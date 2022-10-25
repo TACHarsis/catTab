@@ -1,1 +1,8 @@
-texHeaders.bin
+*.pbo
+releases/*
+*.biprivatekey
+keys/*
+.hemtt/local
+/releases
+/keys
+/.vscode

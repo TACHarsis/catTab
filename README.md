@@ -103,23 +103,23 @@ You can reconfigure the default keys in the configuration file, which can be fou
 Note: To unlock a UAV turret, use the lock / unlock control command available to UAVs (default `CTRL` + `T`) when controlling the UAV turret in full-screen mode (either via the UAV terminal or the UAV gunner view accessible from the tablet).
 
 ### Define vehicle types that have FBCB2 or TAD available ###
-To configure the list of vehicle types that have FBCB2 or TAD available, edit the `cTab_vehicleClass_has_FBCB2` and `cTab_vehicleClass_has_TAD` arrays in the configuration file on the server, which can be found in the ArmA 3 folder `...\Arma 3\userconfig\cTab\ctab_settings.hpp`.
+To configure the list of vehicle types that have FBCB2 or TAD available, edit the `GVARMAIN(vehicleClass_has_FBCB2)` and `GVARMAIN(vehicleClass_has_TAD)` arrays in the configuration file on the server, which can be found in the ArmA 3 folder `...\Arma 3\userconfig\cTab\ctab_settings.hpp`.
 
 ```SQF
 class cTab_settings {
-    cTab_vehicleClass_has_FBCB2[] = {"MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank","Truck_01_base_F","Truck_03_base_F"};
-    cTab_vehicleClass_has_TAD[] = {"Helicopter","Plane"};
+    GVARMAIN(vehicleClass_has_FBCB2)[] = {"MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank","Truck_01_base_F","Truck_03_base_F"};
+    GVARMAIN(vehicleClass_has_TAD)[] = {"Helicopter","Plane"};
 };
 ```
 
 Note: This is a server-side setting, i.e. whatever is set on the client-side userconfig will be overridden by the userconfig on the server.
 
 ### Define helmet classes with enabled helmet camera ###
-To configure the list of helmet classes that enable helmet cameras, edit the `cTab_helmetClass_has_HCam` array in the configuration file on the server, which can be found in the ArmA 3 folder `...\Arma 3\userconfig\cTab\ctab_settings.hpp`. It needs to be within the class `cTab_settings` (same area as above).
+To configure the list of helmet classes that enable helmet cameras, edit the `GVARMAIN(helmetClass_has_HCam)` array in the configuration file on the server, which can be found in the ArmA 3 folder `...\Arma 3\userconfig\cTab\ctab_settings.hpp`. It needs to be within the class `cTab_settings` (same area as above).
 
 ```SQF
 class cTab_settings {
-    cTab_helmetClass_has_HCam = {"H_HelmetB_light","H_Helmet_Kerry","H_HelmetSpecB","H_HelmetO_ocamo","BWA3_OpsCore_Fleck_Camera","BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"};
+    GVARMAIN(helmetClass_has_HCam) = {"H_HelmetB_light","H_Helmet_Kerry","H_HelmetSpecB","H_HelmetO_ocamo","BWA3_OpsCore_Fleck_Camera","BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"};
 };
 ```
 
@@ -162,10 +162,10 @@ this linkItem "ItemMicroDAGR";this addItemToBackpack "ItemcTab";
 If you wish multiple factions to share cTab data, you will have to set their encryption keys to be the same. These are the variables that hold the encryption keys with their default values:
 
 ```SQF
-cTab_encryptionKey_west = "b";
-cTab_encryptionKey_east = "o";
-cTab_encryptionKey_guer = "i";
-cTab_encryptionKey_civ = "c";
+GVARMAIN(encryptionKey_west) = "b";
+GVARMAIN(encryptionKey_east) = "o";
+GVARMAIN(encryptionKey_guer) = "i";
+GVARMAIN(encryptionKey_civ) = "c";
 ```
 
 Note: It is advised to keep the encryption keys as short as possible since some actions use them to exchange data across the network, so by keeping them short, there is less data exchanged.
@@ -174,27 +174,27 @@ So if you want to have for example OPFOR and GUER share cTab data, put this at t
 
 ```SQF
 // set GUER encryption key to be the same as the default BLUEFOR encryption key
-cTab_encryptionKey_guer = "b";
+GVARMAIN(encryptionKey_guer) = "b";
 ```
 
-Note: If `GUER` is set to be friendly with either `WEST` or `EAST`, `GUER` will by default have the same encryption key as the friendly faction. Set `cTab_encryptionKey_guer = "i";` to override.
+Note: If `GUER` is set to be friendly with either `WEST` or `EAST`, `GUER` will by default have the same encryption key as the friendly faction. Set `GVARMAIN(encryptionKey_guer) = "i";` to override.
 
 ### Override vehicle types that have FBCB2 or TAD available ###
 If you wish to override the list of vehicles that have FBCB2 or TAD available, put this at the **TOP** of your `init.sqf`:
 
 ```SQF
 // only make FBCB2 available to MRAPs, APCs and tanks
-cTab_vehicleClass_has_FBCB2 = ["MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank"];
+GVARMAIN(vehicleClass_has_FBCB2) = ["MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank"];
 
 // make TAD available to all helicopters and planes with the exception of the MH-9 Hummingbird and AH-9 Pawnee
-cTab_vehicleClass_has_TAD = ["Heli_Attack_01_base_F","Heli_Attack_02_base_F","Heli_Light_02_base_F","Heli_Transport_01_base_F","Heli_Transport_02_base_F","I_Heli_light_03_base_F","Plane"];
+GVARMAIN(vehicleClass_has_TAD) = ["Heli_Attack_01_base_F","Heli_Attack_02_base_F","Heli_Light_02_base_F","Heli_Transport_01_base_F","Heli_Transport_02_base_F","I_Heli_light_03_base_F","Plane"];
 ```
 
 ### Override helmet classes with enabled helmet camera ###
 
 ```SQF
 // Only have BWmod helmets with a camera simulate a helmet camera
-cTab_helmetClass_has_HCam = ["BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"];
+Ctab_helmetClass_has_HCam = ["BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"];
 ```
 
 ### Change display name of a group ###
@@ -210,7 +210,7 @@ By default all vehicles will be shown with their group names next to them. This 
 
 ```SQF
 // Change this vehicle's identification displayed on all cTab Blue Force Trackers to "Fox"
-this setVariable ["cTab_groupId","Fox",true];
+this setVariable [QGVARMAIN(groupId),"Fox",true];
 ```
 
 Changelog
