@@ -33,17 +33,18 @@ if (UAVControl EGVAR(ui,actUAV) select 1 != "GUNNER") then {
 		EGVAR(ui,actUAV) switchCamera "Gunner";
 		EGVAR(ui,uavViewActive) = true;
 		// spawn a loop in-case control of the UAV is released elsewhere
-		EGVAR(ui,actUAV) spawn {
-			waitUntil {(cameraOn != _this) || (!EGVAR(ui,uavViewActive))};
-			EGVAR(ui,uavViewActive) = false;
-		};
+		[
+			{ (cameraOn != _this) || (!EGVAR(ui,uavViewActive)) },
+			{ EGVAR(ui,uavViewActive) = false; 	},
+			EGVAR(ui,actUAV)
+		] call CBA_fnc_waitUntilAndExecute;
 	} else {
 		// show notification
-		["UAV","No gunner optics available",5] call EFUNC(ui,addNotification);
+		[QSETTING_MODE_CAM_UAV,"No gunner optics available",5] call EFUNC(ui,addNotification);
 	};
 } else {
 	// show notification
-	["UAV","Another user has control",5] call EFUNC(ui,addNotification);
+	[QSETTING_MODE_CAM_UAV,"Another user has control",5] call EFUNC(ui,addNotification);
 };
 
 true

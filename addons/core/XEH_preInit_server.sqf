@@ -29,14 +29,13 @@ if (isArray (ConfigFile >> QGVARMAIN(settings) >> QGVARMAIN(helmetClass_has_HCam
 };
 publicVariable QGVARMAIN(vehicleClass_has_TAD_server);
 
-GVAR(userMarkerLists) = [];
-GVAR(userMarkerTransactionId) = -1;
+
 
 [] spawn {
 	waituntil {time > 0};
 	sleep .1;
 	
-	while {true} do {
+	while {true} do { // name retained for backwards compatibility
 		[QGVARMAIN(updatePulse)] call CBA_fnc_globalEvent;
 		sleep 30;
 	};

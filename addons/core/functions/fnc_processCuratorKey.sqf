@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /*
-	Name: Ctab_ui_fnc_translateUserMarker
+	Name: Ctab_ui_fnc_userMarkerTranslate
 	
 	Author(s):
 		michail-nikolaev (nkey, TFAR)

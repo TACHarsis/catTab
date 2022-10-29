@@ -26,11 +26,11 @@ private _displayName = GVAR(ifOpen) select 1;
 
 if ([_displayName] call FUNC(isDialog)) then {
 	// reset position to default
-	[_displayName,[["dlgIfPosition",[]]],true,true] call FUNC(setSettings);
+	[_displayName,[[QSETTING_POSITION_DIALOG,[]]],true,true] call FUNC(setSettings);
 } else {
-	private _dspIfPosition = [_displayName,"dspIfPosition"] call FUNC(getSettings);
+	private _dspIfPosition = [_displayName,QSETTING_POSITION_DISPLAY] call FUNC(getSettings);
 	// toggle position
-	[_displayName,[["dspIfPosition",!_dspIfPosition]]] call FUNC(setSettings);
+	[_displayName,[[QSETTING_POSITION_DISPLAY,!_dspIfPosition]]] call FUNC(setSettings);
 };
 
 true

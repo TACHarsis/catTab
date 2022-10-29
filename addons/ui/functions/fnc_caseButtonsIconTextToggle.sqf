@@ -9,6 +9,6 @@ Returns TRUE
 params ["_displayName"];
 
 if (GVAR(BFTtxt)) then {GVAR(BFTtxt) = false} else {GVAR(BFTtxt) = true};
-[_displayName,[["showIconText",GVAR(BFTtxt)]]] call FUNC(setSettings);
+[_displayName,[[QSETTING_SHOW_ICON_TEXT,GVAR(BFTtxt)]]] call FUNC(setSettings);
 
 true

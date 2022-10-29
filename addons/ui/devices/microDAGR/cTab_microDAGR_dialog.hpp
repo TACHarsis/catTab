@@ -18,12 +18,12 @@ class GVARMAIN(microDAGR_dlg) {
 	idd = 1776134;
 	movingEnable = true;
 	onLoad = QUOTE(_this call FUNC(onIfOpen));
-	onUnload = QUOTE([] call FUNC(onIfclose));
+	onUnload = QUOTE([] call FUNC(onIfClose));
 	onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
 	objects[] = {};
 	class controlsBackground {
 		class screen: cTab_microDAGR_RscMapControl {
-			onDraw = QUOTE(nop = _this call FUNC(drawMapControlMicroDAGRDlg););
+			onDraw = QUOTE(_this call FUNC(drawMapControlMicroDAGRDlg););
 			onMouseMoving = QUOTE(GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
 			// set initial map scale
 			scaleDefault = QUOTE((missionNamespace getVariable 'GVAR(mapScale)') * 0.86 / (safezoneH * 0.8));

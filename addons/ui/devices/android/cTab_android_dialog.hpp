@@ -23,14 +23,14 @@ class GVARMAIN(Android_dlg) {
 	idd = 177382;
 	movingEnable = true;
 	onLoad = QUOTE(_this call FUNC(onIfOpen));
-	onUnload = QUOTE([] call FUNC(onIfclose));
+	onUnload = QUOTE([] call FUNC(onIfClose));
 	onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
 	objects[] = {};
 	class controlsBackground {
 		class windowsBG: cTab_android_windowsBG {};
 		class screen: cTab_android_RscMapControl {
 			onDraw = QUOTE(nop = _this call FUNC(drawMapControlAndroidDlg););
-			onMouseButtonDblClick = QUOTE(_ok = ARR_2([IDC_CTAB_MARKER_MENU_MAIN,_this]) call FUNC(loadMarkerMenu););
+			onMouseButtonDblClick = QUOTE([ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
 			onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
 		};
 		class screenTopo: screen {
@@ -182,7 +182,7 @@ class GVARMAIN(Android_dlg) {
 					y = pxToGroup_Y(cTab_GUI_android_MESSAGE_BUTTON_MODE_Y);
 					w = pxToScreen_W(cTab_GUI_android_MESSAGE_BUTTON_W);
 					h = pxToScreen_H(cTab_GUI_android_MESSAGE_BUTTON_H);
-					action = QUOTE(ARR_2(['GVARMAIN(Android_dlg)',[[ARR_2('mode','COMPOSE')]]]) call FUNC(setSettings));
+					action = QUOTE(ARR_2(['GVARMAIN(Android_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_MESSAGES_COMPOSE')]]]) call FUNC(setSettings));
 				};
 			};
 		};
@@ -243,7 +243,7 @@ class GVARMAIN(Android_dlg) {
 					y = pxToGroup_Y(cTab_GUI_android_MESSAGE_BUTTON_MODE_Y);
 					w = pxToScreen_W(cTab_GUI_android_MESSAGE_BUTTON_W);
 					h = pxToScreen_H(cTab_GUI_android_MESSAGE_BUTTON_H);
-					action = QUOTE(ARR_2(['GVARMAIN(Android_dlg)',[[ARR_2('mode','MESSAGE')]]]) call FUNC(setSettings));
+					action = QUOTE(ARR_2(['GVARMAIN(Android_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_MESSAGES')]]]) call FUNC(setSettings));
 				};
 			};
 		};

@@ -21,7 +21,7 @@ params ["_camPos"];
 
 private _displayName = GVAR(ifOpen) select 1;
 private _uav = objNull;
-private _data = [_displayName,"uavCam"] call FUNC(getSettings);
+private _data = [_displayName,QSETTING_CAM_UAV] call FUNC(getSettings);
 
 // see if given UAV name is still in the list of valid UAVs
 {

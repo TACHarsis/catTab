@@ -15,7 +15,7 @@ class GVARMAIN(FBCB2_dlg){
 	idd = 1775144;
 	movingEnable = true;
 	onLoad = QUOTE(_this call FUNC(onIfOpen));
-	onUnload = QUOTE([] call FUNC(onIfclose));
+	onUnload = QUOTE([] call FUNC(onIfClose));
 	onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
 	objects[] = {};
 	class controlsBackground {
@@ -29,9 +29,9 @@ class GVARMAIN(FBCB2_dlg){
 			y = pxToScreen_Y(cTab_GUI_FBCB2_SCREEN_CONTENT_Y);
 			w = pxToScreen_W(cTab_GUI_FBCB2_SCREEN_CONTENT_W);
 			h = pxToScreen_H(cTab_GUI_FBCB2_SCREEN_CONTENT_H);
-			onDraw = QUOTE(nop = _this call FUNC(drawMapControlFBCB2););
-			onMouseButtonDblClick = QUOTE(_ok = ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this) call FUNC(loadMarkerMenu););
-			onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld ARR_2(_this select 1,_this select 2););
+			onDraw = QUOTE(_this call FUNC(drawMapControlFBCB2););
+			onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
+			onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
 			maxSatelliteAlpha = 10000;
 			alphaFadeStartScale = 10;
 			alphaFadeEndScale = 10;

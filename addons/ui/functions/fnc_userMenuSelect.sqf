@@ -31,31 +31,34 @@ private _display = (uiNamespace getVariable _displayName);
 
 private _idcToShow = 0;
 
-call {
+switch (_type) do {
 	// send GVAR(cTabUserSelIcon) to server
-	if (_type == 1) exitWith {
+	case (1) : {
 		GVAR(cTabUserSelIcon) pushBack Ctab_player;
-		[call EFUNC(core,getPlayerEncryptionKey),GVAR(cTabUserSelIcon)] call FUNC(addUserMarker);
+		[call EFUNC(core,getPlayerEncryptionKey),GVAR(cTabUserSelIcon)] remoteExec [QFUNC(UserMarkerAddServer), 2];
 	};
 	
 	// Lock UAV cam to clicked position
-	if (_type == 2) exitWith {
+	case (2) : {
 		[GVAR(cTabUserSelIcon) select 0] call FUNC(lockUavCamTo);
 	};
 
-	_idcToShow = call {
-		if (_type == 11) exitWith {3301};
-		if (_type == 12) exitWith {3303};
-		if (_type == 13) exitWith {3304};
-		if (_type == 14) exitWith {
-			if (GVAR(cTabUserSelIcon) select 1 != 0) then {
-				GVAR(cTabUserSelIcon) set [2,0];
-				3304
-			} else {3307};
+	default {
+		_idcToShow = switch(_type) do {
+			case (11) : {3301};
+			case (12) : {3303};
+			case (13) : {3304};
+			case (14) : {
+				if (GVAR(cTabUserSelIcon) select 1 != 0) then {
+					GVAR(cTabUserSelIcon) set [2,0];
+					
+					3304
+				} else {3307};
+			};
+			case (21) : {3305};
+			case (31) : {3306};
+			default {_type};
 		};
-		if (_type == 21) exitWith {3305};
-		if (_type == 31) exitWith {3306};
-		_type;
 	};
 };
 

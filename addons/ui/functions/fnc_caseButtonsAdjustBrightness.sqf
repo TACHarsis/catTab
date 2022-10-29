@@ -7,10 +7,10 @@ Returns TRUE
 */
 params ["_displayName", ["_adjustment", 0, [1]]];
 
-private _brightness = [_displayName,"brightness"] call FUNC(getSettings);
+private _brightness = [_displayName,QSETTING_BRIGHTNESS] call FUNC(getSettings);
 _brightness = _brightness + _adjustment;
 _brightness = [_brightness, 0.5, 1] call BIS_fnc_clamp;
 
-[_displayName,[["brightness",_brightness]]] call FUNC(setSettings);
+[_displayName,[[QSETTING_BRIGHTNESS,_brightness]]] call FUNC(setSettings);
 
 true

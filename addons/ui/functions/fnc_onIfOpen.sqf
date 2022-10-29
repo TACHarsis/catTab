@@ -18,8 +18,9 @@
 		// open TAD display as main interface type
 		[_dispaly] call Ctab_ui_fnc_onIfOpen;
 */
+params ["_displayName"];
 
-uiNamespace setVariable [GVAR(ifOpen) select 1,_this select 0];
+uiNamespace setVariable [GVAR(ifOpen) select 1,_displayName];
 
 [] call FUNC(updateInterface);
 

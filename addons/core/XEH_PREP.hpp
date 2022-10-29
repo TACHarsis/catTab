@@ -1,17 +1,13 @@
-PREP(addToPairs);
 PREP(checkGear);
-PREP(close);
 PREP(currentTime);
 PREP(degreeToOctant);
 PREP(dirTo);
 PREP(distance2D);
 PREP(getCopilot);
-PREP(getFromPairs);
 PREP(getPlayerEncryptionKey);
 PREP(getPlayerSides);
 PREP(onPlayerInventoryChanged);
 PREP(processCuratorKey);
 PREP(remoteControlUav);
-PREP(setToPairs);
 PREP(unitInEnabledVehicleSeat);
 PREP(updateLists);

@@ -56,20 +56,25 @@ Groups on our side that player is not a member of. Use the leader for positionin
 Else, search through the group and use the first member we find equipped with a Tablet or Android for positioning.
 */
 {
-	if ((side _x in _validSides) && {_x != _playerGroup}) then {
+	private _group = _x;
+	if ((side _group in _validSides) && {_group != _playerGroup}) then {
 		_leader = objNull;
-		call {
-			if ([leader _x,["ItemcTab","ItemAndroid"]] call FUNC(checkGear)) exitWith {_leader = leader _x;};
+		if ([leader _group,["ItemcTab","ItemAndroid"]] call FUNC(checkGear)) then {
+			_leader = leader _group;
+		} else {
 			{
-				if ([_x,["ItemcTab","ItemAndroid"]] call FUNC(checkGear)) exitWith {_leader = _x;};
-			} foreach units _x;
+				private _unit = _x;
+				if ([_unit,["ItemcTab","ItemAndroid"]] call FUNC(checkGear)) then {
+					_leader = _unit;
+				};
+			} foreach units _group;
 		};
 		if !(IsNull _leader) then {
 			_groupSize = count units _x;
-			_sizeIcon = call {
-				if (_groupSize <= 3) exitWith {"\A3\ui_f\data\map\markers\nato\group_0.paa"};
-				if (_groupSize <= 9) exitWith {"\A3\ui_f\data\map\markers\nato\group_1.paa"};
-				"\A3\ui_f\data\map\markers\nato\group_2.paa"
+			_sizeIcon = switch (true) do {
+				case (_groupSize <= 3) : {"\A3\ui_f\data\map\markers\nato\group_0.paa"};
+				case (_groupSize <= 9) : {"\A3\ui_f\data\map\markers\nato\group_1.paa"};
+				default {"\A3\ui_f\data\map\markers\nato\group_2.paa"};
 			};
 			_BFTgroups pushBack [_leader,"\A3\ui_f\data\map\markers\nato\b_inf.paa",_sizeIcon,groupID _x,""];
 		};
@@ -85,10 +90,9 @@ Vehciles on our side, that are not empty and that player is not sitting in.
 		_groupID = "";
 		_name = "";
 		_customName = _x getVariable [QGVARMAIN(groupId),""];
-		call {
-			if !(_customName isEqualTo "") exitWith {
-				_name = _customName;
-			};
+		if !(_customName isEqualTo "") then {
+			_name = _customName;
+		} else {
 			if (group _x == _playerGroup) then {
 				_groupID = str([_x] call CBA_fnc_getGroupIndex)
 			};
@@ -96,29 +100,43 @@ Vehciles on our side, that are not empty and that player is not sitting in.
 		};
 		_iconA = "";
 		_iconB = "";
-		call {
-			if (_x isKindOf "MRAP_01_base_F") exitWith {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
-			if (_x isKindOf "MRAP_02_base_F") exitWith {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
-			if (_x isKindOf "MRAP_03_base_F") exitWith {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
-			if (_x isKindOf "Wheeled_APC_F") exitWith {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
-			if (_x isKindOf "Truck_F" && {getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 2}) exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_motor_inf.paa";};
-			if (_x isKindOf "Truck_F") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_support.paa";};
-			if (_x isKindOf "Car_F") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_motor_inf.paa";};
-			if (_x isKindOf "UAV") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
-			if (_x isKindOf "UAV_01_base_F") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
-			if (_x isKindOf "Helicopter") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_air.paa"; _iconB = QPATHTOEF(data,img\icon_air_contact_ca.paa);};
-			if (_x isKindOf "Plane") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_plane.paa"; _iconB = QPATHTOEF(data,img\icon_air_contact_ca.paa);};
-			if (_x isKindOf "Tank" && {getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 6}) exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_mech_inf.paa";};
-			if (_x isKindOf "MBT_01_arty_base_F") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
-			if (_x isKindOf "MBT_01_mlrs_base_F") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
-			if (_x isKindOf "MBT_02_arty_base_F") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
-			if (_x isKindOf "Tank") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_armor.paa";};
-			if (_x isKindOf "StaticMortar") exitWith {_iconA = "\A3\ui_f\data\map\markers\nato\b_mortar.paa";};
+		switch (true) do {
+			case (_x isKindOf "MRAP_01_base_F") 	: {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
+			case (_x isKindOf "MRAP_02_base_F") 	: {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
+			case (_x isKindOf "MRAP_03_base_F") 	: {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
+			case (_x isKindOf "Wheeled_APC_F") 		: {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
+			case (_x isKindOf "Truck_F" && 
+				{getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 2}) 
+													: {_iconA = "\A3\ui_f\data\map\markers\nato\b_motor_inf.paa";};
+			case (_x isKindOf "Truck_F") 			: {_iconA = "\A3\ui_f\data\map\markers\nato\b_support.paa";};
+			case (_x isKindOf "Car_F") 				: {_iconA = "\A3\ui_f\data\map\markers\nato\b_motor_inf.paa";};
+			case (_x isKindOf "UAV") 				: {_iconA = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
+			case (_x isKindOf "UAV_01_base_F") 		: {_iconA = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
+			case (_x isKindOf "Helicopter") 		: {_iconA = "\A3\ui_f\data\map\markers\nato\b_air.paa"; 
+														_iconB = QPATHTOEF(data,img\icon_air_contact_ca.paa);};
+			case (_x isKindOf "Plane") 				: {_iconA = "\A3\ui_f\data\map\markers\nato\b_plane.paa"; 
+														_iconB = QPATHTOEF(data,img\icon_air_contact_ca.paa);};
+			case (_x isKindOf "Tank" && 
+				{getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 6}) 
+														: {_iconA = "\A3\ui_f\data\map\markers\nato\b_mech_inf.paa";};
+			case (_x isKindOf "MBT_01_arty_base_F") 	: {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
+			case (_x isKindOf "MBT_01_mlrs_base_F") 	: {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
+			case (_x isKindOf "MBT_02_arty_base_F") 	: {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
+			case (_x isKindOf "Tank") 					: {_iconA = "\A3\ui_f\data\map\markers\nato\b_armor.paa";};
+			case (_x isKindOf "StaticMortar") 			: {_iconA = "\A3\ui_f\data\map\markers\nato\b_mortar.paa";};
 		};
-		call {
-			if (_iconA isEqualTo "" && {!(_x isKindOf "Static")} && {!(_x isKindOf "StaticWeapon")}) then {_iconA = "\A3\ui_f\data\map\markers\nato\b_unknown.paa";};
-			if (_iconA isEqualTo "") exitWith {};
-			_BFTvehicles pushBack [_x,_iconA,_iconB,_name,_groupID];
+		if (_iconA isEqualTo "") then  {
+			if (!(_x isKindOf "Static") && !(_x isKindOf "StaticWeapon")) then 
+			{
+				_iconA = "\A3\ui_f\data\map\markers\nato\b_unknown.paa";
+			} else {
+				if(!(_x isKindOf "Static") && 
+					{!(_x isKindOf "StaticWeapon")}) then {
+						_iconA = "\A3\ui_f\data\map\markers\nato\b_unknown.paa";
+				};
+			};
+		} else {
+			_BFTvehicles pushBack [_x,_iconA,_iconB,_name,_groupID];	
 		};
 	};
 } foreach vehicles;
@@ -145,7 +163,7 @@ Units on our side, that have either helmets that have been specified to include 
 } foreach allUnits;
 
 // array to hold interface update commands
-private _updateInterface = [];
+private _updateInterface = createHashMap;
 
 // replace the global list arrays in the end so that we avoid them being empty unnecessarily
 GVARMAIN(BFTMembers) = [] + _BFTMembers;
@@ -153,16 +171,11 @@ GVARMAIN(BFTGroups) = [] + _BFTgroups;
 GVARMAIN(BFTvehicles) = [] + _BFTvehicles;
 if !(GVARMAIN(UAVList) isEqualTo _UAVList) then {
 	GVARMAIN(UAVList) = [] + _UAVList;
-	_updateInterface pushBack ["UAVListUpdate",true];
+	call EFUNC(ui,updateListControlUAV);
 };
 if !(GVARMAIN(hCamList) isEqualTo _hCamList) then {
 	GVARMAIN(hCamList) = [] + _hCamList;
-	_updateInterface pushBack ["hCamListUpdate",true];
-};
-
-// call interface updates
-if (count _updateInterface > 0) then {
-	[_updateInterface] call EFUNC(ui,updateInterface);
+	call EFUNC(ui,updateListControlHelmetCams);
 };
 
 true

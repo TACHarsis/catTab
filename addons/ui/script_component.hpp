@@ -12,3 +12,4 @@
 #endif
 
 #include "\z\Ctab\addons\main\script_macros.hpp"
+#include "settings_macros.hpp"

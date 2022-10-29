@@ -30,19 +30,19 @@ params ["_display","_dikCode","_shiftKey","_ctrlKey","_altKey"];
 private _displayName = GVAR(ifOpen) select 1;
 
 if (_dikCode == DIK_F1 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg)]}) exitWith {
-	[_displayName,[["mode","BFT"]]] call FUNC(setSettings);
+	[_displayName,[[QSETTING_MODE,QSETTING_MODE_BFT]]] call FUNC(setSettings);
 	true
 };
 if (_dikCode == DIK_F2 && {_displayName in [QGVARMAIN(Tablet_dlg)]}) exitWith {
-	[_displayName,[["mode","UAV"]]] call FUNC(setSettings);
+	[_displayName,[[QSETTING_MODE,QSETTING_MODE_CAM_UAV]]] call FUNC(setSettings);
 	true
 };
 if (_dikCode == DIK_F3 && {_displayName in [QGVARMAIN(Tablet_dlg)]}) exitWith {
-	[_displayName,[["mode","HCAM"]]] call FUNC(setSettings);
+	[_displayName,[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET]]] call FUNC(setSettings);
 	true
 };
 if (_dikCode == DIK_F4 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg)]}) exitWith {
-	[_displayName,[["mode","MESSAGE"]]] call FUNC(setSettings);
+	[_displayName,[[QSETTING_MODE,QSETTING_MODE_MESSAGES]]] call FUNC(setSettings);
 	true
 };
 if (_dikCode == DIK_F5 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg),QGVARMAIN(TAD_dlg),QGVARMAIN(microDAGR_dlg),QGVARMAIN(FBCB2_dlg)]}) exitWith {
@@ -58,13 +58,14 @@ if (_dikCode == DIK_F7 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Andr
 	true
 };
 if (_dikCode == DIK_DELETE && {GVAR(cursorOnMap)}) exitWith {
-	private _mapTypes = [_displayName,"mapTypes"] call FUNC(getSettings);
-	private _currentMapType = [_displayName,"mapType"] call FUNC(getSettings);
-	private _currentMapTypeIndex = [_mapTypes,_currentMapType] call BIS_fnc_findInPairs;
-	private _ctrlScreen = _display displayCtrl (_mapTypes select _currentMapTypeIndex select 1);
-	private _markerIndex = [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(findUserMarker);
+	private _ctrlScreen = _display displayCtrl ([
+		[_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings),
+		[_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+	] call BIS_fnc_getFromPairs);
+
+	private _markerIndex = [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(userMarkerFind);
 	if (_markerIndex != -1) then {
-		[call EFUNC(core,getPlayerEncryptionKey),_markerIndex] call FUNC(deleteUserMarker);
+		[call EFUNC(core,getPlayerEncryptionKey),_markerIndex] remoteExec [QFUNC(userMarkerDeleteServer), 2];
 	};
 	true
 };

@@ -6,7 +6,7 @@
 		Gundy, Riouken
 
 	Description:
-		Draw userMarkers held in GVAR(userMarkerList) to map control
+		Draw userMarkers held in GVAR(userMarkerListTranslated) to map control
 		
 		List format:
 			Index 0: ARRAY  - marker position
@@ -30,14 +30,15 @@
 params  ["_ctrlScreen","_highlightCursorMarker"];
 
 private _arrowLength = GVAR(userMarkerArrowSize) * ctrlMapScale _ctrlScreen;
-private _cursorMarkerIndex = if (_highlightCursorMarker) then {[_ctrlScreen,GVAR(mapCursorPos)] call FUNC(findUserMarker)} else {-1};
+private _cursorMarkerIndex = if (_highlightCursorMarker) then {[_ctrlScreen,GVAR(mapCursorPos)] call FUNC(userMarkerFind)} else {-1};
+
 {
 	private _markerData = _x select 1;
 	private _pos = _markerData select 0;
 	private _texture1 = _markerData select 1;
 	private _texture2 = _markerData select 2;
 	private _dir = _markerData select 3;
-	private _color = if (_x select 0 != _cursorMarkerIndex) then {_markerData select 4} else {GVAR(TADhighlightColour)};
+	private _color = if (_x select 0 != _cursorMarkerIndex) then {_markerData select 4} else {GVAR(miscColor)};
 	private _text = "";
 	if (_dir < 360) then {
 		private _secondPos = [_pos,_arrowLength,_dir] call BIS_fnc_relPos;
@@ -61,6 +62,6 @@ private _cursorMarkerIndex = if (_highlightCursorMarker) then {[_ctrlScreen,GVAR
 			0, "", 0, GVAR(txtSize),"TahomaB","right"
 		];
 	};
-} foreach GVAR(userMarkerList);
+} foreach GVAR(userMarkerListTranslated);
 
 true

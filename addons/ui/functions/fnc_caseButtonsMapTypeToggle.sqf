@@ -7,14 +7,14 @@ Returns TRUE
 */
 params ["_displayName"];
 
-private _mapTypes = [_displayName,"mapTypes"] call FUNC(getSettings);
-private _currentMapType = [_displayName,"mapType"] call FUNC(getSettings);
+private _mapTypes = [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings);
+private _currentMapType = [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings);
 private _currentMapTypeIndex = [_mapTypes,_currentMapType] call BIS_fnc_findInPairs;
 
 if (_currentMapTypeIndex == count _mapTypes - 1) then {
-	[_displayName,[["mapType",_mapTypes select 0 select 0]]] call FUNC(setSettings);
+	[_displayName,[[QSETTING_CURRENT_MAP_TYPE,_mapTypes select 0 select 0]]] call FUNC(setSettings);
 } else {
-	[_displayName,[["mapType",_mapTypes select (_currentMapTypeIndex + 1) select 0]]] call FUNC(setSettings);
+	[_displayName,[[QSETTING_CURRENT_MAP_TYPE,_mapTypes select (_currentMapTypeIndex + 1) select 0]]] call FUNC(setSettings);
 };
 
 true

@@ -17,14 +17,12 @@
 		BOOLEAN - Always true
  	
  	Example:
-		[[["mapType","SAT"],["mapScaleDsp","4"]]] call Ctab_ui_fnc_updateInterface;
+		[[[QSETTING_CURRENT_MAP_TYPE,QMAP_TYPE_SAT],[QSETTING_MAP_SCALE_DISPLAY,"4"]]] call Ctab_ui_fnc_updateInterface;
 */
-
 #include "..\devices\shared\cTab_gui_macros.hpp"
-params ["_settings"];
 
-//CC: leaving this for another day TODO: Do away with this monster
-private ["_null","_osdCtrl","_text","_mapTypes","_mapType","_mapIDC","_targetMapName","_targetMapIDC","_previousMapCtrl","_previousMapIDC","_renderTarget","_mapScaleKm","_mapScaleMin","_mapScaleMax","_mapScaleTxt","_mapWorldPos","_displayItems","_btnActCtrl","_displayItemsToShow","_mapTools","_showMenu","_data","_UAVListCtrl","_hcamListCtrl","_index","_background","_brightness","_nightMode","_backgroundPosition","_backgroundPositionX","_backgroundPositionW","_backgroundConfigPositionX","_xOffset","_dspIfPosition","_backgroundOffset","_ctrlPos","_mousePos"];
+params ["_displaySettings"];
+
 disableSerialization;
 
 if (isNil QGVAR(ifOpen)) exitWith {false};
@@ -37,15 +35,15 @@ private _targetMapScale = nil;
 private _targetMapWorldPos = nil;
 private _isDialog = [_displayName] call FUNC(isDialog);
 
-if (isNil "_settings") then {
+if (isNil "_displaySettings") then {
 	// Retrieve all settings for the currently open interface
-	_settings = [_displayName] call FUNC(getSettings);
+	_displaySettings = [_displayName] call FUNC(getSettings);
 	_interfaceInit = true;
 };
 
-private _mode = [_settings,"mode"] call EFUNC(core,getFromPairs);
+private _mode = _displaySettings get QSETTING_MODE;
 if (isNil "_mode") then {
-	_mode = [_displayName,"mode"] call FUNC(getSettings);
+	_mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
 	_loadingCtrl = displayNull;
 } else {
 	// show "Loading" control to hide all the action while its going on
@@ -56,24 +54,26 @@ if (isNil "_mode") then {
 };
 
 {
-	call {
-		// ------------ DISPLAY POSITION ------------
-		if (_x select 0 == "dspIfPosition") exitWith {
-			_dspIfPosition = _x select 1;
+	private _key = _x;
+	private _value = _y;
+	switch (_key) do {
+	// ------------ DISPLAY POSITION ------------
+		case (QSETTING_POSITION_DISPLAY) : {
+			private _dspIfPosition = _value;
 			
 			if !(_isDialog) then {
 				// get the current position of the background control
-				_backgroundPosition = [_displayName] call FUNC(getBackgroundPosition);
-				_backgroundPositionX = _backgroundPosition select 0 select 0;
-				_backgroundPositionW = _backgroundPosition select 0 select 2;
+				private _backgroundPosition = [_displayName] call FUNC(getBackgroundPosition);
+				private _backgroundPositionX = _backgroundPosition select 0 select 0;
+				private _backgroundPositionW = _backgroundPosition select 0 select 2;
 				
 				// get the original position of the background control
-				_backgroundConfigPositionX = _backgroundPosition select 1 select 0;
+				private _backgroundConfigPositionX = _backgroundPosition select 1 select 0;
 				
 				// figure out if we need to do anything
 				if !((_backgroundPositionX != _backgroundConfigPositionX) isEqualTo _dspIfPosition) then {
 					// calculate offset required to shift position to the opposite
-					private _xOffset = if (_backgroundPositionX == _backgroundConfigPositionX) then {
+					private _xOffset = if (_backgroundPositionX isEqualTo _backgroundConfigPositionX) then {
 							2 * safeZoneX + safeZoneW - _backgroundPositionW - 2 * _backgroundPositionX
 						} else {
 							_backgroundConfigPositionX - _backgroundPositionX
@@ -83,8 +83,8 @@ if (isNil "_mode") then {
 			};
 		};
 		// ------------ DIALOG POSITION ------------
-		if (_x select 0 == "dlgIfPosition") exitWith {
-			_backgroundOffset = _x select 1;
+		case (QSETTING_POSITION_DIALOG) : {
+			private _backgroundOffset = _value;
 			
 			if (_isDialog) then {
 				if (_backgroundOffset isEqualTo []) then {
@@ -92,7 +92,7 @@ if (isNil "_mode") then {
 							[0,0]
 						} else {
 							// reset to defaults
-							_backgroundPosition = [_displayName] call FUNC(getBackgroundPosition);
+							private _backgroundPosition = [_displayName] call FUNC(getBackgroundPosition);
 							[(_backgroundPosition select 1 select 0) - (_backgroundPosition select 0 select 0),(_backgroundPosition select 1 select 1) - (_backgroundPosition select 0 select 1)]
 						};
 				};
@@ -104,55 +104,56 @@ if (isNil "_mode") then {
 		};
 		// ------------ BRIGHTNESS ------------
 		// Value ranges from 0 to 1, 0 being off and 1 being full brightness
-		if (_x select 0 == "brightness") exitWith {
-			_osdCtrl = _display displayCtrl IDC_CTAB_BRIGHTNESS;
+		case (QSETTING_BRIGHTNESS) : {
+			private _osdCtrl = _display displayCtrl IDC_CTAB_BRIGHTNESS;
 			if !(isNull _osdCtrl) then {
-				_brightness = _x select 1;
-				_nightMode = [_displayName,"nightMode"] call FUNC(getSettings);
+				private _brightness = _value;
+				private _nightMode = [_displayName,QSETTING_NIGHT_MODE] call FUNC(getSettings);
 				// if we are running night mode, lower the brightness proportionally
 				if !(isNil "_nightMode") then {
-					if (_nightMode == 1 || {_nightMode == 2 && (sunOrMoon < 0.2)}) then {_brightness = _brightness * 0.7};
+					if (_nightMode isEqualTo 1 || {_nightMode isEqualTo 2 && (sunOrMoon < 0.2)}) then {_brightness = _brightness * 0.7};
 				};
 				_osdCtrl ctrlSetBackgroundColor [0,0,0,1 - _brightness];
 			};
 		};
-		
+
 		// ------------ NIGHT MODE ------------
 		// 0 = day mode, 1 = night mode, 2 = automatic
-		if (_x select 0 == "nightMode") exitWith {
-			_nightMode = _x select 1;
+		case (QSETTING_NIGHT_MODE) : {
 			// transform nightMode into boolean
-			_nightMode = if (_nightMode == 1 || {_nightMode == 2 && (sunOrMoon < 0.2)}) then {true} else {false};
-			_background = call {
-				if (_displayName in [QGVARMAIN(TAD_dsp),QGVARMAIN(TAD_dlg)]) exitWith {
-					if (_nightMode) then {QPATHTOEF(data,img\TAD_background_night_ca.paa)} else {QPATHTOEF(data,img\TAD_background_ca.paa)};
+			private _nightMode = (_value isEqualTo 1 || {_value isEqualTo 2 && (sunOrMoon < 0.2)});
+			private _background = switch (true) do {
+				case (_displayName in [QGVARMAIN(TAD_dsp),QGVARMAIN(TAD_dlg)]) : {
+					[QPATHTOEF(data,img\TAD_background_ca.paa), QPATHTOEF(data,img\TAD_background_night_ca.paa)] select _nightMode
 				};
-				if (_displayName in [QGVARMAIN(Android_dsp),QGVARMAIN(Android_dlg)]) exitWith {
-					if (_nightMode) then {QPATHTOEF(data,img\android_background_night_ca.paa)} else {QPATHTOEF(data,img\android_background_ca.paa)};
+				case (_displayName in [QGVARMAIN(Android_dsp),QGVARMAIN(Android_dlg)]) : {
+					[QPATHTOEF(data,img\android_background_ca.paa), QPATHTOEF(data,img\android_background_night_ca.paa)] select _nightMode
 				};
-				if (_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)]) exitWith {
-					if (_nightMode) then {QPATHTOEF(data,img\microDAGR_background_night_ca.paa)} else {QPATHTOEF(data,img\microDAGR_background_ca.paa)};
+				case (_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)]) : {
+					[QPATHTOEF(data,img\microDAGR_background_ca.paa), QPATHTOEF(data,img\microDAGR_background_night_ca.paa)] select _nightMode
 				};
-				if (_displayName in [QGVARMAIN(Tablet_dlg)]) exitWith {
-					if (_nightMode) then {QPATHTOEF(data,img\tablet_background_night_ca.paa)} else {QPATHTOEF(data,img\tablet_background_ca.paa)};
+				case (_displayName in [QGVARMAIN(Tablet_dlg)]) : {
+					[QPATHTOEF(data,img\tablet_background_ca.paa), QPATHTOEF(data,img\tablet_background_night_ca.paa)] select _nightMode
 				};
-				""
+				default {""};
 			};
 			if (_background != "") then {
 				(_display displayCtrl IDC_CTAB_BACKGROUND) ctrlSetText _background;
 				// call brightness adjustment if this is outside of interface init
 				if !(_interfaceInit) then {
-					_settings pushBack ["brightness",[_displayName,"brightness"] call FUNC(getSettings)];
+					[_displayName,[
+							[QSETTING_BRIGHTNESS,[_displayName,QSETTING_BRIGHTNESS] call FUNC(getSettings)]
+						],true,true] call FUNC(setSettings);
 				};
 			};
 		};
-		
+
 		// ------------ MODE ------------
-		if (_x select 0 == "mode") exitWith {
+		case (QSETTING_MODE) : {
 			GVAR(userPos) = [];
 			
-			_displayItems = call {				
-				if (_displayName == QGVARMAIN(Tablet_dlg)) exitWith {
+			private _displayItems = switch (true) do {				
+				case (_displayName isEqualTo QGVARMAIN(Tablet_dlg)) : {
 					[3301,3302,3303,3304,3305,3306,3307,
 					IDC_CTAB_MARKER_MENU_MAIN,
 					IDC_CTAB_GROUP_DESKTOP,
@@ -171,7 +172,7 @@ if (isNil "_mode") then {
 					IDC_CTAB_OSD_HOOK_DIR,
 					IDC_CTAB_NOTIFICATION]
 				};
-				if (_displayName == QGVARMAIN(Android_dlg)) exitWith {
+				case (_displayName isEqualTo QGVARMAIN(Android_dlg)) : {
 					[3301,3302,3303,3304,3305,3306,3307,
 					IDC_CTAB_MARKER_MENU_MAIN,
 					IDC_CTAB_GROUP_MENU,
@@ -185,33 +186,52 @@ if (isNil "_mode") then {
 					IDC_CTAB_OSD_HOOK_DIR,
 					IDC_CTAB_NOTIFICATION]
 				};
-				if (_displayName in [QGVARMAIN(FBCB2_dlg),QGVARMAIN(TAD_dlg)]) exitWith {
+				case (_displayName in [QGVARMAIN(FBCB2_dlg),QGVARMAIN(TAD_dlg)]) : {
 					[3301,3302,3303,3304,3305,3306,3307,
 					IDC_CTAB_MARKER_MENU_MAIN,
 					IDC_CTAB_NOTIFICATION]
 				};
-				[IDC_CTAB_NOTIFICATION] // default
+				default {[IDC_CTAB_NOTIFICATION]};
 			};
 			if !(_displayItems isEqualTo []) then {
-				_btnActCtrl = _display displayCtrl IDC_CTAB_BTNACT;
-				_displayItemsToShow = [];
+				private _btnActCtrl = _display displayCtrl IDC_CTAB_BTNACT;
+				private _displayItemsToShow = [];
+
+				// ---------- _NOT_ BFT -----------
+				if (_isDialog && (_mode isNotEqualTo QSETTING_MODE_BFT)) then {
+					private _mapTypes = [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings);
+					if (count _mapTypes > 1) then {
+						_targetMapCtrl = _display displayCtrl ([
+								_mapTypes, 
+								[_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+							] call BIS_fnc_getFromPairs);
+						
+						// If we find the map to be shown, we are switching away from BFT. Lets save map scale and position
+						if (ctrlShown _targetMapCtrl) then {
+							_mapScale = GVAR(mapScale) * GVAR(mapScaleFactor) / 0.86 * (safezoneH * 0.8);
+							[_displayName,[
+									[QSETTING_MAP_WORLD_POS,GVAR(mapWorldPos)],
+									[QSETTING_MAP_SCALE_DIALOG,_mapScale]
+								],false] call FUNC(setSettings);
+						};
+					};
+				};
 				
-				call {
+				switch (_mode) do {
 					// ---------- DESKTOP -----------
-					if (_mode == "DESKTOP") exitWith {
+					case (QSETTING_MODE_DESKTOP) : {
 						_displayItemsToShow pushback IDC_CTAB_GROUP_DESKTOP;
 						_btnActCtrl ctrlSetText "";
 						_btnActCtrl ctrlSetTooltip "";
 					};
 					// ---------- BFT -----------
-					if (_mode == "BFT") exitWith {
-						_mapTypes = [_displayName,"mapTypes"] call FUNC(getSettings);
-						_mapType = [_displayName,"mapType"] call FUNC(getSettings);
-						_mapIDC = [_mapTypes,_mapType] call EFUNC(core,getFromPairs);
+					case (QSETTING_MODE_BFT) : {				
+						_displayItemsToShow pushBack ([
+							[_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings),
+							[_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+						] call BIS_fnc_getFromPairs);
 						
-						_displayItemsToShow pushBack _mapIDC;
-						
-						_mapTools = [_displayName,"mapTools"] call FUNC(getSettings);
+						private _mapTools = [_displayName,QSETTING_MAP_TOOLS] call FUNC(getSettings);
 						if (!isNil "_mapTools" && {_mapTools}) then {
 							_displayItemsToShow append [
 								IDC_CTAB_OSD_HOOK_GRID,
@@ -221,7 +241,7 @@ if (isNil "_mode") then {
 							];
 						};
 						
-						_showMenu = [_displayName,"showMenu"] call FUNC(getSettings);
+						private _showMenu = [_displayName,QSETTING_SHOW_MENU] call FUNC(getSettings);
 						if (!isNil "_showMenu" && {_showMenu}) then	{
 							_displayItemsToShow pushBack IDC_CTAB_GROUP_MENU;
 						};
@@ -231,68 +251,55 @@ if (isNil "_mode") then {
 						// update scale and world position when not on interface init
 						if !(_interfaceInit) then {
 							if (_isDialog) then {
-								_settings pushBack ["mapScaleDlg",[_displayName,"mapScaleDlg"] call FUNC(getSettings)];
-								_settings pushBack ["mapWorldPos",[_displayName,"mapWorldPos"] call FUNC(getSettings)];
-							};
-						};
-					};
-					// ---------- _NOT_ BFT -----------
-					if (_isDialog) then {
-						_mapTypes = [_displayName,"mapTypes"] call FUNC(getSettings);
-						if (count _mapTypes > 1) then {
-							_targetMapName = [_displayName,"mapType"] call FUNC(getSettings);
-							_targetMapIDC = [_mapTypes,_targetMapName] call EFUNC(core,getFromPairs);
-							_targetMapCtrl = _display displayCtrl _targetMapIDC;
-							
-							// If we find the map to be shown, we are switching away from BFT. Lets save map scale and position
-							if (ctrlShown _targetMapCtrl) then {
-								_mapScale = GVAR(mapScale) * GVAR(mapScaleFactor) / 0.86 * (safezoneH * 0.8);
-								[_displayName,[["mapWorldPos",GVAR(mapWorldPos)],["mapScaleDlg",_mapScale]],false] call FUNC(setSettings);
+								[_displayName,[
+										[QSETTING_MAP_SCALE_DIALOG,[_displayName,QSETTING_MAP_SCALE_DIALOG] call FUNC(getSettings)],
+										[QSETTING_MAP_WORLD_POS,[_displayName,QSETTING_MAP_WORLD_POS] call FUNC(getSettings)]
+									],true,true] call FUNC(setSettings);
 							};
 						};
 					};
 					// ---------- UAV -----------
-					if (_mode == "UAV") exitWith {
-						_displayItemsToShow = [
+					case (QSETTING_MODE_CAM_UAV) : {
+						_displayItemsToShow append [
 							IDC_CTAB_GROUP_UAV,
 							IDC_CTAB_MINIMAPBG,
 							IDC_CTAB_CTABUAVMAP
 						];
 						_btnActCtrl ctrlSetTooltip "View Gunner Optics";
-						_settings pushBack ["UAVListUpdate",true];
-						if !(_interfaceInit) then {
-							_settings pushBack ["uavCam",[_displayName,"uavCam"] call FUNC(getSettings)];
-						};
+						[] call FUNC(updateListControlUAV);
+						[_displayName,[
+								[QSETTING_CAM_UAV,[_displayName,QSETTING_CAM_UAV] call FUNC(getSettings)]
+							],true,true] call FUNC(setSettings);
 					};
 					// ---------- HELMET CAM -----------
-					if (_mode == "HCAM") exitWith {
-						_displayItemsToShow = [
+					case (QSETTING_MODE_CAM_HELMET) : {
+						_displayItemsToShow append [
 							IDC_CTAB_GROUP_HCAM,
 							IDC_CTAB_MINIMAPBG,
 							IDC_CTAB_CTABHCAMMAP
 						];
 						_btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
-						_settings pushBack ["hCamListUpdate",true];
-						if !(_interfaceInit) then {
-							_settings pushBack ["hCam",[_displayName,"hCam"] call FUNC(getSettings)];
-						};
+						[] call FUNC(updateListControlHelmetCams);
+						[_displayName,[
+								[QSETTING_CAM_HELMET,[_displayName,QSETTING_CAM_HELMET] call FUNC(getSettings)]
+							],true,true] call FUNC(setSettings);
 					};
 					// ---------- MESSAGING -----------
-					if (_mode == "MESSAGE") exitWith {
-						_displayItemsToShow = [IDC_CTAB_GROUP_MESSAGE];
-						call FUNC(messagingLoadGUI);
+					case (QSETTING_MODE_MESSAGES) : {
+						_displayItemsToShow pushBack IDC_CTAB_GROUP_MESSAGE;
+						[] call FUNC(messagingLoadGUI);
 						GVAR(RscLayerMailNotification) cutText ["", "PLAIN"];
 						_btnActCtrl ctrlSetTooltip "";
 					};
 					// ---------- MESSAGING COMPOSE -----------
-					if (_mode == "COMPOSE") exitWith {
+					case (QSETTING_MODE_MESSAGES_COMPOSE) : {
 						_displayItemsToShow pushBack IDC_CTAB_GROUP_COMPOSE;
-						call FUNC(messagingLoadGUI);
+						[] call FUNC(messagingLoadGUI);
 					};
 					// ---------- FULLSCREEN HELMET CAM -----------
-					if (_mode == "HCAM_FULL") exitWith {
-						_displayItemsToShow = [IDC_CTAB_HCAM_FULL];
-						_data = [_displayName,"hCam"] call FUNC(getSettings);
+					case (QSETTING_MODE_CAM_HELMET_FULL) : {
+						_displayItemsToShow pushBack IDC_CTAB_HCAM_FULL;
+						private _data = [_displayName,QSETTING_CAM_HELMET] call FUNC(getSettings);
 						_btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
 						['rendertarget13',_data] spawn FUNC(createHelmetCam);
 					};
@@ -303,35 +310,36 @@ if (isNil "_mode") then {
 			};
 		};
 		// ------------ SHOW ICON TEXT ------------
-		if (_x select 0 == "showIconText") exitWith {
-			_osdCtrl = _display displayCtrl IDC_CTAB_OSD_TXT_TGGL;
+		case (QSETTING_SHOW_ICON_TEXT) : {
+			private _osdCtrl = _display displayCtrl IDC_CTAB_OSD_TXT_TGGL;
 			if !(isNull _osdCtrl) then {
-				_text = if (_x select 1) then {"ON"} else {"OFF"};
+				private _text = if (_value) then {"ON"} else {"OFF"};
 				_osdCtrl ctrlSetText _text;
 			};
 		};
 		// ------------ MAP SCALE DSP------------
-		if (_x select 0 == "mapScaleDsp") exitWith {
-			if (_mode == "BFT" && !_isDialog) then {
-				_mapScaleKm = _x select 1;
+		case (QSETTING_MAP_SCALE_DISPLAY) : {
+			if (_mode isEqualTo QSETTING_MODE_BFT && !_isDialog) then {
+				private _mapScaleKm = _value;
 				// pre-Calculate map scales
-				_mapScaleMin = [_displayName,"mapScaleMin"] call FUNC(getSettings);
-				_mapScaleMax = [_displayName,"mapScaleMax"] call FUNC(getSettings);
-				_mapScaleKm = call {
-					if (_mapScaleKm >= _mapScaleMax) exitWith {_mapScaleMax};
-					if (_mapScaleKm <= _mapScaleMin) exitWith {_mapScaleMin};
-					// pick the next best scale that is an even multiple of the minimum map scale... It does tip in favour of the larger scale due to the use of logarithm, so its not perfect
-					_mapScaleMin * 2 ^ round (log (_mapScaleKm / _mapScaleMin) / log (2))
-				};
-				if (_mapScaleKm != (_x select 1)) then {
-					[_displayName,[["mapScaleDsp",_mapScaleKm]],false] call FUNC(setSettings);
+				private _mapScaleMin = [_displayName,QSETTING_MAP_SCALE_MIN] call FUNC(getSettings);
+				private _mapScaleMax = [_displayName,QSETTING_MAP_SCALE_MAX] call FUNC(getSettings);
+
+				// pick the next best scale that is an even multiple of the minimum map scale... It does tip in favour of the larger scale due to the use of logarithm, so its not perfect
+				_mapScaleKm = _mapScaleMin * 2 ^ round (log (_mapScaleKm / _mapScaleMin) / log (2));
+				_mapScaleKm = [_mapScaleMin, _mapScaleMin,_mapScaleMax] call BIS_fnc_clamp;
+				
+				if (_mapScaleKm != (_value)) then {
+					[_displayName,[
+							[QSETTING_MAP_SCALE_DISPLAY,_mapScaleKm]
+						],false] call FUNC(setSettings);
 				};
 				GVAR(mapScale) = _mapScaleKm / GVAR(mapScaleFactor);
 				
-				_osdCtrl = _display displayCtrl IDC_CTAB_OSD_MAP_SCALE;
+				private _osdCtrl = _display displayCtrl IDC_CTAB_OSD_MAP_SCALE;
 				if !(isNull _osdCtrl) then {
 					// divide by 2 because we want to display the radius, not the diameter
-					_mapScaleTxt = if (_mapScaleKm > 1) then {
+					private _mapScaleTxt = if (_mapScaleKm > 1) then {
 							_mapScaleKm / 2
 					} else {
 						[_mapScaleKm / 2,0,1] call CBA_fnc_formatNumber
@@ -341,17 +349,17 @@ if (isNil "_mode") then {
 			};
 		};
 		// ------------ MAP SCALE DLG------------
-		if (_x select 0 == "mapScaleDlg") exitWith {
-			if (_mode == "BFT" && _isDialog) then {
-				_mapScaleKm = _x select 1;
+		case (QSETTING_MAP_SCALE_DIALOG) : {
+			if (_mode isEqualTo QSETTING_MODE_BFT && _isDialog) then {
+				private _mapScaleKm = _value;
 				_targetMapScale = _mapScaleKm / GVAR(mapScaleFactor) * 0.86 / (safezoneH * 0.8);
 			};
 		};
 		// ------------ MAP WORLD POSITION ------------
-		if (_x select 0 == "mapWorldPos") exitWith {
-			if (_mode == "BFT") then {
+		case (QSETTING_MAP_WORLD_POS) : {
+			if (_mode isEqualTo QSETTING_MODE_BFT) then {
 				if (_isDialog) then {
-					_mapWorldPos = _x select 1;
+					_mapWorldPos = _value;
 					if !(_mapWorldPos isEqualTo []) then {
 						_targetMapWorldPos = _mapWorldPos;
 					};
@@ -359,17 +367,20 @@ if (isNil "_mode") then {
 			};
 		};
 		// ------------ MAP TYPE ------------
-		if (_x select 0 == "mapType") exitWith {
-			_mapTypes = [_displayName,"mapTypes"] call FUNC(getSettings);
-			if ((count _mapTypes > 1) && (_mode == "BFT")) then {
-				_targetMapName = _x select 1;
-				_targetMapIDC = [_mapTypes,_targetMapName] call EFUNC(core,getFromPairs);
-				_targetMapCtrl = _display displayCtrl _targetMapIDC;
+		case (QSETTING_CURRENT_MAP_TYPE) : {
+			private _targetMapName = _value;
+			private _mapTypes = [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings);
+			if ((count _mapTypes > 1) && (_mode isEqualTo QSETTING_MODE_BFT)) then {
+				
+				_targetMapCtrl = _display displayCtrl ([
+					_mapTypes,
+					_targetMapName /*target map type name*/
+				] call BIS_fnc_getFromPairs);
 				
 				if (!_interfaceInit && _isDialog) then {
-					_previousMapCtrl = controlNull;
+					private _previousMapCtrl = controlNull;
 					{
-						_previousMapIDC = _x select 1;
+						private _previousMapIDC = _x # 1;
 						_previousMapCtrl = _display displayCtrl _previousMapIDC;
 						if (ctrlShown _previousMapCtrl) exitWith {};
 						_previousMapCtrl = controlNull;
@@ -384,13 +395,13 @@ if (isNil "_mode") then {
 				
 				// Hide all unwanted map types
 				{
-					if (_x select 0 != _targetMapName) then {
+					if (_x select 0 isNotEqualTo _targetMapName) then {
 						(_display displayCtrl (_x select 1)) ctrlShow false;
 					};
 				} foreach _mapTypes;
 				
 				// Update OSD element if it exists
-				_osdCtrl = _display displayCtrl IDC_CTAB_OSD_MAP_TGGL;
+				private _osdCtrl = _display displayCtrl IDC_CTAB_OSD_MAP_TGGL;
 				if !(isNull _osdCtrl) then {_osdCtrl ctrlSetText _targetMapName;};
 				
 				// show correct map contorl
@@ -402,35 +413,35 @@ if (isNil "_mode") then {
 			};
 		};
 		// ------------ UAV CAM ------------
-		if (_x select 0 == "uavCam") exitWith {
-			if (_mode == "UAV") then {
-				_data = _x select 1;
-				if (_data != "") then {
-					[_data,[[0,"rendertarget8"],[1,"rendertarget9"]]] spawn FUNC(createUavCam);
-				} else {
-					[] call FUNC(deleteUAVcam);
-				};
+		case (QSETTING_CAM_UAV) : {
+			if (_mode isNotEqualTo QSETTING_MODE_CAM_UAV) exitWith {};
+			if (_value != "") then {
+				[_value,[[0,"rendertarget8"],[1,"rendertarget9"]]] spawn FUNC(createUavCam);
+			} else {
+				[] call FUNC(deleteUAVcam);
 			};
 		};
 		// ------------ HCAM ------------
-		if (_x select 0 == "hCam") exitWith {
-			_renderTarget = call {
-				if (_mode == "HCAM") exitWith {"rendertarget12"};
-				if (_mode == "HCAM_FULL") exitWith {"rendertarget13"}
+		case (QSETTING_CAM_HELMET) : {
+			if (_mode isNotEqualTo QSETTING_MODE_CAM_HELMET) exitWith {};
+			private _renderTarget = switch (_mode) do {
+				case (QSETTING_MODE_CAM_HELMET) : {"rendertarget12"};
+				case (QSETTING_MODE_CAM_HELMET_FULL) : {"rendertarget13"};
+				default {nil};
 			};
-			if !(isNil "_renderTarget") then {
-				_data = _x select 1;
-				if (_data != "") then {
-					[_renderTarget,_data] spawn FUNC(createHelmetCam);
-				} else {
-					[] call FUNC(deleteHelmetCam);
-				}
+			if (isNil "_renderTarget") exitWith {};
+
+			if (_value != "") then {
+				[_renderTarget,_value] spawn FUNC(createHelmetCam);
+			} else {
+				[] call FUNC(deleteHelmetCam);
 			};
 		};
 		// ------------ MAP TOOLS ------------
-		if (_x select 0 == "mapTools") exitWith {
-			GVAR(drawMapTools) = _x select 1;
-			if (_mode == "BFT") then {
+		case (QSETTING_MAP_TOOLS) : {
+			GVAR(drawMapTools) = _value;
+			if (_mode isEqualTo QSETTING_MODE_BFT) then {
+				private _osdCtrl = controlNull;
 				if !(_displayName in [QGVARMAIN(TAD_dlg),QGVARMAIN(TAD_dsp)]) then {
 					{
 						_osdCtrl = _display displayCtrl _x;
@@ -441,96 +452,36 @@ if (isNil "_mode") then {
 				};
 				_osdCtrl = _display displayCtrl IDC_CTAB_OSD_HOOK_TGGL1;
 				if !(isNull _osdCtrl) then {
-					_text = if (_x select 1) then {"OWN"} else {"CURS"};
+					private _text = if (_value) then {"OWN"} else {"CURS"};
 					_osdCtrl ctrlSetText _text;
 				};
 				_osdCtrl = _display displayCtrl IDC_CTAB_OSD_HOOK_TGGL2;
 				if !(isNull _osdCtrl) then {
-					_text = if (_x select 1) then {"CURS"} else {"OWN"};
+					private _text = if (_value) then {"CURS"} else {"OWN"};
 					_osdCtrl ctrlSetText _text;
 				};
 			};
 		};
 		// ------------ MENU ------------
-		if (_x select 0 == "showMenu") exitWith {
-			_osdCtrl = _display displayCtrl IDC_CTAB_GROUP_MENU;
+		case (QSETTING_SHOW_MENU) : {
+			private _osdCtrl = _display displayCtrl IDC_CTAB_GROUP_MENU;
 			if !(isNull _osdCtrl) then {
-				if (_mode == "BFT") then {
-					_osdCtrl ctrlShow (_x select 1);
+				if (_mode isEqualTo QSETTING_MODE_BFT) then {
+					_osdCtrl ctrlShow (_value);
 				};
 			};
 		};
-		// ------------ UAV List Update ------------
-		if (_x select 0 == "UAVListUpdate") exitWith {
-			if (_mode == "UAV") then {
-				_data = [_displayName,"uavCam"] call FUNC(getSettings);
-				_UAVListCtrl = _display displayCtrl IDC_CTAB_CTABUAVList;
-				lbClear _UAVListCtrl;
-				_UAVListCtrl lbSetCurSel -1;
-				// Populate list of UAVs
-				{
-					if !((crew _x isEqualTo [])) then {
-						_index = _UAVListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,getText (configfile >> "cfgVehicles" >> typeOf _x >> "displayname")];
-						_UAVListCtrl lbSetData [_index,str _x];
-					};
-				} foreach GVARMAIN(UAVList);
-				lbSort [_UAVListCtrl, "ASC"];
-				if (_data != "") then {
-					// Find last selected UAV and select if found
-					for "_x" from 0 to (lbSize _UAVListCtrl - 1) do {
-						if (_data == _UAVListCtrl lbData _x) exitWith {
-							if (lbCurSel _UAVListCtrl != _x) then {
-								_UAVListCtrl lbSetCurSel _x;
-							};
-						};
-					};
-					// If no UAV could be selected, clear last selected UAV
-					if (lbCurSel _UAVListCtrl == -1) then {
-						[_displayName,[["uavCam",""]]] call FUNC(setSettings);
-					};
-				};
-			};
-		};
-		// ------------ HCAM List Update ------------
-		if (_x select 0 == "hCamListUpdate") exitWith {
-			if (_mode == "HCAM") then {
-				_data = [_displayName,"hCam"] call FUNC(getSettings);
-				_hcamListCtrl = _display displayCtrl IDC_CTAB_CTABHCAMLIST;
-				// Populate list of HCAMs
-				lbClear _hcamListCtrl;
-				_hcamListCtrl lbSetCurSel -1;
-				{
-					_index = _hcamListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,name _x];
-					_hcamListCtrl lbSetData [_index,str _x];
-				} foreach GVARMAIN(hCamList);
-				lbSort [_hcamListCtrl, "ASC"];
-				if (_data != "") then {
-					// Find last selected hCam and select if found
-					for "_x" from 0 to (lbSize _hcamListCtrl - 1) do {
-						if (_data == _hcamListCtrl lbData _x) exitWith {
-							if (lbCurSel _hcamListCtrl != _x) then {
-								_hcamListCtrl lbSetCurSel _x;
-							};
-						};
-					};
-					// If no hCam could be selected, clear last selected hCam
-					if (lbCurSel _hcamListCtrl == -1) then {
-						[_displayName,[["hCam",""]]] call FUNC(setSettings);
-					};
-				};
-			};
-		};
-		// ----------------------------------
 	};
-} forEach _settings;
+	// ----------------------------------
+} forEach _displaySettings;
 
 // update scale and world position if we have to. If so, fill in the blanks and make the changes
 if ((!isNil "_targetMapScale") || (!isNil "_targetMapWorldPos")) then {
 	if (isNull _targetMapCtrl) then {
-		_targetMapName = [_displayName,"mapType"] call FUNC(getSettings);
-		_mapTypes = [_displayName,"mapTypes"] call FUNC(getSettings);
-		_targetMapIDC = [_mapTypes,_targetMapName] call EFUNC(core,getFromPairs);
-		_targetMapCtrl = _display displayCtrl _targetMapIDC;
+		_targetMapCtrl = _display displayCtrl ([
+			[_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings),
+			[_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+		] call BIS_fnc_getFromPairs);
 	};
 	if (isNil "_targetMapScale") then {
 		_targetMapScale = ctrlMapScale _targetMapCtrl;
@@ -547,9 +498,9 @@ if ((!isNil "_targetMapScale") || (!isNil "_targetMapWorldPos")) then {
 if !(isNull _loadingCtrl) then {
 	// move mouse cursor to the center of the screen if its a dialog
 	if (_interfaceInit && _isDialog) then {
-		_ctrlPos = ctrlPosition _loadingCtrl;
+		private _ctrlPos = ctrlPosition _loadingCtrl;
 		// put the mouse position in the center of the screen
-		_mousePos = [(_ctrlPos select 0) + ((_ctrlPos select 2) / 2),(_ctrlPos select 1) + ((_ctrlPos select 3) / 2)];
+		private _mousePos = [(_ctrlPos select 0) + ((_ctrlPos select 2) / 2),(_ctrlPos select 1) + ((_ctrlPos select 3) / 2)];
 		// delay moving the mouse cursor by one frame using a PFH, for some reason its not working without
 		[{
 			[_this select 1] call CBA_fnc_removePerFrameHandler;

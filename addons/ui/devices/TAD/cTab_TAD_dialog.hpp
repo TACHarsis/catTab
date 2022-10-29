@@ -17,14 +17,14 @@ class GVARMAIN(TAD_dlg) {
 	idd = 1755424;
 	movingEnable = true;
 	onLoad = QUOTE(_this call FUNC(onIfOpen));
-	onUnload = QUOTE([] call FUNC(onIfclose));
+	onUnload = QUOTE([] call FUNC(onIfClose));
 	onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
 	objects[] = {};
 	class controlsBackground {
 		class mapBackground: cTab_TAD_Map_Background {};
 		class screen: cTab_TAD_RscMapControl {
 			idc = IDC_CTAB_SCREEN;
-			onDraw = QUOTE(nop = _this call FUNC(drawMapControlTADDlg););
+			onDraw = QUOTE(_this call FUNC(drawMapControlTADDlg););
 			onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
 			onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
 		};
@@ -34,8 +34,8 @@ class GVARMAIN(TAD_dlg) {
 		};
 		class screenBlack: cTab_TAD_RscMapControl_BLACK {
 			idc = IDC_CTAB_SCREEN_BLACK;
-			onDraw = QUOTE(nop = _this call FUNC(drawMapControlTADDlg););
-			onMouseButtonDblClick = QUOTE(_ok = ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this) call FUNC(loadMarkerMenu););
+			onDraw = QUOTE(_this call FUNC(drawMapControlTADDlg););
+			onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
 			onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
 		};
 	};

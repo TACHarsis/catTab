@@ -27,7 +27,7 @@ class GVARMAIN(Tablet_dlg){
 	idd = 1775154;
 	movingEnable = true;
 	onLoad = QUOTE(_this call FUNC(onIfOpen));
-	onUnload = QUOTE([] call FUNC(onIfclose));
+	onUnload = QUOTE([] call FUNC(onIfClose));
 	onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
 	objects[] = {};
 	class controlsBackground {
@@ -65,7 +65,7 @@ class GVARMAIN(Tablet_dlg){
 		};
 		class screen: cTab_Tablet_RscMapControl {
 			idc = IDC_CTAB_SCREEN;
-			onDraw = QUOTE(nop = _this call FUNC(drawMapControlTablet););
+			onDraw = QUOTE(_this call FUNC(drawMapControlTablet););
 			onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
 			onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
 		};
@@ -106,28 +106,28 @@ class GVARMAIN(Tablet_dlg){
 					y = pxToGroup_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_Y);
 					w = pxToScreen_W(cTab_GUI_tablet_DESKTOP_ICON_W);
 					h = pxToScreen_H(cTab_GUI_tablet_DESKTOP_ICON_H);
-					action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','BFT')]])] call FUNC(setSettings));
+					action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_BFT')]])] call FUNC(setSettings));
 					toolTip = "FBCB2 - Blue Force Tracker";
 				};
 				class actUAVtxt: actBFTtxt {
 					idc = IDC_CTAB_ACTUAVTXT;
 					text = QPATHTOEF(data,img\cTab_UAV_ico.paa) ;//"UAV Intelligence"; //--- ToDo: Localize;
 					y = pxToGroup_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_Y * 2 + cTab_GUI_tablet_DESKTOP_ICON_H);
-					action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','UAV')]])] call FUNC(setSettings));
+					action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_CAM_UAV')]])] call FUNC(setSettings));
 					toolTip = "UAV Video Feeds";
 				};
 				class actVIDtxt: actBFTtxt {
 					idc = IDC_CTAB_ACTVIDTXT;
 					text = QPATHTOEF(data,img\cTab_HMC_ico.paa) ;//"Live Video Feeds"; //--- ToDo: Localize;
 					y = pxToGroup_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_Y * 3 + cTab_GUI_tablet_DESKTOP_ICON_H * 2);
-					action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','HCAM')]])] call FUNC(setSettings));
+					action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_CAM_HELMET')]])] call FUNC(setSettings));
 					toolTip = "Live Helmet Cam Video Feeds";
 				};
 				class actMSGtxt: actBFTtxt {
 					idc = IDC_CTAB_ACTMSGTXT;
 					text = QPATHTOEF(data,img\Mail_Main_Icon_ico.paa) ;
 					y = pxToGroup_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_Y * 4 + cTab_GUI_tablet_DESKTOP_ICON_H * 3);
-					action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','MESSAGE')]])] call FUNC(setSettings));
+					action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_MESSAGES')]])] call FUNC(setSettings));
 					toolTip = "Text Messaging System";
 				};
 			};
@@ -164,7 +164,7 @@ class GVARMAIN(Tablet_dlg){
 					y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_CONTENT_T_Y);
 					w = pxToScreen_W(cTab_GUI_tablet_WINDOW_CONTENT_W);
 					h = pxToScreen_H(cTab_GUI_tablet_WINDOW_CONTENT_H);
-					onLBSelChanged = QUOTE(if !(GVAR(openStart) && (_this select 1 != -1)) then {ARR_2(['GVARMAIN(Tablet_dlg)',[[ARR_2('uavCam',(_this select 0) lbData (_this select 1))]])] call FUNC(setSettings);};);
+					onLBSelChanged = QUOTE(if (!GVAR(openStart) && ((_this select 1) != -1)) then {ARR_2(['GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_CAM_UAV',(_this select 0) lbData (_this select 1))]])] call FUNC(setSettings);};);
 				};
 				class cTabUAVdisplay: cTab_RscPicture {
 					idc = IDC_CTAB_CTABUAVDISPLAY;
@@ -211,7 +211,7 @@ class GVARMAIN(Tablet_dlg){
 					y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_CONTENT_T_Y);
 					w = pxToScreen_W(cTab_GUI_tablet_WINDOW_CONTENT_W);
 					h = pxToScreen_H(cTab_GUI_tablet_WINDOW_CONTENT_H);
-					onLBSelChanged = QUOTE(if !(GVAR(openStart) && (_this select 1 != -1)) then {[ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('hCam',(_this select 0) lbData (_this select 1))]])] call FUNC(setSettings);};);
+					onLBSelChanged = QUOTE(if (!GVAR(openStart) && ((_this select 1) != -1)) then {[ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_CAM_HELMET',(_this select 0) lbData (_this select 1))]])] call FUNC(setSettings);};);
 				};
 				class cTabHcamDisplay: cTab_RscPicture {
 					idc = IDC_CTAB_CTABHCAMDISPLAY;
@@ -349,22 +349,22 @@ class GVARMAIN(Tablet_dlg){
 		class btnF1: cTab_Tablet_btnF1 {
 			idc = IDC_CTAB_BTNF1;
 			tooltip = "Blue Force Tracker - Quick Key";
-			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','BFT')]])] call FUNC(setSettings));
+			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_BFT')]])] call FUNC(setSettings));
 		};
 		class btnF2: cTab_Tablet_btnF2 {
 			idc = IDC_CTAB_BTNF2;
 			tooltip = "UAV Intel Live Feed - Quick Key";
-			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','UAV')]])] call FUNC(setSettings));
+			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_CAM_UAV')]])] call FUNC(setSettings));
 		};
 		class btnF3: cTab_Tablet_btnF3 {
 			idc = IDC_CTAB_BTNF3;
 			tooltip = "Helmet Cam Live Feed - Quick Key";
-			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','HCAM')]])] call FUNC(setSettings));
+			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_CAM_HELMET')]])] call FUNC(setSettings));
 		};
 		class btnF4: cTab_Tablet_btnF4 {
 			idc = IDC_CTAB_BTNF4;
 			tooltip = "Text Message Application - Quick Key";
-			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','MESSAGE')]])] call FUNC(setSettings));
+			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_MESSAGES')]])] call FUNC(setSettings));
 		};
 		class btnF5: cTab_Tablet_btnF5 {
 			idc = IDC_CTAB_BTNF5;
@@ -384,7 +384,7 @@ class GVARMAIN(Tablet_dlg){
 		class btnMain: cTab_Tablet_btnHome {
 			idc = IDC_CTAB_BTNMAIN;
 			tooltip = "Main Menu";
-			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('mode','DESKTOP')]])] call FUNC(setSettings));
+			action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','DESKTOP')]])] call FUNC(setSettings));
 		};
 		class btnFN: cTab_Tablet_btnFn {
 			idc = IDC_CTAB_BTNFN;

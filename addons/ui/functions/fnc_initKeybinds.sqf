@@ -5,7 +5,7 @@ private _category = "CatTAB";
 	_category,
 	QGVAR(ifMain),
 	["Toggle Main Interface","Open cTab device in small overlay mode if available"],
-	{ call FUNC(onIfMainPressed) },
+	{ [0] call FUNC(onIfButtonPressed) },
 	"",
 	[DIK_H,[false,false,false]]
 ] call cba_fnc_addKeybind;
@@ -14,7 +14,7 @@ private _category = "CatTAB";
 	_category,
 	QGVAR(ifSecondary),
 	["Toggle Secondary Interface","Open cTab device in interactable mode"],
-	{ call FUNC(onIfSecondaryPressed) },
+	{ [1] call FUNC(onIfButtonPressed) },
 	"",
 	[DIK_H,[false,true,false]]
 ] call cba_fnc_addKeybind;
@@ -23,7 +23,7 @@ private _category = "CatTAB";
 	_category,
 	QGVAR(ifTertiary),
 	["Toggle Tertiary Interface","Open private cTab device when in a vehicle with its own cTab device, or to open Tablet while also carrying a MicroDAGR"],
-	{ call FUNC(onIfTertiaryPressed) },
+	{ [2] call FUNC(onIfButtonPressed) },
 	"",
 	[DIK_H,[false,false,true]]
 ] call cba_fnc_addKeybind;

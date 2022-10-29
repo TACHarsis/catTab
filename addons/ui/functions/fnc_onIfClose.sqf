@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /*
-	Name: Ctab_ui_fnc_onIfclose
+	Name: Ctab_ui_fnc_onIfClose
 	
 	Author(s):
 		Gundy
@@ -15,12 +15,13 @@
 		BOOLEAN - TRUE
 	
 	Example:
-		[] call Ctab_ui_fnc_onIfclose;
+		[] call Ctab_ui_fnc_onIfClose;
 */
 
 // remove helmet and UAV cameras
 [] call FUNC(deleteHelmetCam);
 [] call FUNC(deleteUAVcam);
+
 
 if !(isNil QGVAR(ifOpen)) then {
 	// [_ifType,_displayName,_player,_playerKilledEhId,_vehicle,_vehicleGetOutEhId]
@@ -64,16 +65,12 @@ if !(isNil QGVAR(ifOpen)) then {
 			// calculate x and y as offsets to the original
 			private _xOffset = _backgroundPositionX - _backgroundConfigPositionX;
 			private _yOffset = _backgroundPositionY - _backgroundConfigPositionY;
-			
+
 			// figure out if the interface position has changed
-			private _backgroundOffset = if (_xOffset != 0 || _yOffset != 0) then {
-				[_xOffset,_yOffset]
-			} else {
-				[]
-			};
+			private _backgroundOffset = [[], [_xOffset,_yOffset]] select (_xOffset != 0 || _yOffset != 0);
 			
 			// Save mapWorldPos and mapScaleDlg of current dialog so it can be restored later
-			[_displayName,[["mapWorldPos",GVAR(mapWorldPos)],["mapScaleDlg",_mapScale],["dlgIfPosition",_backgroundOffset]],false] call FUNC(setSettings);
+			[_displayName,[[QSETTING_MAP_WORLD_POS,GVAR(mapWorldPos)],[QSETTING_MAP_SCALE_DIALOG,_mapScale],[SETTING_POSITION_DIALOG,_backgroundOffset]],false] call FUNC(setSettings);
 		};
 	};
 	

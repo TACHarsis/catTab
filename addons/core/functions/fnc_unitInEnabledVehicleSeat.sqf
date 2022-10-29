@@ -14,7 +14,7 @@
 	Parameters:
 		0: OBJECT - Unit object to check
 		1: OBJECT - Vehicle to check against
-		2: STRING - String of device to check for (current options are: "FBCB2" and "TAD")
+		2: STRING - String of device to check for (current options are: QSETTINGS_FBCB2 and SETTINGS_TAD)
  	
  	Returns:
 		BOOLEAN - True if unit is in the front-section of a cTab enabled vehicle, false if not
@@ -35,15 +35,15 @@ private _typeClassList = switch (_type) do {
 	case "TAD": { GVARMAIN(vehicleClass_has_TAD) };
 	default { [] };
 };
-
 {
 	if (_vehicle isKindOf _x) exitWith {
-		call {
-			if (_unit == driver _vehicle) exitWith {_return = true;};
-			if (_type == "FBCB2") exitWith {
-				call {
-					private _cargoIndex = _vehicle getCargoIndex _unit; // 0-based seat number in cargo, -1 if not in cargo
-					if (_cargoIndex == -1) exitWith {_return = true;}; // if not in cargo, _unit must be gunner or commander
+		switch (true) do {
+			case (_unit == driver _vehicle) : {_return = true;};
+			case (_type == QSETTINGS_FBCB2) : {
+				private _cargoIndex = _vehicle getCargoIndex _unit; // 0-based seat number in cargo, -1 if not in cargo
+				if (_cargoIndex == -1) then {// if not in cargo, _unit must be gunner or commander
+					_return = true;
+				} else {
 					private _cargoCompartments = getArray (configFile/"CfgVehicles"/typeOf _vehicle/"cargoCompartments");
 					if (count _cargoCompartments > 1) then {
 						// assume the vehicle setup is correct if there is more than one cargo compartment
@@ -57,11 +57,14 @@ private _typeClassList = switch (_type) do {
 					};
 				};
 			};
-			if (_type == "TAD") then {
-				if (_unit == _vehicle call FUNC(getCopilot)) then {_return = true};
+			default {
+				if (_type == QSETTINGS_TAD) then {
+					if (_unit == _vehicle call FUNC(getCopilot)) then {_return = true};
+				};
 			};
 		};
 	};
+	if(_return) exitWith { true };
 } forEach _typeClassList;
 
 _return

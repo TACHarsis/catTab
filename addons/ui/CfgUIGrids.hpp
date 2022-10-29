@@ -3,7 +3,7 @@ class CfgUIGrids {
         class Presets {
             class Arma3 {
                 class Variables {
-                    ADDON[] = {
+                    grid_Android_Display[] = {
                         {
 							"safezoneX - 0.86 * 0.17",
 							"safezoneY + safezoneH * 0.88 - (0.86 * 4/3) * 0.72",
@@ -18,12 +18,12 @@ class CfgUIGrids {
         };
 
         class Variables {
-            class ADDON {
-                displayName = "Der Name";
-                description = "Die Beschreibung";
+            class grid_Android_Display {
+                displayName = "Android";
+                description = "Default position of android in display mode";
                 //preview = "#(argb,8,8,3)color(1,0,0.91,0.75)";
 				preview = QPATHTOEF(data,img\android_background_ca.paa);
-                saveToProfile[] = {0,1,2,3};
+                saveToProfile[] = {0,1};
             };
         };
     };

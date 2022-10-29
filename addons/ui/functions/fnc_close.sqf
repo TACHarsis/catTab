@@ -21,13 +21,13 @@
 private ["_displayName","_display"];
 
 if !(isNil QGVAR(ifOpen)) then {
-	// [_ifType,_displayName,_player,_playerKilledEhId,_vehicle,_vehicleGetOutEhId]
 	private _displayName = GVAR(ifOpen) select 1;
 	private _display = uiNamespace getVariable _displayName;
 	
 	_display closeDisplay 0;
+	//From Wiki. onUnload event doesn't fire for RscTitles displays started with cutRsc.
 	if !([_displayName] call FUNC(isDialog)) then {
-		[] call FUNC(onIfclose);
+		[] call FUNC(onIfClose);
 	};
 };
 

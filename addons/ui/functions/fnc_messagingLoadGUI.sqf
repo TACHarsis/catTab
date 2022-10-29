@@ -6,7 +6,7 @@ disableSerialization;
 private _return = true;
 private _display = uiNamespace getVariable (GVAR(ifOpen) select 1);
 private _playerEncryptionKey = call EFUNC(core,getPlayerEncryptionKey);
-private _msgArray = Ctab_player getVariable [format ["cTab_messages_%1",_playerEncryptionKey],[]];
+private _msgArray = Ctab_player getVariable [format [QGVARMAIN(messages_%1),_playerEncryptionKey],[]];
 private _msgControl = _display displayCtrl IDC_CTAB_MSG_LIST;
 private _plrlistControl = _display displayCtrl IDC_CTAB_MSG_RECIPIENTS;
 lbClear _msgControl;
@@ -16,7 +16,7 @@ private _plrList = playableUnits;
 if (_plrList isEqualTo []) then {_plrList pushBack Ctab_player};
 private _validSides = call EFUNC(core,getPlayerSides);
 
-// turn this on for testing, otherwise not really usefull, since sending to an AI controlled, but switchable unit will send the message to the player himself
+// turn this on for testing, otherwise not really usefull, since sending to an AI controlled, but switchable unit will send the message to the player themselves
 /*if (count _plrList < 1) then { _plrList = switchableUnits;};*/
 
 uiNamespace setVariable [QGVAR(msgPlayerList), _plrList];

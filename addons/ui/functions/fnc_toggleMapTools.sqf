@@ -21,10 +21,10 @@
 
 params ["_displayName"];
 
-private _currentMapTools = [_displayName,"mapTools"] call FUNC(getSettings);
+private _currentMapTools = [_displayName,QSETTING_MAP_TOOLS] call FUNC(getSettings);
 
 private _newMapTools = !_currentMapTools;
 
-[_displayName,[["mapTools",_newMapTools]]] call FUNC(setSettings);
+[_displayName,[[QSETTING_MAP_TOOLS,_newMapTools]]] call FUNC(setSettings);
 
 _newMapTools

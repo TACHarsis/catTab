@@ -8,9 +8,9 @@ Returns TRUE
 
 params["_displayName"];
 
-private _showMenu = [_displayName,"showMenu"] call FUNC(getSettings);
+private _showMenu = [_displayName,QSETTING_SHOW_MENU] call FUNC(getSettings);
 _showMenu = !_showMenu;
-[_displayName,[["showMenu",_showMenu]]] call FUNC(setSettings);
+[_displayName,[[QSETTING_SHOW_MENU,_showMenu]]] call FUNC(setSettings);
 
 true
 

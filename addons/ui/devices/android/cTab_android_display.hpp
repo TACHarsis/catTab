@@ -27,7 +27,7 @@ class GVARMAIN(Android_dsp){
 	class controlsBackground {
 		class windowsBG: cTab_android_windowsBG {};
 		class screen: cTab_android_RscMapControl {
-			onDraw = QUOTE(nop = _this call FUNC(drawMapControlAndroidDsp););
+			onDraw = QUOTE(_this call FUNC(drawMapControlAndroidDsp););
 		};
 		class screenTopo: screen {
 			idc = IDC_CTAB_SCREEN_TOPO;

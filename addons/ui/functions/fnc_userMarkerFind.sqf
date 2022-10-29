@@ -1,12 +1,13 @@
 #include "script_component.hpp"
 /*
- 	Name: Ctab_ui_fnc_findUserMarker
+ 	Name: Ctab_ui_fnc_userMarkerFind
  	
  	Author(s):
 		Gundy, Riouken
 
  	Description:
-		Find user placed marker at provided position
+		Find user placed marker at provided position.
+		CC: This is used on the client only and with the refactor it works on the client only.
 
 	Parameters:
 		0: OBJECT - Map control we took the position from
@@ -16,9 +17,11 @@
 		INTEGER - Index of user marker, if not found -1
  	
  	Example:
-		_markerIndex = [_ctrlScreen,[0,0]] call Ctab_ui_fnc_findUserMarker;
+		_markerIndex = [_ctrlScreen,[0,0]] call Ctab_ui_fnc_userMarkerFind;
 */
-params ["_ctrlScreen","_searchPos"];
+params ["_ctrlScreen",["_searchPos", [0,0],[[]],[2,3]]];
+
+
 
 private _return = -1;
 
@@ -33,6 +36,6 @@ private _maxDistance = _searchPos distanceSqr [(_searchPos select 0) + _targetRa
 		_maxDistance = _distance;
 		_return = _x select 0;
 	};
-} foreach GVAR(userMarkerList);
+} foreach GVAR(userMarkerListTranslated);
 
 _return

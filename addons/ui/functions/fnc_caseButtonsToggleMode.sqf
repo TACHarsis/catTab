@@ -4,17 +4,17 @@
 
 params ["_displayName"];
 
-private _mode = [_displayName,"mode"] call FUNC(getSettings);
+private _mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
 
 
 if (_displayName == QGVARMAIN(Android_dlg)) then {
-	if (_mode != "BFT") then {
-		_mode = "BFT";
+	if (_mode != QSETTING_MODE_BFT) then {
+		_mode = QSETTING_MODE_BFT;
 	} else {
-		_mode = "MESSAGE";
+		_mode = QSETTING_MODE_MESSAGES;
 	};
 };
 
-[_displayName,[["mode",_mode]]] call FUNC(setSettings);
+[_displayName,[[QSETTING_MODE,_mode]]] call FUNC(setSettings);
 
 true

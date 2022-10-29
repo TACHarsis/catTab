@@ -46,8 +46,8 @@ if (_recipientNames != "") then {
 	_msgArray pushBack [format ["%1 - %2",_time,_recipientNames],_msgBody,2];
 	Ctab_player setVariable [format [QGVAR(messages_%1),_playerEncryptionKey],_msgArray];
 
-	if (!isNil QGVAR(ifOpen) && {[GVAR(ifOpen) select 1,"mode"] call FUNC(getSettings) == "MESSAGE"}) then {
-		call FUNC(messagingLoadGUI);
+	if (!isNil QGVAR(ifOpen) && {[GVAR(ifOpen) select 1,QSETTING_MODE] call FUNC(getSettings) == QSETTING_MODE_MESSAGES}) then {
+		[] call FUNC(messagingLoadGUI);
 	};
 	
 	// add a notification

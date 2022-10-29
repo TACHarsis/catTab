@@ -18,7 +18,8 @@
 	Example:
 		[QGVARMAIN(Tablet_dlg),[0.2,0.1]] call Ctab_ui_fnc_setInterfacePosition;
 */
-params ["_displayName","_xOffset","_yOffset"];
+params ["_displayName","_offset"];
+_offset params ["_xOffset","_yOffset"];
 
 disableSerialization;
 

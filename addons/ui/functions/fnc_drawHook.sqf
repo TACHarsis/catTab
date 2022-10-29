@@ -28,22 +28,23 @@
 params ["_display","_ctrlScreen","_pos","_secondPos","_mode", "_isTAD"];
 
 // draw arrow from current position to map centre
-private _dirToSecondPos = call {
-	if (_mode == 0) exitWith {
-		_ctrlScreen drawArrow [_pos,_secondPos,GVAR(MicroDAGRhighlightColour)];
+private _dirToSecondPos = if (_mode == 0) then {
+		_ctrlScreen drawArrow [_pos,_secondPos,GVAR(mapToolsHookColor)];
+
 		[_pos,_secondPos] call EFUNC(core,dirTo)
+	} else {
+		_ctrlScreen drawArrow [_secondPos,_pos,GVAR(mapToolsHookColor)];
+
+		[_secondPos,_pos] call EFUNC(core,dirTo)
 	};
-	_ctrlScreen drawArrow [_secondPos,_pos,GVAR(MicroDAGRhighlightColour)];
-	[_secondPos,_pos] call EFUNC(core,dirTo)
-};
+
 private _dstToSecondPos = [_pos,_secondPos] call EFUNC(core,distance2D);
-call {
-	// Call this if we are drawing for a TAD
-	if (_isTAD) exitWith {
-		(_display displayCtrl IDC_CTAB_OSD_HOOK_GRID) ctrlSetText format ["%1",mapGridPosition _secondPos];
-		(_display displayCtrl IDC_CTAB_OSD_HOOK_ELEVATION) ctrlSetText format ["%1m",[round getTerrainHeightASL _secondPos,3] call CBA_fnc_formatNumber];
-		(_display displayCtrl IDC_CTAB_OSD_HOOK_DIR) ctrlSetText format ["%1°/%2",[_dirToSecondPos,3] call CBA_fnc_formatNumber,[_dstToSecondPos / 1000,2,1] call CBA_fnc_formatNumber];
-	};
+// Call this if we are drawing for a TAD
+if (_isTAD) then {
+	(_display displayCtrl IDC_CTAB_OSD_HOOK_GRID) ctrlSetText format ["%1",mapGridPosition _secondPos];
+	(_display displayCtrl IDC_CTAB_OSD_HOOK_ELEVATION) ctrlSetText format ["%1m",[round getTerrainHeightASL _secondPos,3] call CBA_fnc_formatNumber];
+	(_display displayCtrl IDC_CTAB_OSD_HOOK_DIR) ctrlSetText format ["%1°/%2",[_dirToSecondPos,3] call CBA_fnc_formatNumber,[_dstToSecondPos / 1000,2,1] call CBA_fnc_formatNumber];
+} else {
 	(_display displayCtrl IDC_CTAB_OSD_HOOK_GRID) ctrlSetText format ["%1",mapGridPosition _secondPos];
 	(_display displayCtrl IDC_CTAB_OSD_HOOK_ELEVATION) ctrlSetText format ["%1m",round getTerrainHeightASL _secondPos];
 	(_display displayCtrl IDC_CTAB_OSD_HOOK_DIR) ctrlSetText format ["%1° %2",[_dirToSecondPos,3] call CBA_fnc_formatNumber,[_dirToSecondPos] call EFUNC(core,degreeToOctant)];

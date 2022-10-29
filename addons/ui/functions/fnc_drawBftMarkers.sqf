@@ -45,44 +45,36 @@ if (_mode != 2) then {
 		private _groupID = _x select 4 /* 3 is name, 4 is group idx */;
 		private _pos = getPosASL _veh;
 		
-		call {
-			if (_mode == 1 && {_iconB != "" && {_veh != _playerVehicle}}) exitWith {
-				// Drawing on TAD && vehicle is an air contact
-				call {
-					if (_groupID != "") exitWith {
-						// air contact is in our group
-						_ctrlScreen drawIcon [_iconB,GVAR(TADgroupColour),_pos,GVAR(airContactSize),GVAR(airContactSize),direction _veh,"",0,GVAR(txtSize),"TahomaB","right"];
-						_ctrlScreen drawIcon ["\A3\ui_f\data\map\Markers\System\dummy_ca.paa",GVAR(TADgroupColour),_pos,0,0,0,_groupID,0,GVAR(airContactGroupTxtSize) * 0.8,"TahomaB","center"];
-					};
-					// air contact is _not_ in our group
-					_ctrlScreen drawIcon [_iconB,GVAR(TADfontColour),_pos,GVAR(airContactSize),GVAR(airContactSize),direction _veh,"",0,GVAR(txtSize),"TahomaB","right"];
-					if (_drawText) then {
-						_ctrlScreen drawIcon ["\A3\ui_f\data\map\Markers\System\dummy_ca.paa",GVAR(TADfontColour),_pos,GVAR(airContactDummySize),GVAR(airContactDummySize),0,_text,0,GVAR(txtSize),"TahomaB","right"];
-					};
-				};
+		if (_mode == 1 && {_iconB != "" && {_veh != _playerVehicle}}) then { // Drawing on TAD && vehicle is an air contact
+			if (_groupID != "") then {
+				// air contact is in our group
+				_ctrlScreen drawIcon [_iconB,GVAR(airContactColor),_pos,GVAR(airContactSize),GVAR(airContactSize),direction _veh,"",0,GVAR(txtSize),"TahomaB","right"];
+				_ctrlScreen drawIcon ["\A3\ui_f\data\map\Markers\System\dummy_ca.paa",GVAR(airContactColor),_pos,0,0,0,_groupID,0,GVAR(airContactGroupTxtSize) * 0.8,"TahomaB","center"];
+			} else {
+			// air contact is _not_ in our group
+			_ctrlScreen drawIcon [_iconB,GVAR(TADOwnIconColor),_pos,GVAR(airContactSize),GVAR(airContactSize),direction _veh,"",0,GVAR(txtSize),"TahomaB","right"];
+			if (_drawText) then {
+				_ctrlScreen drawIcon ["\A3\ui_f\data\map\Markers\System\dummy_ca.paa",GVAR(TADOwnIconColor),_pos,GVAR(airContactDummySize),GVAR(airContactDummySize),0,_text,0,GVAR(txtSize),"TahomaB","right"];
 			};
-			// Draw on anything but TAD
-			call {
-				if (_veh != _playerVehicle) exitWith {
-					// player is not sitting in this vehicle
-					_ctrlScreen drawIcon [
-						_x select 1,
-						GVAR(colorBlue),
-						_pos,
-						GVAR(iconSize),GVAR(iconSize),
-						0,_text,0,GVAR(txtSize),"TahomaB","right"
-					];
-				};
-				if (group _veh != _playerGroup) then {
-					// player is not in the same group as this vehicle
-					_ctrlScreen drawIcon [
-						"\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
-						GVAR(colorBlue),
-						_pos,
-						GVAR(iconSize),GVAR(iconSize),
-						0,_text,0,GVAR(txtSize),"TahomaB","right"
-					];
-				};
+			};
+		} else { // Draw on anything but TAD
+			if (_veh != _playerVehicle) exitWith { // player is not sitting in this vehicle			
+				_ctrlScreen drawIcon [
+					_x select 1,
+					GVAR(colorBlue),
+					_pos,
+					GVAR(iconSize),GVAR(iconSize),
+					0,_text,0,GVAR(txtSize),"TahomaB","right"
+				];
+			};
+			if (group _veh != _playerGroup) then { // player is not in the same group as this vehicle
+				_ctrlScreen drawIcon [
+					"\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
+					GVAR(colorBlue),
+					_pos,
+					GVAR(iconSize),GVAR(iconSize),
+					0,_text,0,GVAR(txtSize),"TahomaB","right"
+				];
 			};
 		};
 		_vehicles pushBack _veh;
@@ -92,28 +84,27 @@ if (_mode != 2) then {
 	{
 		private _veh = vehicle (_x select 0);
 		
-		call {
-			// See if the group leader's vehicle is in the list of drawn vehicles
-			private _vehIndex = _vehicles find _veh;
-			
-			// Only do this if the vehicle has not been drawn yet, or the player is sitting in the same vehicle as the group leader
-			if (_vehIndex != -1 || {_veh == _playerVehicle}) exitWith {
-				if (_drawText) then {
-					// we want to draw text and the group leader is in a vehicle that has already been drawn
-					private _text = _x select 3;
-					// _vehIndex == -1 means that the player sits in the vehicle
-					if (_vehIndex == -1 || {(groupID group _veh) != _text}) then {
-						// group name is not the same as that of the vehicle the leader is sitting in
-						private _mountedIndex = _mountedLabels find _veh;
-						if (_mountedIndex != -1) then {
-							private _mountedLabels set [_mountedIndex + 1,(_mountedLabels select (_mountedIndex + 1)) + "/" + (_text)];
-						} else {
-							_mountedLabels pushBack _veh;
-							_mountedLabels pushBack _text;
-						};
+		// See if the group leader's vehicle is in the list of drawn vehicles
+		private _vehIndex = _vehicles find _veh;
+		
+		// Only do this if the vehicle has not been drawn yet, or the player is sitting in the same vehicle as the group leader
+		if (_vehIndex != -1 || {_veh == _playerVehicle}) then {
+			if (_drawText) then {
+				// we want to draw text and the group leader is in a vehicle that has already been drawn
+				private _text = _x select 3;
+				// _vehIndex == -1 means that the player sits in the vehicle
+				if (_vehIndex == -1 || {(groupID group _veh) != _text}) then {
+					// group name is not the same as that of the vehicle the leader is sitting in
+					private _mountedIndex = _mountedLabels find _veh;
+					if (_mountedIndex != -1) then {
+						private _mountedLabels set [_mountedIndex + 1,(_mountedLabels select (_mountedIndex + 1)) + "/" + (_text)];
+					} else {
+						_mountedLabels pushBack _veh;
+						_mountedLabels pushBack _text;
 					};
 				};
 			};
+		} else {
 			private _text = if (_drawText) then {_x select 3} else {""};
 			private _pos = getPosASL _veh;
 			_ctrlScreen drawIcon [_x select 1,GVAR(colorBlue),_pos,GVAR(iconSize),GVAR(iconSize),0,_text,0,GVAR(txtSize),"TahomaB","right"];
@@ -127,9 +118,8 @@ private _mountedLabels = [];
 {
 	private _veh = vehicle (_x select 0);
 	
-	call {
-		// make sure we are still in the same team
-		if (group Ctab_player != group (_x select 0)) exitWith {};
+	// make sure we are still in the same team
+	if (group Ctab_player isEqualTo group (_x select 0)) then {
 		
 		// get the fire-team color
 		private _teamColor = GVAR(colorTeam) select (["MAIN","RED","GREEN","BLUE","YELLOW"] find (assignedTeam (_x select 0)));

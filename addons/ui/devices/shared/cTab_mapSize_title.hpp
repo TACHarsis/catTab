@@ -7,9 +7,9 @@
 
 
 //CC: This whole thing only exists to get the specifications of the current cartography
-class GVARMAIN(mapSize_dsp){
+class GVAR(mapSize_dsp){
 	idd = 13673;
-	onLoad = QUOTE(uiNamespace setVariable [ARR_2('GVARMAIN(mapSize_dsp)',_this select 0]));
+	onLoad = QUOTE(uiNamespace setVariable [ARR_2('GVAR(mapSize_dsp)',_this select 0]));
 	fadein = 0;
 	fadeout = 0;
 	duration = 10e10;

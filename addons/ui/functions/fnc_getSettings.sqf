@@ -16,7 +16,7 @@
  	Returns:
  	(If only parameter 0 is specified)
 		ARRAY - All property pairs for that display / dialog are returned, like so: [["propertyName1",propertyValue1],["propertyName2",propertyValue2]]
-			If the uiNamespace variable cannot be found in cTabDisplayPropertyGroups, nil is returned.
+			If the uiNamespace variable cannot be found in Ctab_ui_DisplayPropertyGroups, nil is returned.
 	(If parameter 1 is specified)
 		ANY - Value of individual property, nil if it does not exist
  	
@@ -25,34 +25,28 @@
 		[QGVARMAIN(Tablet_dlg)] call Ctab_ui_fnc_getSettings;
 		
 		// Return available map types for Tablet
-		[QGVARMAIN(Tablet_dlg),"mapTypes"] call Ctab_ui_fnc_getSettings;
+		[QGVARMAIN(Tablet_dlg),QSETTING_MAP_TYPES] call Ctab_ui_fnc_getSettings;
 */
-params ["_displayName","_property"];
+params ["_displayName",["_property",""]];
 
-private _propertyGroupName = [GVAR(displayPropertyGroups),_displayName] call EFUNC(core,getFromPairs);
+private _propertyGroupName = GVAR(displayPropertyGroups) get _displayName;
 
-// Exit with nil if uiNamespace variable cannot be found in cTabDisplayPropertyGroups
+// Exit with nil if uiNamespace variable cannot be found in Ctab_ui_DisplayPropertyGroups
 if (isNil "_propertyGroupName") exitWith {nil};
 
 // Fetch common and interface group specific property pairs
-private _commonProperties = [GVAR(settings),"COMMON"] call EFUNC(core,getFromPairs);
-private _groupProperties = [GVAR(settings),_propertyGroupName] call EFUNC(core,getFromPairs);
-if (isNil "_groupProperties") then {_groupProperties = [];};
+private _commonProperties = GVAR(settings) get QSETTINGS_COMMON;
+private _groupProperties = GVAR(settings) getOrDefault [_propertyGroupName, []];
 
 // Return value of requested property
-
-if (count _this == 2) exitWith {
-	private _value = [_groupProperties,_property] call EFUNC(core,getFromPairs);
-	if (isNil "_value") then {
-		_value = [_commonProperties,_property] call EFUNC(core,getFromPairs);
-	};
-	if (isNil "_value") then {nil} else {_value}
+if (_property isNotEqualTo "") exitWith {
+	 _groupProperties getOrDefault [_property, _commonProperties getOrDefault [_property, nil]]
 };
 
 // Return list of all property pairs
-private _combinedProperties = [] + _commonProperties;
+private _combinedProperties = + _commonProperties;
 {
-	[_combinedProperties,_x select 0,_x select 1] call BIS_fnc_setToPairs;
+	_combinedProperties set [_x,_y];
 } forEach _groupProperties;
 
 _combinedProperties

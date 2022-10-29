@@ -29,12 +29,11 @@ private _targetOffSet = [];
 	if (_data == str _x) exitWith {_newHost = _x;};
 } foreach GVARMAIN(hCamList);
 
-call {
 	// should unit not be in a vehicle
-	if (vehicle _newHost isKindOf "CAManBase") exitWith {
+if (vehicle _newHost isKindOf "CAManBase") then {
 		_camOffSet = [0.12,0,0.15];
 		_targetOffSet = [0,8,1];
-	};
+ } else {
 	// if unit is in a vehilce, see if 3rd person view is allowed
 	if (difficultyEnabled "3rdPersonView") exitWith {
 		_newHost = vehicle _newHost;
@@ -48,7 +47,7 @@ call {
 
 // if there is no valid unit or we are not allowed to set up a helmet cam in these conditions, drop out of full screen view
 if (IsNull _newHost) exitWith {
-	['GVARMAIN(Tablet_dlg)',[["mode","HCAM"]]] call FUNC(setSettings);
+	[QGVARMAIN(Tablet_dlg),[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET]]] call FUNC(setSettings);
 	false
 };
 

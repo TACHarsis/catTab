@@ -1,30 +1,28 @@
 #include "script_component.hpp"
 /*
-	Name: Ctab_ui_fnc_updateUserMarkerList
+	Name: Ctab_ui_fnc_userMarkerListUpdate
 	
 	Author(s):
 		Gundy
 
 	Description:
 		Update lists of user markers by finding extracting all the user markers with the right encryption key and then translate the marker data in to a format so that it can be drawn quicker.
+		CC: Only called on client
 		
 	Parameters:
 		NONE
 	
 	Returns:
-		BOOLEAN - Always TRUE
+		Nothing
 	
 	Example:
-		call Ctab_ui_fnc_updateUserMarkerList;
+		call Ctab_ui_fnc_userMarkerListUpdate;
 */
 
 private _playerEncryptionKey = call EFUNC(core,getPlayerEncryptionKey);
-
 private _tempList = [];
 {
-	_tempList pushBack [_x select 0,_x select 1 call FUNC(translateUserMarker)];
-} foreach ([GVAR(userMarkerLists),_playerEncryptionKey,[]] call EFUNC(core,getFromPairs));
+	_tempList pushBack [_x select 0,_x select 1 call FUNC(userMarkerTranslate)];
+} foreach (GVAR(userMarkerLists) getOrDefault [_playerEncryptionKey, []]);
 
-GVAR(userMarkerList) = _tempList;
-
-true
+GVAR(userMarkerListTranslated) = _tempList;

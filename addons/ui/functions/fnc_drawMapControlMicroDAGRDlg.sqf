@@ -5,9 +5,6 @@ params ["_ctrlScreen"];
 
 private _display = ctrlParent _ctrlScreen;
 
-GVAR(mapWorldPos) = [_ctrlScreen] call FUNC(ctrlMapCenter);
-GVAR(mapScale) = ctrlMapScale _ctrlScreen;
-
 // current position
 private _veh = vehicle Ctab_player;
 private _playerPos = getPosASL _veh;
@@ -16,12 +13,15 @@ private _heading = direction _veh;
 [_ctrlScreen,false] call FUNC(drawUserMarkers);
 [_ctrlScreen,GVAR(microDAGRmode)] call FUNC(drawBftMarkers);
 
+GVAR(mapWorldPos) = [_ctrlScreen] call FUNC(ctrlMapCenter);
+GVAR(mapScale) = ctrlMapScale _ctrlScreen;
+
 // draw directional arrow at own location
 _ctrlScreen drawIcon [
 	"\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
-	GVAR(MicroDAGRfontColour),
+	GVAR(mapToolsPlayerVehicleIconColor),
 	_playerPos,
-	GVAR(TADOwnIconBaseSize),GVAR(TADOwnIconBaseSize),
+	GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
 	_heading,"", 1,GVAR(txtSize),"TahomaB","right"
 ];
 

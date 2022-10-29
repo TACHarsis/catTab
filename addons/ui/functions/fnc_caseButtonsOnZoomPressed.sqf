@@ -10,15 +10,15 @@ params [["_zoomIn", true, [false]]];
 
 if (GVAR(openStart) || (isNil QGVAR(ifOpen))) exitWith {false};
 
-private _displayName = GVAR(IfOpen) select 1;
+private _displayName = GVAR(ifOpen) select 1;
 
 if !([_displayName] call FUNC(isDialog)) exitWith {
-	private _mapScale = ([_displayName,"mapScaleDsp"] call FUNC(getSettings)) * ([2, 0.5] select _zoomIn);
-	private _mapScaleMax = [_displayName,"mapScaleMax"] call FUNC(getSettings);
+	private _mapScale = ([_displayName,QSETTING_MAP_SCALE_DISPLAY] call FUNC(getSettings)) * ([2, 0.5] select _zoomIn);
+	private _mapScaleMax = [_displayName,QSETTING_MAP_SCALE_MAX] call FUNC(getSettings);
 	if (_mapScale > _mapScaleMax) then {
 		_mapScale = _mapScaleMax;
 	};
-	_mapScale = [_displayName,[["mapScaleDsp",_mapScale]]] call FUNC(setSettings);
+	_mapScale = [_displayName,[[QSETTING_MAP_SCALE_DISPLAY,_mapScale]]] call FUNC(setSettings);
 
 	true
 };

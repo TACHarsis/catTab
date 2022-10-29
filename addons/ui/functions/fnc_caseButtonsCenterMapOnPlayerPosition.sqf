@@ -19,6 +19,6 @@
 */
 
 
-[_this select 0,[["mapWorldPos",getPosASL vehicle Ctab_player]],true,true] call FUNC(setSettings);
+[_this select 0,[[QSETTING_MAP_WORLD_POS,getPosASL vehicle Ctab_player]],true,true] call FUNC(setSettings);
 
 true

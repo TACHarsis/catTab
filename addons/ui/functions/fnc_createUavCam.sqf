@@ -49,10 +49,10 @@ if !(alive _uav) exitWith {false};
 	private _camPosMemPt = "";
 	private _camDirMemPt = "";
 	
-	private _seatName = call {
-		if (_seat == 0) exitWith {"Driver"};
-		if (_seat == 1) exitWith {"Gunner"};
-		""
+	private _seatName = switch (_seat) do {
+		case (0) : {"Driver"};
+		case (1) : {"Gunner"};
+		default {""};
 	};
 	if (_seatName != "") then {
 		// retrieve memory point names from vehicle config
@@ -65,11 +65,10 @@ if !(alive _uav) exitWith {false};
 		_cam attachTo [_uav,[0,0,0],_camPosMemPt];
 		// set up cam on render target
 		_cam cameraEffect ["INTERNAL","BACK",_renderTarget];
-		call {
-			if (_seat == 1) exitWith {
-				_renderTarget setPiPEffect [2]; // IR mode
-				_cam camSetFov 0.1; // set zoom
-			};
+		if (_seat == 1) then {
+			_renderTarget setPiPEffect [2]; // IR view
+			_cam camSetFov 0.1; // set zoom
+		} else {
 			_cam camSetFov 0.5; // set default zoom
 		};
 		GVAR(uAVcams) pushBack [_uav,_renderTarget,_cam,_camPosMemPt,_camDirMemPt];

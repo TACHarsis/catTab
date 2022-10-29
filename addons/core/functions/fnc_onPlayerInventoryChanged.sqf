@@ -34,18 +34,10 @@ private _displayName = GVAR(ifOpen) select 1;
 private _itemsToCheck = (_newPlayerInventory select 17) + (_newPlayerInventory select 3) + (_newPlayerInventory select 5) + (_newPlayerInventory select 7);
 
 // see if we still have the correct device on us
-private _playerLostDevice = call {
-	if (_displayName == QGVARMAIN(Tablet_dlg)) exitWith {
-		!("ItemcTab" in _itemsToCheck)
-	};
-	if (_displayName in [QGVARMAIN(Android_dlg),QGVARMAIN(Android_dsp)]) exitWith {
-		!("ItemAndroid" in _itemsToCheck)
-	};
-	if (_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)]) exitWith {
-		!("ItemMicroDAGR" in _itemsToCheck)
-	};
-	false
-};
+private _playerLostDevice = 
+	(_displayName == QGVARMAIN(Tablet_dlg) && !("ItemcTab" in _itemsToCheck)) ||
+	(_displayName in [QGVARMAIN(Android_dlg),QGVARMAIN(Android_dsp)] && ("ItemAndroid" in _itemsToCheck)) ||
+	(_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)] && !("ItemMicroDAGR" in _itemsToCheck));
 
 if (_playerLostDevice) then {[] call EFUNC(ui,close)};
 
