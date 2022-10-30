@@ -66,11 +66,15 @@ if !(alive _uav) exitWith {false};
 		// set up cam on render target
 		_cam cameraEffect ["INTERNAL","BACK",_renderTarget];
 		if (_seat == 1) then {
-			_renderTarget setPiPEffect [2]; // IR view
+			private _visionMode = _uav currentVisionMode [];
+			_renderTarget setPiPEffect [_visionMode # 0, _visionMode # 1];
 			_cam camSetFov 0.1; // set zoom
 		} else {
+			private _visionMode = _uav currentVisionMode [-1];
+			_renderTarget setPiPEffect [_visionMode # 0, _visionMode # 1];
 			_cam camSetFov 0.5; // set default zoom
 		};
+		_cam camCommit 0;
 		GVAR(uAVcams) pushBack [_uav,_renderTarget,_cam,_camPosMemPt,_camDirMemPt];
 	};
 } foreach _uavCams;
