@@ -48,7 +48,7 @@ GVAR(ifOpen) = [_interfaceType,_displayName,_player,
 
 if (_vehicle != _player && (_isDialog || _displayName in [QGVARMAIN(TAD_dsp)])) then {
 	GVAR(ifOpen) set [5,
-		_vehicle addEventHandler ["GetOut",{if (_player == Ctab_player) then {[] call FUNC(close)}}]
+			_vehicle addEventHandler ["GetOut",{if ((_this # 2) == Ctab_player) then {[] call FUNC(close);}}]
 	];
 };
 
