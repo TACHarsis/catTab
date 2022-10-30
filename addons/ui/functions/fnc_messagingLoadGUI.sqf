@@ -22,16 +22,18 @@ private _validSides = call EFUNC(core,getPlayerSides);
 uiNamespace setVariable [QGVAR(msgPlayerList), _plrList];
 // Messages
 {
-	private _title =  _x select 0;
-	private _msgState = _x select 2;
-	private _img = call {
-		if (_msgState == 0) exitWith {QPATHTOEF(data,img\icoUnopenedmail.paa)};
-		if (_msgState == 1) exitWith {QPATHTOEF(data,img\icoOpenmail.paa)};
-		if (_msgState == 2) exitWith {QPATHTOEF(data,img\icon_sentMail_ca.paa)};
+	_x params ["_title", "_msgBody", "_msgState"];
+
+	private _img = switch (_msgState) do {
+		case (0) : {QPATHTOEF(data,img\icoUnopenedmail.paa)};
+		case (1) : {QPATHTOEF(data,img\icoOpenmail.paa)};
+		case (2) : {QPATHTOEF(data,img\icon_sentMail_ca.paa)};
+		default {""}; //CC: some default here in case we add more types?
 	};
 	private _index = _msgControl lbAdd _title;
 	_msgControl lbSetPicture [_index,_img];
-	_msgControl lbSetTooltip [_index,_title];
+	private _preview = _msgBody select [0, 15 min (count _msgBody -1)];
+	_msgControl lbSetTooltip [_index,_preview];
 } foreach _msgArray;
 
 {
