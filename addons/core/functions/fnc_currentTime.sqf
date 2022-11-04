@@ -1,21 +1,21 @@
 #include "script_component.hpp"
 /*
- 	Name: Ctab_ui_fnc_currentTime
- 	
- 	Author(s):
-		Gundy
+     Name: Ctab_ui_fnc_currentTime
+     
+     Author(s):
+        Gundy
 
- 	Description:
-		Retrieve current in-game time in HH:MM format
-	
-	Parameters:
-		NONE
- 	
- 	Returns:
-		STRING - Current in-game time in format "HH:MM"
- 	
- 	Example:
-		_time = call Ctab_ui_fnc_currentTime;
+     Description:
+        Retrieve current in-game time in HH:MM format
+    
+    Parameters:
+        NONE
+     
+     Returns:
+        STRING - Current in-game time in format "HH:MM"
+     
+     Example:
+        _time = call Ctab_ui_fnc_currentTime;
 */
 
 private _date = date;

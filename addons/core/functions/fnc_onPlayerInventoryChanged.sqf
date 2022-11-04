@@ -1,22 +1,22 @@
 #include "script_component.hpp"
 /*
-	Name: Ctab_ui_fnc_onPlayerInventoryChanged
-	
-	Author(s):
-		Gundy
-	
-	Description:
-		Handles ACE3 event that triggers upon player's inventory changed event. It will check to see if there is currently a cTab device that requires a an inventory item open and if that is the case, close that device.
-	
-	Parameters:
-		0: OBJECT - player object that an inventory change was detected for
-		1: ARRAY  - list of the new player inventory as returned by ace_common_fnc_getAllGear
-	
-	Returns:
-		BOOLEAN - TRUE
-	
-	Example:
-		[ACE_player,[player] call ace_common_fnc_getAllGear] call Ctab_ui_fnc_onPlayerInventoryChanged;
+    Name: Ctab_ui_fnc_onPlayerInventoryChanged
+    
+    Author(s):
+        Gundy
+    
+    Description:
+        Handles ACE3 event that triggers upon player's inventory changed event. It will check to see if there is currently a cTab device that requires a an inventory item open and if that is the case, close that device.
+    
+    Parameters:
+        0: OBJECT - player object that an inventory change was detected for
+        1: ARRAY  - list of the new player inventory as returned by ace_common_fnc_getAllGear
+    
+    Returns:
+        BOOLEAN - TRUE
+    
+    Example:
+        [ACE_player,[player] call ace_common_fnc_getAllGear] call Ctab_ui_fnc_onPlayerInventoryChanged;
 */
 params ["_unit", "_newPlayerInventory"];
 
@@ -35,9 +35,9 @@ private _itemsToCheck = (_newPlayerInventory select 17) + (_newPlayerInventory s
 
 // see if we still have the correct device on us
 private _playerLostDevice = 
-	(_displayName == QGVARMAIN(Tablet_dlg) && !("ItemcTab" in _itemsToCheck)) ||
-	(_displayName in [QGVARMAIN(Android_dlg),QGVARMAIN(Android_dsp)] && ("ItemAndroid" in _itemsToCheck)) ||
-	(_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)] && !("ItemMicroDAGR" in _itemsToCheck));
+    (_displayName == QGVARMAIN(Tablet_dlg) && !("ItemcTab" in _itemsToCheck)) ||
+    (_displayName in [QGVARMAIN(Android_dlg),QGVARMAIN(Android_dsp)] && ("ItemAndroid" in _itemsToCheck)) ||
+    (_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)] && !("ItemMicroDAGR" in _itemsToCheck));
 
 if (_playerLostDevice) then {[] call EFUNC(ui,close)};
 

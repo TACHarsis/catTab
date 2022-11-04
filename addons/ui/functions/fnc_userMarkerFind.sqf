@@ -1,23 +1,23 @@
 #include "script_component.hpp"
 /*
- 	Name: Ctab_ui_fnc_userMarkerFind
- 	
- 	Author(s):
-		Gundy, Riouken
+     Name: Ctab_ui_fnc_userMarkerFind
+     
+     Author(s):
+        Gundy, Riouken
 
- 	Description:
-		Find user placed marker at provided position.
-		CC: This is used on the client only and with the refactor it works on the client only.
+     Description:
+        Find user placed marker at provided position.
+        CC: This is used on the client only and with the refactor it works on the client only.
 
-	Parameters:
-		0: OBJECT - Map control we took the position from
-		1: ARRAY  - Position to look for marker
- 	
- 	Returns:
-		INTEGER - Index of user marker, if not found -1
- 	
- 	Example:
-		_markerIndex = [_ctrlScreen,[0,0]] call Ctab_ui_fnc_userMarkerFind;
+    Parameters:
+        0: OBJECT - Map control we took the position from
+        1: ARRAY  - Position to look for marker
+     
+     Returns:
+        INTEGER - Index of user marker, if not found -1
+     
+     Example:
+        _markerIndex = [_ctrlScreen,[0,0]] call Ctab_ui_fnc_userMarkerFind;
 */
 params ["_ctrlScreen",["_searchPos", [0,0],[[]],[2,3]]];
 
@@ -31,11 +31,11 @@ private _maxDistance = _searchPos distanceSqr [(_searchPos select 0) + _targetRa
 
 // find closest user marker within _maxDistance
 {
-	private _distance = _searchPos distanceSqr (_x select 1 select 0);
-	if (_distance <= _maxDistance) then {
-		_maxDistance = _distance;
-		_return = _x select 0;
-	};
+    private _distance = _searchPos distanceSqr (_x select 1 select 0);
+    if (_distance <= _maxDistance) then {
+        _maxDistance = _distance;
+        _return = _x select 0;
+    };
 } foreach GVAR(userMarkerListTranslated);
 
 _return

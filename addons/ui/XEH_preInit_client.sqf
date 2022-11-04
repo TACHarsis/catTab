@@ -4,7 +4,7 @@
 // By - Riouken
 // http://forums.bistudio.com/member.php?64032-Riouken
 // You may re-use any of this work as long as you provide credit back to me.
-#include "devices\shared\cTab_gui_macros.hpp"
+#include "devices\shared\cTab_defines.hpp"
 
 // Exit if this is machine has no interface, i.e. is a headless client (HC)
 if !(hasInterface) exitWith {};
@@ -20,22 +20,22 @@ GVAR(userMarkerListTranslated) = [];
 [player] remoteExec [QFUNC(userMarkerListGetServer), 2];
 
 GVAR(displayPropertyGroups) = createHashMapFromArray [
-	[QGVARMAIN(Tablet_dlg),QSETTINGS_TABLET],
-	[QGVARMAIN(Android_dlg),QSETTINGS_ANDROID],
-	[QGVARMAIN(Android_dsp),QSETTINGS_ANDROID],
-	[QGVARMAIN(FBCB2_dlg),QSETTINGS_FBCB2],
-	[QGVARMAIN(TAD_dsp),QSETTINGS_TAD],
-	[QGVARMAIN(TAD_dlg),QSETTINGS_TAD],
-	[QGVARMAIN(microDAGR_dsp),QSETTINGS_MICRODAGR],
-	[QGVARMAIN(microDAGR_dlg),QSETTINGS_MICRODAGR]
+    [QGVARMAIN(Tablet_dlg),QSETTINGS_TABLET],
+    [QGVARMAIN(Android_dlg),QSETTINGS_ANDROID],
+    [QGVARMAIN(Android_dsp),QSETTINGS_ANDROID],
+    [QGVARMAIN(FBCB2_dlg),QSETTINGS_FBCB2],
+    [QGVARMAIN(TAD_dsp),QSETTINGS_TAD],
+    [QGVARMAIN(TAD_dlg),QSETTINGS_TAD],
+    [QGVARMAIN(microDAGR_dsp),QSETTINGS_MICRODAGR],
+    [QGVARMAIN(microDAGR_dlg),QSETTINGS_MICRODAGR]
 ];
 GVAR(mapScaleInitialized) = false;
 [] call FUNC(initializeMapScale);
 [
-	{ GVAR(mapScaleInitialized)	},
-	{
-		[] call FUNC(initializeSettings);
-	}
+    { GVAR(mapScaleInitialized)    },
+    {
+        [] call FUNC(initializeSettings);
+    }
 ] call CBA_fnc_waitUntilAndExecute;
 // set air contact  color to purple
 GVAR(airContactColor) = [255/255, 0/255, 255/255, 1];
@@ -51,34 +51,34 @@ GVAR(TADOwnIconColor) = [57/255, 255/255, 20/255, 1];
 
 // set base colors from BI -- Helps keep colors matching if user changes colors in options.
 GVAR(colorBlue) = [
-	profilenamespace getvariable ['Map_BLUFOR_R',0],
-	profilenamespace getvariable ['Map_BLUFOR_G',1],
-	profilenamespace getvariable ['Map_BLUFOR_B',1],
-	profilenamespace getvariable ['Map_BLUFOR_A',0.8]
+    profilenamespace getvariable ['Map_BLUFOR_R',0],
+    profilenamespace getvariable ['Map_BLUFOR_G',1],
+    profilenamespace getvariable ['Map_BLUFOR_B',1],
+    profilenamespace getvariable ['Map_BLUFOR_A',0.8]
 ];
 
 GVAR(colorRed) = [
-	profilenamespace getvariable ['Map_OPFOR_R',0],
-	profilenamespace getvariable ['Map_OPFOR_G',1],
-	profilenamespace getvariable ['Map_OPFOR_B',1],
-	profilenamespace getvariable ['Map_OPFOR_A',0.8]
+    profilenamespace getvariable ['Map_OPFOR_R',0],
+    profilenamespace getvariable ['Map_OPFOR_G',1],
+    profilenamespace getvariable ['Map_OPFOR_B',1],
+    profilenamespace getvariable ['Map_OPFOR_A',0.8]
 ];
 
 GVAR(colorGreen) = [
-	profilenamespace getvariable ['Map_Independent_R',0],
-	profilenamespace getvariable ['Map_Independent_G',1],
-	profilenamespace getvariable ['Map_Independent_B',1],
-	profilenamespace getvariable ['Map_Independent_A',0.8]
+    profilenamespace getvariable ['Map_Independent_R',0],
+    profilenamespace getvariable ['Map_Independent_G',1],
+    profilenamespace getvariable ['Map_Independent_B',1],
+    profilenamespace getvariable ['Map_Independent_A',0.8]
 ];
 
 // Define Fire-Team colors
 // MAIN,RED,GREEN,BLUE,YELLOW
 GVAR(colorTeam) = [
-	GVAR(colorBlue),
-	[200/255,0,0,0.8], // Fireteam Red
-	[0,199/255,0,0.8], // Fireteam Green
-	[0,0,200/255,0.8], // Fireteam Blue
-	[225/255,225/255,0,0.8] // Fireteam Yellow
+    GVAR(colorBlue),
+    [200/255,0,0,0.8], // Fireteam Red
+    [0,199/255,0,0.8], // Fireteam Green
+    [0,0,200/255,0.8], // Fireteam Blue
+    [225/255,225/255,0,0.8] // Fireteam Yellow
 ];
 
 
@@ -115,8 +115,8 @@ uiNamespace setVariable [QGVARMAIN(microDAGR_dlg), displayNull];
 GVAR(openStart) = false;
 
 GVAR(msgReceiveEHID) = [
-	QGVARMAIN(msg_receive), // id kept for potential backwards compatibility
-	FUNC(messagingOnMessageReceived)
+    QGVARMAIN(msg_receive), // id kept for potential backwards compatibility
+    FUNC(messagingOnMessageReceived)
 ] call CBA_fnc_addEventHandler;
 
 GVAR(actUAV) = nullObj;

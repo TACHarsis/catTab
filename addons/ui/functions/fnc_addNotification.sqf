@@ -26,16 +26,16 @@ private _done = false;
 
 // search for other _appID notifications
 {
-	// if we find one, override it and increase the counter
-	if ((_x select 0) isEqualTo _appID) exitWith {
-		GVAR(notificationCache) set [_forEachIndex,[_appID,_time,_notification,_decayTime,(_x select 4) + 1]];
-		_done = true;
-	};
+    // if we find one, override it and increase the counter
+    if ((_x select 0) isEqualTo _appID) exitWith {
+        GVAR(notificationCache) set [_forEachIndex,[_appID,_time,_notification,_decayTime,(_x select 4) + 1]];
+        _done = true;
+    };
 } forEach GVAR(notificationCache);
 
 // if we haven't added the notification to the cache above, do it now
 if !(_done) then {
-	GVAR(notificationCache) pushBack [_appID,_time,_notification,_decayTime,1];
+    GVAR(notificationCache) pushBack [_appID,_time,_notification,_decayTime,1];
 };
 
 [] call FUNC(processNotifications);

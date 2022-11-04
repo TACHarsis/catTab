@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 
-#include "shared\cTab_gui_macros.hpp"
+#include "shared\cTab_defines.hpp"
 #include "shared\cTab_base_gui_classes.hpp"
 
 #include "tablet\cTab_Tablet_dialog.hpp"

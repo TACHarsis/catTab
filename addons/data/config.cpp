@@ -10,15 +10,15 @@ class CfgPatches {
         name = QUOTE(COMPONENT);
         units[] = {  };
         weapons[] = {
-			"ItemcTab",
-			"ItemAndroid",
-			"ItemMicroDAGR",
-			"ItemcTabHCam"
-		};
+            "ItemcTab",
+            "ItemAndroid",
+            "ItemMicroDAGR",
+            "ItemcTabHCam"
+        };
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {"ctab_main"};
         author = AUTHORS;
-		authorUrl = "https://github.com/TACHarsis/catTab";
+        authorUrl = "https://github.com/TACHarsis/catTab";
         VERSION_CONFIG;
     };
 };

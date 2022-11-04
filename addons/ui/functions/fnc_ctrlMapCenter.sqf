@@ -1,21 +1,21 @@
 #include "script_component.hpp"
 /*
- 	Name: Ctab_ui_fnc_ctrlMapCenter
- 	
- 	Author(s):
-		Gundy
+     Name: Ctab_ui_fnc_ctrlMapCenter
+     
+     Author(s):
+        Gundy
 
- 	Description:
-		Determine map center position of given map control
-	
-	Parameters:
-		0: OBJECT  - Map control to return map center coordinates for
- 	
- 	Returns:
-		ARRAY - 2D world coordinates of map control center 
- 	
- 	Example:
-		[_ctrlScreen] call Ctab_ui_fnc_ctrlMapCenter;
+     Description:
+        Determine map center position of given map control
+    
+    Parameters:
+        0: OBJECT  - Map control to return map center coordinates for
+     
+     Returns:
+        ARRAY - 2D world coordinates of map control center 
+     
+     Example:
+        [_ctrlScreen] call Ctab_ui_fnc_ctrlMapCenter;
 */
 
 params ["_ctrlScreen"];

@@ -1,5 +1,5 @@
 #include "script_component.hpp"
-#include "..\devices\shared\cTab_gui_macros.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 
 disableSerialization;
 
@@ -22,25 +22,25 @@ private _validSides = call EFUNC(core,getPlayerSides);
 uiNamespace setVariable [QGVAR(msgPlayerList), _plrList];
 // Messages
 {
-	_x params ["_title", "_msgBody", "_msgState"];
+    _x params ["_title", "_msgBody", "_msgState"];
 
-	private _img = switch (_msgState) do {
-		case (0) : {QPATHTOEF(data,img\icoUnopenedmail.paa)};
-		case (1) : {QPATHTOEF(data,img\icoOpenmail.paa)};
-		case (2) : {QPATHTOEF(data,img\icon_sentMail_ca.paa)};
-		default {""}; //CC: some default here in case we add more types?
-	};
-	private _index = _msgControl lbAdd _title;
-	_msgControl lbSetPicture [_index,_img];
-	private _preview = _msgBody select [0, 15 min (count _msgBody -1)];
-	_msgControl lbSetTooltip [_index,_preview];
+    private _img = switch (_msgState) do {
+        case (0) : {QPATHTOEF(data,img\icoUnopenedmail.paa)};
+        case (1) : {QPATHTOEF(data,img\icoOpenmail.paa)};
+        case (2) : {QPATHTOEF(data,img\icon_sentMail_ca.paa)};
+        default {""}; //CC: some default here in case we add more types?
+    };
+    private _index = _msgControl lbAdd _title;
+    _msgControl lbSetPicture [_index,_img];
+    private _preview = _msgBody select [0, 15 min (count _msgBody -1)];
+    _msgControl lbSetTooltip [_index,_preview];
 } foreach _msgArray;
 
 {
-	if ((side _x in _validSides) && {isPlayer _x} && {[_x,["ItemcTab","ItemAndroid"]] call EFUNC(core,checkGear)}) then {
-		private _index = _plrlistControl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,name _x];
-		_plrlistControl lbSetData [_index,str _x];
-	};
+    if ((side _x in _validSides) && {isPlayer _x} && {[_x,["ItemcTab","ItemAndroid"]] call EFUNC(core,checkGear)}) then {
+        private _index = _plrlistControl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,name _x];
+        _plrlistControl lbSetData [_index,str _x];
+    };
 } foreach _plrList;
 
 lbSort [_plrlistControl, "ASC"];

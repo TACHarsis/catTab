@@ -1,5 +1,5 @@
 #include "script_component.hpp"
-#include "..\devices\shared\cTab_gui_macros.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 // cTab - Commander's Tablet with FBCB2 Blue Force Tracking
 // Battlefield tablet to access real time intel and blue force tracker.
 // By - Riouken

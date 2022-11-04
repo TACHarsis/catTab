@@ -1,5 +1,5 @@
 #include "script_component.hpp"
-#include "..\devices\shared\cTab_gui_macros.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 
 /*
 Function called when DELETE button is pressed in messaging mode
@@ -18,7 +18,7 @@ private _msgArray = Ctab_player getVariable [format [QGVARMAIN(messages_%1),_pla
 
 // run through the selection backwards as otherwise the indices won't match anymore
 for "_i" from (count _msgLbSelection) to 0 step -1 do {
-	_msgArray deleteAt (_msgLbSelection select _i);
+    _msgArray deleteAt (_msgLbSelection select _i);
 };
 Ctab_player setVariable [format [QGVARMAIN(messages_%1),_playerEncryptionKey],_msgArray];
 

@@ -19,18 +19,18 @@ private _veh = vehicle Ctab_player;
 private _playerPos = getPosASL _veh;
 private _heading = direction _veh;
 _ctrlScreen drawIcon [
-	GVAR(playerVehicleIcon),
-	GVAR(TADOwnIconColor),
-	_playerPos,
-	GVAR(ownVehicleIconScaledSize),GVAR(ownVehicleIconScaledSize),
-	_heading,"", 1,GVAR(txtSize),"TahomaB","right"
+    GVAR(playerVehicleIcon),
+    GVAR(TADOwnIconColor),
+    _playerPos,
+    GVAR(ownVehicleIconScaledSize),GVAR(ownVehicleIconScaledSize),
+    _heading,"", 1,GVAR(txtSize),"TahomaB","right"
 ];
 
 // update hook information
 if (GVAR(drawMapTools)) then {
-	[_display,_ctrlScreen,_playerPos,GVAR(mapCursorPos),0,true] call FUNC(drawHook);
+    [_display,_ctrlScreen,_playerPos,GVAR(mapCursorPos),0,true] call FUNC(drawHook);
 } else {
-	[_display,_ctrlScreen,_playerPos,GVAR(mapCursorPos),1,true] call FUNC(drawHook);
+    [_display,_ctrlScreen,_playerPos,GVAR(mapCursorPos),1,true] call FUNC(drawHook);
 };
 
 

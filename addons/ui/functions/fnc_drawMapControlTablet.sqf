@@ -18,16 +18,16 @@ GVAR(mapScale) = ctrlMapScale _ctrlScreen;
 
 // draw directional arrow at own location
 _ctrlScreen drawIcon [
-	"\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
-	GVAR(mapToolsPlayerVehicleIconColor),
-	_playerPos,
-	GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-	_heading,"", 1,GVAR(txtSize),"TahomaB","right"
+    "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
+    GVAR(mapToolsPlayerVehicleIconColor),
+    _playerPos,
+    GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
+    _heading,"", 1,GVAR(txtSize),"TahomaB","right"
 ];
 
 // update hook information
 if (GVAR(drawMapTools)) then {
-	[_display,_ctrlScreen,_playerPos,GVAR(mapCursorPos),0,false] call FUNC(drawHook);
+    [_display,_ctrlScreen,_playerPos,GVAR(mapCursorPos),0,false] call FUNC(drawHook);
 };
 
 true

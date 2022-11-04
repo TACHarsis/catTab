@@ -12,9 +12,9 @@ private _currentMapType = [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(get
 private _currentMapTypeIndex = [_mapTypes,_currentMapType] call BIS_fnc_findInPairs;
 
 if (_currentMapTypeIndex == count _mapTypes - 1) then {
-	[_displayName,[[QSETTING_CURRENT_MAP_TYPE,_mapTypes select 0 select 0]]] call FUNC(setSettings);
+    [_displayName,[[QSETTING_CURRENT_MAP_TYPE,_mapTypes select 0 select 0]]] call FUNC(setSettings);
 } else {
-	[_displayName,[[QSETTING_CURRENT_MAP_TYPE,_mapTypes select (_currentMapTypeIndex + 1) select 0]]] call FUNC(setSettings);
+    [_displayName,[[QSETTING_CURRENT_MAP_TYPE,_mapTypes select (_currentMapTypeIndex + 1) select 0]]] call FUNC(setSettings);
 };
 
 true

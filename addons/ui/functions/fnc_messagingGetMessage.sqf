@@ -1,5 +1,5 @@
 #include "script_component.hpp"
-#include "..\devices\shared\cTab_gui_macros.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 
 params ["","_index"];
 
@@ -14,8 +14,8 @@ private _msgName = (_msgArray select _index) select 0;
 private _msgtxt = (_msgArray select _index) select 1;
 private _msgState = (_msgArray select _index) select 2;
 if (_msgState == 0) then {
-	_msgArray set [_index,[_msgName,_msgtxt,1]];
-	Ctab_player setVariable [format [QGVARMAIN(messages_%1),_playerEncryptionKey],_msgArray];
+    _msgArray set [_index,[_msgName,_msgtxt,1]];
+    Ctab_player setVariable [format [QGVARMAIN(messages_%1),_playerEncryptionKey],_msgArray];
 };
 
 [] call FUNC(messagingLoadGUI);

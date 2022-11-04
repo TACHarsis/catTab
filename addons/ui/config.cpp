@@ -13,13 +13,13 @@ class CfgPatches {
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {"Ctab_main", "cba_settings"};
         author = AUTHORS;
-		authorUrl = "https://github.com/TACHarsis/catTab";
+        authorUrl = "https://github.com/TACHarsis/catTab";
         VERSION_CONFIG;
     };
 };
 
 #include "CfgEventHandlers.hpp"
 #include "CfgNotifications.hpp"
-#include "CfgUIGrids.hpp"
 #include "devices\devices.hpp"
 #include "RscTitles.hpp"
+#include "CfgUIGrids.hpp"

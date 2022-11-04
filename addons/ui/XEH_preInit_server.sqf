@@ -4,7 +4,7 @@
 // By - Riouken
 // http://forums.bistudio.com/member.php?64032-Riouken
 // You may re-use any of this work as long as you provide credit back to me.
-#include "devices\shared\cTab_gui_macros.hpp"
+#include "devices\shared\cTab_defines.hpp"
 
 // Exit if this is machine has no interface, i.e. is a headless client (HC)
 if !(hasInterface) exitWith {};

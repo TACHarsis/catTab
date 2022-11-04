@@ -10,9 +10,9 @@ Returns TRUE
 private _mode = [QGVARMAIN(Tablet_dlg),QSETTING_MODE] call FUNC(getSettings);
 
 switch (_mode) do {
-	case (QSETTING_MODE_CAM_UAV): {[] call EFUNC(core,remoteControlUav);};
-	case (QSETTING_MODE_CAM_HELMET): {[QGVARMAIN(Tablet_dlg),[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET_FULL]]] call FUNC(setSettings);};
-	case (QSETTING_MODE_CAM_HELMET_FULL): {[QGVARMAIN(Tablet_dlg),[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET]]] call FUNC(setSettings);};
+    case (QSETTING_MODE_CAM_UAV): {[] call EFUNC(core,remoteControlUav);};
+    case (QSETTING_MODE_CAM_HELMET): {[QGVARMAIN(Tablet_dlg),[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET_FULL]]] call FUNC(setSettings);};
+    case (QSETTING_MODE_CAM_HELMET_FULL): {[QGVARMAIN(Tablet_dlg),[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET]]] call FUNC(setSettings);};
 };
 
 true

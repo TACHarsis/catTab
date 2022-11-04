@@ -19,20 +19,20 @@ ctrlMapAnimCommit _ctrlScreen;
 
 // draw vehicle icon at own location
 _ctrlScreen drawIcon [
-	GVAR(playerVehicleIcon),
-	GVAR(TADOwnIconColor),
-	_playerPos,
-	GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-	_heading,"", 1,GVAR(txtSize),"TahomaB","right"
+    GVAR(playerVehicleIcon),
+    GVAR(TADOwnIconColor),
+    _playerPos,
+    GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
+    _heading,"", 1,GVAR(txtSize),"TahomaB","right"
 ];
 
 // draw TAD overlay (two circles, one at full scale, the other at half scale + current heading)
 _ctrlScreen drawIcon [
-	QPATHTOEF(data,img\TAD_overlay_ca.paa),
-	GVAR(TADOwnIconColor),
-	_playerPos,
-	250,250,
-	_heading,"",1,GVAR(txtSize),"TahomaB","right"
+    QPATHTOEF(data,img\TAD_overlay_ca.paa),
+    GVAR(TADOwnIconColor),
+    _playerPos,
+    250,250,
+    _heading,"",1,GVAR(txtSize),"TahomaB","right"
 ];
 
 true

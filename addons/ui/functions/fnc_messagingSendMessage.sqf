@@ -1,5 +1,5 @@
 #include "script_component.hpp"
-#include "..\devices\shared\cTab_gui_macros.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 
 disableSerialization;
 
@@ -21,42 +21,42 @@ if (_msgBody isEqualTo "") exitWith {false};
 private _recipientNames = "";
 
 {
-	private _data = _plrLBctrl lbData _x;
-	private _recip = objNull;
-	{
-		if (_data == str _x) exitWith {_recip = _x;};
-	} foreach _plrList;
-	
-	if !(IsNull _recip) then {
-		if (_recipientNames isEqualTo "") then {
-			_recipientNames = format ["%1:%2 (%3)",groupId group _recip,[_recip] call CBA_fnc_getGroupIndex,name _recip];
-		} else {
-			_recipientNames = format ["%1; %2",_recipientNames,name _recip];
-		};
-		
-		private _arguments = [_recip,_msgTitle,_msgBody,_playerEncryptionKey,Ctab_player];
+    private _data = _plrLBctrl lbData _x;
+    private _recip = objNull;
+    {
+        if (_data == str _x) exitWith {_recip = _x;};
+    } foreach _plrList;
+    
+    if !(IsNull _recip) then {
+        if (_recipientNames isEqualTo "") then {
+            _recipientNames = format ["%1:%2 (%3)",groupId group _recip,[_recip] call CBA_fnc_getGroupIndex,name _recip];
+        } else {
+            _recipientNames = format ["%1; %2",_recipientNames,name _recip];
+        };
+        
+        private _arguments = [_recip,_msgTitle,_msgBody,_playerEncryptionKey,Ctab_player];
 
-		[QGVARMAIN(msg_receive),_arguments,_recip] call CBA_fnc_targetEvent;
-	};
+        [QGVARMAIN(msg_receive),_arguments,_recip] call CBA_fnc_targetEvent;
+    };
 } forEach _indices;
 
 // If the message was sent
 if (_recipientNames != "") then {
-	private _msgArray = Ctab_player getVariable [format [QGVAR(messages_%1),_playerEncryptionKey],[]];
-	_msgArray pushBack [format ["%1 - %2",_time,_recipientNames],_msgBody,2];
-	Ctab_player setVariable [format [QGVAR(messages_%1),_playerEncryptionKey],_msgArray];
+    private _msgArray = Ctab_player getVariable [format [QGVAR(messages_%1),_playerEncryptionKey],[]];
+    _msgArray pushBack [format ["%1 - %2",_time,_recipientNames],_msgBody,2];
+    Ctab_player setVariable [format [QGVAR(messages_%1),_playerEncryptionKey],_msgArray];
 
-	if (!isNil QGVAR(ifOpen) && {[GVAR(ifOpen) select 1,QSETTING_MODE] call FUNC(getSettings) == QSETTING_MODE_MESSAGES}) then {
-		[] call FUNC(messagingLoadGUI);
-	};
-	
-	// add a notification
-	["MSG","Message sent successfully",3] call FUNC(addNotification);
-	playSound QGVARMAIN(mailSent);
-	// remove message body
-	_msgBodyctrl ctrlSetText "";
-	// clear selected recipients
-	_plrLBctrl lbSetCurSel -1;
+    if (!isNil QGVAR(ifOpen) && {[GVAR(ifOpen) select 1,QSETTING_MODE] call FUNC(getSettings) == QSETTING_MODE_MESSAGES}) then {
+        [] call FUNC(messagingLoadGUI);
+    };
+    
+    // add a notification
+    ["MSG","Message sent successfully",3] call FUNC(addNotification);
+    playSound QGVARMAIN(mailSent);
+    // remove message body
+    _msgBodyctrl ctrlSetText "";
+    // clear selected recipients
+    _plrLBctrl lbSetCurSel -1;
 };
 
 _return
