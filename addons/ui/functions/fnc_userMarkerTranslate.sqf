@@ -35,7 +35,7 @@
         [[1714.35,5716.82],0,0,0,"12:00"] call Ctab_ui_fnc_translateUserMarker;
 */
 params ["_pos", "_markerIcon", "_markerSize", "_markerDir", "_text"];
-private _color = GVAR(colorRed);
+private _color = GVAR(colorOPFOR);
 
 private _texture1 = switch (_markerIcon) do {
     case (0)     : {"\A3\ui_f\data\map\markers\nato\o_inf.paa"};
@@ -53,12 +53,12 @@ private _texture1 = switch (_markerIcon) do {
     case (14)     : {QPATHTOEF(data,img\map\markers\o_inf_mat.paa)};
     case (15)     : {QPATHTOEF(data,img\map\markers\o_inf_mmortar.paa)};
     case (16)     : {QPATHTOEF(data,img\map\markers\o_inf_aa.paa)};
-    _color = GVAR(colorGreen);
+    _color = GVAR(colorINDEPENDENT);
     case (20)     : {"\A3\ui_f\data\map\markers\military\join_CA.paa"};
     case (21)     : {"\A3\ui_f\data\map\markers\military\circle_CA.paa"};
     case (22)     : {"\A3\ui_f\data\map\mapcontrol\Hospital_CA.paa"};
     case (23)     : {"\A3\ui_f\data\map\markers\military\warning_CA.paa"};
-    _color = GVAR(colorBlue);
+    _color = GVAR(colorBLUFOR);
     case (30) : {"\A3\ui_f\data\map\markers\nato\b_hq.paa"};
     case (31) : {"\A3\ui_f\data\map\markers\military\end_CA.paa"};
     default {""};
