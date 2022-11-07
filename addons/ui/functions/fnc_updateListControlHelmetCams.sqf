@@ -4,6 +4,7 @@
 if (isNil QGVAR(ifOpen)) exitWith {};
 
 private _displayName = GVAR(ifOpen) select 1;
+private _display = uiNamespace getVariable _displayName;
 private _displaySettings = [_displayName] call FUNC(getSettings);
 private _mode = _displaySettings get QSETTING_MODE;
 
