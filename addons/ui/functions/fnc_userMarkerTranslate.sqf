@@ -44,14 +44,15 @@ private _texture1 = switch (_markerIcon) do {
     case (3)     : {"\A3\ui_f\data\map\markers\nato\o_armor.paa"};
     case (4)     : {"\A3\ui_f\data\map\markers\nato\o_air.paa";};
     case (5)     : {"\A3\ui_f\data\map\markers\nato\o_plane.paa"};
-    case (6)     : {"\A3\ui_f\data\map\markers\nato\o_unknown.paa"};
-    case (7)     : {QPATHTOEF(data,img\o_inf_rifle.paa)};
-    case (8)     : {QPATHTOEF(data,img\o_inf_mg.paa)};
-    case (9)     : {QPATHTOEF(data,img\o_inf_at.paa)};
-    case (10)     : {QPATHTOEF(data,img\o_inf_mmg.paa)};
-    case (11)     : {QPATHTOEF(data,img\o_inf_mat.paa)};
-    case (12)     : {QPATHTOEF(data,img\o_inf_mmortar.paa)};
-    case (13)     : {QPATHTOEF(data,img\o_inf_aa.paa)};
+    case (6)     : {"\A3\ui_f\data\map\markers\nato\o_naval.paa"};
+    case (7)     : {"\A3\ui_f\data\map\markers\nato\o_unknown.paa"};
+    case (10)     : {QPATHTOEF(data,img\map\markers\o_inf_rifle.paa)};
+    case (11)     : {QPATHTOEF(data,img\map\markers\o_inf_mg.paa)};
+    case (12)     : {QPATHTOEF(data,img\map\markers\o_inf_at.paa)};
+    case (13)     : {QPATHTOEF(data,img\map\markers\o_inf_mmg.paa)};
+    case (14)     : {QPATHTOEF(data,img\map\markers\o_inf_mat.paa)};
+    case (15)     : {QPATHTOEF(data,img\map\markers\o_inf_mmortar.paa)};
+    case (16)     : {QPATHTOEF(data,img\map\markers\o_inf_aa.paa)};
     _color = GVAR(colorGreen);
     case (20)     : {"\A3\ui_f\data\map\markers\military\join_CA.paa"};
     case (21)     : {"\A3\ui_f\data\map\markers\military\circle_CA.paa"};
@@ -69,6 +70,9 @@ private _texture2 = switch(_markerSize) do {
     case (2) : {"\A3\ui_f\data\map\markers\nato\group_1.paa"};
     case (3) : {"\A3\ui_f\data\map\markers\nato\group_2.paa"};
     case (4) : {"\A3\ui_f\data\map\markers\nato\group_3.paa"};
+    case (5) : {"\A3\ui_f\data\map\markers\nato\group_4.paa"};
+    case (6) : {"\A3\ui_f\data\map\markers\nato\group_5.paa"};
+
     default {""};
 };
 
@@ -87,4 +91,4 @@ private _dir = switch(_markerDir) do {
 
 private _align = if ((_dir > 0) && (_dir < 180)) then {"left"} else {"right"};
 
-[_pos,_texture1,_texture2,_dir,_color,_text,_align]
+[_pos,_texture1,GVAR(iconSize),_texture2,GVAR(groupOverlayIconSize),_dir,_color,_text,_align]

@@ -22,10 +22,9 @@
 */
 if !(isServer) exitWith {};
 
-params ["_encryptionKey","_markerIndex","_transactionId"];
-
+params ["_encryptionKey","_markerIndex"];
 // get the marker list that corresponds to the encryption key
-private _userMarkerList = GVAR(userMarkerListsServer) get [_encryptionKey,[]];
+private _userMarkerList = GVAR(userMarkerListsServer) getOrDefault [_encryptionKey,[]];
 if(_userMarkerList isEqualTo []) exitWith {};
 
 // try to find the marker to be removed
