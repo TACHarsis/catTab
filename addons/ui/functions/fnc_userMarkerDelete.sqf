@@ -25,7 +25,7 @@ if !(hasInterface) exitWith {};
 
 params ["_encryptionKey","_markerIndex","_transactionId"];
 
-if(!isNil "_transactionId") exitWith{};
+if(isNil "_transactionId") exitWith{};
 
 if (GVAR(userMarkerTransactionId) == _transactionId) exitWith {};
 if (GVAR(userMarkerTransactionId) != (_transactionId -1)) exitWith {
