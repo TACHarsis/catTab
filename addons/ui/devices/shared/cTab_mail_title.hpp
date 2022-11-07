@@ -32,7 +32,7 @@ class GVAR(mail_ico_disp) {
             y = CUSTOM_GRID_Y;
             w = CUSTOM_GRID_WAbs;
             h = CUSTOM_GRID_HAbs;
-            text = QPATHTOEF(data,img\icon_mail_ca.paa);
+            text = QPATHTOEF(data,img\ui\messaging\icon_mail_ca.paa);
         };
     };
 };

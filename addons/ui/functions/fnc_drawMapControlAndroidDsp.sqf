@@ -23,7 +23,7 @@ _ctrlScreen drawIcon [
     GVAR(mapToolsPlayerVehicleIconColor),
     _playerPos,
     GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-    _heading,"", 1,GVAR(txtSize),"TahomaB","right"
+    _heading,"", 1,GVAR(textSize),"TahomaB","right"
 ];
 
 true

@@ -23,7 +23,7 @@ _ctrlScreen drawIcon [
     GVAR(TADOwnIconColor),
     _playerPos,
     GVAR(ownVehicleIconScaledSize),GVAR(ownVehicleIconScaledSize),
-    _heading,"", 1,GVAR(txtSize),"TahomaB","right"
+    _heading,"", 1,GVAR(textSize),"TahomaB","right"
 ];
 
 // update hook information

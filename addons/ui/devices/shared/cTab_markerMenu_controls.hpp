@@ -77,7 +77,7 @@ class MainSubmenu: cTab_RscControlsGroup {
 };
 
 class EnemySub1: cTab_RscControlsGroup {
-    #define cTab_MENU_MAX_ELEMENTS 8
+    #define cTab_MENU_MAX_ELEMENTS 9
     idc = 3301;
     x = MENU_X;
     y = MENU_Y;
@@ -154,15 +154,25 @@ class EnemySub1: cTab_RscControlsGroup {
             sizeEx = MENU_sizeEx;
             action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,5)];[12] call FUNC(userMenuSelect));
         };
-        class uknbtn: cTab_MenuItem {
-            idc = IDC_USRMN_UKNBTN;
-            text = "Unknown"; //--- ToDo: Localize;
+        class nvlbtn: cTab_MenuItem {
+            idc = IDC_USRMN_NVLBTN;
+            text = "Naval"; //--- ToDo: Localize;
             x = 0;
             y = MENU_elementY(7);
             w = MENU_W;
             h = MENU_elementH;
             sizeEx = MENU_sizeEx;
             action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,6)];[12] call FUNC(userMenuSelect));
+        };
+        class uknbtn: cTab_MenuItem {
+            idc = IDC_USRMN_UKNBTN;
+            text = "Unknown"; //--- ToDo: Localize;
+            x = 0;
+            y = MENU_elementY(8);
+            w = MENU_W;
+            h = MENU_elementH;
+            sizeEx = MENU_sizeEx;
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,7)];[12] call FUNC(userMenuSelect));
         };
         class exit: cTab_MenuExit {
             idc = -1;
@@ -178,7 +188,7 @@ class EnemySub1: cTab_RscControlsGroup {
 };
 
 class EnemySub2: cTab_RscControlsGroup {
-    #define cTab_MENU_MAX_ELEMENTS 6
+    #define cTab_MENU_MAX_ELEMENTS 8
     idc = 3303;
     x = MENU_X;
     y = MENU_Y;
@@ -241,6 +251,26 @@ class EnemySub2: cTab_RscControlsGroup {
             h = MENU_elementH;
             sizeEx = MENU_sizeEx;
             action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(2,4)];[13] call FUNC(userMenuSelect));
+        };
+        class cpnynbtn: cTab_MenuItem {
+            idc = IDC_USRMN_CPNYBTN;
+            text = "Company"; //--- ToDo: Localize;
+            x = 0;
+            y = MENU_elementY(6);
+            w = MENU_W;
+            h = MENU_elementH;
+            sizeEx = MENU_sizeEx;
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(2,5)];[13] call FUNC(userMenuSelect));
+        };
+        class btlnbtn: cTab_MenuItem {
+            idc = IDC_USRMN_CPNYBTN;
+            text = "Battalion"; //--- ToDo: Localize;
+            x = 0;
+            y = MENU_elementY(7);
+            w = MENU_W;
+            h = MENU_elementH;
+            sizeEx = MENU_sizeEx;
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(2,6)];[13] call FUNC(userMenuSelect));
         };
         class exit: cTab_MenuExit {
             idc = -1;
@@ -395,7 +425,7 @@ class EnemySub4: cTab_RscControlsGroup {
             w = MENU_W;
             h = MENU_elementH;
             sizeEx = MENU_sizeEx;
-            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,7)];[13] call FUNC(userMenuSelect));
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,10)];[13] call FUNC(userMenuSelect));
         };
         class lmg_btn: cTab_MenuItem {
             idc = -1;
@@ -405,7 +435,7 @@ class EnemySub4: cTab_RscControlsGroup {
             w = MENU_W;
             h = MENU_elementH;
             sizeEx = MENU_sizeEx;
-            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,8)];[13] call FUNC(userMenuSelect));
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,11)];[13] call FUNC(userMenuSelect));
         };
         class at_btn: cTab_MenuItem {
             idc = -1;
@@ -415,7 +445,7 @@ class EnemySub4: cTab_RscControlsGroup {
             w = MENU_W;
             h = MENU_elementH;
             sizeEx = MENU_sizeEx;
-            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,9)];[13] call FUNC(userMenuSelect));
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,12)];[13] call FUNC(userMenuSelect));
         };
         class mmg_btn: cTab_MenuItem {
             idc = -1;
@@ -425,7 +455,7 @@ class EnemySub4: cTab_RscControlsGroup {
             w = MENU_W;
             h = MENU_elementH;
             sizeEx = MENU_sizeEx;
-            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,10)];[13] call FUNC(userMenuSelect));
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,13)];[13] call FUNC(userMenuSelect));
         };
         class mat_btn: cTab_MenuItem {
             idc = -1;
@@ -435,7 +465,7 @@ class EnemySub4: cTab_RscControlsGroup {
             w = MENU_W;
             h = MENU_elementH;
             sizeEx = MENU_sizeEx;
-            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,11)];[13] call FUNC(userMenuSelect));
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,14)];[13] call FUNC(userMenuSelect));
         };
         class aa_btn: cTab_MenuItem {
             idc = -1;
@@ -445,7 +475,7 @@ class EnemySub4: cTab_RscControlsGroup {
             w = MENU_W;
             h = MENU_elementH;
             sizeEx = MENU_sizeEx;
-            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,13)];[13] call FUNC(userMenuSelect));
+            action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(1,15)];[13] call FUNC(userMenuSelect));
         };
         class mmortar_btn: cTab_MenuItem {
             idc = -1;

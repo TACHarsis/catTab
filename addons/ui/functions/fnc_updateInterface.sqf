@@ -123,16 +123,16 @@ if (isNil "_mode") then {
             private _nightMode = (_value isEqualTo 1 || {_value isEqualTo 2 && (sunOrMoon < 0.2)});
             private _background = switch (true) do {
                 case (_displayName in [QGVARMAIN(TAD_dsp),QGVARMAIN(TAD_dlg)]) : {
-                    [QPATHTOEF(data,img\TAD_background_ca.paa), QPATHTOEF(data,img\TAD_background_night_ca.paa)] select _nightMode
+                    [QPATHTOEF(data,img\ui\display_frames\TAD_background_ca.paa), QPATHTOEF(data,img\ui\display_frames\TAD_background_night_ca.paa)] select _nightMode
                 };
                 case (_displayName in [QGVARMAIN(Android_dsp),QGVARMAIN(Android_dlg)]) : {
-                    [QPATHTOEF(data,img\android_background_ca.paa), QPATHTOEF(data,img\android_background_night_ca.paa)] select _nightMode
+                    [QPATHTOEF(data,img\ui\display_frames\android_background_ca.paa), QPATHTOEF(data,img\ui\display_frames\android_background_night_ca.paa)] select _nightMode
                 };
                 case (_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)]) : {
-                    [QPATHTOEF(data,img\microDAGR_background_ca.paa), QPATHTOEF(data,img\microDAGR_background_night_ca.paa)] select _nightMode
+                    [QPATHTOEF(data,img\ui\display_frames\microDAGR_background_ca.paa), QPATHTOEF(data,img\ui\display_frames\microDAGR_background_night_ca.paa)] select _nightMode
                 };
                 case (_displayName in [QGVARMAIN(Tablet_dlg)]) : {
-                    [QPATHTOEF(data,img\tablet_background_ca.paa), QPATHTOEF(data,img\tablet_background_night_ca.paa)] select _nightMode
+                    [QPATHTOEF(data,img\ui\display_frames\tablet_background_ca.paa), QPATHTOEF(data,img\ui\display_frames\tablet_background_night_ca.paa)] select _nightMode
                 };
                 default {""};
             };
@@ -185,7 +185,20 @@ if (isNil "_mode") then {
                     IDC_CTAB_OSD_HOOK_DIR,
                     IDC_CTAB_NOTIFICATION]
                 };
-                case (_displayName in [QGVARMAIN(FBCB2_dlg),QGVARMAIN(TAD_dlg)]) : {
+                case (_displayName in [QGVARMAIN(FBCB2_dlg)]) : {
+                    [3301,3302,3303,3304,3305,3306,3307,
+                    IDC_CTAB_MARKER_MENU_MAIN,
+                    IDC_CTAB_NOTIFICATION,
+                    IDC_CTAB_GROUP_MESSAGE,
+                    IDC_CTAB_SCREEN,
+                    IDC_CTAB_SCREEN_TOPO,
+                    IDC_CTAB_OSD_HOOK_GRID,
+                    IDC_CTAB_OSD_HOOK_ELEVATION,
+                    IDC_CTAB_OSD_HOOK_DST,
+                    IDC_CTAB_OSD_HOOK_DIR
+                    ]
+                };
+                case (_displayName in [QGVARMAIN(TAD_dlg)]) : {
                     [3301,3302,3303,3304,3305,3306,3307,
                     IDC_CTAB_MARKER_MENU_MAIN,
                     IDC_CTAB_NOTIFICATION]

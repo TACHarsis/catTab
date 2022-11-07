@@ -25,14 +25,14 @@ uiNamespace setVariable [QGVAR(msgPlayerList), _plrList];
     _x params ["_title", "_msgBody", "_msgState"];
 
     private _img = switch (_msgState) do {
-        case (0) : {QPATHTOEF(data,img\icoUnopenedmail.paa)};
-        case (1) : {QPATHTOEF(data,img\icoOpenmail.paa)};
-        case (2) : {QPATHTOEF(data,img\icon_sentMail_ca.paa)};
+        case (0) : {QPATHTOEF(data,img\ui\messaging\icoUnopenedmail.paa)};
+        case (1) : {QPATHTOEF(data,img\ui\messaging\icoOpenmail.paa)};
+        case (2) : {QPATHTOEF(data,img\ui\messaging\icon_sentMail_ca.paa)};
         default {""}; //CC: some default here in case we add more types?
     };
     private _index = _msgControl lbAdd _title;
     _msgControl lbSetPicture [_index,_img];
-    private _preview = _msgBody select [0, 15 min (count _msgBody -1)];
+    private _preview = _msgBody select [0, 15 min (count _msgBody)];
     _msgControl lbSetTooltip [_index,_preview];
 } foreach _msgArray;
 

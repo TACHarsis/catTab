@@ -52,8 +52,8 @@ class GVARMAIN(TAD_dsp) {
             ### OSD GUI controls ###
         */
         class navModeOrScale: cTab_TAD_OSD_navModeOrScale {
-            x = pxToScreen_X(cTab_GUI_TAD_OSD_EDGE_R - cTab_GUI_TAD_OSD_ELEMENT_MODE_W * 2);
-            w = pxToScreen_W(cTab_GUI_TAD_OSD_ELEMENT_MODE_W * 2);
+            x = TAD_pixel2Screen_X(OSD_edge_px_R - OSD_elementMode_size_px_W * 2);
+            w = TAD_pixel2Screen_W(OSD_elementMode_size_px_W * 2);
         };
         class modeTAD: cTab_TAD_OSD_modeTAD {};
         class txtToggleIconBg: cTab_TAD_OSD_txtToggleIconBg {};

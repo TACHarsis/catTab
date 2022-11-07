@@ -14,7 +14,7 @@
 
 #include "cTab_android_controls.hpp"
 
-#define MENU_sizeEx pxToScreen_H(cTab_GUI_android_OSD_TEXT_STD_SIZE)
+#define MENU_sizeEx ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px)
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(Android_dsp) {

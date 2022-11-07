@@ -10,6 +10,6 @@ files = [
     "*.paa",
     "ctab_settings.hpp"
 ]
-ignore = [
-    "*.png"
+exclude = [
+    "*.png",
 ]

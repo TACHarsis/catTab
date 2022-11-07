@@ -29,7 +29,7 @@ params ["_display","_dikCode","_shiftKey","_ctrlKey","_altKey"];
 
 private _displayName = GVAR(ifOpen) select 1;
 
-if (_dikCode == DIK_F1 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg)]}) exitWith {
+if (_dikCode == DIK_F1 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg),QGVARMAIN(FBCB2_dlg)]}) exitWith {
     [_displayName,[[QSETTING_MODE,QSETTING_MODE_BFT]]] call FUNC(setSettings);
     true
 };
@@ -41,7 +41,7 @@ if (_dikCode == DIK_F3 && {_displayName in [QGVARMAIN(Tablet_dlg)]}) exitWith {
     [_displayName,[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET]]] call FUNC(setSettings);
     true
 };
-if (_dikCode == DIK_F4 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg)]}) exitWith {
+if (_dikCode == DIK_F4 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg),QGVARMAIN(FBCB2_dlg)]}) exitWith {
     [_displayName,[[QSETTING_MODE,QSETTING_MODE_MESSAGES]]] call FUNC(setSettings);
     true
 };

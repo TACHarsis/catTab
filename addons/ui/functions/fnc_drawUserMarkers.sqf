@@ -3,7 +3,7 @@
     Name: Ctab_ui_fnc_drawUserMarkers
     
     Author(s):
-        Gundy, Riouken
+        Gundy, Riouken, Cat Harsis
 
     Description:
         Draw userMarkers held in GVAR(userMarkerListTranslated) to map control
@@ -11,11 +11,13 @@
         List format:
             Index 0: ARRAY  - marker position
             Index 1: STRING - path to marker icon
-            Index 2: STRING - path to marker size icon
-            Index 3: STRING - direction of reported movement
-            Index 4: ARRAY  - marker color
-            Index 5: STRING - marker time
-            Index 6: STRING - text alignment
+            Index 2: INTEGER - Size of icon
+            Index 3: STRING - path to marker size icon
+            Index 4: INTEGER - Size of icon overlay
+            Index 5: STRING - direction of reported movement
+            Index 6: ARRAY  - marker color
+            Index 7: STRING - marker time
+            Index 8: STRING - text alignment
     
     Parameters:
         0: OBJECT  - Map control to draw BFT icons on
@@ -30,36 +32,35 @@
 params  ["_ctrlScreen","_highlightCursorMarker"];
 
 private _arrowLength = GVAR(userMarkerArrowSize) * ctrlMapScale _ctrlScreen;
-private _cursorMarkerIndex = if (_highlightCursorMarker) then {[_ctrlScreen,GVAR(mapCursorPos)] call FUNC(userMarkerFind)} else {-1};
+private _cursorMarkerIndex = [
+        -1,
+        [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(userMarkerFind)
+    ] select _highlightCursorMarker;
 
 {
-    private _markerData = _x select 1;
-    private _pos = _markerData select 0;
-    private _texture1 = _markerData select 1;
-    private _texture2 = _markerData select 2;
-    private _dir = _markerData select 3;
-    private _color = if (_x select 0 != _cursorMarkerIndex) then {_markerData select 4} else {GVAR(miscColor)};
-    private _text = "";
-    if (_dir < 360) then {
+    _x params ["_markerIndex", "_markerData"];
+    _markerData params ["_pos","_texture1","_iconSize","_texture2","_overlayIconSize","_dir","_color",["_text", "", [""]],["_align", "left", [""]]];
+
+    private _color = [GVAR(miscColor), _color] select (_markerIndex != _cursorMarkerIndex);
+    if(_dir > 0) then {
         private _secondPos = [_pos,_arrowLength,_dir] call BIS_fnc_relPos;
         _ctrlScreen drawArrow [_pos, _secondPos, _color];
     };
-    if (GVAR(BFTtxt)) then {_text = _markerData select 5;};
     
     _ctrlScreen drawIcon [
         _texture1,
         _color,
         _pos, 
-        GVAR(iconSize), GVAR(iconSize), 
-        0, _text, 0, GVAR(txtSize),"TahomaB",_markerData select 6
+        _iconSize, _iconSize, 
+        0, ["",_text] select GVAR(textEnabled), 0, GVAR(textSize),"TahomaB",_align
     ];
     if (_texture2 != "") then {
         _ctrlScreen drawIcon [
             _texture2,
             _color,
             _pos,
-            GVAR(groupOverlayIconSize), GVAR(groupOverlayIconSize),
-            0, "", 0, GVAR(txtSize),"TahomaB","right"
+            _overlayIconSize, _overlayIconSize,
+            0, "", 0, GVAR(textSize),"TahomaB","right"
         ];
     };
 } foreach GVAR(userMarkerListTranslated);

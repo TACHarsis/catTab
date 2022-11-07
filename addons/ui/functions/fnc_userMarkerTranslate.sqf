@@ -77,7 +77,6 @@ private _texture2 = switch(_markerSize) do {
 };
 
 private _dir = switch(_markerDir) do {
-    case (0) : {400};
     case (1) : {0};
     case (2) : {45};
     case (3) : {90};
@@ -86,9 +85,9 @@ private _dir = switch(_markerDir) do {
     case (6) : {225};
     case (7) : {270};
     case (8) : {315};
-    default {700};
+    default {-1};
 };
 
 private _align = if ((_dir > 0) && (_dir < 180)) then {"left"} else {"right"};
 
-[_pos,_texture1,GVAR(iconSize),_texture2,GVAR(groupOverlayIconSize),_dir,_color,_text,_align]
+[_pos,_texture1,GVAR(iconSize)+(_markerSize*0.75),_texture2,GVAR(groupOverlayIconSize)+(_markerSize*0.75*1.65),_dir,_color,_text,_align]

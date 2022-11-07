@@ -11,15 +11,14 @@
 #define CUSTOM_GRID_HAbs    (safezoneH * 1.2)
 #define CUSTOM_GRID_WAbs    (CUSTOM_GRID_HAbs * 3/4)
 // since the actual map position is not in the center, we correct for it by shifting it right
-// (BACKGROUND_PIXEL_W - cTab_GUI_tablet_MAP_W) / 2 - cTab_GUI_tablet_MAP_X
-// is 96.5, that is the pixel amount we have to shift by, devided by BACKGROUND_PIXEL_W
+// (TABLET_BackgroundImage_px_W - TABLET_mapRect_px_W) / 2 - TABLET_mapRect_px_X
+// is 96.5, that is the pixel amount we have to shift by, devided by TABLET_BackgroundImage_px_W
 // to make it a ratio that we can apply to CUSTOM_GRID_WAbs in order to get a screen value to shift by
 #define CUSTOM_GRID_X    (safezoneX + (safezoneW - CUSTOM_GRID_WAbs) / 2 + (CUSTOM_GRID_WAbs * 96.5 / 2048))
 #define CUSTOM_GRID_Y    (safezoneY + (safezoneH - CUSTOM_GRID_HAbs) / 2)
 
 #include "cTab_Tablet_controls.hpp"
-
-#define MENU_sizeEx pxToScreen_H(cTab_GUI_tablet_OSD_TEXT_STD_SIZE)
+#define MENU_sizeEx TABLET_pixel2Screen_H(OSD_elementBase_textSize_px)
 #include "..\shared\cTab_defines.hpp"
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
@@ -33,29 +32,31 @@ class GVARMAIN(Tablet_dlg){
     class controlsBackground {
         class windowsBG: cTab_RscPicture {
             idc = IDC_CTAB_WIN_BACK;
-            text = "#(argb,8,8,3)color(0.2,0.431,0.647,1)";
-            x = pxToScreen_X(cTab_GUI_tablet_MAP_X);
-            y = pxToScreen_Y(cTab_GUI_tablet_MAP_Y);
-            w = pxToScreen_W(cTab_GUI_tablet_MAP_W);
-            h = pxToScreen_H(cTab_GUI_tablet_MAP_H);
+            text=QPATHTOEF(data,img\ui\desktop\classic\tablet_desktop_background_0_co.paa);
+            //text = "#(argb,8,8,3)color(0.2,0.431,0.647,1)";
+            //onLoad = QUOTE((_this # 0) ctrlSetText format[ARR_4('#(argb,8,8,3)color(%1,%2,%3,1)',GVAR(tabletDesktopColor) select 0,GVAR(tabletDesktopColor) select 1,GVAR(tabletDesktopColor) select 2)];);
+            x = TABLET_pixel2Screen_X(TABLET_mapRect_px_X);
+            y = TABLET_pixel2Screen_Y(TABLET_mapRect_px_Y);
+            w = TABLET_pixel2Screen_W(TABLET_mapRect_px_W);
+            h = TABLET_pixel2Screen_H(TABLET_mapRect_px_H);
         };
         class windowsBar: cTab_RscPicture {
             idc = IDC_CTAB_WIN_TASKBAR;
-            text = QPATHTOEF(data,img\Desktop_bar.jpg);
-            x = pxToScreen_X(cTab_GUI_tablet_TASKBAR_X);
-            y = pxToScreen_Y(cTab_GUI_tablet_TASKBAR_Y);
-            w = pxToScreen_W(cTab_GUI_tablet_TASKBAR_W);
-            h = pxToScreen_H(cTab_GUI_tablet_TASKBAR_H);
+            text = QPATHTOEF(data,img\ui\desktop\classic\Desktop_bar_ca.paa);
+            x = TABLET_pixel2Screen_X(TASKBAR_area_px_X);
+            y = TABLET_pixel2Screen_Y(TASKBAR_area_px_Y);
+            w = TABLET_pixel2Screen_W(TASKBAR_area_px_W);
+            h = TABLET_pixel2Screen_H(TASKBAR_area_px_H);
         };
         class MiniMapBG: cTab_Tablet_window_back_BL {
             idc = IDC_CTAB_MINIMAPBG;
         };
         class cTabUavMap: cTab_Tablet_RscMapControl {
             idc = IDC_CTAB_CTABUAVMAP;
-            x = pxToScreen_X(cTab_GUI_tablet_WINDOW_CONTENT_L_X);
-            y = pxToScreen_Y(cTab_GUI_tablet_WINDOW_CONTENT_B_Y);
-            w = pxToScreen_W(cTab_GUI_tablet_WINDOW_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_tablet_WINDOW_CONTENT_H);
+            x = TABLET_pixel2Screen_X(WINDOW_SMALL_contentRect_px_L_X);
+            y = TABLET_pixel2Screen_Y(WINDOW_SMALL_contentRect_px_B_Y);
+            w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
+            h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
             onDraw = QUOTE(nop = _this call FUNC(drawUAV););
             onMouseButtonDblClick = "";
         };
@@ -90,10 +91,10 @@ class GVARMAIN(Tablet_dlg){
          // ---------- DESKTOP -----------
          class Desktop: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_DESKTOP;
-            x = pxToScreen_X(cTab_GUI_tablet_SCREEN_CONTENT_X);
-            y = pxToScreen_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y);
-            w = pxToScreen_W(cTab_GUI_tablet_SCREEN_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_tablet_SCREEN_CONTENT_H);
+            x = TABLET_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = TABLET_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = TABLET_pixel2Screen_H(SCREEN_contentRect_px_H);
             class VScrollbar {};
             class HScrollbar {};
             class Scrollbar {};
@@ -101,32 +102,32 @@ class GVARMAIN(Tablet_dlg){
                 class actBFTtxt: cTab_ActiveText {
                     style = ST_PICTURE;
                     idc = IDC_CTAB_ACTBFTTXT;
-                    text = QPATHTOEF(data,img\cTab_BFT_ico.paa) ;//"Blue Force Tracker"; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_tablet_SCREEN_CONTENT_X + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_DESKTOP_ICON_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_DESKTOP_ICON_H);
+                    text = QPATHTOEF(data,img\ui\desktop\classic\cTab_BFT_ico.paa) ;//"Blue Force Tracker"; //--- ToDo: Localize;
+                    x = TABLET_pixel2GroupRect_X(SCREEN_contentRect_px_X + SCREEN_icon_OFFSET_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_contentRect_px_Y + SCREEN_icon_OFFSET_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_icon_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_icon_px_H);
                     action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_BFT')]])] call FUNC(setSettings));
                     toolTip = "FBCB2 - Blue Force Tracker";
                 };
                 class actUAVtxt: actBFTtxt {
                     idc = IDC_CTAB_ACTUAVTXT;
-                    text = QPATHTOEF(data,img\cTab_UAV_ico.paa) ;//"UAV Intelligence"; //--- ToDo: Localize;
-                    y = pxToGroup_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_Y * 2 + cTab_GUI_tablet_DESKTOP_ICON_H);
+                    text = QPATHTOEF(data,img\ui\desktop\classic\cTab_UAV_ico.paa) ;//"UAV Intelligence"; //--- ToDo: Localize;
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_contentRect_px_Y + SCREEN_icon_OFFSET_px_Y * 2 + SCREEN_icon_px_H);
                     action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_CAM_UAV')]])] call FUNC(setSettings));
                     toolTip = "UAV Video Feeds";
                 };
                 class actVIDtxt: actBFTtxt {
                     idc = IDC_CTAB_ACTVIDTXT;
-                    text = QPATHTOEF(data,img\cTab_HMC_ico.paa) ;//"Live Video Feeds"; //--- ToDo: Localize;
-                    y = pxToGroup_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_Y * 3 + cTab_GUI_tablet_DESKTOP_ICON_H * 2);
+                    text = QPATHTOEF(data,img\ui\desktop\classic\cTab_HMC_ico.paa) ;//"Live Video Feeds"; //--- ToDo: Localize;
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_contentRect_px_Y + SCREEN_icon_OFFSET_px_Y * 3 + SCREEN_icon_px_H * 2);
                     action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_CAM_HELMET')]])] call FUNC(setSettings));
                     toolTip = "Live Helmet Cam Video Feeds";
                 };
                 class actMSGtxt: actBFTtxt {
                     idc = IDC_CTAB_ACTMSGTXT;
-                    text = QPATHTOEF(data,img\Mail_Main_Icon_ico.paa) ;
-                    y = pxToGroup_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y + cTab_GUI_tablet_DESKTOP_ICON_OFFSET_Y * 4 + cTab_GUI_tablet_DESKTOP_ICON_H * 3);
+                    text = QPATHTOEF(data,img\ui\desktop\classic\Ctab_mail_ico.paa) ;
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_contentRect_px_Y + SCREEN_icon_OFFSET_px_Y * 4 + SCREEN_icon_px_H * 3);
                     action = QUOTE([ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_MESSAGES')]])] call FUNC(setSettings));
                     toolTip = "Text Messaging System";
                 };
@@ -135,101 +136,101 @@ class GVARMAIN(Tablet_dlg){
          // ---------- UAV -----------
          class UAV: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_UAV;
-            x = pxToScreen_X(cTab_GUI_tablet_SCREEN_CONTENT_X);
-            y = pxToScreen_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y);
-            w = pxToScreen_W(cTab_GUI_tablet_SCREEN_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_tablet_SCREEN_CONTENT_H);
+            x = TABLET_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = TABLET_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = TABLET_pixel2Screen_H(SCREEN_contentRect_px_H);
             class VScrollbar {};
             class HScrollbar {};
             class Scrollbar {};
             class controls {
                 class UAVListBG: cTab_Tablet_window_back_TL {
                     idc = 9;
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_BACK_L_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_BACK_T_Y);
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_OFFSET_L_px_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_OFFSET_T_px_Y);
                 };
                 class UAVVidBG1: cTab_Tablet_window_back_TR {
                     idc = 10;
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_BACK_R_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_BACK_T_Y);
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_OFFSET_R_px_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_OFFSET_T_px_Y);
                 };
                 class UAVVidBG2: cTab_Tablet_window_back_BR {
                     idc = 11;
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_BACK_R_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_BACK_B_Y);
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_OFFSET_R_px_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_OFFSET_B_px_Y);
                 };
                 class GVARMAIN(UAVList): cTab_RscListbox_Tablet {
                     idc = IDC_CTAB_CTABUAVList;
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_CONTENT_L_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_CONTENT_T_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_WINDOW_CONTENT_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_WINDOW_CONTENT_H);
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_contentRect_px_L_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_contentRect_px_T_Y);
+                    w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
+                    h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
                     onLBSelChanged = QUOTE(if (!GVAR(openStart) && ((_this select 1) != -1)) then {ARR_2(['GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_CAM_UAV',(_this select 0) lbData (_this select 1))]])] call FUNC(setSettings);};);
                 };
                 class cTabUAVdisplay: cTab_RscPicture {
                     idc = IDC_CTAB_CTABUAVDISPLAY;
-                    text = "#(argb,512,512,1)r2t(rendertarget8,1.1896551724)";
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_CONTENT_R_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_CONTENT_T_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_WINDOW_CONTENT_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_WINDOW_CONTENT_H);
+                    text = "#(argb,1024,1024,1)r2t(rendertarget8,1.1896551724)";
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_contentRect_px_R_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_contentRect_px_T_Y);
+                    w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
+                    h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
                 };
                 class cTabUAV2nddisplay: cTab_RscPicture {
                     idc = IDC_CTAB_CTABUAV2NDDISPLAY;
-                    text = "#(argb,512,512,1)r2t(rendertarget9,1.1896551724)";
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_CONTENT_R_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_CONTENT_B_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_WINDOW_CONTENT_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_WINDOW_CONTENT_H);
+                    text = "#(argb,1024,1024,1)r2t(rendertarget9,1.1896551724)";
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_contentRect_px_R_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_contentRect_px_B_Y);
+                    w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
+                    h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
                 };
             };
          };
          // ---------- HELMET CAM -----------
          class HCAM: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_HCAM;
-            x = pxToScreen_X(cTab_GUI_tablet_SCREEN_CONTENT_X);
-            y = pxToScreen_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y);
-            w = pxToScreen_W(cTab_GUI_tablet_SCREEN_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_tablet_SCREEN_CONTENT_H);
+            x = TABLET_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = TABLET_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = TABLET_pixel2Screen_H(SCREEN_contentRect_px_H);
             class VScrollbar {};
             class HScrollbar {};
             class Scrollbar {};
             class controls {
                 class HcamListBG: cTab_Tablet_window_back_TL {
                     idc = 12;
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_BACK_L_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_BACK_T_Y);
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_OFFSET_L_px_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_OFFSET_T_px_Y);
                 };
                 class HcamVidBG: cTab_Tablet_window_back_TR {
                     idc = 14;
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_BACK_R_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_BACK_T_Y);
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_OFFSET_R_px_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_OFFSET_T_px_Y);
                 };
                 class GVARMAIN(hCamList): cTab_RscListbox_Tablet {
                     idc = IDC_CTAB_CTABHCAMLIST;
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_CONTENT_L_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_CONTENT_T_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_WINDOW_CONTENT_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_WINDOW_CONTENT_H);
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_contentRect_px_L_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_contentRect_px_T_Y);
+                    w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
+                    h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
                     onLBSelChanged = QUOTE(if (!GVAR(openStart) && ((_this select 1) != -1)) then {[ARR_2('GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_CAM_HELMET',(_this select 0) lbData (_this select 1))]])] call FUNC(setSettings);};);
                 };
                 class cTabHcamDisplay: cTab_RscPicture {
                     idc = IDC_CTAB_CTABHCAMDISPLAY;
-                    text = "#(argb,512,512,1)r2t(rendertarget12,1.1896551724)";
-                    x = pxToGroup_X(cTab_GUI_tablet_WINDOW_CONTENT_R_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_WINDOW_CONTENT_T_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_WINDOW_CONTENT_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_WINDOW_CONTENT_H);
+                    text = "#(argb,1024,1024,1)r2t(rendertarget12,1.1896551724)";
+                    x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_contentRect_px_R_X);
+                    y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_contentRect_px_T_Y);
+                    w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
+                    h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
                 };
             };
          };
         // ---------- MESSAGING -----------
          class MESSAGE: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_MESSAGE;
-            x = pxToScreen_X(cTab_GUI_tablet_SCREEN_CONTENT_X);
-            y = pxToScreen_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y);
-            w = pxToScreen_W(cTab_GUI_tablet_SCREEN_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_tablet_SCREEN_CONTENT_H);
+            x = TABLET_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = TABLET_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = TABLET_pixel2Screen_H(SCREEN_contentRect_px_H);
             class VScrollbar {};
             class HScrollbar {};
             class Scrollbar {};
@@ -237,18 +238,18 @@ class GVARMAIN(Tablet_dlg){
                 class msgframe: cTab_RscFrame {
                     idc = 15;
                     text = "Read Message"; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_tablet_MESSAGE_MESSAGETEXT_FRAME_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_MESSAGE_MESSAGETEXT_FRAME_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_MESSAGE_MESSAGETEXT_FRAME_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_MESSAGE_MESSAGETEXT_FRAME_H);
+                    x = TABLET_pixel2GroupRect_X(SCREEN_messages_read_frame_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_messages_read_frame_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_messages_read_frame_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_messages_read_frame_px_H);
                 };
                 class msgListbox: cTab_RscListbox_Tablet {
                     idc = IDC_CTAB_MSG_LIST;
                     style = LB_MULTI;
-                    x = pxToGroup_X(cTab_GUI_tablet_MESSAGE_MESSAGELIST_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_MESSAGE_MESSAGELIST_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_MESSAGE_MESSAGELIST_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_MESSAGE_MESSAGELIST_H);
+                    x = TABLET_pixel2GroupRect_X(SCREEN_messages_read_list_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_messages_read_list_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_messages_read_list_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_messages_read_list_px_H);
                     onLBSelChanged = QUOTE(_this call FUNC(messagingGetMessage););
                 };
                 class msgTxt: cTab_RscEdit_Tablet {
@@ -257,45 +258,45 @@ class GVARMAIN(Tablet_dlg){
                     style = ST_MULTI;
                     lineSpacing = 0.2;
                     text = "No Message Selected"; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_tablet_MESSAGE_MESSAGETEXT_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_MESSAGE_MESSAGETEXT_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_MESSAGE_MESSAGETEXT_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_MESSAGE_MESSAGETEXT_H);
+                    x = TABLET_pixel2GroupRect_X(SCREEN_messages_read_text_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_messages_read_text_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_messages_read_text_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_messages_read_text_px_H);
                     canModify = 0;
                 };
                 class composeFrame: cTab_RscFrame {
                     idc = 16;
                     text = "Compose Message"; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_tablet_MESSAGE_COMPOSE_FRAME_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_MESSAGE_COMPOSE_FRAME_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_MESSAGE_COMPOSE_FRAME_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_MESSAGE_COMPOSE_FRAME_H);
+                    x = TABLET_pixel2GroupRect_X(SCREEN_messages_compose_frame_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_messages_compose_frame_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_messages_compose_frame_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_messages_compose_frame_px_H);
                 };
                 class playerlistbox: cTab_RscListbox_Tablet {
                     idc = IDC_CTAB_MSG_RECIPIENTS;
                     style = LB_MULTI;
-                    x = pxToGroup_X(cTab_GUI_tablet_MESSAGE_PLAYERLIST_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_MESSAGE_PLAYERLIST_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_MESSAGE_PLAYERLIST_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_MESSAGE_PLAYERLIST_H);
+                    x = TABLET_pixel2GroupRect_X(SCREEN_messages_compose_list_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_messages_compose_list_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_messages_compose_list_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_messages_compose_list_px_H);
                 };
                 class deletebtn: cTab_RscButton_Tablet {
                     idc = IDC_CTAB_MSG_BTNDELETE;
                     text = "Delete"; //--- ToDo: Localize;
                     tooltip = "Delete Selected Message(s)";
-                    x = pxToGroup_X(cTab_GUI_tablet_MESSAGE_BUTTON_DELETE_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_MESSAGE_BUTTON_DELETE_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_MESSAGE_BUTTON_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_MESSAGE_BUTTON_H);
+                    x = TABLET_pixel2GroupRect_X(SCREEN_messages_button_delete_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_messages_button_delete_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_messages_button_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_messages_button_H);
                     action = QUOTE(['GVARMAIN(Tablet_dlg)'] call FUNC(messagingDeleteSelectedMessage););
                 };
                 class sendbtn: cTab_RscButton_Tablet {
                     idc = IDC_CTAB_MSG_BTNSEND;
                     text = "Send"; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_tablet_MESSAGE_BUTTON_SEND_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_MESSAGE_BUTTON_SEND_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_MESSAGE_BUTTON_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_MESSAGE_BUTTON_H);
+                    x = TABLET_pixel2GroupRect_X(SCREEN_messages_button_send_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_messages_button_send_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_messages_button_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_messages_button_H);
                     action = QUOTE(call FUNC(messagingSendMessage););
                 };
                 class edittxtbox: cTab_RscEdit_Tablet {
@@ -304,21 +305,21 @@ class GVARMAIN(Tablet_dlg){
                     style = ST_MULTI;
                     lineSpacing = 0.2;
                     text = ""; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_tablet_MESSAGE_COMPOSE_TEXT_X);
-                    y = pxToGroup_Y(cTab_GUI_tablet_MESSAGE_COMPOSE_TEXT_Y);
-                    w = pxToScreen_W(cTab_GUI_tablet_MESSAGE_COMPOSE_TEXT_W);
-                    h = pxToScreen_H(cTab_GUI_tablet_MESSAGE_COMPOSE_TEXT_H);
+                    x = TABLET_pixel2GroupRect_X(SCREEN_messages_compose_text_px_X);
+                    y = TABLET_pixel2GroupRect_Y(SCREEN_messages_compose_text_px_Y);
+                    w = TABLET_pixel2Screen_W(SCREEN_messages_compose_text_px_W);
+                    h = TABLET_pixel2Screen_H(SCREEN_messages_compose_text_px_H);
                 };
             };
         };
         // ---------- FULLSCREEN HCAM -----------
         class cTabHcamFull: cTab_RscPicture {
             idc = IDC_CTAB_HCAM_FULL;
-            text = "#(argb,512,512,1)r2t(rendertarget13,1.3096153846)";
-            x = pxToScreen_X(cTab_GUI_tablet_SCREEN_CONTENT_X);
-            y = pxToScreen_Y(cTab_GUI_tablet_SCREEN_CONTENT_Y);
-            w = pxToScreen_W(cTab_GUI_tablet_SCREEN_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_tablet_SCREEN_CONTENT_H);
+            text = "#(argb,1024,1024,1)r2t(rendertarget13,1.3096153846)";
+            x = TABLET_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = TABLET_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = TABLET_pixel2Screen_H(SCREEN_contentRect_px_H);
          };
 
         /*

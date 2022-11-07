@@ -48,7 +48,8 @@
 #define IDC_USRMN_AMRBTN        	2005
 #define IDC_USRMN_HELIBTN       	2006
 #define IDC_USRMN_PLNBTN        	2007
-#define IDC_USRMN_UKNBTN        	2008
+#define IDC_USRMN_NVLBTN        	2008
+#define IDC_USRMN_UKNBTN        	2009
 #define IDC_USRMN_FTBTN         	2009
 #define IDC_USRMN_PATBTN        	2010
 #define IDC_USRMN_SQDBTN        	2011

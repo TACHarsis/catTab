@@ -39,7 +39,7 @@ GVAR(mapScaleInitialized) = false;
 ] call CBA_fnc_waitUntilAndExecute;
 // set air contact  color to purple
 GVAR(airContactColor) = [255/255, 0/255, 255/255, 1];
-// set misc color to neon yellow (CC: used for helmet cam and uav icon in their respective views, but also for a special kind of usermarker!!?)
+// set misc color to neon yellow (CC: used for helmet cam and uav icon in their respective views, but also for the highlighted user marker!!?)
 GVAR(miscColor) = [243/255, 243/255, 21/255, 1];
 // vehicle icon color is neon green
 GVAR(mapToolsPlayerVehicleIconColor) = [57/255, 255/255, 20/255, 1];
@@ -50,21 +50,21 @@ GVAR(TADOwnIconColor) = [57/255, 255/255, 20/255, 1];
 
 
 // set base colors from BI -- Helps keep colors matching if user changes colors in options.
-GVAR(colorBlue) = [
+GVAR(colorBLUFOR) = [
     profilenamespace getvariable ['Map_BLUFOR_R',0],
     profilenamespace getvariable ['Map_BLUFOR_G',1],
     profilenamespace getvariable ['Map_BLUFOR_B',1],
     profilenamespace getvariable ['Map_BLUFOR_A',0.8]
 ];
 
-GVAR(colorRed) = [
+GVAR(colorOPFOR) = [
     profilenamespace getvariable ['Map_OPFOR_R',0],
     profilenamespace getvariable ['Map_OPFOR_G',1],
     profilenamespace getvariable ['Map_OPFOR_B',1],
     profilenamespace getvariable ['Map_OPFOR_A',0.8]
 ];
 
-GVAR(colorGreen) = [
+GVAR(colorINDEPENDENT) = [
     profilenamespace getvariable ['Map_Independent_R',0],
     profilenamespace getvariable ['Map_Independent_G',1],
     profilenamespace getvariable ['Map_Independent_B',1],
@@ -73,8 +73,8 @@ GVAR(colorGreen) = [
 
 // Define Fire-Team colors
 // MAIN,RED,GREEN,BLUE,YELLOW
-GVAR(colorTeam) = [
-    GVAR(colorBlue),
+GVAR(teamColors) = [
+    [0,0,200/255,0.8], // Fireteam Blue
     [200/255,0,0,0.8], // Fireteam Red
     [0,199/255,0,0.8], // Fireteam Green
     [0,0,200/255,0.8], // Fireteam Blue
@@ -82,16 +82,16 @@ GVAR(colorTeam) = [
 ];
 
 
-
-
 // set icon size of own vehicle
 GVAR(ownVehicleIconBaseSize) = 18;
 GVAR(ownVehicleIconScaledSize) = GVAR(ownVehicleIconBaseSize) / (0.86 / (safezoneH * 0.8));
 
-GVAR(BFTtxt) = true;
+GVAR(textEnabled) = true;
 
 // Draw Map Tolls (Hook)
 GVAR(drawMapTools) = false;
+GVAR(mapToolsRangeFormatThreshold) = 750;
+
 
 // Base defines.
 GVAR(uavViewActive) = false;
@@ -122,3 +122,5 @@ GVAR(msgReceiveEHID) = [
 GVAR(actUAV) = nullObj;
 
 GVAR(notificationCache) = [];
+
+[] call FUNC(initSettings);

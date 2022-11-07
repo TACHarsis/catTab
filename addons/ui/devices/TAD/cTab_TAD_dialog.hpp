@@ -10,7 +10,7 @@
 #include "cTab_TAD_controls.hpp"
 #include "..\shared\cTab_defines.hpp"
 
-#define MENU_sizeEx pxToScreen_H(cTab_GUI_TAD_OSD_TEXT_STD_SIZE)
+#define MENU_sizeEx TAD_pixel2Screen_H(OSD_text_size_base_px)
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(TAD_dlg) {

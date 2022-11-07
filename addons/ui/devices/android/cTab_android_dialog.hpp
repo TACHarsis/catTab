@@ -16,7 +16,7 @@
 #include "cTab_android_controls.hpp"
 #include "..\shared\cTab_defines.hpp"
 
-#define MENU_sizeEx pxToScreen_H(27)
+#define MENU_sizeEx ANDROID_pixel2Screen_H(27)
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(Android_dlg) {
@@ -59,10 +59,10 @@ class GVARMAIN(Android_dlg) {
         // ---------- MAIN MENU -----------
         class menuContainer: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_MENU;
-            x = pxToScreen_X(cTab_GUI_android_OSD_MENU_X);
-            y = pxToScreen_Y(cTab_GUI_android_OSD_MENU_Y);
-            w = pxToScreen_W(cTab_GUI_android_OSD_MENU_W);
-            h = pxToScreen_H(cTab_GUI_android_OSD_MENU_H);
+            x = ANDROID_pixel2Screen_X(OSD_menu_px_X);
+            y = ANDROID_pixel2Screen_Y(OSD_menu_px_Y);
+            w = ANDROID_pixel2Screen_W(OSD_menu_px_W);
+            h = ANDROID_pixel2Screen_H(OSD_menu_px_H);
             class VScrollbar {};
             class HScrollbar {};
             class Scrollbar {};
@@ -71,51 +71,51 @@ class GVARMAIN(Android_dlg) {
                     idc = 9;
                     x = 0;
                     y = 0;
-                    w = pxToScreen_W(cTab_GUI_android_OSD_MENU_W);
-                    h = pxToScreen_H(cTab_GUI_android_OSD_MENU_H);
+                    w = ANDROID_pixel2Screen_W(OSD_menu_px_W);
+                    h = ANDROID_pixel2Screen_H(OSD_menu_px_H);
                 };
                 class btnTextonoff: cTab_RscButton {
                     idc = 9;
                     text = "Text On/Off"; //--- ToDo: Localize;
-                    sizeEx = pxToScreen_H(cTab_GUI_android_OSD_TEXT_STD_SIZE);
-                    x = pxToMenu_X(cTab_GUI_android_OSD_MENU_ELEMENT_X);
-                    y = pxToMenu_Y(cTab_GUI_android_OSD_MENU_ELEMENT_Y(1));
-                    w = pxToScreen_W(cTab_GUI_android_OSD_MENU_ELEMENT_W);
-                    h = pxToScreen_H(cTab_GUI_android_OSD_MENU_ELEMENT_H);
+                    sizeEx = ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px);
+                    x = ANDROID_pixel2Menu_X(OSD_menuElement_px_X);
+                    y = ANDROID_pixel2Menu_Y(OSD_menuElement_px_Y(1));
+                    w = ANDROID_pixel2Screen_W(OSD_menuElement_px_W);
+                    h = ANDROID_pixel2Screen_H(OSD_menuElement_px_H);
                     tooltip = "Toggle Text on/off"; //--- ToDo: Localize;
                     action = QUOTE(['GVARMAIN(Android_dlg)'] call FUNC(caseButtonsIconTextToggle););
                 };
                 class btnIcnSizeup: btnTextonoff {
                     idc = 10;
                     text = "Icon Size +"; //--- ToDo: Localize;
-                    y = pxToMenu_Y(cTab_GUI_android_OSD_MENU_ELEMENT_Y(2));
+                    y = ANDROID_pixel2Menu_Y(OSD_menuElement_px_Y(2));
                     tooltip = "Increase Icon/Text Size"; //--- ToDo: Localize;
                     action = QUOTE(1 call FUNC(caseButtonsAdjustTextSize););
                 };
                 class btnIconSizedwn: btnTextonoff {
                     idc = 11;
                     text = "Icon Size -"; //--- ToDo: Localize;
-                    y = pxToMenu_Y(cTab_GUI_android_OSD_MENU_ELEMENT_Y(3));
+                    y = ANDROID_pixel2Menu_Y(OSD_menuElement_px_Y(3));
                     tooltip = "Decrease Icon/Text Size"; //--- ToDo: Localize;
                     action = QUOTE(-1 call FUNC(caseButtonsAdjustTextSize););
                 };
                 class btnF5: btnTextonoff {
                     idc = 12;
-                    y = pxToMenu_Y(cTab_GUI_android_OSD_MENU_ELEMENT_Y(7));
+                    y = ANDROID_pixel2Menu_Y(OSD_menuElement_px_Y(7));
                     text = "Map Tools";
                     tooltip = "Toggle Map Tools (F5)";
                     action = QUOTE(['GVARMAIN(Android_dlg)'] call FUNC(toggleMapTools));
                 };
                 class btnF6: btnTextonoff {
                     idc = 14;
-                    y = pxToMenu_Y(cTab_GUI_android_OSD_MENU_ELEMENT_Y(5));
+                    y = ANDROID_pixel2Menu_Y(OSD_menuElement_px_Y(5));
                     text = "Map Textures";
                     tooltip = "Toggle Map Textures (F6)";
                     action = QUOTE(['GVARMAIN(Android_dlg)'] call FUNC(caseButtonsMapTypeToggle););
                 };
                 class btnF7: btnTextonoff {
                     idc = 15;
-                    y = pxToMenu_Y(cTab_GUI_android_OSD_MENU_ELEMENT_Y(6));
+                    y = ANDROID_pixel2Menu_Y(OSD_menuElement_px_Y(6));
                     text = "Center Map";
                     action = QUOTE(['GVARMAIN(Android_dlg)'] call FUNC(caseButtonsCenterMapOnPlayerPosition));
                     tooltip = "Center Map On Current Position (F7)";
@@ -125,10 +125,10 @@ class GVARMAIN(Android_dlg) {
         // ---------- MESSAGING READ -----------
         class MESSAGE: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_MESSAGE;
-            x = pxToScreen_X(cTab_GUI_android_SCREEN_CONTENT_X);
-            y = pxToScreen_Y(cTab_GUI_android_SCREEN_CONTENT_Y);
-            w = pxToScreen_W(cTab_GUI_android_SCREEN_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_android_SCREEN_CONTENT_H);
+            x = ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = ANDROID_pixel2Screen_H(SCREEN_contentRect_px_H);
             class VScrollbar {};
             class HScrollbar {};
             class Scrollbar {};
@@ -136,20 +136,20 @@ class GVARMAIN(Android_dlg) {
                 class msgListbox: cTab_RscListbox {
                     idc = IDC_CTAB_MSG_LIST;
                     style = LB_MULTI;
-                    sizeEx = pxToScreen_H(cTab_GUI_android_OSD_TEXT_STD_SIZE * 0.8);
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_MESSAGELIST_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_MESSAGELIST_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_MESSAGELIST_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_MESSAGELIST_H);
+                    sizeEx = ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px * 0.8);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_read_list_px_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_read_list_px_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_read_list_px_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_read_list_px_H);
                     onLBSelChanged = QUOTE(_this call FUNC(messagingGetMessage););
                 };
                 class msgframe: cTab_RscFrame {
                     idc = 16;
                     text = "Read Message"; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_MESSAGETEXT_FRAME_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_MESSAGETEXT_FRAME_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_MESSAGETEXT_FRAME_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_MESSAGETEXT_FRAME_H);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_read_frame_px_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_read_frame_px_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_read_frame_px_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_read_frame_px_H);
                 };
                 class msgTxt: cTab_RscEdit {
                     idc = IDC_CTAB_MSG_CONTENT;
@@ -157,31 +157,31 @@ class GVARMAIN(Android_dlg) {
                     style = ST_MULTI;
                     lineSpacing = 0.2;
                     text = "No Message Selected"; //--- ToDo: Localize;
-                    sizeEx = pxToScreen_H(cTab_GUI_android_OSD_TEXT_STD_SIZE);
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_MESSAGETEXT_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_MESSAGETEXT_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_MESSAGETEXT_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_MESSAGETEXT_H);
+                    sizeEx = ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_read_text_px_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_read_text_px_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_read_text_px_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_read_text_px_H);
                     canModify = 0;
                 };
                 class deletebtn: cTab_RscButton {
                     idc = IDC_CTAB_MSG_BTNDELETE;
                     text = "Delete"; //--- ToDo: Localize;
                     tooltip = "Delete Selected Message(s)";
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_BUTTON_DELETE_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_BUTTON_DELETE_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_BUTTON_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_BUTTON_H);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_button_delete_px_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_button_delete_px_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_button_px_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_button_H);
                     action = QUOTE(['GVARMAIN(Android_dlg)'] call FUNC(messagingDeleteSelectedMessage););
                 };
                 class toCompose: cTab_RscButton {
                     idc = 17;
                     text = "Compose >>"; //--- ToDo: Localize;
                     tooltip = "Compose Messages";
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_BUTTON_MODE_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_BUTTON_MODE_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_BUTTON_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_BUTTON_H);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_mode_button_px_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_mode_button_px_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_button_px_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_button_H);
                     action = QUOTE(ARR_2(['GVARMAIN(Android_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_MESSAGES_COMPOSE')]]]) call FUNC(setSettings));
                 };
             };
@@ -189,10 +189,10 @@ class GVARMAIN(Android_dlg) {
         // ---------- MESSAGING COMPOSE -----------
         class COMPOSE: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_COMPOSE;
-            x = pxToScreen_X(cTab_GUI_android_SCREEN_CONTENT_X);
-            y = pxToScreen_Y(cTab_GUI_android_SCREEN_CONTENT_Y);
-            w = pxToScreen_W(cTab_GUI_android_SCREEN_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_android_SCREEN_CONTENT_H);
+            x = ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = ANDROID_pixel2Screen_H(SCREEN_contentRect_px_H);
             class VScrollbar {};
             class HScrollbar {};
             class Scrollbar {};
@@ -200,27 +200,27 @@ class GVARMAIN(Android_dlg) {
                 class composeFrame: cTab_RscFrame {
                     idc = 18;
                     text = "Compose Message"; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_COMPOSE_FRAME_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_COMPOSE_FRAME_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_COMPOSE_FRAME_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_COMPOSE_FRAME_H);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_compose_frame_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_compose_frame_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_compose_frame_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_compose_frame_H);
                 };
                 class playerlistbox: cTab_RscListbox {
                     idc = IDC_CTAB_MSG_RECIPIENTS;
                     style = LB_MULTI;
-                    sizeEx = pxToScreen_H(cTab_GUI_android_OSD_TEXT_STD_SIZE * 0.8);
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_PLAYERLIST_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_PLAYERLIST_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_PLAYERLIST_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_PLAYERLIST_H);
+                    sizeEx = ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px * 0.8);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_compose_list_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_compose_list_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_compose_list_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_compose_list_H);
                 };
                 class sendbtn: cTab_RscButton {
                     idc = IDC_CTAB_MSG_BTNSEND;
                     text = "Send"; //--- ToDo: Localize;
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_BUTTON_SEND_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_BUTTON_SEND_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_BUTTON_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_BUTTON_H);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_button_send_px_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_button_send_px_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_button_px_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_button_H);
                     action = QUOTE(call FUNC(messagingSendMessage););
                 };
                 class edittxtbox: cTab_RscEdit {
@@ -229,20 +229,20 @@ class GVARMAIN(Android_dlg) {
                     style = ST_MULTI;
                     lineSpacing = 0.2;
                     text = ""; //--- ToDo: Localize;
-                    sizeEx = pxToScreen_H(cTab_GUI_android_OSD_TEXT_STD_SIZE);
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_COMPOSE_TEXT_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_COMPOSE_TEXT_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_COMPOSE_TEXT_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_COMPOSE_TEXT_H);
+                    sizeEx = ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_compose_text_px_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_compose_text_px_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_compose_text_px_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_compose_text_px_H);
                 };
                 class toRead: cTab_RscButton {
                     idc = 19;
                     text = "Read >>"; //--- ToDo: Localize;
                     tooltip = "Read Messages";
-                    x = pxToGroup_X(cTab_GUI_android_MESSAGE_BUTTON_MODE_X);
-                    y = pxToGroup_Y(cTab_GUI_android_MESSAGE_BUTTON_MODE_Y);
-                    w = pxToScreen_W(cTab_GUI_android_MESSAGE_BUTTON_W);
-                    h = pxToScreen_H(cTab_GUI_android_MESSAGE_BUTTON_H);
+                    x = ANDROID_pixel2GroupRect_X(ANDROID_messages_mode_button_px_X);
+                    y = ANDROID_pixel2GroupRect_Y(ANDROID_messages_mode_button_px_Y);
+                    w = ANDROID_pixel2Screen_W(ANDROID_messages_button_px_W);
+                    h = ANDROID_pixel2Screen_H(ANDROID_messages_button_H);
                     action = QUOTE(ARR_2(['GVARMAIN(Android_dlg)',[[ARR_2('SETTING_MODE','SETTING_MODE_MESSAGES')]]]) call FUNC(setSettings));
                 };
             };

@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 
-//CC: Switches between Map/BFT and messaging screen
+//CC: Switches between Map/BFT and messaging screen, maybe should be more generic or get a more specific name?
 
 params ["_displayName"];
 
@@ -10,12 +10,10 @@ if(isNil "_displayName") then {
 
 private _mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
 
-if (_displayName == QGVARMAIN(Android_dlg)) then {
-    if (_mode != QSETTING_MODE_BFT) then {
-        _mode = QSETTING_MODE_BFT;
-    } else {
-        _mode = QSETTING_MODE_MESSAGES;
-    };
+if (_mode != QSETTING_MODE_BFT) then {
+    _mode = QSETTING_MODE_BFT;
+} else {
+    _mode = QSETTING_MODE_MESSAGES;
 };
 
 [_displayName,[[QSETTING_MODE,_mode]]] call FUNC(setSettings);

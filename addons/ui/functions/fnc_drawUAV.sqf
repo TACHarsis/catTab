@@ -19,7 +19,7 @@ _ctrlScreen drawIcon [
     GVAR(mapToolsPlayerVehicleIconColor),
     getPosASL _veh,
     GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-    direction _veh,"", 1,GVAR(txtSize),"TahomaB","right"
+    direction _veh,"", 1,GVAR(textSize),"TahomaB","right"
 ];
 
 // draw icon at UAV location
@@ -28,7 +28,7 @@ _ctrlScreen drawIcon [
     ,GVAR(miscColor),
     _pos,
     GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-    direction GVAR(actUAV),"",0,GVAR(txtSize),"TahomaB","right"
+    direction GVAR(actUAV),"",0,GVAR(textSize),"TahomaB","right"
 ];
 
 _ctrlScreen ctrlMapAnimAdd [0,GVAR(mapScaleUAV),_pos];

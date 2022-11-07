@@ -101,10 +101,10 @@ Vehciles on our side, that are not empty and that player is not sitting in.
         _iconA = "";
         _iconB = "";
         switch (true) do {
-            case (_x isKindOf "MRAP_01_base_F")     : {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
-            case (_x isKindOf "MRAP_02_base_F")     : {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
-            case (_x isKindOf "MRAP_03_base_F")     : {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
-            case (_x isKindOf "Wheeled_APC_F")         : {_iconA = QPATHTOEF(data,img\b_mech_inf_wheeled.paa);};
+            case (_x isKindOf "MRAP_01_base_F")     : {_iconA = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
+            case (_x isKindOf "MRAP_02_base_F")     : {_iconA = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
+            case (_x isKindOf "MRAP_03_base_F")     : {_iconA = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
+            case (_x isKindOf "Wheeled_APC_F")         : {_iconA = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
             case (_x isKindOf "Truck_F" && 
                 {getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 2}) 
                                                     : {_iconA = "\A3\ui_f\data\map\markers\nato\b_motor_inf.paa";};
@@ -113,9 +113,9 @@ Vehciles on our side, that are not empty and that player is not sitting in.
             case (_x isKindOf "UAV")                 : {_iconA = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
             case (_x isKindOf "UAV_01_base_F")         : {_iconA = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
             case (_x isKindOf "Helicopter")         : {_iconA = "\A3\ui_f\data\map\markers\nato\b_air.paa"; 
-                                                        _iconB = QPATHTOEF(data,img\icon_air_contact_ca.paa);};
+                                                        _iconB = QPATHTOEF(data,img\map\markers\icon_air_contact_ca.paa);};
             case (_x isKindOf "Plane")                 : {_iconA = "\A3\ui_f\data\map\markers\nato\b_plane.paa"; 
-                                                        _iconB = QPATHTOEF(data,img\icon_air_contact_ca.paa);};
+                                                        _iconB = QPATHTOEF(data,img\map\markers\icon_air_contact_ca.paa);};
             case (_x isKindOf "Tank" && 
                 {getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 6}) 
                                                         : {_iconA = "\A3\ui_f\data\map\markers\nato\b_mech_inf.paa";};
@@ -156,7 +156,11 @@ Units on our side, that have either helmets that have been specified to include 
 */
 {
     if (side _x in _validSides) then {
-        if (headgear _x in GVARMAIN(helmetClass_has_HCam) || {[_x,["ItemcTabHCam"]] call FUNC(checkGear)}) then {
+        private _headgear = headgear _x;
+        private _camera = getNumber (configfile >> "CfgWeapons" >> _headgear >> "CTAB_Camera");
+        if (_camera isNotEqualTo 0 ||
+            {_headgear in GVARMAIN(helmetClass_has_HCam)} ||
+            {[_x,["ItemcTabHCam"]] call FUNC(checkGear)}) then {
             _hCamList pushBack _x;
         };
     };

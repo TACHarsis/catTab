@@ -8,7 +8,7 @@
 #include "cTab_FBCB2_controls.hpp"
 #include "..\shared\cTab_defines.hpp"
 
-#define MENU_sizeEx pxToScreen_H(cTab_GUI_FBCB2_OSD_TEXT_STD_SIZE)
+#define MENU_sizeEx FBCB2_pixel2Screen_H(OSD_elementBase_textSize_px)
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(FBCB2_dlg){
@@ -22,13 +22,24 @@ class GVARMAIN(FBCB2_dlg){
         class background: cTab_FBCB2_background {
             moving = 1;
         };
+        class windowsBG: cTab_RscPicture {
+            idc = IDC_CTAB_WIN_BACK;
+            //text=QPATHTOEF(data,img\ui\desktop\classic\FBCB2_desktop_background_1_co.paa);
+            text = "#(argb,8,8,3)color(0.2,0.431,0.647,1)";
+            //onLoad = QUOTE((_this # 0) ctrlSetText format[ARR_4('#(argb,8,8,3)color(%1,%2,%3,1)',GVAR(FBCB2DesktopColor) select 0,GVAR(FBCB2DesktopColor) select 1,GVAR(FBCB2DesktopColor) select 2)];);
+            x = FBCB2_pixel2Screen_X(FBCB2_mapRect_px_X);
+            y = FBCB2_pixel2Screen_Y(FBCB2_mapRect_px_Y);
+            w = FBCB2_pixel2Screen_W(FBCB2_mapRect_px_W);
+            h = FBCB2_pixel2Screen_H(FBCB2_mapRect_px_H);
+        };
+        
         class screen: cTab_RscMapControl {
             idc = IDC_CTAB_SCREEN;
             text = "#(argb,8,8,3)color(1,1,1,1)";
-            x = pxToScreen_X(cTab_GUI_FBCB2_SCREEN_CONTENT_X);
-            y = pxToScreen_Y(cTab_GUI_FBCB2_SCREEN_CONTENT_Y);
-            w = pxToScreen_W(cTab_GUI_FBCB2_SCREEN_CONTENT_W);
-            h = pxToScreen_H(cTab_GUI_FBCB2_SCREEN_CONTENT_H);
+            x = FBCB2_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = FBCB2_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = FBCB2_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = FBCB2_pixel2Screen_H(SCREEN_contentRect_px_H);
             onDraw = QUOTE(_this call FUNC(drawMapControlFBCB2););
             onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
@@ -63,6 +74,100 @@ class GVARMAIN(FBCB2_dlg){
         class dirDegree: cTab_FBCB2_on_screen_dirDegree {};
         class grid: cTab_FBCB2_on_screen_grid {};
         class dirOctant: cTab_FBCB2_on_screen_dirOctant {};
+        class hookGrid: cTab_FBCB2_on_screen_hookGrid {};
+        class hookElevation: cTab_FBCB2_on_screen_hookElevation {};
+        class hookDst: cTab_FBCB2_on_screen_hookDst {};
+        class hookDir: cTab_FBCB2_on_screen_hookDir {};
+
+        // ---------- MESSAGING -----------
+         class MESSAGE: cTab_RscControlsGroup {
+            idc = IDC_CTAB_GROUP_MESSAGE;
+            x = FBCB2_pixel2Screen_X(SCREEN_contentRect_px_X);
+            y = FBCB2_pixel2Screen_Y(SCREEN_contentRect_px_Y);
+            w = FBCB2_pixel2Screen_W(SCREEN_contentRect_px_W);
+            h = FBCB2_pixel2Screen_H(SCREEN_contentRect_px_H);
+            class VScrollbar {};
+            class HScrollbar {};
+            class Scrollbar {};
+            class controls {
+                class msgframe: cTab_RscFrame {
+                    idc = 15;
+                    text = "Read Message"; //--- ToDo: Localize;
+                    x = FBCB2_pixel2GroupRect_X(SCREEN_messages_read_frame_px_X);
+                    y = FBCB2_pixel2GroupRect_Y(SCREEN_messages_read_frame_px_Y);
+                    w = FBCB2_pixel2Screen_W(SCREEN_messages_read_frame_px_W);
+                    h = FBCB2_pixel2Screen_H(SCREEN_messages_read_frame_px_H);
+                };
+                class msgListbox: cTab_RscListbox_FBCB2 {
+                    idc = IDC_CTAB_MSG_LIST;
+                    style = LB_MULTI;
+                    x = FBCB2_pixel2GroupRect_X(SCREEN_messages_read_list_px_X);
+                    y = FBCB2_pixel2GroupRect_Y(SCREEN_messages_read_list_px_Y);
+                    w = FBCB2_pixel2Screen_W(SCREEN_messages_read_list_px_W);
+                    h = FBCB2_pixel2Screen_H(SCREEN_messages_read_list_px_H);
+                    onLBSelChanged = QUOTE(_this call FUNC(messagingGetMessage););
+                };
+                class msgTxt: cTab_RscEdit_FBCB2 {
+                    idc = IDC_CTAB_MSG_CONTENT;
+                    htmlControl = true;
+                    style = ST_MULTI;
+                    lineSpacing = 0.2;
+                    text = "No Message Selected"; //--- ToDo: Localize;
+                    x = FBCB2_pixel2GroupRect_X(SCREEN_messages_read_text_px_X);
+                    y = FBCB2_pixel2GroupRect_Y(SCREEN_messages_read_text_px_Y);
+                    w = FBCB2_pixel2Screen_W(SCREEN_messages_read_text_px_W);
+                    h = FBCB2_pixel2Screen_H(SCREEN_messages_read_text_px_H);
+                    canModify = 0;
+                };
+                class composeFrame: cTab_RscFrame {
+                    idc = 16;
+                    text = "Compose Message"; //--- ToDo: Localize;
+                    x = FBCB2_pixel2GroupRect_X(SCREEN_messages_compose_frame_px_X);
+                    y = FBCB2_pixel2GroupRect_Y(SCREEN_messages_compose_frame_px_Y);
+                    w = FBCB2_pixel2Screen_W(SCREEN_messages_compose_frame_px_W);
+                    h = FBCB2_pixel2Screen_H(SCREEN_messages_compose_frame_px_H);
+                };
+                class playerlistbox: cTab_RscListbox_FBCB2 {
+                    idc = IDC_CTAB_MSG_RECIPIENTS;
+                    style = LB_MULTI;
+                    x = FBCB2_pixel2GroupRect_X(SCREEN_messages_compose_list_px_X);
+                    y = FBCB2_pixel2GroupRect_Y(SCREEN_messages_compose_list_px_Y);
+                    w = FBCB2_pixel2Screen_W(SCREEN_messages_compose_list_px_W);
+                    h = FBCB2_pixel2Screen_H(SCREEN_messages_compose_list_px_H);
+                };
+                class deletebtn: cTab_RscButton_FBCB2 {
+                    idc = IDC_CTAB_MSG_BTNDELETE;
+                    text = "Delete"; //--- ToDo: Localize;
+                    tooltip = "Delete Selected Message(s)";
+                    x = FBCB2_pixel2GroupRect_X(SCREEN_messages_button_delete_px_X);
+                    y = FBCB2_pixel2GroupRect_Y(SCREEN_messages_button_delete_px_Y);
+                    w = FBCB2_pixel2Screen_W(SCREEN_messages_button_px_W);
+                    h = FBCB2_pixel2Screen_H(SCREEN_messages_button_H);
+                    action = QUOTE(['GVARMAIN(FBCB2_dlg)'] call FUNC(messagingDeleteSelectedMessage););
+                };
+                class sendbtn: cTab_RscButton_FBCB2 {
+                    idc = IDC_CTAB_MSG_BTNSEND;
+                    text = "Send"; //--- ToDo: Localize;
+                    x = FBCB2_pixel2GroupRect_X(SCREEN_messages_button_send_px_X);
+                    y = FBCB2_pixel2GroupRect_Y(SCREEN_messages_button_send_px_Y);
+                    w = FBCB2_pixel2Screen_W(SCREEN_messages_button_px_W);
+                    h = FBCB2_pixel2Screen_H(SCREEN_messages_button_H);
+                    action = QUOTE(call FUNC(messagingSendMessage););
+                };
+                class edittxtbox: cTab_RscEdit_FBCB2 {
+                    idc = IDC_CTAB_MSG_COMPOSE;
+                    htmlControl = true;
+                    style = ST_MULTI;
+                    lineSpacing = 0.2;
+                    text = ""; //--- ToDo: Localize;
+                    x = FBCB2_pixel2GroupRect_X(SCREEN_messages_compose_text_px_X);
+                    y = FBCB2_pixel2GroupRect_Y(SCREEN_messages_compose_text_px_Y);
+                    w = FBCB2_pixel2Screen_W(SCREEN_messages_compose_text_px_W);
+                    h = FBCB2_pixel2Screen_H(SCREEN_messages_compose_text_px_H);
+                };
+            };
+        };
+
         class pwrbtn: cTab_FBCB2_btnPWR {
             idc = IDC_CTAB_BTNOFF;
             action = QUOTE(closeDialog 0;);
@@ -77,6 +182,11 @@ class GVARMAIN(FBCB2_dlg){
             idc = IDC_CTAB_BTNDWN;
             action = QUOTE(-1 call FUNC(caseButtonsAdjustTextSize););
             tooltip = "Decrease Font";
+        };
+        class btntggl: cTab_FBCB2_btnRight {
+            idc = IDC_CTAB_BTNF1;
+            action = QUOTE(['GVARMAIN(FBCB2_dlg)'] call FUNC(caseButtonsToggleMode););
+            tooltip = "Toggle Map (F1) / Messages (F4)";
         };
         class btnfunction: cTab_FBCB2_btnFCN {
             idc = IDC_CTAB_BTNFN;
@@ -98,10 +208,7 @@ class GVARMAIN(FBCB2_dlg){
             action = QUOTE(['GVARMAIN(FBCB2_dlg)'] call FUNC(caseButtonsCenterMapOnPlayerPosition));
             tooltip = "Center Map On Current Position (F7)";
         };
-        class hookGrid: cTab_FBCB2_on_screen_hookGrid {};
-        class hookElevation: cTab_FBCB2_on_screen_hookElevation {};
-        class hookDst: cTab_FBCB2_on_screen_hookDst {};
-        class hookDir: cTab_FBCB2_on_screen_hookDir {};
+
         //### Secondary Map Pop up    ------------------------------------------------------------------------------------------------------
         #include "..\shared\cTab_markerMenu_controls.hpp"
 

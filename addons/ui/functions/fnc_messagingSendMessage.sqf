@@ -42,7 +42,7 @@ private _recipientNames = "";
 
 // If the message was sent
 if (_recipientNames != "") then {
-    private _msgArray = Ctab_player getVariable [format [QGVAR(messages_%1),_playerEncryptionKey],[]];
+    private _msgArray = Ctab_player getVariable [format [QGVARMAIN(messages_%1),_playerEncryptionKey],[]];
     _msgArray pushBack [format ["%1 - %2",_time,_recipientNames],_msgBody,2];
     Ctab_player setVariable [format [QGVAR(messages_%1),_playerEncryptionKey],_msgArray];
 

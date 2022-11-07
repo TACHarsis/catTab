@@ -48,7 +48,11 @@ if (_isTAD) then {
     (_display displayCtrl IDC_CTAB_OSD_HOOK_GRID) ctrlSetText format ["%1",mapGridPosition _secondPos];
     (_display displayCtrl IDC_CTAB_OSD_HOOK_ELEVATION) ctrlSetText format ["%1m",round getTerrainHeightASL _secondPos];
     (_display displayCtrl IDC_CTAB_OSD_HOOK_DIR) ctrlSetText format ["%1° %2",[_dirToSecondPos,3] call CBA_fnc_formatNumber,[_dirToSecondPos] call EFUNC(core,degreeToOctant)];
-    (_display displayCtrl IDC_CTAB_OSD_HOOK_DST) ctrlSetText format ["%1km",[_dstToSecondPos / 1000,1,2] call CBA_fnc_formatNumber];
+    private _dstText = [
+        format ["%1m", [_dstToSecondPos,3] call CBA_fnc_formatNumber],
+        format ["%1km",[_dstToSecondPos / 1000,1,2] call CBA_fnc_formatNumber]
+    ] select (_dstToSecondPos > GVAR(mapToolsRangeFormatThreshold));
+    (_display displayCtrl IDC_CTAB_OSD_HOOK_DST) ctrlSetText _dstText;
 };
 
 true

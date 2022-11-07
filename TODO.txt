@@ -1,9 +1,17 @@
 * reduce redundant/duplicate code
-* read tablet location from uigrids
 * hook up notifications?
 * names instead of group id?
 * movable markers
-* fullscreen headcam not working when unit in vehicle?
+* (fullscreen) headcam not working when unit in vehicle?
 * own unit decays on TAD display?
 * Turn pair business into hashmaps
 * Handle switch of active interface on enter/leave vehicle?
+* LockUAVCam marker
+* LockUAVCam when returning to tablet?
+* Unlock camera via marker menu and/or???
+* Switch UAV camera modes
+* desktop bar shows actual time
+* tasks?
+* draw UAV camera (lock) targets on map
+* Font option
+* FBCB2 messages uses vehicle for key?
