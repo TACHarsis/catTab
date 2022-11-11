@@ -8,6 +8,5 @@ PREP(getPlayerEncryptionKey);
 PREP(getPlayerSides);
 PREP(onPlayerInventoryChanged);
 PREP(processCuratorKey);
-PREP(remoteControlUav);
 PREP(unitInEnabledVehicleSeat);
 PREP(updateLists);

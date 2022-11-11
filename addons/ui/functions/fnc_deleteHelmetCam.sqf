@@ -19,12 +19,12 @@
 
 */
 
-if !(isNil QGVAR(hCams)) then {
-    private _cam = GVAR(hCams) select 0;
+if !(isNil QGVAR(helmetCams)) then {
+    private _cam = GVAR(helmetCams) select 0;
     _cam cameraEffect ["TERMINATE","BACK"];
     camDestroy _cam;
-    deleteVehicle (GVAR(hCams) select 1);
-    GVAR(hCams) = nil;
+    deleteVehicle (GVAR(helmetCams) select 1);
+    GVAR(helmetCams) = nil;
 };
 
 true

@@ -27,10 +27,12 @@ class GVARMAIN(Android_dlg) {
     onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
     objects[] = {};
     class controlsBackground {
-        class windowsBG: cTab_android_windowsBG {};
+        class windowsBG: cTab_android_windowsBG {
+            onLoad = QUOTE([ARR_2(_this,[ARR_4(GVAR(androidDesktopBackgroundMode),GVAR(androidDesktopBackgroundPreset),GVAR(androidDesktopColor),GVAR(androidDesktopCustomImageName))])] call FUNC(setDeviceBackground););
+        };
         class screen: cTab_android_RscMapControl {
             onDraw = QUOTE(nop = _this call FUNC(drawMapControlAndroidDlg););
-            onMouseButtonDblClick = QUOTE([ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
+            onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
         };
         class screenTopo: screen {

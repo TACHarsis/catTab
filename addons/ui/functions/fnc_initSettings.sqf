@@ -37,6 +37,8 @@ Types:
 
 */
 private _modCategory = "CatTab";//LLSTRING(Setting_Cagetory_Mod);
+private _androidCategory = "Android";//LLSTRING(Setting_Cagetory_Android);
+private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
 
 [
     QGVAR(enableAddon),
@@ -46,20 +48,90 @@ private _modCategory = "CatTab";//LLSTRING(Setting_Cagetory_Mod);
     true
 ] call CBA_fnc_addSetting;
 
+//--------------- Android ---------------
+
+[
+    QGVAR(androidDesktopBackgroundMode),
+    "LIST",
+    [LLSTRING(Setting_Android_Desktop_Background_Mode), LLSTRING(Setting_Android_Desktop_Background_Mode_Hint)],
+    [_modCategory,_androidCategory],
+    [[0,1,2],["Preset", "Custom", "Color"], 0],
+    2
+] call CBA_fnc_addSetting;
+
+[
+    QGVAR(androidDesktopBackgroundPreset),
+    "LIST",
+    [LLSTRING(Setting_Android_Desktop_Background_Preset), LLSTRING(Setting_Android_Desktop_Background_Preset_Hint)],
+    [_modCategory,_androidCategory],
+    [[
+        QPATHTOEF(data,img\ui\desktop\classic\example_custom_android_desktop_background_0_co.paa)
+    ],
+    [
+        "Bisxual Lighting"
+    ], 0],
+    2
+] call CBA_fnc_addSetting;
+
 [
     QGVAR(androidDesktopColor),
     "COLOR",
-    [LLSTRING(Setting_Tablet_Desktop_Color), LLSTRING(Setting_Tablet_Desktop_Color_Hint)],
-    [_modCategory],
+    [LLSTRING(Setting_Android_Desktop_Color), LLSTRING(Setting_Android_Desktop_Color_Hint)],
+    [_modCategory,_androidCategory],
     [0.239,0.863,0.517],
-	2
+    2
+] call CBA_fnc_addSetting;
+
+[   //These images get cached the first time they are used from their path
+    QGVAR(androidDesktopCustomImageName),
+    "EDITBOX",
+    [LLSTRING(Setting_Android_Desktop_Custom_Image), LLSTRING(Setting_Android_Desktop_Custom_Image_Hint)],
+    [_modCategory,_androidCategory],
+    "example_custom_android_desktop_background_co.jpg",
+    2
+] call CBA_fnc_addSetting;
+
+//--------------- Tablet ---------------
+
+[
+    QGVAR(tabletDesktopBackgroundMode),
+    "LIST",
+    [LLSTRING(Setting_Tablet_Desktop_Background_Mode), LLSTRING(Setting_Tablet_Desktop_Background_Mode_Hint)],
+    [_modCategory,_tabletCategory],
+    [[0,1,2],["Preset", "Custom", "Color"], 0],
+    2
+] call CBA_fnc_addSetting;
+
+[
+    QGVAR(tabletDesktopBackgroundPreset),
+    "LIST",
+    [LLSTRING(Setting_Tablet_Desktop_Background_Preset), LLSTRING(Setting_Tablet_Desktop_Background_Preset_Hint)],
+    [_modCategory,_tabletCategory],
+    [[
+        QPATHTOEF(data,img\ui\desktop\classic\tablet_desktop_background_0_co.paa),
+        QPATHTOEF(data,img\ui\desktop\classic\tablet_desktop_background_1_co.paa)
+    ],
+    [
+        "Swoosh",
+        "Blue-ish"
+    ], 0],
+    2
 ] call CBA_fnc_addSetting;
 
 [
     QGVAR(tabletDesktopColor),
     "COLOR",
     [LLSTRING(Setting_Tablet_Desktop_Color), LLSTRING(Setting_Tablet_Desktop_Color_Hint)],
-    [_modCategory],
+    [_modCategory,_tabletCategory],
     [0,0.443,0.348],
-	2
+    2
+] call CBA_fnc_addSetting;
+
+[   //These images get cached the first time they are used from their path
+    QGVAR(tabletDesktopCustomImageName),
+    "EDITBOX",
+    [LLSTRING(Setting_Tablet_Desktop_Custom_Image), LLSTRING(Setting_Tablet_Desktop_Custom_Image_Hint)],
+    [_modCategory,_tabletCategory],
+    "example_custom_tablet_desktop_background_co.jpg",
+    2
 ] call CBA_fnc_addSetting;

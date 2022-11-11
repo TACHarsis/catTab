@@ -1,30 +1,30 @@
 #include "script_component.hpp"
 
 // This is drawn every frame on the tablet helmet cam screen. fnc
-params ["_ctrlScreen"];
+params ["_mapCtrl"];
 
-if (isNil QGVAR(hCams)) exitWith {};
+if (isNil QGVAR(helmetCams)) exitWith {};
 
-private _camHost = GVAR(hCams) select 2;
+private _camHost = GVAR(helmetCams) select 2;
 
-private _display = ctrlParent _ctrlScreen;
+private _display = ctrlParent _mapCtrl;
 private _pos = getPosASL _camHost;
 
-[_ctrlScreen,false] call FUNC(drawUserMarkers);
-[_ctrlScreen,0] call FUNC(drawBftMarkers);
+[_mapCtrl,false] call FUNC(drawUserMarkers);
+[_mapCtrl,0] call FUNC(drawBftMarkers);
 
 // draw icon at own location
-private _veh = vehicle Ctab_player;
-_ctrlScreen drawIcon [
+private _vehicle = vehicle Ctab_player;
+_mapCtrl drawIcon [
     "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
     GVAR(mapToolsPlayerVehicleIconColor),
-    getPosASL _veh,
+    getPosASL _vehicle,
     GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-    direction _veh,"", 1,GVAR(textSize),"TahomaB","right"
+    direction _vehicle,"", 1,GVAR(textSize),"TahomaB","right"
 ];
 
 // draw icon at helmet cam location
-_ctrlScreen drawIcon [
+_mapCtrl drawIcon [
     "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
     GVAR(miscColor),
     _pos,
@@ -32,7 +32,7 @@ _ctrlScreen drawIcon [
     direction _camHost,"",0,GVAR(textSize),"TahomaB","right"
 ];
 
-_ctrlScreen ctrlMapAnimAdd [0,GVAR(mapScaleHCam),_pos];
-ctrlMapAnimCommit _ctrlScreen;
+_mapCtrl ctrlMapAnimAdd [0,GVAR(mapScaleHCam),_pos];
+ctrlMapAnimCommit _mapCtrl;
 
 true

@@ -20,43 +20,41 @@
 */
 params ["_renderTarget","_data"];
 
-private _newHost = objNull;
+private _unit = _data call BIS_fnc_objectFromNetId;
 private _camOffSet = [];
 private _targetOffSet = [];
+private _unitVehicle = vehicle _unit;
 
-// see if given unit name is still in the list of units with valid helmet cams
-{
-    if (_data == str _x) exitWith {_newHost = _x;};
-} foreach GVARMAIN(hCamList);
-
-    // should unit not be in a vehicle
-if (vehicle _newHost isKindOf "CAManBase") then {
-        _camOffSet = [0.12,0,0.15];
-        _targetOffSet = [0,8,1];
- } else {
-    // if unit is in a vehilce, see if 3rd person view is allowed
-    if (difficultyEnabled "3rdPersonView") exitWith {
-        _newHost = vehicle _newHost;
-        // Might want to calculate offsets based on the actual vehicle dimensions in the future
-        _camOffSet = [0,-8,4];
-        _targetOffSet = [0,8,2];
+if !(isNull _unit) then {
+        // should unit not be in a vehicle
+    if (_unitVehicle isKindOf "CAManBase") then {
+            _camOffSet = [0.12,0,0.15];
+            _targetOffSet = [0,8,1];
+    } else {
+        // if unit is in a vehilce, see if 3rd person view is allowed
+        // 3rd person view (0 = disabled, 1 = enabled, 2 = enabled for vehicles only (Since  Arma 3 v1.99))
+        if (difficultyOption "3rdPersonView" > 0) exitWith {
+            _unit = _unitVehicle;
+            // Might want to calculate offsets based on the actual vehicle dimensions in the future
+            _camOffSet = [0,-8,4];
+            _targetOffSet = [0,8,2];
+        };
+        // if unit is in a vehicle and 3rd person view is not allowed
+        _unit = objNull;
     };
-    // if unit is in a vehicle and 3rd person view is not allowed
-    _newHost = objNull;
 };
 
 // if there is no valid unit or we are not allowed to set up a helmet cam in these conditions, drop out of full screen view
-if (IsNull _newHost) exitWith {
+if (IsNull _unit) exitWith {
     [QGVARMAIN(Tablet_dlg),[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET]]] call FUNC(setSettings);
-    false
 };
 
 // if there is already a camera, see if its the same one we are about to set up
 // if true, render to given target (in case the target has changed), else delete the camera so we can create a new one
-if !(isNil QGVAR(hCams)) then {
-    private _oldCam = GVAR(hCams) select 0;
-    private _oldHost = GVAR(hCams) select 2;
-    if (_oldHost isEqualTo _newHost) then {
+if !(isNil QGVAR(helmetCams)) then {
+    private _oldCam = GVAR(helmetCams) select 0;
+    private _oldUnit = GVAR(helmetCams) select 2;
+    if (_oldUnit isEqualTo _unit) then {
         _oldCam cameraEffect ["INTERNAL","BACK",_renderTarget];
     } else {
         private _nop = [] call FUNC(deleteHelmetCam);
@@ -65,23 +63,22 @@ if !(isNil QGVAR(hCams)) then {
 };
 
 // only continue if there is no helmet cam currently set up
-if !(isNil QGVAR(hCams)) exitWith {true};
+if !(isNil QGVAR(helmetCams)) exitWith {true};
 
 private _target = "Sign_Sphere10cm_F" createVehicleLocal position player;
 hideObject _target;
-_target attachTo [_newHost,_targetOffSet];
+_target attachTo [_unit,_targetOffSet];
 
-private _cam = "camera" camCreate getPosATL _newHost;
+private _cam = "camera" camCreate getPosATL _unit;
 _cam camPrepareFov 0.700;
 _cam camPrepareTarget _target;
 _cam camCommitPrepared 0;
-if (vehicle _newHost == _newHost) then {
-    _cam attachTo [_newHost,_camOffSet,"Head"];
+
+if (vehicle _unit == _unit) then {
+    _cam attachTo [_unit,_camOffSet,"Head"];
 } else {
-    _cam attachTo [_newHost,_camOffSet];
+    _cam attachTo [_unit,_camOffSet];
 };
 _cam cameraEffect ["INTERNAL","BACK",_renderTarget];
 
-GVAR(hCams) = [_cam,_target,_newHost];
-
-true
+GVAR(helmetCams) = [_cam,_target,_unit];

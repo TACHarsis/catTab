@@ -426,8 +426,11 @@ if (isNil "_mode") then {
         // ------------ UAV CAM ------------
         case (QSETTING_CAM_UAV) : {
             if (_mode isNotEqualTo QSETTING_MODE_CAM_UAV) exitWith {};
-            if (_value != "") then {
-                [_value,[[0,"rendertarget8"],[1,"rendertarget9"]]] spawn FUNC(createUavCam);
+            private _uav = _value call BIS_fnc_objectFromNetId;
+            if !(isNull _uav) then {
+                private _uavMapControl = _display displayCtrl IDC_CTAB_CTABUAVMAP;
+
+                [_uav,[[0,"rendertarget8"],[1,"rendertarget9"]],_uavMapControl] spawn FUNC(createUavCam);
             } else {
                 [] call FUNC(deleteUAVcam);
             };

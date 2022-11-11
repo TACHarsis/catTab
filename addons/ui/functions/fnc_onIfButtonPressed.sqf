@@ -15,7 +15,7 @@ if (GVAR(openStart)) exitWith {false};
 
 
 if (GVAR(uavViewActive)) then {
-    objNull remoteControl (gunner GVAR(actUAV));
+    objNull remoteControl (gunner GVAR(currentUAV));
     vehicle Ctab_player switchCamera 'internal';
     GVAR(uavViewActive) = false;
 

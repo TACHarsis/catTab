@@ -27,4 +27,3 @@ class CfgPatches {
 #include "CfgVehicles.hpp"
 #include "CfgWeapons.hpp"
 #include "CfgSounds.hpp"
-#include "\ctab_class_settings.hpp"

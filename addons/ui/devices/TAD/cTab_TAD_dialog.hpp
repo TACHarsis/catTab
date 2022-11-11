@@ -25,7 +25,8 @@ class GVARMAIN(TAD_dlg) {
         class screen: cTab_TAD_RscMapControl {
             idc = IDC_CTAB_SCREEN;
             onDraw = QUOTE(_this call FUNC(drawMapControlTADDlg););
-            onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
+            onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
+            onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
         };
         class screenTopo: screen {
@@ -35,7 +36,8 @@ class GVARMAIN(TAD_dlg) {
         class screenBlack: cTab_TAD_RscMapControl_BLACK {
             idc = IDC_CTAB_SCREEN_BLACK;
             onDraw = QUOTE(_this call FUNC(drawMapControlTADDlg););
-            onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
+            onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
+            onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
         };
     };

@@ -7,7 +7,6 @@
 // You may re-use any of this work as long as you provide credit back to me.
 
 
-//--- cTab
 #define CUSTOM_GRID_HAbs    (safezoneH * 1.2)
 #define CUSTOM_GRID_WAbs    (CUSTOM_GRID_HAbs * 3/4)
 // since the actual map position is not in the center, we correct for it by shifting it right
@@ -32,9 +31,8 @@ class GVARMAIN(Tablet_dlg){
     class controlsBackground {
         class windowsBG: cTab_RscPicture {
             idc = IDC_CTAB_WIN_BACK;
-            text=QPATHTOEF(data,img\ui\desktop\classic\tablet_desktop_background_0_co.paa);
-            //text = "#(argb,8,8,3)color(0.2,0.431,0.647,1)";
-            //onLoad = QUOTE((_this # 0) ctrlSetText format[ARR_4('#(argb,8,8,3)color(%1,%2,%3,1)',GVAR(tabletDesktopColor) select 0,GVAR(tabletDesktopColor) select 1,GVAR(tabletDesktopColor) select 2)];);
+            text = "";
+            onLoad = QUOTE([ARR_2(_this,[ARR_4(GVAR(tabletDesktopBackgroundMode),GVAR(tabletDesktopBackgroundPreset),GVAR(tabletDesktopColor),GVAR(tabletDesktopCustomImageName))])] call FUNC(setDeviceBackground););
             x = TABLET_pixel2Screen_X(TABLET_mapRect_px_X);
             y = TABLET_pixel2Screen_Y(TABLET_mapRect_px_Y);
             w = TABLET_pixel2Screen_W(TABLET_mapRect_px_W);
@@ -57,17 +55,18 @@ class GVARMAIN(Tablet_dlg){
             y = TABLET_pixel2Screen_Y(WINDOW_SMALL_contentRect_px_B_Y);
             w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
             h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
-            onDraw = QUOTE(nop = _this call FUNC(drawUAV););
+            onDraw = QUOTE(nop = _this call FUNC(drawMapControlUAV););
             onMouseButtonDblClick = "";
         };
         class cTabHcamMap: cTabUavMap {
             idc = IDC_CTAB_CTABHCAMMAP;
-            onDraw = QUOTE(nop = _this call FUNC(drawHCam););
+            onDraw = QUOTE(nop = _this call FUNC(drawMapControlHCam););
         };
         class screen: cTab_Tablet_RscMapControl {
             idc = IDC_CTAB_SCREEN;
             onDraw = QUOTE(_this call FUNC(drawMapControlTablet););
-            onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
+            onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
+            onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
         };
         class screenTopo: screen {
@@ -167,16 +166,16 @@ class GVARMAIN(Tablet_dlg){
                     h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
                     onLBSelChanged = QUOTE(if (!GVAR(openStart) && ((_this select 1) != -1)) then {ARR_2(['GVARMAIN(Tablet_dlg)',[[ARR_2('SETTING_CAM_UAV',(_this select 0) lbData (_this select 1))]])] call FUNC(setSettings);};);
                 };
-                class cTabUAVdisplay: cTab_RscPicture {
-                    idc = IDC_CTAB_CTABUAVDISPLAY;
+                class cTabUAVDriverDisplay: cTab_RscPicture {
+                    idc = IDC_CTAB_UAVDRIVERDISPLAY;
                     text = "#(argb,1024,1024,1)r2t(rendertarget8,1.1896551724)";
                     x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_contentRect_px_R_X);
                     y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_contentRect_px_T_Y);
                     w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
                     h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
                 };
-                class cTabUAV2nddisplay: cTab_RscPicture {
-                    idc = IDC_CTAB_CTABUAV2NDDISPLAY;
+                class cTabUAVGunnerDisplay: cTab_RscPicture {
+                    idc = IDC_CTAB_UAVGUNNERDISPLAY;
                     text = "#(argb,1024,1024,1)r2t(rendertarget9,1.1896551724)";
                     x = TABLET_pixel2GroupRect_X(WINDOW_SMALL_contentRect_px_R_X);
                     y = TABLET_pixel2GroupRect_Y(WINDOW_SMALL_contentRect_px_B_Y);

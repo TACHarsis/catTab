@@ -15,3 +15,4 @@
 * draw UAV camera (lock) targets on map
 * Font option
 * FBCB2 messages uses vehicle for key?
+* ability to switch between unit names and numbers?

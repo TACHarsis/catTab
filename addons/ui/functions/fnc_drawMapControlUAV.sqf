@@ -3,11 +3,11 @@
 // This is drawn every frame on the tablet uav screen. fnc
 params ["_ctrlScreen"];
 
-if (isNil QGVAR(actUAV)) exitWith {};
-if (GVAR(actUAV) == player) exitWith {};
+if (isNil QGVAR(currentUAV) || {isNull GVAR(currentUAV)}) exitWith {};
+if (GVAR(currentUAV) == player) exitWith {};
 
 private _display = ctrlParent _ctrlScreen;
-private _pos = getPosASL GVAR(actUAV);
+private _pos = getPosASL GVAR(currentUAV);
 
 [_ctrlScreen,false] call FUNC(drawUserMarkers);
 [_ctrlScreen,0] call FUNC(drawBftMarkers);
@@ -24,11 +24,11 @@ _ctrlScreen drawIcon [
 
 // draw icon at UAV location
 _ctrlScreen drawIcon [
-    "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa"
-    ,GVAR(miscColor),
+    "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
+    GVAR(miscColor),
     _pos,
     GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-    direction GVAR(actUAV),"",0,GVAR(textSize),"TahomaB","right"
+    direction GVAR(currentUAV),"",0,GVAR(textSize),"TahomaB","right"
 ];
 
 _ctrlScreen ctrlMapAnimAdd [0,GVAR(mapScaleUAV),_pos];

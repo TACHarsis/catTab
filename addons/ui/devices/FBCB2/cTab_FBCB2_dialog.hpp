@@ -41,7 +41,8 @@ class GVARMAIN(FBCB2_dlg){
             w = FBCB2_pixel2Screen_W(SCREEN_contentRect_px_W);
             h = FBCB2_pixel2Screen_H(SCREEN_contentRect_px_H);
             onDraw = QUOTE(_this call FUNC(drawMapControlFBCB2););
-            onMouseButtonDblClick = QUOTE(_ok = [ARR_2(IDC_CTAB_MARKER_MENU_MAIN,_this)] call FUNC(loadMarkerMenu););
+            onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
+            onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
             maxSatelliteAlpha = 10000;
             alphaFadeStartScale = 10;

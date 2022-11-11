@@ -23,13 +23,13 @@
     Example:
         [str _uavVehicle,[[0,"rendertarget8"],[1,"rendertarget9"]]] call Ctab_ui_fnc_createUavCam;
 */
-params ["_data","_uavCams"];
+params ["_data","_uavCams", "_uavMapCtrl"];
 
 private _uav = objNull;
 
 // see if given UAV name is still in the list of valid UAVs
 {
-    if (_data == str _x) exitWith {_uav = _x;};
+    if (_data == _x) exitWith {_uav = _x;};
 } foreach GVARMAIN(UAVList);
 
 // remove exisitng UAV cameras
@@ -42,8 +42,8 @@ if (isNull _uav) exitWith {false};
 if !(alive _uav) exitWith {false};
 
 {
-    private _seat = _x select 0;
-    private _renderTarget = _x select 1;
+    _x params ["_seat", "_renderTargetName"];
+
     // check existing cameras
     _cam = objNull;
     private _camPosMemPt = "";
@@ -64,40 +64,54 @@ if !(alive _uav) exitWith {false};
         private _cam = "camera" camCreate [0,0,0];
         _cam attachTo [_uav,[0,0,0],_camPosMemPt];
         // set up cam on render target
-        _cam cameraEffect ["INTERNAL","BACK",_renderTarget];
-        if (_seat == 1) then {
+        _cam cameraEffect ["INTERNAL","BACK",_renderTargetName];
+        private _turretPath = if (_seat == 1) then {
             private _visionMode = _uav currentVisionMode [];
-            _renderTarget setPiPEffect [_visionMode # 0, _visionMode # 1];
+            _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
             _cam camSetFov 0.1; // set zoom
+            []
         } else {
             private _visionMode = _uav currentVisionMode [-1];
-            _renderTarget setPiPEffect [_visionMode # 0, _visionMode # 1];
+            _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
             _cam camSetFov 0.5; // set default zoom
+            [-1]
         };
         _cam camCommit 0;
-        GVAR(uAVcams) pushBack [_uav,_renderTarget,_cam,_camPosMemPt,_camDirMemPt];
+        GVAR(uAVcams) pushBack [_uav,_renderTargetName,_cam,_camPosMemPt,_camDirMemPt, _turretPath];
     };
 } foreach _uavCams;
 
 // set up event handler
 if !(GVAR(uAVcams) isEqualTo []) exitWith {
     if (isNil QGVAR(uavEventHandle)) then {
-        GVAR(uavEventHandle) = addMissionEventHandler ["Draw3D",{
+        GVAR(uavEventHandle) = [
             {
-                if !(isNil "_x") then {
-                    private _uav = _x select 0;
-                    private _cam = _x select 2;
-                    if (alive _uav) then {
-                        private _dir = (_uav selectionPosition (_x select 3)) vectorFromTo (_uav selectionPosition (_x select 4));
-                        _cam setVectorDirAndUp [_dir,_dir vectorCrossProduct [-(_dir select 1), _dir select 0, 0]];
-                    } else {
-                        [_cam] call FUNC(deleteUAVcam);
-                    };
+                params ["_uavMapCtrl", "_handle"];
+                if(ctrlShown _uavMapCtrl) then {
+                    private _removedUAVs = [];
+                    {
+                        _x params  ["_uav","_renderTargetName","_cam","_camPosMemPt","_camDirMemPt", "_turretPath"];
+                        
+                        if (alive _uav) then {
+                            private _dir = (_uav selectionPosition (_camPosMemPt)) vectorFromTo (_uav selectionPosition (_camDirMemPt));
+                            _cam setVectorDirAndUp [_dir,_dir vectorCrossProduct [-(_dir select 1), _dir select 0, 0]];
+                            private _visionMode = _uav currentVisionMode _turretPath;
+                            _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
+                            _cam camCommit 0;
+                        } else {
+                            _removedUAV pushBack _cam;
+                        };
+                    } foreach GVAR(uAVcams);
+                    {
+                        [_x] call FUNC(deleteUAVcam);
+                    } foreach _removedUAVs;
                 };
-            } foreach GVAR(uAVcams);
-        }];
+            },
+            0,
+            _uavMapCtrl
+        ] call CBA_fnc_addPerFrameHandler;
     };
-    GVAR(actUAV) = _uav;
+    GVAR(currentUAV) = _uav;
     true
 };
 

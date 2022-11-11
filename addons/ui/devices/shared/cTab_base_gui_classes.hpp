@@ -8,7 +8,7 @@
 #include "\a3\ui_f\hpp\defineResincl.inc"
 
 // Fonts
-#define GUI_FONT_NORMAL     	PuristaMedium
+#define GUI_FONT_NORMAL         PuristaMedium
 #define GUI_FONT_BOLD           PuristaSemibold
 #define GUI_FONT_THIN           PuristaLight
 #define GUI_FONT_MONO           EtelkaMonospacePro

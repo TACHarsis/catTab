@@ -6,22 +6,18 @@
 // http://forums.bistudio.com/member.php?64032-Riouken
 // You may re-use any of this work as long as you provide credit back to me.
 
-params ["_mainPop", "_sendingCtrlArry"];
+params ["_control", "_button", "_xPos", "_yPos", "_shift", "_ctrl", "_alt"];
 
 disableSerialization;
 
 GVAR(cTabUserSelIcon) = [[],0,0,0,""];
 
-private _cntrlScreen = _sendingCtrlArry select 0;
-
-_sendingCtrlArry params ["","","_xPos", "_yPos"];
-
 GVAR(userPos) = [_xPos,_yPos];
 
-private _tempWorldPos = _cntrlScreen posScreenToWorld [_xPos,_yPos];
+private _tempWorldPos = _control posScreenToWorld [_xPos,_yPos];
 GVAR(cTabUserSelIcon) set [0,[_tempWorldPos select 0,_tempWorldPos select 1]];
 
 private _time = call EFUNC(core,currentTime);
 GVAR(cTabUserSelIcon) set [4,_time];
 
-[_mainPop] call FUNC(userMenuSelect);
+[IDC_CTAB_MARKER_MENU_MAIN] call FUNC(userMenuSelect);

@@ -34,8 +34,7 @@ Ctab_player = objNull;
 GVAR(checkForPlayerChangePFH) = [{
     if !(Ctab_player isEqualTo (missionNamespace getVariable ["BIS_fnc_moduleRemoteControl_unit",player])) then {
         Ctab_player = missionNamespace getVariable ["BIS_fnc_moduleRemoteControl_unit",player];
-        // close any interface that might still be open
-        call EFUNC(ui,close);
+        
         //prep the arrays that will hold ctab data
         GVARMAIN(BFTMembers) = [];
         GVARMAIN(BFTGroups) = [];
@@ -43,9 +42,8 @@ GVAR(checkForPlayerChangePFH) = [{
         GVARMAIN(UAVList) = [];
         GVARMAIN(hCamList) = [];
         call FUNC(updateLists);
-        call EFUNC(ui,userMarkerListUpdate);
-        // remove msg notification
-        EGVAR(ui,RscLayerMailNotification) cutText ["", "PLAIN"];
+
+        [QGVAR(playerChanged), Ctab_player] call CBA_fnc_localEvent;
     };
 }] call CBA_fnc_addPerFrameHandler;
 

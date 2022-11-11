@@ -8,8 +8,13 @@ sig_version = 3
 files = [
     "mod.cpp",
     "*.paa",
-    "ctab_settings.hpp"
+    "settings/",
+    "settings/ctab_settings.hpp",
+    "custom_backgrounds/",
+    "custom_backgrounds/*.paa",
+    "custom_backgrounds/*.jpg",
 ]
 exclude = [
     "*.png",
+    "*.pdn",
 ]

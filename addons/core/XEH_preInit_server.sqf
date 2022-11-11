@@ -29,14 +29,12 @@ if (isArray (ConfigFile >> QGVARMAIN(settings) >> QGVARMAIN(helmetClass_has_HCam
 };
 publicVariable QGVARMAIN(vehicleClass_has_TAD_server);
 
-
-
-[] spawn {
-    waituntil {time > 0};
-    sleep .1;
-    
-    while {true} do { // name retained for backwards compatibility
-        [QGVARMAIN(updatePulse)] call CBA_fnc_globalEvent;
-        sleep 30;
-    };
-};
+[
+    { time > 0 },
+    {[
+        {   // name retained for backwards compatibility
+            [QGVARMAIN(updatePulse)] call CBA_fnc_globalEvent;
+        },
+        30
+    ]  call CBA_fnc_addPerFrameHandler;}
+] call CBA_fnc_waitUntilAndExecute;

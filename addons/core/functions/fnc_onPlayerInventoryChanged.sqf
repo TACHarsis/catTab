@@ -39,6 +39,10 @@ private _playerLostDevice =
     (_displayName in [QGVARMAIN(Android_dlg),QGVARMAIN(Android_dsp)] && ("ItemAndroid" in _itemsToCheck)) ||
     (_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)] && !("ItemMicroDAGR" in _itemsToCheck));
 
-if (_playerLostDevice) then {[] call EFUNC(ui,close)};
+if (_playerLostDevice) then {
+    [
+        GVAR(deviceLost),
+        _displayName
+    ] call CBA_fnc_localEvent};
 
 true

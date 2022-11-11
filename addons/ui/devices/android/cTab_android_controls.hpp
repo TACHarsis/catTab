@@ -283,9 +283,7 @@ class cTab_android_loadingtxt: cTab_RscText_android {
 };
 class cTab_android_windowsBG: cTab_RscPicture {
     idc = IDC_CTAB_WIN_BACK;
-    //text = "#(argb,8,8,3)color(0.2,0.431,0.647,1)";
-    text=QPATHTOEF(data,img\ui\desktop\classic\android_desktop_background_0_co.paa);
-    //onLoad = QUOTE((_this # 0) ctrlSetText format[ARR_4('#(argb,8,8,3)color(%1,%2,%3,1)',GVAR(androidDesktopColor) select 0,GVAR(androidDesktopColor) select 1,GVAR(androidDesktopColor) select 2)];);
+    text = "";
     x = ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X);
     y = ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y);
     w = ANDROID_pixel2Screen_W(ANDROID_mapRect_px_W);

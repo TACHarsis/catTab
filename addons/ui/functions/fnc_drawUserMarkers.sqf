@@ -34,7 +34,7 @@ params  ["_ctrlScreen","_highlightCursorMarker"];
 private _arrowLength = GVAR(userMarkerArrowSize) * ctrlMapScale _ctrlScreen;
 private _cursorMarkerIndex = [
         -1,
-        [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(userMarkerFind)
+        [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(userMarkerFindAtLocation)
     ] select _highlightCursorMarker;
 
 {

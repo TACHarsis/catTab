@@ -37,7 +37,7 @@ for "_i" from (count GVAR(uAVcams) -1) to 0 step -1 do {
 // remove camera direction update event handler if no more cams are present
 if (count GVAR(uAVcams) == 0) then {
     if !(isNil QGVAR(uavEventHandle)) then {
-        removeMissionEventHandler ["Draw3D",GVAR(uavEventHandle)];
+        [GVAR(uavEventHandle)] call CBA_fnc_removePerFrameHandler;
         GVAR(uavEventHandle) = nil;
     };
 };

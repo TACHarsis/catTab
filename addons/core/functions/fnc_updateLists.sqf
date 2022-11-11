@@ -31,10 +31,10 @@
         call Ctab_ui_fnc_updateLists;
 */
 
-private _BFTMembers = []; // members of player's group
-private _BFTgroups = []; // other groups
-private _BFTvehicles = []; // all vehicles
-private _UAVList =  []; // all remote controllable UAVs
+private _bftMembers = []; // members of player's group
+private _bftGroups = []; // other groups
+private _bftVehicles = []; // all vehicles
+private _uavList =  []; // all remote controllable UAVs
 private _hCamList = [];  // units with a helmet cam
 
 private _validSides = call FUNC(getPlayerSides);
@@ -46,7 +46,7 @@ GVARMAIN(BFTMembers) --- GROUP MEMBERS
 */
 {
     if ((_x != Ctab_player) && {[_x,["ItemcTab","ItemAndroid","ItemMicroDAGR"]] call FUNC(checkGear)}) then {
-        _BFTMembers pushBack [_x,_x call EFUNC(ui,getInfMarkerIcon),"",name _x,str([_x] call CBA_fnc_getGroupIndex)];
+        _bftMembers pushBack _x;
     };
 } foreach units Ctab_player;
 
@@ -70,13 +70,7 @@ Else, search through the group and use the first member we find equipped with a 
             } foreach units _group;
         };
         if !(IsNull _leader) then {
-            _groupSize = count units _x;
-            _sizeIcon = switch (true) do {
-                case (_groupSize <= 3) : {"\A3\ui_f\data\map\markers\nato\group_0.paa"};
-                case (_groupSize <= 9) : {"\A3\ui_f\data\map\markers\nato\group_1.paa"};
-                default {"\A3\ui_f\data\map\markers\nato\group_2.paa"};
-            };
-            _BFTgroups pushBack [_leader,"\A3\ui_f\data\map\markers\nato\b_inf.paa",_sizeIcon,groupID _x,""];
+            _bftGroups pushBack [_group, _leader];
         };
     };
 } foreach allGroups;
@@ -87,57 +81,7 @@ Vehciles on our side, that are not empty and that player is not sitting in.
 */
 {
     if ((side _x in _validSides) && {count (crew _x) > 0} && {_x != _playerVehicle}) then {
-        _groupID = "";
-        _name = "";
-        _customName = _x getVariable [QGVARMAIN(groupId),""];
-        if !(_customName isEqualTo "") then {
-            _name = _customName;
-        } else {
-            if (group _x == _playerGroup) then {
-                _groupID = str([_x] call CBA_fnc_getGroupIndex)
-            };
-            _name = groupID group _x;
-        };
-        _iconA = "";
-        _iconB = "";
-        switch (true) do {
-            case (_x isKindOf "MRAP_01_base_F")     : {_iconA = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
-            case (_x isKindOf "MRAP_02_base_F")     : {_iconA = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
-            case (_x isKindOf "MRAP_03_base_F")     : {_iconA = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
-            case (_x isKindOf "Wheeled_APC_F")         : {_iconA = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
-            case (_x isKindOf "Truck_F" && 
-                {getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 2}) 
-                                                    : {_iconA = "\A3\ui_f\data\map\markers\nato\b_motor_inf.paa";};
-            case (_x isKindOf "Truck_F")             : {_iconA = "\A3\ui_f\data\map\markers\nato\b_support.paa";};
-            case (_x isKindOf "Car_F")                 : {_iconA = "\A3\ui_f\data\map\markers\nato\b_motor_inf.paa";};
-            case (_x isKindOf "UAV")                 : {_iconA = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
-            case (_x isKindOf "UAV_01_base_F")         : {_iconA = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
-            case (_x isKindOf "Helicopter")         : {_iconA = "\A3\ui_f\data\map\markers\nato\b_air.paa"; 
-                                                        _iconB = QPATHTOEF(data,img\map\markers\icon_air_contact_ca.paa);};
-            case (_x isKindOf "Plane")                 : {_iconA = "\A3\ui_f\data\map\markers\nato\b_plane.paa"; 
-                                                        _iconB = QPATHTOEF(data,img\map\markers\icon_air_contact_ca.paa);};
-            case (_x isKindOf "Tank" && 
-                {getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 6}) 
-                                                        : {_iconA = "\A3\ui_f\data\map\markers\nato\b_mech_inf.paa";};
-            case (_x isKindOf "MBT_01_arty_base_F")     : {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
-            case (_x isKindOf "MBT_01_mlrs_base_F")     : {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
-            case (_x isKindOf "MBT_02_arty_base_F")     : {_iconA = "\A3\ui_f\data\map\markers\nato\b_art.paa";};
-            case (_x isKindOf "Tank")                     : {_iconA = "\A3\ui_f\data\map\markers\nato\b_armor.paa";};
-            case (_x isKindOf "StaticMortar")             : {_iconA = "\A3\ui_f\data\map\markers\nato\b_mortar.paa";};
-        };
-        if (_iconA isEqualTo "") then  {
-            if (!(_x isKindOf "Static") && !(_x isKindOf "StaticWeapon")) then 
-            {
-                _iconA = "\A3\ui_f\data\map\markers\nato\b_unknown.paa";
-            } else {
-                if(!(_x isKindOf "Static") && 
-                    {!(_x isKindOf "StaticWeapon")}) then {
-                        _iconA = "\A3\ui_f\data\map\markers\nato\b_unknown.paa";
-                };
-            };
-        } else {
-            _BFTvehicles pushBack [_x,_iconA,_iconB,_name,_groupID];    
-        };
+        _bftVehicles pushBack _x;
     };
 } foreach vehicles;
 
@@ -146,7 +90,7 @@ GVARMAIN(UAVList) --- UAVs
 */
 {
     if (side _x in _validSides) then {
-        _UAVList pushBack _x;
+        _uavList pushBack _x;
     };
 } foreach allUnitsUav;
 
@@ -170,16 +114,29 @@ Units on our side, that have either helmets that have been specified to include 
 private _updateInterface = createHashMap;
 
 // replace the global list arrays in the end so that we avoid them being empty unnecessarily
-GVARMAIN(BFTMembers) = [] + _BFTMembers;
-GVARMAIN(BFTGroups) = [] + _BFTgroups;
-GVARMAIN(BFTvehicles) = [] + _BFTvehicles;
-if !(GVARMAIN(UAVList) isEqualTo _UAVList) then {
-    GVARMAIN(UAVList) = [] + _UAVList;
-    call EFUNC(ui,updateListControlUAV);
+if !(GVARMAIN(BFTMembers) isEqualTo _bftMembers) then {
+    GVARMAIN(BFTMembers) = [] + _bftMembers;
+    [QGVAR(bftMemberListUpdate), [GVARMAIN(BFTMembers)]] call CBA_fnc_localEvent;
 };
+
+if !(GVARMAIN(BFTGroups) isEqualTo _bftGroups) then {
+    GVARMAIN(BFTGroups) = [] + _bftGroups;
+    [QGVAR(bftGroupListUpdate), [GVARMAIN(BFTGroups)]] call CBA_fnc_localEvent;
+};
+
+if !(GVARMAIN(BFTvehicles) isEqualTo _bftVehicles) then {
+    GVARMAIN(BFTvehicles) = [] + _bftVehicles;
+    [QGVAR(bftVehicleListUpdate), [GVARMAIN(BFTvehicles)]] call CBA_fnc_localEvent;
+};
+
+if !(GVARMAIN(UAVList) isEqualTo _uavList) then {
+    GVARMAIN(UAVList) = [] + _uavList;
+    [QGVAR(uavListUpdate), GVARMAIN(UAVList)] call CBA_fnc_localEvent;
+};
+
 if !(GVARMAIN(hCamList) isEqualTo _hCamList) then {
     GVARMAIN(hCamList) = [] + _hCamList;
-    call EFUNC(ui,updateListControlHelmetCams);
+    [QGVAR(helmetCamListUpdate), GVARMAIN(hCamList)] call CBA_fnc_localEvent;
 };
 
 true

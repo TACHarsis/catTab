@@ -33,27 +33,64 @@ private _vehicles = [];
 private _playerVehicle = vehicle Ctab_player;
 private _playerGroup = group Ctab_player;
 private _mountedLabels = [];
-private _drawText = GVAR(textEnabled);
-
 
 if (_mode != 2) then {
+    
+    private _selectedUAV = GVAR(currentUAV);
+    private _selectedUAVPos = if(isNil "_selectedUAV") then {[0,0,0]} else {getPosASL _selectedUAV};
+    // ------------------ UAV Sight/Lock Lines ------------------
+    {
+        private _uav = _x;
+        private _uavPosition = getPosASL _uav;
+        private _isSelectedUAV = !isNil "_selectedUAV" && {_uav isEqualTo _selectedUAV};
+        private _uavLineColor = [[1,1,1,1],[1,0,0.5,1]] select (_isSelectedUAV);
+        
+        private _lineTargetPos = GVAR(mapCursorPos);
+        private _camLockedTo = _uav lockedCameraTo [];
+        private _camIsLocked = !(isNil "_camLockedTo");
+        
+        if (_camIsLocked) then {
+            _lineTargetPos = if((typeName _camLockedTo) isEqualTo "ARRAY") then { _camLockedTo } else { [] call {getPosASL _camLockedTo} };
+        };
+        
+        if (_isSelectedUAV || _camIsLocked) then {
+            _ctrlScreen drawLine [
+                _uavPosition,
+                _lineTargetPos,
+                _uavLineColor
+            ];
+        };
+        
+        if (_camIsLocked) then {
+            _ctrlScreen drawIcon [
+                "\A3\ui_f\data\GUI\Cfg\KeyFrameAnimation\IconControlPoint_ca.paa",
+                _uavLineColor,
+                _lineTargetPos,
+                GVAR(iconSize)/2,GVAR(iconSize)/2,
+                0,"",0,GVAR(textSize),"TahomaB","right"
+            ];
+        };
+    } foreach GVARMAIN(UAVList);
     // ------------------ VEHICLES ------------------
     {
-        private _veh = _x select 0;
-        private _iconB = _x select 2;
-        private _text = if (_drawText) then {_x select 3} else {""};
-        private _groupID = _x select 4 /* 3 is name, 4 is group idx */;
-        private _pos = getPosASL _veh;
+        _x params ["_vehicle","_unitIcon","_airIcon","_name","_groupID"];
+
+        private _text = if (GVAR(textEnabled)) then {_name} else {""};
+        private _pos = getPosASL _vehicle;
+        private _isSelectedUAV = ! isNil QGVAR(currentUAV) && {! isNull GVAR(currentUAV)} && {GVAR(currentUAV) isEqualTo _vehicle};
+        private _isPlayerVehicle = _vehicle isEqualTo _playerVehicle;
+        private _hasAirContactIcon = _airIcon isNotEqualTo "";
+        private _vehicleInPlayerGroup = group _vehicle isEqualTo _playerGroup;
         
-        if (_mode == 1 && {_iconB != "" && {_veh != _playerVehicle}}) then { // Drawing on TAD && vehicle is an air contact
+        if (_mode == 1 && _hasAirContactIcon && !_isPlayerVehicle) then { // Drawing on TAD && vehicle is an air contact
             if (_groupID != "") then {
                 // air contact is in our group
                 _ctrlScreen drawIcon [
-                    _iconB,
+                    _airIcon,
                     GVAR(airContactColor),
                     _pos,
                     GVAR(airContactSize),GVAR(airContactSize),
-                    direction _veh,"",0,GVAR(textSize),"TahomaB","right"
+                    direction _vehicle,"",0,GVAR(textSize),"TahomaB","right"
                 ];
                 _ctrlScreen drawIcon [
                     "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
@@ -62,35 +99,36 @@ if (_mode != 2) then {
                     GVAR(textSize),0, // << wtf?
                     0,_groupID,0,GVAR(airContactGroupTxtSize) * 0.8,"TahomaB","center"];
             } else {
-            // air contact is _not_ in our group
-            _ctrlScreen drawIcon [
-                    _iconB,
-                GVAR(TADOwnIconColor),
-                _pos,
-                GVAR(airContactSize),GVAR(airContactSize),
-                direction _veh,"",0,GVAR(textSize),"TahomaB","right"
-            ];
-            if (_drawText) then {
+                // air contact is _not_ in our group
                 _ctrlScreen drawIcon [
-                    "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
+                    _airIcon,
                     GVAR(TADOwnIconColor),
                     _pos,
-                    GVAR(airContactDummySize),GVAR(airContactDummySize),
-                    0,_text,0,GVAR(textSize),"TahomaB","right"
+                    GVAR(airContactSize),GVAR(airContactSize),
+                    direction _vehicle,"",0,GVAR(textSize),"TahomaB","right"
                 ];
-            };
+                if (GVAR(textEnabled)) then {
+                    _ctrlScreen drawIcon [
+                        "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
+                        GVAR(TADOwnIconColor),
+                        _pos,
+                        GVAR(airContactDummySize),GVAR(airContactDummySize),
+                        0,_text,0,GVAR(textSize),"TahomaB","right"
+                    ];
+                };
             };
         } else { // Draw on anything but TAD
-            if (_veh != _playerVehicle) exitWith { // player is not sitting in this vehicle            
+            if (!_isPlayerVehicle) exitWith { // player is not sitting in this vehicle            
                 _ctrlScreen drawIcon [
-                    _x select 1,
-                    GVAR(colorBLUFOR),
+                    _unitIcon,
+                    [GVAR(colorBLUFOR), [0,1,0,1]] select (_isSelectedUAV),
+                    //GVAR(colorBLUFOR),
                     _pos,
                     GVAR(iconSize),GVAR(iconSize),
                     0,_text,0,GVAR(textSize),"TahomaB","right"
                 ];
             };
-            if (group _veh != _playerGroup) then { // player is not in the same group as this vehicle
+            if (!_vehicleInPlayerGroup) then { // player is not in the same group as this vehicle
                 _ctrlScreen drawIcon [
                     "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
                     GVAR(colorBLUFOR),
@@ -100,21 +138,23 @@ if (_mode != 2) then {
                 ];
             };
         };
-        _vehicles pushBack _veh;
-    } foreach GVARMAIN(BFTvehicles);
+        _vehicles pushBack _vehicle;
+    } foreach GVAR(bftVehicleIcons);
 
     // ------------------ GROUPS ------------------
     {
-        private _veh = vehicle (_x select 0);
+        _x params ["_group", "_leader", "_icon","_sizeIcon", "_groupIdx", "_unknown"];
+        // name is never used
+        private _veh = vehicle (_leader);
         
         // See if the group leader's vehicle is in the list of drawn vehicles
         private _vehIndex = _vehicles find _veh;
         
         // Only do this if the vehicle has not been drawn yet, or the player is sitting in the same vehicle as the group leader
         if (_vehIndex != -1 || {_veh == _playerVehicle}) then {
-            if (_drawText) then {
+            if (GVAR(textEnabled)) then {
                 // we want to draw text and the group leader is in a vehicle that has already been drawn
-                private _text = _x select 3;
+                private _text = _groupIdx;
                 // _vehIndex == -1 means that the player sits in the vehicle
                 if (_vehIndex == -1 || {(groupID group _veh) != _text}) then {
                     // group name is not the same as that of the vehicle the leader is sitting in
@@ -128,91 +168,94 @@ if (_mode != 2) then {
                 };
             };
         } else {
-            private _text = if (_drawText) then {_x select 3} else {""};
+            private _text = if (GVAR(textEnabled)) then {_groupIdx} else {""};
             private _pos = getPosASL _veh;
+            
             _ctrlScreen drawIcon [
-                _x select 1,
+                _icon,
                 GVAR(colorBLUFOR),
                 _pos,GVAR(iconSize),GVAR(iconSize),
                 0,_text,0,GVAR(textSize),"TahomaB","right"
             ];
             _ctrlScreen drawIcon [
-                _x select 2,
+                _sizeIcon,
                 GVAR(colorBLUFOR),
                 _pos,
                 GVAR(groupOverlayIconSize),GVAR(groupOverlayIconSize),
                 0,"",0,GVAR(textSize),"TahomaB","right"
             ];
         };
-    } foreach GVARMAIN(BFTGroups);
+    } foreach GVAR(bftGroupIcons);
 };
 
 // ------------------ MEMBERS ------------------
 private _mountedLabels = [];
 {
-    private _veh = vehicle (_x select 0);
+    _x params ["_unit", "_icon", "_unknown", "_name", "_groupIdx"];
+    // name is never used
+    private _vehicle = vehicle (_unit);
     
     // make sure we are still in the same team
-    if (group Ctab_player isEqualTo group (_x select 0)) then {
+    if (group Ctab_player isEqualTo group (_unit)) then {
         
         // get the fire-team color
-        private _teamColor = GVAR(teamColors) select (["MAIN","RED","GREEN","BLUE","YELLOW"] find (assignedTeam (_x select 0)));
+        private _teamColor = GVAR(teamColors) select (["MAIN","RED","GREEN","BLUE","YELLOW"] find (assignedTeam (_unit)));
         
-        if (_mode != 2 && {_veh == _playerVehicle || {_veh in _vehicles}}) exitWith {
-            if (_drawText) then {
+        if (_mode != 2 && {_vehicle == _playerVehicle || {_vehicle in _vehicleicles}}) exitWith {
+            if (GVAR(textEnabled)) then {
                 // we want to draw text on anything but MicroDAGR and the unit sits in a vehicle that has already been drawn
-                private _mountedIndex = _mountedLabels find _veh;
+                private _mountedIndex = _mountedLabels find _vehicle;
                 if (_mountedIndex != -1) then {
-                    _mountedLabels set [_mountedIndex + 1,(_mountedLabels select (_mountedIndex + 1)) + "/" + (_x select 4)];
+                    _mountedLabels set [_mountedIndex + 1,(_mountedLabels select (_mountedIndex + 1)) + "/" + (_groupIdx)];
                 } else {
-                    _mountedLabels pushBack _veh;
-                    _mountedLabels pushBack (_x select 4 /* 3 is name, 4 is group idx */);
+                    _mountedLabels pushBack _vehicle;
+                    _mountedLabels pushBack (_groupIdx /* 3 is name, 4 is group idx */);
                 };
             };
         };
-        if (_veh != (_x select 0)) exitWith {
+        if (_vehicle != (_unit)) exitWith {
             // the unit _does_ sit in a vehicle
-            private _mountedIndex = _mountedLabels find _veh;
-            if (_mountedIndex != -1 && _drawText) then {
-                _mountedLabels set [_mountedIndex + 1,(_mountedLabels select (_mountedIndex + 1)) + "/" + (_x select 4 /* 3 is name, 4 is group idx */)];
+            private _mountedIndex = _mountedLabels find _vehicle;
+            if (_mountedIndex != -1 && GVAR(textEnabled)) then {
+                _mountedLabels set [_mountedIndex + 1,(_mountedLabels select (_mountedIndex + 1)) + "/" + (_groupIdx /* 3 is name, 4 is group idx */)];
             } else {
-                _mountedLabels pushBack _veh;
-                if  (_drawText) then {
-                    _mountedLabels pushBack (_x select 4 /* 3 is name, 4 is group idx */);
+                _mountedLabels pushBack _vehicle;
+                if  (GVAR(textEnabled)) then {
+                    _mountedLabels pushBack (_groupIdx /* 3 is name, 4 is group idx */);
                 };
-                if (_veh != _playerVehicle) then {
+                if (_isPlayerVehicle) then {
                     _ctrlScreen drawIcon [
                         "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
                         GVAR(colorBLUFOR),
-                        getPosASL _veh,
+                        getPosASL _vehicle,
                         GVAR(iconSize),GVAR(iconSize),
-                        direction _veh,"",0,GVAR(textSize),"TahomaB","right"
+                        direction _vehicle,"",0,GVAR(textSize),"TahomaB","right"
                     ];
                 };
             };
         };
-        private _pos = getPosASL _veh;
+        private _pos = getPosASL _vehicle;
         _ctrlScreen drawIcon [
-            _x select 1,
+            _icon,
             _teamColor,
             _pos,
             GVAR(manSize),GVAR(manSize),
-            direction _veh,"",0,GVAR(textSize),"TahomaB","right"
+            direction _vehicle,"",0,GVAR(textSize),"TahomaB","right"
         ];
-        if (_drawText) then {
+        if (GVAR(textEnabled)) then {
             _ctrlScreen drawIcon [
                 "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
                 _teamColor,
                 _pos,
                 GVAR(manSize),GVAR(manSize),
-                0,_x select 4 /* 3 is name, 4 is group idx */,0,GVAR(textSize),"TahomaB","right"
+                0,_groupIdx,0,GVAR(textSize),"TahomaB","right"
             ];
         };
     };
-} foreach GVARMAIN(BFTMembers);
+} foreach GVAR(bftMemberIcons);
 
 // ------------------ ADD LABEL TO VEHICLES WITH MOUNTED GROUPS / MEMBERS ------------------
-if (_drawText && !(_mountedLabels isEqualTo [])) then {
+if (GVAR(textEnabled) && !(_mountedLabels isEqualTo [])) then {
     for "_i" from 0 to (count _mountedLabels - 2) step 2 do {
         private _veh = _mountedLabels select _i;
         if (_veh != _playerVehicle) then {

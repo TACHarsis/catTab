@@ -12,6 +12,7 @@ if (isNil "_mode") exitWith {};
 
 if (_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
     private _data = [_displayName,QSETTING_CAM_UAV] call FUNC(getSettings);
+    private _uav = _data call BIS_fnc_objectFromNetId;
     private _UAVListCtrl = _display displayCtrl IDC_CTAB_CTABUAVList;
 
     // Populate list of UAVs
@@ -20,15 +21,16 @@ if (_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
     {
         if !((crew _x isEqualTo [])) then {
             private _index = _UAVListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,getText (configfile >> "cfgVehicles" >> typeOf _x >> "displayname")];
-            _UAVListCtrl lbSetData [_index,str _x];
+            _UAVListCtrl lbSetData [_index, _x call BIS_fnc_netId];
         };
     } foreach GVARMAIN(UAVList);
 
     lbSort [_UAVListCtrl, "ASC"];
-    if (_data != "") then {
+    
+    if !(isNull _uav) then {
         // Find last selected UAV and select if found
         for "_i" from 0 to (lbSize _UAVListCtrl - 1) do {
-            if (_data isEqualTo (_UAVListCtrl lbData _i)) exitWith {
+            if (_uav isEqualTo ((_UAVListCtrl lbData _i) call BIS_fnc_objectFromNetId)) exitWith {
                 if ((lbCurSel _UAVListCtrl) != _i) then {
                     _UAVListCtrl lbSetCurSel _i;
                 };

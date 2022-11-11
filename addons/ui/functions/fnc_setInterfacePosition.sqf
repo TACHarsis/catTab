@@ -42,9 +42,9 @@ private _displayConfigContainers = if (_isDialog) then {
                     private _idc = getNumber (_x >> "idc");
                     if (_idc > 0) then {
                         private _ctrl = _display displayCtrl _idc;
-						private _configPosition = [getNumber (_x >> "x"),getNumber (_x >> "y")];
-						private _newPosition = (_configPosition vectorAdd _offset);
-						_newPosition = [_newPosition # 0, _newPosition # 1];
+                        private _configPosition = [getNumber (_x >> "x"),getNumber (_x >> "y")];
+                        private _newPosition = (_configPosition vectorAdd _offset);
+                        _newPosition = [_newPosition # 0, _newPosition # 1];
                         _ctrl ctrlSetPosition _newPosition;
                         _ctrl ctrlCommit 0;
                     } else {diag_log str ["invalid IDC",_x]};

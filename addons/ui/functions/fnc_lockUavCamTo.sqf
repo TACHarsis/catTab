@@ -21,12 +21,15 @@ params ["_camPos"];
 
 private _displayName = GVAR(ifOpen) select 1;
 private _uav = objNull;
-private _data = [_displayName,QSETTING_CAM_UAV] call FUNC(getSettings);
+private _uavNetId = [_displayName,QSETTING_CAM_UAV] call FUNC(getSettings);
+private _uav = _uavNetId call BIS_fnc_objectFromNetId;
 
 // see if given UAV name is still in the list of valid UAVs
-{
-    if (_data == str _x) exitWith {_uav = _x;};
-} foreach GVARMAIN(UAVList);
+if! (_uav in GVARMAIN(UAVList)) exitWith {};
+
+if(isNull _uav) then {
+    _uav = GVAR(currentUAV);
+};
 
 if !(isNull _uav) exitWith {
     

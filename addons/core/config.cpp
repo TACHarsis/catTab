@@ -19,3 +19,4 @@ class CfgPatches {
 };
 
 #include "CfgEventHandlers.hpp"
+#include "\settings\ctab_class_settings.hpp"

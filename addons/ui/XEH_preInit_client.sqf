@@ -119,8 +119,69 @@ GVAR(msgReceiveEHID) = [
     FUNC(messagingOnMessageReceived)
 ] call CBA_fnc_addEventHandler;
 
-GVAR(actUAV) = nullObj;
+GVAR(currentUAV) = objNull;
 
 GVAR(notificationCache) = [];
 
 [] call FUNC(initSettings);
+
+
+GVAR(bftMemberIcons) = [];
+GVAR(bftMemberListUpdateEHID) = [
+    QEGVAR(core,bftMemberListUpdate),
+    FUNC(updateBFTMemberIconList)
+] call CBA_fnc_addEventHandler;
+
+GVAR(bftGroupIcons) = [];
+GVAR(bftGroupListUpdateEHID) = [
+    QEGVAR(core,bftGroupListUpdate),
+    FUNC(updateBFTGroupIconList)
+] call CBA_fnc_addEventHandler;
+
+GVAR(bftVehicleIcons) = [];
+GVAR(bftVehicleListUpdateEHID) = [
+    QEGVAR(core,bftVehicleListUpdate),
+    FUNC(updateBFTVehicleIconList)
+] call CBA_fnc_addEventHandler;
+
+GVAR(uavListUpdateEHID) = [
+    QEGVAR(core,uavListUpdate),
+    FUNC(updateListControlUAV)
+] call CBA_fnc_addEventHandler;
+
+GVAR(helmetCamListUpdateEHID) = [
+    QEGVAR(core,helmetCamListUpdate),
+    FUNC(updateListControlHelmetCams)
+] call CBA_fnc_addEventHandler;
+
+GVAR(playerChangeEHID) = [
+    QEGVAR(core,playerChanged),
+    {
+        params ["_ctabPlayer"];
+
+        // close any interface that might still be open
+        [] call FUNC(close);
+        // retrieve associate user markers
+        [] call FUNC(userMarkerListUpdate);
+        // remove msg notification
+        GVAR(RscLayerMailNotification) cutText ["", "PLAIN"];
+    }
+] call CBA_fnc_addEventHandler;
+
+GVAR(deviceLostEHID) = [
+    QEGVAR(core,deviceLost),
+    {
+        params ["_displayName"];
+        // close interface that might still be open
+        [] call FUNC(close)
+    }
+] call CBA_fnc_addEventHandler;
+
+GVAR(remoteControlFailedEHID) = [
+    QGVAR(remoteControlFailed),
+    {
+        params ["_errorMessage"];
+        // show notification
+        [QSETTING_MODE_CAM_UAV,_errorMessage,5] call FUNC(addNotification);
+    }
+]

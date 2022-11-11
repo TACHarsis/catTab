@@ -63,10 +63,44 @@ if (_dikCode == DIK_DELETE && {GVAR(cursorOnMap)}) exitWith {
         [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
     ] call BIS_fnc_getFromPairs);
 
-    private _markerIndex = [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(userMarkerFind);
+    private _markerIndex = [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(userMarkerFindAtLocation);
     if (_markerIndex != -1) then {
         [call EFUNC(core,getPlayerEncryptionKey),_markerIndex] remoteExec [QFUNC(userMarkerDeleteServer), 2];
+    } else {
+        if!(_displayName in [QGVARMAIN(Tablet_dlg)]) exitWith {};
+
+        private _closestUAV = [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(uavLockFindAtLocation);
+        if !(isNil "_closestUAV") then {
+            // unlock
+            diag_log "unlocking";
+            _closestUAV lockCameraTo [objNull, [0]];
+        };
     };
+
+    true
+};
+
+if (_dikCode == DIK_SPACE && {_displayName in [QGVARMAIN(Tablet_dlg)]} && {GVAR(cursorOnMap)}) exitWith {
+    diag_log "at all?";
+    private _ctrlScreen = _display displayCtrl ([
+        [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings),
+        [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+    ] call BIS_fnc_getFromPairs);
+
+    private _closestUAV = [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(uavFindAtLocation);
+    diag_log format["closest uav: %1", _closestUAV];
+    if !(isNull _closestUAV) then {
+        //setting new active UAV
+        diag_log "new uav";
+        GVAR(currentUAV) = _closestUAV;
+        [QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_UAV,_closestUAV call BIS_fnc_netId]]] call FUNC(setSettings);
+    } else {
+        // deselect current uav
+        diag_log "deselecting";
+        GVAR(currentUAV) = objNull;
+        [QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_UAV,""]]] call FUNC(setSettings);
+    };
+
     true
 };
 
