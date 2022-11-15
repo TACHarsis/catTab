@@ -1,37 +1,16 @@
 #include "script_component.hpp"
+#include "mapControlOptions.hpp"
 
-// This is drawn every frame on the tablet uav screen. fnc
 params ["_ctrlScreen"];
 
 if (isNil QGVAR(currentUAV) || {isNull GVAR(currentUAV)}) exitWith {};
-if (GVAR(currentUAV) == player) exitWith {};
+if (GVAR(currentUAV) == Ctab_player) exitWith {};
 
-private _display = ctrlParent _ctrlScreen;
-private _pos = getPosASL GVAR(currentUAV);
+private _camHost = GVAR(helmetCams) select 2;
 
-[_ctrlScreen,false] call FUNC(drawUserMarkers);
-[_ctrlScreen,0] call FUNC(drawBftMarkers);
-
-// draw icon at own location
-private _veh = vehicle Ctab_player;
-_ctrlScreen drawIcon [
-    "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
-    GVAR(mapToolsPlayerVehicleIconColor),
-    getPosASL _veh,
-    GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-    direction _veh,"", 1,GVAR(textSize),"TahomaB","right"
-];
-
-// draw icon at UAV location
-_ctrlScreen drawIcon [
-    "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
-    GVAR(miscColor),
-    _pos,
-    GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-    direction GVAR(currentUAV),"",0,GVAR(textSize),"TahomaB","right"
-];
-
-_ctrlScreen ctrlMapAnimAdd [0,GVAR(mapScaleUAV),_pos];
-ctrlMapAnimCommit _ctrlScreen;
-
-true
+[_ctrlScreen, createHashMapFromArray [
+    [DMC_DRAW_MARKERS,  [false,0]],
+    [DMC_RECENTER, GVAR(currentUAV)],
+    [DMC_HUMAN_AVATAR, GVAR(currentUAV)],
+    [DMC_HUMAN_AVATAR, objNull]
+]] call FUNC(drawMapControl);

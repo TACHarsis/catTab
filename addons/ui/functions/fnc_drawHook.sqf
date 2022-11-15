@@ -1,4 +1,5 @@
 #include "script_component.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 /*
      Name: Ctab_ui_fnc_drawHook
      
@@ -22,9 +23,6 @@
      Example:
         [_display,_ctrlScreen,_playerPos,GVAR(mapCursorPos),0,false] call Ctab_ui_fnc_drawHook;
 */
-
-#include "..\devices\shared\cTab_defines.hpp"
-
 params ["_display","_ctrlScreen","_pos","_secondPos","_mode", "_isTAD"];
 
 // draw arrow from current position to map centre

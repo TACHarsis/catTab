@@ -18,6 +18,7 @@ PREP(deleteUAVcam);
 PREP(drawBftMarkers);
 PREP(drawMapControlHCam);
 PREP(drawHook);
+PREP(drawMapControl);
 PREP(drawMapControlAndroidDlg);
 PREP(drawMapControlAndroidDsp);
 PREP(drawMapControlFBCB2);

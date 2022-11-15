@@ -1,38 +1,12 @@
 #include "script_component.hpp"
-
+#include "mapControlOptions.hpp"
+    
 // This is drawn every frame on the TAD display. fnc
 params ["_ctrlScreen"];
 
-private _display = ctrlParent _ctrlScreen;
-
-// current position
-private _veh = vehicle Ctab_player;
-private _playerPos = getPosASL _veh;
-private _heading = direction _veh;
-
-[_ctrlScreen,false] call FUNC(drawUserMarkers);
-[_ctrlScreen,1] call FUNC(drawBftMarkers);
-
-// change scale of map and centre to player position
-_ctrlScreen ctrlMapAnimAdd [0, GVAR(mapScale), _playerPos];
-ctrlMapAnimCommit _ctrlScreen;
-
-// draw vehicle icon at own location
-_ctrlScreen drawIcon [
-    GVAR(playerVehicleIcon),
-    GVAR(TADOwnIconColor),
-    _playerPos,
-    GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-    _heading,"", 1,GVAR(textSize),"TahomaB","right"
-];
-
-// draw TAD overlay (two circles, one at full scale, the other at half scale + current heading)
-_ctrlScreen drawIcon [
-    QPATHTOEF(data,img\map\overlay\TAD_overlay_ca.paa),
-    GVAR(TADOwnIconColor),
-    _playerPos,
-    250,250,
-    _heading,"",1,GVAR(textSize),"TahomaB","right"
-];
-
-true
+[_ctrlScreen, createHashMapFromArray [
+    [DMC_DRAW_MARKERS,  [false,1]],
+    [DMC_RECENTER,      objNull],
+    [DMC_VEHICLE_AVATAR, GVAR(playerVehicleIcon)],
+    [DMC_TAD_OVERLAY, nil]
+]] call FUNC(drawMapControl);

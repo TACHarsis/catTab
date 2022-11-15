@@ -51,7 +51,7 @@ if !(isNil QGVAR(ifOpen)) then {
     if !(GVAR(openStart)) then {
         if ([_displayName] call FUNC(isDialog)) then {
             // convert mapscale to km
-            _mapScale = GVAR(mapScale) * GVAR(mapScaleFactor) / 0.86 * (safezoneH * 0.8);
+            private _mapScale = GVAR(mapScale) * GVAR(mapScaleFactor) / 0.86 * (safezoneH * 0.8);
             
             // get the current position of the background control
             private _backgroundPosition = [_displayName] call FUNC(getBackgroundPosition);

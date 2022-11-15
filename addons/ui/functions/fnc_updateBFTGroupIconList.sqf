@@ -11,5 +11,5 @@ GVAR(bftGroupIcons) = [];
         case (_groupSize <= 9) : {"\A3\ui_f\data\map\markers\nato\group_1.paa"};
         default {"\A3\ui_f\data\map\markers\nato\group_2.paa"};
     };
-    GVAR(bftGroupIcons) pushBack [_group, _leader, "\A3\ui_f\data\map\markers\nato\b_inf.paa",_sizeIcon, groupID _group, ""];
+    GVAR(bftGroupIcons) pushBack [_group, _leader, "\A3\ui_f\data\map\markers\nato\b_inf.paa",_sizeIcon];
 } foreach _bftGroupList;
