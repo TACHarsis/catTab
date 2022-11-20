@@ -45,8 +45,12 @@ if (_dikCode == DIK_F4 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Andr
     [_displayName,[[QSETTING_MODE,QSETTING_MODE_MESSAGES]]] call FUNC(setSettings);
     true
 };
-if (_dikCode == DIK_F5 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg),QGVARMAIN(TAD_dlg),QGVARMAIN(microDAGR_dlg),QGVARMAIN(FBCB2_dlg)]}) exitWith {
+if (_dikCode == DIK_F5 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg),QGVARMAIN(microDAGR_dlg),QGVARMAIN(FBCB2_dlg)]}) exitWith {
     [_displayName] call FUNC(toggleMapTools);
+    true
+};
+if (_dikCode == DIK_F5 && {_displayName in [QGVARMAIN(TAD_dlg)]}) exitWith {
+    [_displayName] call FUNC(toggleMapToolReferenceMode);
     true
 };
 if (_dikCode == DIK_F6 && {_displayName in [QGVARMAIN(Tablet_dlg),QGVARMAIN(Android_dlg),QGVARMAIN(TAD_dlg),QGVARMAIN(microDAGR_dlg),QGVARMAIN(FBCB2_dlg)]}) exitWith {
@@ -72,7 +76,6 @@ if (_dikCode == DIK_DELETE && {GVAR(cursorOnMap)}) exitWith {
         private _closestUAV = [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(uavLockFindAtLocation);
         if !(isNil "_closestUAV") then {
             // unlock
-            diag_log "unlocking";
             _closestUAV lockCameraTo [objNull, [0]];
         };
     };
@@ -81,22 +84,18 @@ if (_dikCode == DIK_DELETE && {GVAR(cursorOnMap)}) exitWith {
 };
 
 if (_dikCode == DIK_SPACE && {_displayName in [QGVARMAIN(Tablet_dlg)]} && {GVAR(cursorOnMap)}) exitWith {
-    diag_log "at all?";
     private _ctrlScreen = _display displayCtrl ([
         [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings),
         [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
     ] call BIS_fnc_getFromPairs);
 
     private _closestUAV = [_ctrlScreen,GVAR(mapCursorPos)] call FUNC(uavFindAtLocation);
-    diag_log format["closest uav: %1", _closestUAV];
     if !(isNull _closestUAV) then {
         //setting new active UAV
-        diag_log "new uav";
         GVAR(currentUAV) = _closestUAV;
         [QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_UAV,_closestUAV call BIS_fnc_netId]]] call FUNC(setSettings);
     } else {
         // deselect current uav
-        diag_log "deselecting";
         GVAR(currentUAV) = objNull;
         [QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_UAV,""]]] call FUNC(setSettings);
     };

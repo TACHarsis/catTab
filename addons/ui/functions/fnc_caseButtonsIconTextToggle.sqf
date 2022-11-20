@@ -8,7 +8,10 @@ Returns TRUE
 
 params ["_displayName"];
 
-if (GVAR(textEnabled)) then {GVAR(textEnabled) = false} else {GVAR(textEnabled) = true};
-[_displayName,[[QSETTING_SHOW_ICON_TEXT,GVAR(textEnabled)]]] call FUNC(setSettings);
+private _drawText = [_displayName, QSETTING_SHOW_ICON_TEXT] call FUNC(getSettings);
+
+_drawText = !_drawText;
+
+[_displayName,[[QSETTING_SHOW_ICON_TEXT,_drawText]]] call FUNC(setSettings);
 
 true

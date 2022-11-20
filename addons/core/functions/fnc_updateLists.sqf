@@ -83,7 +83,8 @@ private _playerVehicle = vehicle Ctab_player;
 private _bftVehicles = vehicles select {
     count (crew _x) > 0 &&
     {side _x in _validSides} &&
-    {_x != _playerVehicle} };
+    {_x != _playerVehicle} 
+};
 
 if !(GVARMAIN(BFTvehicles) isEqualTo _bftVehicles) then {
     GVARMAIN(BFTvehicles) = [] + _bftVehicles;

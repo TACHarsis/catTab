@@ -23,7 +23,7 @@ class GVARMAIN(microDAGR_dlg) {
     objects[] = {};
     class controlsBackground {
         class screen: cTab_microDAGR_RscMapControl {
-            onDraw = QUOTE(_this call FUNC(drawMapControlMicroDAGRDlg););
+            onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(microDAGR_dlg),_this)] call FUNC(drawMapControl););
             onMouseMoving = QUOTE(GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
             // set initial map scale
             scaleDefault = QUOTE((missionNamespace getVariable 'GVAR(mapScale)') * 0.86 / (safezoneH * 0.8));

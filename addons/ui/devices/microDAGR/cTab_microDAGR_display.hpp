@@ -21,7 +21,7 @@ class GVARMAIN(microDAGR_dsp) {
     onLoad = QUOTE(_this call FUNC(onIfOpen));
     class controlsBackground {
         class screen: cTab_microDAGR_RscMapControl {
-            onDraw = QUOTE(_this call FUNC(drawMapControlMicroDAGRDsp););
+            onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(microDAGR_dsp),_this)] call FUNC(drawMapControl););
             // set initial map scale
             scaleDefault = QUOTE(missionNamespace getVariable 'GVAR(mapScale)');
         };

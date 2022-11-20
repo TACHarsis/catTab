@@ -55,16 +55,16 @@ class GVARMAIN(Tablet_dlg){
             y = TABLET_pixel2Screen_Y(WINDOW_SMALL_contentRect_px_B_Y);
             w = TABLET_pixel2Screen_W(WINDOW_SMALL_contentRect_px_W);
             h = TABLET_pixel2Screen_H(WINDOW_SMALL_contentRect_px_H);
-            onDraw = QUOTE(nop = _this call FUNC(drawMapControlUAV););
+            onDraw = QUOTE(nop = [ARR_2(QQGVAR(TAD_UAVS),_this)] call FUNC(drawMapControl););
             onMouseButtonDblClick = "";
         };
         class cTabHcamMap: cTabUavMap {
             idc = IDC_CTAB_CTABHCAMMAP;
-            onDraw = QUOTE(nop = _this call FUNC(drawMapControlHCam););
+            onDraw = QUOTE(nop = [ARR_2(QQGVAR(TAD_HCAMS),_this)] call FUNC(drawMapControl););
         };
         class screen: cTab_Tablet_RscMapControl {
             idc = IDC_CTAB_SCREEN;
-            onDraw = QUOTE(_this call FUNC(drawMapControlTablet););
+            onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(Tablet_dlg),_this)] call FUNC(drawMapControl););
             onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
             onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);

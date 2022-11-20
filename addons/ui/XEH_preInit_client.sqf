@@ -21,6 +21,8 @@ GVAR(userMarkerListTranslated) = [];
 
 GVAR(displayPropertyGroups) = createHashMapFromArray [
     [QGVARMAIN(Tablet_dlg),QSETTINGS_TABLET],
+    [QGVAR(TAD_UAVS),QSETTINGS_UAVS],
+    [QGVAR(TAD_HCAMS),QSETTINGS_HCAMS],
     [QGVARMAIN(Android_dlg),QSETTINGS_ANDROID],
     [QGVARMAIN(Android_dsp),QSETTINGS_ANDROID],
     [QGVARMAIN(FBCB2_dlg),QSETTINGS_FBCB2],
@@ -29,12 +31,16 @@ GVAR(displayPropertyGroups) = createHashMapFromArray [
     [QGVARMAIN(microDAGR_dsp),QSETTINGS_MICRODAGR],
     [QGVARMAIN(microDAGR_dlg),QSETTINGS_MICRODAGR]
 ];
+
+[] call FUNC(initializeDeviceMapSettings);
+
+
 GVAR(mapScaleInitialized) = false;
 [] call FUNC(initializeMapScale);
 [
     { GVAR(mapScaleInitialized)    },
     {
-        [] call FUNC(initializeSettings);
+        [] call FUNC(initializeDeviceSettings);
     }
 ] call CBA_fnc_waitUntilAndExecute;
 // set air contact  color to purple
@@ -46,8 +52,9 @@ GVAR(mapToolsPlayerVehicleIconColor) = [57/255, 255/255, 20/255, 1];
 // direction arrow / hook is neon yellow
 GVAR(mapToolsHookColor) = [243/255, 243/255, 21/255, 1];
 // set TAD own icon color to neon green
-GVAR(TADOwnIconColor) = [57/255, 255/255, 20/255, 1];
+GVAR(TADOwnSideColor) = [57/255, 255/255, 20/255, 1];
 
+GVAR(selectedUAVColor) = [0,1,0,1];
 
 // set base colors from BI -- Helps keep colors matching if user changes colors in options.
 GVAR(colorBLUFOR) = [
@@ -85,8 +92,6 @@ GVAR(teamColors) = [
 // set icon size of own vehicle
 GVAR(ownVehicleIconBaseSize) = 18;
 GVAR(ownVehicleIconScaledSize) = GVAR(ownVehicleIconBaseSize) / (0.86 / (safezoneH * 0.8));
-
-GVAR(textEnabled) = true;
 
 // Draw Map Tolls (Hook)
 GVAR(drawMapTools) = false;

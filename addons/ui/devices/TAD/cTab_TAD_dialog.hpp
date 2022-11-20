@@ -24,7 +24,7 @@ class GVARMAIN(TAD_dlg) {
         class mapBackground: cTab_TAD_Map_Background {};
         class screen: cTab_TAD_RscMapControl {
             idc = IDC_CTAB_SCREEN;
-            onDraw = QUOTE(_this call FUNC(drawMapControlTADDlg););
+            onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(TAD_dlg),_this)] call FUNC(drawMapControl););
             onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
             onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
@@ -35,7 +35,7 @@ class GVARMAIN(TAD_dlg) {
         };
         class screenBlack: cTab_TAD_RscMapControl_BLACK {
             idc = IDC_CTAB_SCREEN_BLACK;
-            onDraw = QUOTE(_this call FUNC(drawMapControlTADDlg););
+            onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(TAD_dlg),_this)] call FUNC(drawMapControl););
             onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
             onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
@@ -130,8 +130,8 @@ class GVARMAIN(TAD_dlg) {
         };
         class btnMapTools: cTab_RscButton_TAD_OSB18 {
             idc = 21;
-            action = QUOTE(['GVARMAIN(TAD_dlg)'] call FUNC(toggleMapTools));
-            tooltip = "Toggle Map Tools (F5)";
+            action = QUOTE(['GVARMAIN(TAD_dlg)'] call FUNC(toggleMapToolReferenceMode));
+            tooltip = "Toggle Reference Mode (F5)";
         };
         class btnF7: cTab_RscButton_TAD_OSB19 {
             idc = 22;

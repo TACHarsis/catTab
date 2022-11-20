@@ -25,7 +25,7 @@ class GVARMAIN(TAD_dsp) {
         class mapBackground: cTab_TAD_Map_Background {};
         class screen: cTab_TAD_RscMapControl {
             idc = IDC_CTAB_SCREEN;
-            onDraw = QUOTE(_this call FUNC(drawMapControlTADDsp););
+            onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(TAD_dsp),_this)] call FUNC(drawMapControl););
             // set initial map scale
             scaleDefault = QUOTE(missionNamespace getVariable 'GVAR(mapScale)');
             // hide grid lines
@@ -38,7 +38,7 @@ class GVARMAIN(TAD_dsp) {
         };
         class screenBlack: cTab_TAD_RscMapControl_BLACK {
             idc = IDC_CTAB_SCREEN_BLACK;
-            onDraw = QUOTE(_this call FUNC(drawMapControlTADDsp););
+            onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(TAD_dsp),_this)] call FUNC(drawMapControl););
             // set initial map scale
             scaleDefault = QUOTE(missionNamespace getVariable 'GVAR(mapScale)');
             // hide grid lines

@@ -29,7 +29,7 @@
     Example:
         [_ctrlScreen] call Ctab_ui_fnc_drawUserMarkers;
 */
-params  ["_ctrlScreen","_highlightCursorMarker"];
+params  ["_ctrlScreen","_highlightCursorMarker", "_drawText"];
 
 private _arrowLength = GVAR(userMarkerArrowSize) * ctrlMapScale _ctrlScreen;
 private _cursorMarkerIndex = [
@@ -52,7 +52,7 @@ private _cursorMarkerIndex = [
         _color,
         _pos, 
         _iconSize, _iconSize, 
-        0, ["",_text] select GVAR(textEnabled), 0, GVAR(textSize),"TahomaB",_align
+        0, ["",_text] select _drawText, 0, GVAR(textSize),"TahomaB",_align
     ];
     if (_texture2 != "") then {
         _ctrlScreen drawIcon [

@@ -50,7 +50,7 @@ private _deviceAndroid = [
 private _deviceMicroDAGR = [
     {[_player,["ItemMicroDAGR"]] call EFUNC(core,checkGear)},
     //CC: If we also have a tablet, the microDAGR gets to draw cooler shit
-    { GVAR(microDAGRmode) = [2,0] select ([_player,["ItemcTab"]] call EFUNC(core,checkGear)); [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)] select _this} 
+    { [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)] select _this} 
 ];
 
 private _deviceFBCB2 = [
@@ -68,9 +68,27 @@ private _deviceTablet = [
 //CC: Tertiary order: Tablet, Android dlg, DAGR dlg, TAD dlg, FBCB2
     
 private _devices = switch (_interfaceKey) do {
-    case (0) /*main*/         : {[_deviceTAD,_deviceAndroid,_deviceMicroDAGR,_deviceFBCB2,_deviceTablet]};
-    case (1) /*secondary*/    : {[_deviceTAD,_deviceFBCB2,_deviceAndroid,_deviceMicroDAGR,_deviceTablet]};
-    case (2) /*tertiary*/    : {[_deviceTablet,_deviceAndroid,_deviceMicroDAGR,_deviceTAD,_deviceFBCB2]};
+    case (0) /*main*/       : {[
+            _deviceTAD,
+            _deviceAndroid,
+            _deviceMicroDAGR,
+            _deviceFBCB2,
+            _deviceTablet
+        ]};
+    case (1) /*secondary*/  : {[
+            _deviceTAD,
+            _deviceFBCB2,
+            _deviceAndroid,
+            _deviceMicroDAGR,
+            _deviceTablet
+        ]};
+    case (2) /*tertiary*/   : {[
+            _deviceTablet,
+            _deviceAndroid,
+            _deviceMicroDAGR,
+            _deviceTAD,
+            _deviceFBCB2
+        ]};
     default {[[{false},{}]]};
 };
 

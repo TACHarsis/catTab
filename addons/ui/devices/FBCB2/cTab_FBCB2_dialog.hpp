@@ -40,7 +40,7 @@ class GVARMAIN(FBCB2_dlg){
             y = FBCB2_pixel2Screen_Y(SCREEN_contentRect_px_Y);
             w = FBCB2_pixel2Screen_W(SCREEN_contentRect_px_W);
             h = FBCB2_pixel2Screen_H(SCREEN_contentRect_px_H);
-            onDraw = QUOTE(_this call FUNC(drawMapControlFBCB2););
+            onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(FBCB2_dlg),_this)] call FUNC(drawMapControl););
             onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
             onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);

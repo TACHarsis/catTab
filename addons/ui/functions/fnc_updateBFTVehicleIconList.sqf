@@ -5,19 +5,19 @@ GVAR(bftVehicleIcons) = [];
 {
     private _vehicle = _x;
 
-    private _groupID = "";
+    private _groudIdx = "";
     private _name = "";
     private _customName = _x getVariable [QGVARMAIN(groupId),""];
     if !(_customName isEqualTo "") then {
         _name = _customName;
     } else {
         if (group _x == _playerGroup) then {
-            _groupID = str([_x] call CBA_fnc_getGroupIndex)
+            _groudIdx = str([_x] call CBA_fnc_getGroupIndex)
         };
         _name = groupID group _x;
     };
     private _unitIcon = "";
-    private _airIcon = "";
+    private _type = "LAND";
     switch (true) do {
         case (_x isKindOf "MRAP_01_base_F")         : {_unitIcon = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
         case (_x isKindOf "MRAP_02_base_F")         : {_unitIcon = QPATHTOEF(data,img\map\markers\b_mech_inf_wheeled.paa);};
@@ -30,11 +30,12 @@ GVAR(bftVehicleIcons) = [];
         case (_x isKindOf "Car_F")                  : {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_motor_inf.paa";};
         case (_x in allUnitsUav)                    : {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_uav.paa";
                                                         _name = format["%1(UAV)",_name];};
-        case (_x isKindOf "UAV_01_base_F")          : {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_uav.paa";};
+        case (_x isKindOf "UAV_01_base_F")          : {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_uav.paa";
+                                                        _type = "Air"};
         case (_x isKindOf "Helicopter")             : {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_air.paa"; 
-                                                        _airIcon = QPATHTOEF(data,img\map\markers\icon_air_contact_ca.paa);};
+                                                        _type = "Air"};
         case (_x isKindOf "Plane")                  : {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_plane.paa"; 
-                                                        _airIcon = QPATHTOEF(data,img\map\markers\icon_air_contact_ca.paa);};
+                                                        _type = "Air"};
         case (_x isKindOf "Tank" && 
             {getNumber (configfile >> "cfgVehicles" >> typeOf _x >> "transportSoldier") > 6}) 
                                                     : {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_mech_inf.paa";};
@@ -46,5 +47,5 @@ GVAR(bftVehicleIcons) = [];
         default                                       {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_unknown.paa"; };
     };
 
-    GVAR(bftVehicleIcons) pushBack [_x,_unitIcon,_airIcon,_name,_groupID];   
+    GVAR(bftVehicleIcons) pushBack [_x,_name,_type,_unitIcon];
 } foreach _bftVehicleList;
