@@ -185,7 +185,7 @@ class cTab_microDAGR_btnMapTools: cTab_RscButton_microDAGR_LeftDown {
 };
 class cTab_microDAGR_on_screen_battery: cTab_RscPicture {
     idc = 7;
-    text = QPATHTOEF(data,img\icon_battery_ca.paa);
+    text = QPATHTOEF(data,img\ui\icon_battery_ca.paa);
     x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_LEFT_X);
     y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_T + (cTab_GUI_microDAGR_OSD_ELEMENT_STD_H - cTab_GUI_microDAGR_OSD_ICON_STD_SIZE) / 2);
     w = MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_OSD_ICON_STD_SIZE);
