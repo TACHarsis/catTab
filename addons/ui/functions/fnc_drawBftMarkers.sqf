@@ -8,26 +8,18 @@
      Description:
         Draw BFT markers
         
-        List format:
-            Index 0: Unit object
-            Index 1: Path to icon A
-            Index 2: Path to icon B (either group size or wingmen)
-            Index 3: Text to display
-            Index 4: String of group index
-
-    
     Parameters:
-        0: OBJECT  - Map control to draw BFT icons on
-        1: INTEGER - Mode, 0 = draw normal, 1 = draw for TAD, 2 = draw for MicroDAGR
+        0: CONTROL  - Map control to draw BFT icons on
+        0: STRING   - Display Name
+        1: ARRAY    - Array of strings denoting drawin options
      
      Returns:
         Nothing
      
      Example:
-        [_ctrlScreen,0] call Ctab_ui_fnc_drawBftMarkers;
+        [_ctrlScreen,GVARMAIN(Tablet), ["Vehicles"]] call Ctab_ui_fnc_drawBftMarkers;
 */
 params ["_ctrlScreen","_displayName", "_bftOptions"];
-//CC: This is very awkward code. The mode switches the drawing of Vehicles and Groups for different devices
 
 // record of vehicles we have drawn this frame
 private _processedVehicles = [];
