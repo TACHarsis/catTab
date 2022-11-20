@@ -28,7 +28,6 @@ params [
 ];
 
 private _foundUAV = objNull;
-diag_log format["initially: %1", _foundUAV];
 private _targetRadius = GVAR(iconSize) * 2 * (ctrlMapScale (_mapControl)) * GVAR(mapScaleFactor);
 
 private _maxDistance = _searchPos distanceSqr [(_searchPos select 0) + _targetRadius,(_searchPos select 1) + _targetRadius];
@@ -45,6 +44,5 @@ private _maxDistance = _searchPos distanceSqr [(_searchPos select 0) + _targetRa
    };
 } foreach GVARMAIN(UAVList);
 
-diag_log format["returning: %1", _foundUAV];
 
 _foundUAV
