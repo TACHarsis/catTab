@@ -112,7 +112,8 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                     [DMC_DRAW_MARKERS,          [false,[
                                         DMC_BFT_VEHICLES,
                                         DMC_BFT_GROUPS,
-                                        DMC_BFT_MEMBERS
+                                        DMC_BFT_MEMBERS,
+                                        DMC_BFT_UAV
                                     ]]],
                                     [DMC_RECENTER,              [{GVAR(currentUAV)}, {GVAR(mapScaleUAV)}]],
                                     [DMC_HUMAN_AVATAR,          [{GVAR(currentUAV)}, objNull]]

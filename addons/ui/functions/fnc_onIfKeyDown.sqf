@@ -99,6 +99,7 @@ if (_dikCode == DIK_SPACE && {_displayName in [QGVARMAIN(Tablet_dlg)]} && {GVAR(
         GVAR(currentUAV) = objNull;
         [QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_UAV,""]]] call FUNC(setSettings);
     };
+    [QGVAR(UAVSelected), [GVAR(currentUAV)]] call CBA_fnc_localEvent;
 
     true
 };

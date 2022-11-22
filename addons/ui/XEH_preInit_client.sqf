@@ -88,6 +88,8 @@ GVAR(teamColors) = [
     [225/255,225/255,0,0.8] // Fireteam Yellow
 ];
 
+GVAR(UAVLineColor) = [1,1,1,1];
+GVAR(UAVLineColorSelected) = [1,0,0.5,1];
 
 // set icon size of own vehicle
 GVAR(ownVehicleIconBaseSize) = 18;
@@ -189,4 +191,37 @@ GVAR(remoteControlFailedEHID) = [
         // show notification
         [QSETTING_MODE_CAM_UAV,_errorMessage,5] call FUNC(addNotification);
     }
-]
+] call CBA_fnc_addEventHandler;
+
+#ifdef DEBUG_MODE_FULL
+GVAR(uavSelectedEHID) = [
+    QGVAR(UAVSelected),
+    {
+        params ["_uav"];
+        if(isNull GVAR(currentUAV) && !isNil QGVAR(uavDebugPFH)) then {
+            GVAR(uavDebugPFH) call CBA_fnc_removePerFrameHandler;
+            GVAR(uavDebugPFH) = nil;
+        };
+        
+        if(!isNull GVAR(currentUAV) && isNil QGVAR(uavDebugPFH)) then {
+            GVAR(uavDebugPFH) = [{
+                if(isNull Ctab_ui_currentUAV) exitWith {};
+                params ["","_pfhID"];
+                private _uav = GVAR(currentUAV);
+
+                private _uavViewData = [_uav] call FUNC(getUAVViewData);
+                _uavViewData params ["_uavLookOrigin","_uavLookDir","_hitOccured","_aimPoint","_intersectRayTarget"];
+
+                drawLine3D [_uavLookOrigin, _aimPoint, [1,0,0,1]];
+                drawIcon3D ["\A3\ui_f\data\GUI\Cfg\KeyFrameAnimation\IconCamera_ca.paa", [1,1,1,1], _aimPoint, 0,0,0,format ["AimPoint: %1",_aimPoint]];
+                drawIcon3D ["\A3\ui_f\data\GUI\Cfg\KeyFrameAnimation\IconCamera_ca.paa", [1,1,1,1],_uavLookOrigin, 0,0,0,format [" BegPos: %1", _uavLookOrigin]];
+                drawIcon3D ["\A3\ui_f\data\GUI\Cfg\KeyFrameAnimation\IconCamera_ca.paa", [1,1,1,1],_uavLookOrigin vectorAdd _uavLookDir, 0,0,0,format ["Dir(rel)): %1", _dir]];
+                drawIcon3D ["\A3\ui_f\data\map\Markers\System\dummy_ca.paa", [1,1,1,1],_intersectRayTarget, 1,1,0,format ["RayTarget: %1", _intersectRayTarget]];
+                drawLine3D [_uavLookOrigin, _uavLookOrigin vectorAdd _uavLookDir, [0,0,0,1]];
+                drawLine3D [_uavLookOrigin, getPos player, [0,1,0,1]];
+                drawLine3D [_uavLookOrigin, _intersectRayTarget, [0,0,1,1]];
+            },0] call CBA_fnc_addPerFrameHandler;
+        }
+    }
+] call CBA_fnc_addEventHandler;
+#endif

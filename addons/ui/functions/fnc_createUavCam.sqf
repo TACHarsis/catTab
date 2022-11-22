@@ -112,7 +112,7 @@ if !(GVAR(uAVcams) isEqualTo []) exitWith {
         ] call CBA_fnc_addPerFrameHandler;
     };
     GVAR(currentUAV) = _uav;
+    [QGVAR(UAVSelected), [GVAR(currentUAV)]] call CBA_fnc_localEvent;
+
     true
 };
-
-false

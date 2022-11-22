@@ -35,24 +35,31 @@ private _drawText = _displayOptions getOrDefault [QSETTING_SHOW_ICON_TEXT,false]
 private _displayEnvironmentType = _displayOptions getOrDefault [QSETTING_DEVICE_ENVIRONMENT,QDEVICE_GROUND];
 
 if(DMC_BFT_UAV in _bftOptions) then {
-    _selectedUAV = GVAR(currentUAV);
-
-    private _selectedUAVPos = if(isNull _selectedUAV) then {[0,0,0]} else {getPosASL _selectedUAV};
+     _selectedUAV = GVAR(currentUAV);
     // ------------------ UAV Sight/Lock Lines ------------------
     {
+        
         private _uav = _x;
+        private _isSelectedUAV = _uav isEqualTo _selectedUAV;
         private _uavPosition = getPosASL _uav;
-        private _isSelectedUAV = !isNil "_selectedUAV" && {_uav isEqualTo _selectedUAV};
-        private _uavLineColor = [[1,1,1,1],[1,0,0.5,1]] select (_isSelectedUAV);
+        
+        private _uavLineColor = [
+            GVAR(UAVLineColor),
+            GVAR(UAVLineColorSelected)
+        ] select (_isSelectedUAV);
         
         private _lineTargetPos = GVAR(mapCursorPos);
         private _camLockedTo = _uav lockedCameraTo [];
         private _camIsLocked = !(isNil "_camLockedTo");
         
         if (_camIsLocked) then {
-            _lineTargetPos = if((typeName _camLockedTo) isEqualTo "ARRAY") then { _camLockedTo } else { [] call {getPosASL _camLockedTo} };
+            _lineTargetPos = if((typeName _camLockedTo) isEqualTo "ARRAY") then {
+                _camLockedTo
+            } else {
+                [] call {getPosASL _camLockedTo}
+            };
         };
-        
+
         if (_isSelectedUAV || _camIsLocked) then {
             _ctrlScreen drawLine [
                 _uavPosition,
@@ -71,6 +78,34 @@ if(DMC_BFT_UAV in _bftOptions) then {
             ];
         };
     } foreach GVARMAIN(UAVList);
+
+    if !(isNull _selectedUAV) then {
+        private _uavViewData = [_selectedUAV] call FUNC(getUAVViewData);
+        _uavViewData params ["_uavLookOrigin","_uavLookDir","_hitOccured","_aimPoint","_intersectRayTarget"];
+        
+        private _uavViewConeVertices = [_selectedUAV, _uavViewData] call FUNC(getUAVViewCone);
+        
+        private _coneColor = [
+            [0.1,0.5,0.1,1],
+            [0,1,0,1]
+        ] select _hitOccured;
+
+        _ctrlScreen drawPolygon [_uavViewConeVertices, _coneColor];
+        
+        _ctrlScreen drawLine [
+            _uavLookOrigin,
+            _aimPoint,
+            _coneColor
+        ];
+        
+        _ctrlScreen drawIcon [
+            "\A3\ui_f\data\GUI\Cfg\KeyFrameAnimation\IconCamera_ca.paa",
+            _coneColor,
+            _aimPoint,
+            GVAR(iconSize)/2,GVAR(iconSize)/2,
+            0,"",0,GVAR(textSize),"TahomaB","right"
+        ];
+    };
 };
 
 if(DMC_BFT_VEHICLES in _bftOptions) then {
@@ -80,7 +115,7 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
         _x params ["_vehicle","_type","_name","_unitIcon"];
 
         private _text = if (_drawText) then {_name} else {""};
-        private _pos = getPosASL _vehicle;
+        private _pos = getPos _vehicle;
         private _vehicleGroup = group _vehicle;
 
         private _isSelectedUAV = _selectedUAV isEqualTo _vehicle;
@@ -278,7 +313,7 @@ if(DMC_BFT_MEMBERS in _bftOptions) then {
                 };
             };
         } else { // does not sit in a vehicle 
-            private _pos = getPosASL _unitVehicle;
+            private _pos = getPos _unitVehicle;
             _ctrlScreen drawIcon [
                 _icon,
                 _teamColor,
@@ -308,7 +343,7 @@ if (_drawText && (_mountedLabelHash isNotEqualTo createHashMap)) then {
             _ctrlScreen drawIcon [
                 "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
                 GVAR(colorBLUFOR),
-                getPosASL _vehicle,
+                getPos _vehicle,
                 GVAR(iconSize),GVAR(iconSize),
                 0,_mountedLabelHash select (_i + 1),0,GVAR(textSize),"TahomaB","left"
             ];

@@ -22,6 +22,8 @@ PREP(drawUserMarkers);
 PREP(getBackgroundPosition);
 PREP(getInfMarkerIcon);
 PREP(getSettings);
+PREP(getUAVViewCone);
+PREP(getUAVViewData);
 PREP(initializeDeviceMapSettings);
 PREP(initializeMapScale);
 PREP(initializeDeviceSettings);
