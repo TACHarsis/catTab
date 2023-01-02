@@ -29,7 +29,7 @@
 ///////////////////////////////////////////////////////////////////////////
 class cTab_RscText {
     access = 0;
-    type = 0;
+    type = CT_STATIC;
     idc = -1;
     colorBackground[] =
     {
@@ -66,7 +66,7 @@ class cTab_RscText {
 };
 class cTab_RscStructuredText {
     access = 0;
-    type = 13;
+    type = CT_STRUCTURED_TEXT ;
     idc = -1;
     style = 0;
     colorText[] =
@@ -92,7 +92,7 @@ class cTab_RscStructuredText {
 };
 class cTab_RscPicture {
     access = 0;
-    type = 0;
+    type = CT_STATIC;
     idc = -1;
     style = 48;
     colorBackground[] =
@@ -122,7 +122,7 @@ class cTab_RscPicture {
 };
 class cTab_RscEdit {
     access = 0;
-    type = 2;
+    type = CT_EDIT;
     x = 0;
     y = 0;
     h = 0.04;
@@ -166,7 +166,7 @@ class cTab_RscEdit {
 };
 class cTab_RscCombo {
     access = 0;
-    type = 4;
+    type = CT_COMBO;
     colorSelect[] =
     {
         0,
@@ -214,7 +214,7 @@ class cTab_RscCombo {
         1
     };
     maxHistoryDelay = 1;
-    class ScrollBar {
+    class ComboScrollBar {
         color[] =
         {
             1,
@@ -250,10 +250,10 @@ class cTab_RscCombo {
     shadow = 0;
     colorSelectBackground[] =
     {
-        1,
-        1,
-        1,
-        0.7
+        0.7,
+        0.7,
+        0.7,
+        1
     };
     arrowEmpty = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_ca.paa";
     arrowFull = "\A3\ui_f\data\GUI\RscCommon\rsccombo\arrow_combo_active_ca.paa";
@@ -284,7 +284,7 @@ class cTab_RscCombo {
 };
 class cTab_RscListBox {
     access = 0;
-    type = 5;
+    type = CT_LISTBOX;
     w = 0.4;
     h = 0.4;
     rowHeight = 0;
@@ -440,7 +440,7 @@ class cTab_RscListBox {
 };
 class cTab_RscButton {
     access = 0;
-    type = 1;
+    type = CT_BUTTON;
     text = "";
     colorText[] =
     {
@@ -681,11 +681,11 @@ class cTab_HTML {
     */
 };
 
-// Invisable button
+// Invisible button
 
 class cTab_RscButtonInv {
     access = 0;
-    type = 1;
+    type = CT_BUTTON ;
     text = "";
     colorText[] =
     {
@@ -786,7 +786,7 @@ class cTab_RscButtonInv {
 
 
 class cTab_RscShortcutButton {
-    type = 16;
+    type = CT_SHORTCUTBUTTON;
     x = 0.1;
     y = 0.1;
     class HitZone {
@@ -965,7 +965,7 @@ class cTab_RscShortcutButtonMain {
     };
 };
 class cTab_RscFrame {
-    type = 0;
+    type = CT_STATIC;
     idc = -1;
     style = 64;
     shadow = 2;
@@ -989,7 +989,7 @@ class cTab_RscFrame {
 };
 class cTab_RscSlider {
     access = 0;
-    type = 3;
+    type = CT_SLIDER;
     style = 1024;
     w = 0.3;
     color[] =
@@ -1010,7 +1010,7 @@ class cTab_RscSlider {
     h = 0.025;
 };
 class cTab_IGUIBack {
-    type = 0;
+    type = CT_STATIC;
     idc = 124;
     style = 128;
     text = "";
@@ -1038,7 +1038,7 @@ class cTab_IGUIBack {
 };
 class cTab_RscCheckbox {
     idc = -1;
-    type = 7;
+    type = CT_CHECKBOXES;
     style = 0;
     x = "LINE_X(XVAL)";
     y = "LINE_Y";
@@ -1115,7 +1115,7 @@ class cTab_RscCheckbox {
 };
 class cTab_RscButtonMenu {
     idc = -1;
-    type = 16;
+    type = CT_SHORTCUTBUTTON;
     style = "0x02 + 0xC0";
     default = 0;
     shadow = 0;
@@ -1310,7 +1310,7 @@ class cTab_RscControlsGroup {
     };
     class Controls {
     };
-    type = 15;
+    type = CT_CONTROLS_GROUP;
     idc = -1;
     x = 0;
     y = 0;
@@ -1321,7 +1321,7 @@ class cTab_RscControlsGroup {
 };
 /*
 class cTab_RscFrame {
-    type = 0;
+    type = CT_STATIC;
     idc = -1;
     style = 64;
     shadow = 2;
@@ -1335,7 +1335,7 @@ class cTab_RscFrame {
 /*
 class cTab_RscSlider {
     access = 0;
-    type = 3;
+    type = CT_SLIDER;
     style = 1024;
     w = 0.3;
     color[] = {1,1,1,0.8};
