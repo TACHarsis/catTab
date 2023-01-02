@@ -26,7 +26,6 @@ private _processedVehicles = [];
 
 private _playerVehicle = vehicle Ctab_player;
 private _playerGroup = group Ctab_player;
-private _selectedUAV = objNull;
 
 private _mountedLabelHash = createHashMap;
 
@@ -35,12 +34,10 @@ private _drawText = _displayOptions getOrDefault [QSETTING_SHOW_ICON_TEXT,false]
 private _displayEnvironmentType = _displayOptions getOrDefault [QSETTING_DEVICE_ENVIRONMENT,QDEVICE_GROUND];
 
 if(DMC_BFT_UAV in _bftOptions) then {
-     _selectedUAV = GVAR(currentUAV);
     // ------------------ UAV Sight/Lock Lines ------------------
     {
-        
         private _uav = _x;
-        private _isSelectedUAV = _uav isEqualTo _selectedUAV;
+        private _isSelectedUAV = _uav isEqualTo GVAR(currentUAV);
         private _uavPosition = getPosASL _uav;
         
         private _uavLineColor = [
@@ -60,6 +57,14 @@ if(DMC_BFT_UAV in _bftOptions) then {
             };
         };
 
+        _ctrlScreen drawIcon [
+            "\A3\ui_f\data\map\markers\nato\b_uav.paa",
+            [GVAR(colorBLUFOR),GVAR(selectedUAVColor)] select _isSelectedUAV,
+            _uavPosition,
+            GVAR(iconSize),GVAR(iconSize),
+            0,"",0,GVAR(textSize),"TahomaB","right"
+        ];
+
         if (_isSelectedUAV || _camIsLocked) then {
             _ctrlScreen drawLine [
                 _uavPosition,
@@ -77,13 +82,16 @@ if(DMC_BFT_UAV in _bftOptions) then {
                 0,"",0,GVAR(textSize),"TahomaB","right"
             ];
         };
+
+        _processedVehicles pushBack _uav;
+
     } foreach GVARMAIN(UAVList);
 
-    if !(isNull _selectedUAV) then {
-        private _uavViewData = [_selectedUAV] call FUNC(getUAVViewData);
+    if !(isNull GVAR(currentUAV)) then {
+        private _uavViewData = [GVAR(currentUAV)] call FUNC(getUAVViewData);
         _uavViewData params ["_uavLookOrigin","_uavLookDir","_hitOccured","_aimPoint","_intersectRayTarget"];
         
-        private _uavViewConeVertices = [_selectedUAV, _uavViewData] call FUNC(getUAVViewCone);
+        private _uavViewConeVertices = [GVAR(currentUAV), _uavViewData] call FUNC(getUAVViewCone);
         
         private _coneColor = [
             [0.1,0.5,0.1,1],
@@ -114,17 +122,18 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
     {
         _x params ["_vehicle","_type","_name","_unitIcon"];
 
+        //skip UAV that would get drawn on their own
+        if(_vehicle in _processedVehicles) then { continue };
+
         private _text = if (_drawText) then {_name} else {""};
         private _pos = getPos _vehicle;
         private _vehicleGroup = group _vehicle;
 
-        private _isSelectedUAV = _selectedUAV isEqualTo _vehicle;
         private _isPlayerVehicle = _vehicle isEqualTo _playerVehicle;
         private _isAirType = _type isEqualTo "Air";
         private _isInPlayerGroup = _vehicleGroup isEqualTo _playerGroup;
         private _displayIsAirDevice = _displayEnvironmentType isEqualTo QDEVICE_AIR;
         private _drawAsWings = _displayIsAirDevice && _isAirType; // Drawing on TAD && vehicle is an air contact
-
         _processedVehicles pushBack _vehicle;
 
         if(_isPlayerVehicle && _isInPlayerGroup) then {continue};
@@ -157,18 +166,12 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
             0,
             direction _vehicle
         ] select _drawAsWings;
-
         private _iconColor = if(_drawAsWings) then { 
             [
                 GVAR(TADOwnSideColor),
                 GVAR(airContactColor)
             ] select _isInPlayerGroup
-        } else {
-            [
-                GVAR(colorBLUFOR), 
-                GVAR(selectedUAVColor)
-            ] select (_isSelectedUAV)
-        };
+        } else { GVAR(colorBLUFOR) };
 
         _ctrlScreen drawIcon [
             _icon,
@@ -214,7 +217,7 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
             if !(_drawText) then { continue };
 
             if (_isPlayerVehicle || {_unitVehicle in _processedVehicles}) then {
-                // we want to draw text on anything but MicroDAGR and the unit sits in a vehicle that has already been drawn or in player vehicle that doesn't get drawn
+                // vehicle has already been drawn or in player vehicle that doesn't get drawn
                 private _mountedLabel = _mountedLabelHash getOrDefault [_unitVehicle, ""];
                 _mountedLabelHash set [
                             _unitVehicle, 
@@ -234,7 +237,7 @@ if(DMC_BFT_GROUPS in _bftOptions) then {
         // _ctabLeader may not be leader of group but first non-leader unit with ctab device
         private _groupId = groupId _group;
         private _ctabLeaderVehicle = vehicle (_ctabLeader);
-        
+
         if(_ctabLeaderVehicle isNotEqualTo _ctabLeader) then { // ctabLeader is in a vehicle
             if !(_drawText) exitWith {};
 
@@ -242,17 +245,17 @@ if(DMC_BFT_GROUPS in _bftOptions) then {
 
             // Only do this if the vehicle has not been drawn yet, or the player is sitting in the same vehicle as the ctab leader
             private _isPlayerVehicle = _ctabLeaderVehicle == _playerVehicle;
-            
+
             // See if the ctab leader's vehicle is in the list of drawn vehicles
             private _vehicleWasDrawnBefore = _ctabLeaderVehicle in _processedVehicles;
 
             if (_isPlayerVehicle || // either is player vehicle (and has not been drawn before) or ctab leader sits in vehicle of other group
                 (_vehicleWasDrawnBefore && {(groupID group _ctabLeaderVehicle) != _groupId})) then {
-                    
+
                 // group name is not the same as that of the vehicle the ctab leader is sitting in
                 private _mountedLabel = _mountedLabelHash getOrDefault [_ctabLeaderVehicle, ""];
                 _mountedLabelHash set [
-                    _ctabLeaderVehicle, 
+                    _ctabLeaderVehicle,
                     [_groupId,format ["%1/%2",_mountedLabel, _groupId]] select (_mountedLabel isEqualTo "")
                 ];
             };
