@@ -31,8 +31,8 @@ private _return = false;
 if (_vehicle isKindOf "ParachuteBase") exitWith {false};
 
 private _typeClassList = switch (_type) do {
-    case "FBCB2": { GVARMAIN(vehicleClass_has_FBCB2) };
-    case "TAD": { GVARMAIN(vehicleClass_has_TAD) };
+    case "FBCB2": { GVARMAIN(vehicleClassesFBCB2) };
+    case "TAD": { GVARMAIN(vehicleClassesTAD) };
     default { [] };
 };
 {

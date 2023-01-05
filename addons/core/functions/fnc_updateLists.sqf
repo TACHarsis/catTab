@@ -111,7 +111,7 @@ private _hCamList = allUnits select {
         private _camera = getNumber (configfile >> "CfgWeapons" >> _headgear >> "CTAB_Camera");
         
         (_camera isNotEqualTo 0 ||
-            {_headgear in GVARMAIN(helmetClass_has_HCam)} ||
+            {_headgear in GVARMAIN(helmetClasses)} ||
             {[_x,["ItemcTabHCam"]] call FUNC(checkGear)})
     };
 };

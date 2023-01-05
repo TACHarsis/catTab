@@ -103,23 +103,23 @@ You can reconfigure the default keys in the configuration file, which can be fou
 Note: To unlock a UAV turret, use the lock / unlock control command available to UAVs (default `CTRL` + `T`) when controlling the UAV turret in full-screen mode (either via the UAV terminal or the UAV gunner view accessible from the tablet).
 
 ### Define vehicle types that have FBCB2 or TAD available ###
-To configure the list of vehicle types that have FBCB2 or TAD available, edit the `GVARMAIN(vehicleClass_has_FBCB2)` and `GVARMAIN(vehicleClass_has_TAD)` arrays in the configuration file on the server, which can be found in the ArmA 3 folder `...\Arma 3\userconfig\cTab\ctab_settings.hpp`.
+To configure the list of vehicle types that have FBCB2 or TAD available, edit the `GVARMAIN(vehicleClassesFBCB2)` and `GVARMAIN(vehicleClassesTAD)` arrays in the configuration file on the server, which can be found in the ArmA 3 folder `...\Arma 3\userconfig\cTab\ctab_settings.hpp`.
 
 ```SQF
 class cTab_settings {
-    GVARMAIN(vehicleClass_has_FBCB2)[] = {"MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank","Truck_01_base_F","Truck_03_base_F"};
-    GVARMAIN(vehicleClass_has_TAD)[] = {"Helicopter","Plane"};
+    GVARMAIN(vehicleClassesFBCB2)[] = {"MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank","Truck_01_base_F","Truck_03_base_F"};
+    GVARMAIN(vehicleClassesTAD)[] = {"Helicopter","Plane"};
 };
 ```
 
 Note: This is a server-side setting, i.e. whatever is set on the client-side userconfig will be overridden by the userconfig on the server.
 
 ### Define helmet classes with enabled helmet camera ###
-To configure the list of helmet classes that enable helmet cameras, edit the `GVARMAIN(helmetClass_has_HCam)` array in the configuration file on the server, which can be found in the ArmA 3 folder `...\Arma 3\userconfig\cTab\ctab_settings.hpp`. It needs to be within the class `cTab_settings` (same area as above).
+To configure the list of helmet classes that enable helmet cameras, edit the `GVARMAIN(helmetClasses)` array in the configuration file on the server, which can be found in the ArmA 3 folder `...\Arma 3\userconfig\cTab\ctab_settings.hpp`. It needs to be within the class `cTab_settings` (same area as above).
 
 ```SQF
 class cTab_settings {
-    GVARMAIN(helmetClass_has_HCam) = {"H_HelmetB_light","H_Helmet_Kerry","H_HelmetSpecB","H_HelmetO_ocamo","BWA3_OpsCore_Fleck_Camera","BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"};
+    GVARMAIN(helmetClasses) = {"H_HelmetB_light","H_Helmet_Kerry","H_HelmetSpecB","H_HelmetO_ocamo","BWA3_OpsCore_Fleck_Camera","BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"};
 };
 ```
 
@@ -184,17 +184,17 @@ If you wish to override the list of vehicles that have FBCB2 or TAD available, p
 
 ```SQF
 // only make FBCB2 available to MRAPs, APCs and tanks
-GVARMAIN(vehicleClass_has_FBCB2) = ["MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank"];
+GVARMAIN(vehicleClassesFBCB2) = ["MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank"];
 
 // make TAD available to all helicopters and planes with the exception of the MH-9 Hummingbird and AH-9 Pawnee
-GVARMAIN(vehicleClass_has_TAD) = ["Heli_Attack_01_base_F","Heli_Attack_02_base_F","Heli_Light_02_base_F","Heli_Transport_01_base_F","Heli_Transport_02_base_F","I_Heli_light_03_base_F","Plane"];
+GVARMAIN(vehicleClassesTAD) = ["Heli_Attack_01_base_F","Heli_Attack_02_base_F","Heli_Light_02_base_F","Heli_Transport_01_base_F","Heli_Transport_02_base_F","I_Heli_light_03_base_F","Plane"];
 ```
 
 ### Override helmet classes with enabled helmet camera ###
 
 ```SQF
 // Only have BWmod helmets with a camera simulate a helmet camera
-Ctab_helmetClass_has_HCam = ["BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"];
+Ctab_helmetClasses = ["BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"];
 ```
 
 ### Change display name of a group ###
