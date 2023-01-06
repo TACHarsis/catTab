@@ -31,6 +31,21 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         _options
                                     }],
                                     [DMC_SAVE_SCALE_POSITION,   {true}],
+                                    [DMC_RECENTER,              {
+                                        params ["_displayName", "_displaySettinggs"];
+                                        private _mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
+                                        switch (_mode) do {
+                                            case (QSETTING_MODE_CAM_UAV) : {
+                                                [[-1,0] select GVAR(trackCurrentUAV), GVAR(currentUAV), GVAR(mapScaleUAV)]
+                                            };
+                                            case (QSETTING_MODE_CAM_HELMET) : {
+                                                [[-1,0] select GVAR(trackCurrentHCam), GVAR(helmetCamData) select 2, GVAR(mapScaleHCam)]
+                                            };
+                                            default {
+                                                [-1, "", ""]
+                                            };
+                                        }
+                                    }],
                                     [DMC_HUMAN_AVATAR,          [objNull]],
                                     [DMC_DRAW_HOOK,             nil]
                                 ]
