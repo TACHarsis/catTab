@@ -17,8 +17,8 @@
      Example:
         ['Ctab_TAD_dlg'] call Ctab_ui_fnc_centerMapOnPlayerPosition;
 */
+params ["_displayName"];
 
-
-[_this select 0,[[QSETTING_MAP_WORLD_POS,getPosASL vehicle Ctab_player]],true,true] call FUNC(setSettings);
+[_displayName,[[QSETTING_MAP_WORLD_POS,getPosASL vehicle Ctab_player]],true,true] call FUNC(setSettings);
 
 true

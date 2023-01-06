@@ -18,13 +18,19 @@
 GVAR(displayDrawOptions) = createHashMapFromArray [
     [QGVARMAIN(Tablet_dlg),     createHashMapFromArray [
                                     [DMC_CONDITION,             {true}],
-                                    [DMC_DRAW_MARKERS,          [true,[
-                                        DMC_BFT_UAV,
-                                        DMC_BFT_VEHICLES,
-                                        DMC_BFT_GROUPS,
-                                        DMC_BFT_MEMBERS
-                                    ]]],
-                                    [DMC_SAVE_SCALE_POSITION,   nil],
+                                    [DMC_DRAW_MARKERS,          {
+                                        params ["_displayName", "_displaySettinggs"];
+                                        private _mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
+                                        private _options = [true,[
+                                            DMC_BFT_VEHICLES,
+                                            DMC_BFT_GROUPS,
+                                            DMC_BFT_MEMBERS
+                                        ]];
+                                        if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then { (_options#1) pushBack DMC_BFT_UAV};
+
+                                        _options
+                                    }],
+                                    [DMC_SAVE_SCALE_POSITION,   {true}],
                                     [DMC_HUMAN_AVATAR,          [objNull]],
                                     [DMC_DRAW_HOOK,             nil]
                                 ]
@@ -36,7 +42,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         DMC_BFT_GROUPS,
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_SAVE_SCALE_POSITION,   nil],
+                                    [DMC_SAVE_SCALE_POSITION,   true],
                                     [DMC_HUMAN_AVATAR,          [objNull]],
                                     [DMC_DRAW_HOOK,             nil]
                                 ]
@@ -48,7 +54,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         DMC_BFT_GROUPS,
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_RECENTER,              [nil]],
+                                    [DMC_RECENTER,              [player]],
                                     [DMC_HUMAN_AVATAR,          [objNull]]
                                 ]
     ],
@@ -59,7 +65,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         DMC_BFT_GROUPS,
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_SAVE_SCALE_POSITION,   nil],
+                                    [DMC_SAVE_SCALE_POSITION,   true],
                                     [DMC_HUMAN_AVATAR,          [objNull]],
                                     [DMC_DRAW_HOOK,             nil]
                                 ]
@@ -71,7 +77,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         DMC_BFT_GROUPS,
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_RECENTER,              [nil]],
+                                    [DMC_RECENTER,              [player]],
                                     [DMC_VEHICLE_AVATAR,        {GVAR(playerVehicleIcon)}],
                                     [DMC_TAD_OVERLAY,           nil]
                                 ]
@@ -83,7 +89,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         DMC_BFT_GROUPS,
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_SAVE_SCALE_POSITION,   nil],
+                                    [DMC_SAVE_SCALE_POSITION,   true],
                                     [DMC_VEHICLE_AVATAR,        {GVAR(playerVehicleIcon)}],
                                     [DMC_DRAW_HOOK,             nil]
                                 ]
@@ -93,7 +99,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                     [DMC_DRAW_MARKERS,          [false,[
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_RECENTER,              [nil]],
+                                    [DMC_RECENTER,              [player]],
                                     [DMC_HUMAN_AVATAR,          [objNull]]
                                 ]
     ],
@@ -102,32 +108,34 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                     [DMC_DRAW_MARKERS,          [true,[
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_SAVE_SCALE_POSITION,   nil],
+                                    [DMC_SAVE_SCALE_POSITION,   true],
                                     [DMC_HUMAN_AVATAR,          [objNull]],
                                     [DMC_DRAW_HOOK,             nil]
                                 ]
     ],
-    [QGVAR(TAD_UAVS),           createHashMapFromArray [
-                                    [DMC_CONDITION,             {!(isNull GVAR(currentUAV)) && (GVAR(currentUAV) isNotEqualTo Ctab_player)}],
+    [QGVAR(TABLET_UAVS),        createHashMapFromArray [
+                                    [DMC_CONDITION,             {/* !(isNull GVAR(currentUAV)) &&  */(GVAR(currentUAV) isNotEqualTo Ctab_player)}],
                                     [DMC_DRAW_MARKERS,          [false,[
                                         DMC_BFT_VEHICLES,
                                         DMC_BFT_GROUPS,
                                         DMC_BFT_MEMBERS,
                                         DMC_BFT_UAV
                                     ]]],
-                                    [DMC_RECENTER,              [{GVAR(currentUAV)}, {GVAR(mapScaleUAV)}]],
-                                    [DMC_HUMAN_AVATAR,          [{GVAR(currentUAV)}, objNull]]
+                                    [DMC_SAVE_SCALE_POSITION,   {isNull GVAR(currentUAV)}],
+                                    [DMC_RECENTER,              {[[-1,0] select GVAR(trackCurrentUAV), GVAR(currentUAV), GVAR(mapScaleUAV)]}],
+                                    [DMC_HUMAN_AVATAR,          {[[objNull], [GVAR(currentUAV), objNull]] select GVAR(trackCurrentUAV)}]
                                 ]
     ],
-    [QGVAR(TAD_HCAMS),          createHashMapFromArray [
-                                    [DMC_CONDITION,             {!(isNil QGVAR(helmetCams))}],
+    [QGVAR(TABLET_HCAM),          createHashMapFromArray [
+                                    [DMC_CONDITION,             {!(isNil QGVAR(helmetCamData))}],
                                     [DMC_DRAW_MARKERS,          [false,[
                                         DMC_BFT_VEHICLES,
                                         DMC_BFT_GROUPS,
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_RECENTER,              [{GVAR(helmetCams) select 2},{GVAR(mapScaleHCam)}]],
-                                    [DMC_HUMAN_AVATAR,          [{GVAR(helmetCams) select 2}, objNull]]
+                                    [DMC_SAVE_SCALE_POSITION,   {isNil QGVAR(helmetCamData)}],
+                                    [DMC_RECENTER,              {[[-1,0] select GVAR(trackCurrentHCam), GVAR(helmetCamData) select 2, GVAR(mapScaleHCam)]}],
+                                    [DMC_HUMAN_AVATAR,          {[[objNull], [GVAR(helmetCamData) select 2, objNull]] select !isNil QGVAR(helmetCamData)}]
                                 ]
     ]
 ];

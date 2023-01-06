@@ -14,7 +14,7 @@
 
 class GVARMAIN(microDAGR_dsp) {
     idd = 1776135;
-    movingEnable = true;
+    movingEnable = "true";
     duration = 10e10;
     fadeIn = 0;
     fadeOut = 0;
@@ -23,7 +23,7 @@ class GVARMAIN(microDAGR_dsp) {
         class screen: cTab_microDAGR_RscMapControl {
             onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(microDAGR_dsp),_this)] call FUNC(drawMapControl););
             // set initial map scale
-            scaleDefault = QUOTE(missionNamespace getVariable 'GVAR(mapScale)');
+            scaleDefault = QUOTE(missionNamespace getVariable QQGVAR(mapScale));
         };
         class screenTopo: screen {
             idc = IDC_CTAB_SCREEN_TOPO;

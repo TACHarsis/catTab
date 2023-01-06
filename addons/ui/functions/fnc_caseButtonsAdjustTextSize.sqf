@@ -4,4 +4,6 @@
 
 params [["_adjustment", 0, [1]]];
 
-(GVAR(txtFctr) + _adjustment) call FUNC(caseButtonsApplyTextSize);
+(GVAR(txtFctr) + _adjustment) call FUNC(applyTextSize);
+
+true

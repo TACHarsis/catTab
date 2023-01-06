@@ -117,43 +117,43 @@
 
 class cTab_RscText_Android: cTab_RscText {
     style = ST_CENTER;
-    w = ANDROID_pixel2Screen_W(OSD_elementBase_size_px_W);
-    h = ANDROID_pixel2Screen_H(OSD_elementBase_size_px_H);
-    font = GUI_FONT_MONO;
+    w = QUOTE(ANDROID_pixel2Screen_W(OSD_elementBase_size_px_W));
+    h = QUOTE(ANDROID_pixel2Screen_H(OSD_elementBase_size_px_H));
+    font = QUOTE(GUI_FONT_MONO);
     colorText[] = COLOR_WHITE;
-    sizeEx = ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px);
+    sizeEx = QUOTE(ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px));
     colorBackground[] = COLOR_TRANSPARENT;
     shadow = 0;
 };
 class cTab_android_RscMapControl: cTab_RscMapControl {
     idc = IDC_CTAB_SCREEN;
     text = "#(argb,8,8,3)color(1,1,1,1)";
-    x = ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X);
-    y = ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y);
-    w = ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W);
-    h = ANDROID_pixel2Screen_H(SCREEN_contentRect_px_H);
+    x = QUOTE(ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X));
+    y = QUOTE(ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y));
+    w = QUOTE(ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W));
+    h = QUOTE(ANDROID_pixel2Screen_H(SCREEN_contentRect_px_H));
     //type = CT_MAP;
     // allow to zoom out further (defines the maximum map scale, usually 1)
     scaleMax = 1000;
     // set initial map scale
-    scaleDefault = QUOTE((missionNamespace getVariable 'GVAR(mapScale)') * 0.86 / safezoneH);
+    scaleDefault = QUOTE((missionNamespace getVariable QQGVAR(mapScale)) * 0.86 / safezoneH);
     // turn on satellite map information (defines the map scale of when to switch to topographical)
     maxSatelliteAlpha = 10000;
     alphaFadeStartScale = 10;
     alphaFadeEndScale = 10;
 
     // Rendering density coefficients
-    ptsPerSquareSea = 8 / cTab_android_DLGtoDSP_fctr;        // seas
-    ptsPerSquareTxt = 8 / cTab_android_DLGtoDSP_fctr;        // textures
-    ptsPerSquareCLn = 8 / cTab_android_DLGtoDSP_fctr;        // count-lines
-    ptsPerSquareExp = 8 / cTab_android_DLGtoDSP_fctr;        // exposure
-    ptsPerSquareCost = 8 / cTab_android_DLGtoDSP_fctr;        // cost
+    ptsPerSquareSea = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // seas
+    ptsPerSquareTxt = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // textures
+    ptsPerSquareCLn = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // count-lines
+    ptsPerSquareExp = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // exposure
+    ptsPerSquareCost = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // cost
 
     // Rendering thresholds
-    ptsPerSquareFor = 3 / cTab_android_DLGtoDSP_fctr;        // forests
-    ptsPerSquareForEdge = 100 / cTab_android_DLGtoDSP_fctr;    // forest edges
-    ptsPerSquareRoad = 1.5 / cTab_android_DLGtoDSP_fctr;        // roads
-    ptsPerSquareObj = 4 / cTab_android_DLGtoDSP_fctr;        // other objects
+    ptsPerSquareFor = QUOTE( 3 / cTab_android_DLGtoDSP_fctr);        // forests
+    ptsPerSquareForEdge = QUOTE( 100 / cTab_android_DLGtoDSP_fctr);    // forest edges
+    ptsPerSquareRoad = QUOTE( 1.5 / cTab_android_DLGtoDSP_fctr);        // roads
+    ptsPerSquareObj = QUOTE( 4 / cTab_android_DLGtoDSP_fctr);        // other objects
 
     /*
     // replace CustomMark with wedding cake icon
@@ -171,123 +171,123 @@ class cTab_android_RscMapControl: cTab_RscMapControl {
 class cTab_android_background: cTab_RscPicture {
     idc = IDC_CTAB_BACKGROUND;
     text = ""; // will be set during onLoad event
-    x = CUSTOM_GRID_X;
-    y = CUSTOM_GRID_Y;
-    w = CUSTOM_GRID_WAbs;
-    h = CUSTOM_GRID_HAbs;
+    x = QUOTE(CUSTOM_GRID_X);
+    y = QUOTE(CUSTOM_GRID_Y);
+    w = QUOTE(CUSTOM_GRID_WAbs);
+    h = QUOTE(CUSTOM_GRID_HAbs);
 };
 class cTab_android_btnBack: cTab_RscButtonInv {
-    x = ANDROID_pixel2Screen_X(1609);
-    y = ANDROID_pixel2Screen_Y(806);
-    w = ANDROID_pixel2Screen_W(102);
-    h = ANDROID_pixel2Screen_H(102);
+    x = QUOTE(ANDROID_pixel2Screen_X(1609));
+    y = QUOTE(ANDROID_pixel2Screen_Y(806));
+    w = QUOTE(ANDROID_pixel2Screen_W(102));
+    h = QUOTE(ANDROID_pixel2Screen_H(102));
 };
 class cTab_android_btnMenu: cTab_android_btnBack {
-    y = ANDROID_pixel2Screen_Y(1140);
+    y = QUOTE(ANDROID_pixel2Screen_Y(1140));
 };
 class cTab_android_btnHome: cTab_android_btnBack {
-    x = ANDROID_pixel2Screen_X(1613);
-    y = ANDROID_pixel2Screen_Y(972);
+    x = QUOTE(ANDROID_pixel2Screen_X(1613));
+    y = QUOTE(ANDROID_pixel2Screen_Y(972));
 };
 class cTab_android_btnPower: cTab_RscButtonInv {
-    x = ANDROID_pixel2Screen_X(1583);
-    y = ANDROID_pixel2Screen_Y(1407);
-    w = ANDROID_pixel2Screen_W(107);
-    h = ANDROID_pixel2Screen_H(48);
+    x = QUOTE(ANDROID_pixel2Screen_X(1583));
+    y = QUOTE(ANDROID_pixel2Screen_Y(1407));
+    w = QUOTE(ANDROID_pixel2Screen_W(107));
+    h = QUOTE(ANDROID_pixel2Screen_H(48));
 };
 class cTab_android_notificationLight {
-    x = ANDROID_pixel2Screen_X(1793);
-    y = ANDROID_pixel2Screen_Y(768);
-    w = ANDROID_pixel2Screen_W(61);
-    h = ANDROID_pixel2Screen_H(61);
+    x = QUOTE(ANDROID_pixel2Screen_X(1793));
+    y = QUOTE(ANDROID_pixel2Screen_Y(768));
+    w = QUOTE(ANDROID_pixel2Screen_W(61));
+    h = QUOTE(ANDROID_pixel2Screen_H(61));
 };
 class cTab_android_header: cTab_RscPicture {
     idc = 1;
     text = "#(argb,8,8,3)color(0,0,0,1)";
-    x = ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X);
-    y = ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y);
-    w = ANDROID_pixel2Screen_W(ANDROID_mapRect_px_W);
-    h = ANDROID_pixel2Screen_H(OSD_header_px_H);
+    x = QUOTE(ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X));
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y));
+    w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_mapRect_px_W));
+    h = QUOTE(ANDROID_pixel2Screen_H(OSD_header_px_H));
 };
 class cTab_android_on_screen_battery: cTab_RscPicture {
     idc = 2;
     text = QPATHTOEF(data,img\ui\icon_battery_ca.paa);
-    x = ANDROID_pixel2Screen_X(OSD_element_px_X(1));
-    y = ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + (OSD_header_px_H - OSD_elementBase_iconSize_px) / 2);
-    w = ANDROID_pixel2Screen_W(OSD_elementBase_iconSize_px);
-    h = ANDROID_pixel2Screen_H(OSD_elementBase_iconSize_px);
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(1)));
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + (OSD_header_px_H )- OSD_elementBase_iconSize_px) / 2);
+    w = QUOTE(ANDROID_pixel2Screen_W(OSD_elementBase_iconSize_px));
+    h = QUOTE(ANDROID_pixel2Screen_H(OSD_elementBase_iconSize_px));
     colorText[] = COLOR_WHITE;
 };
 class cTab_android_on_screen_time: cTab_RscText_android {
     idc = IDC_CTAB_OSD_TIME;
     style = ST_CENTER;
-    x = ANDROID_pixel2Screen_X(OSD_element_px_X(3));
-    y = ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + (OSD_header_px_H - OSD_elementBase_textSize_px) / 2);
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(3)));
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + (OSD_header_px_H )- OSD_elementBase_textSize_px) / 2);
 };
 class cTab_android_on_screen_signalStrength: cTab_android_on_screen_battery {
     idc = 3;
     text = QPATHTOEF(data,img\ui\icon_signalStrength_ca.paa);
-    x = ANDROID_pixel2Screen_X(OSD_element_px_X(5) + OSD_elementBase_size_px_W - OSD_elementBase_iconSize_px * 2);
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(5) + OSD_elementBase_size_px_W - OSD_elementBase_iconSize_px * 2));
     colorText[] = COLOR_WHITE;
 };
 class cTab_android_on_screen_satellite: cTab_android_on_screen_battery {
     idc = 4;
     text = "\a3\ui_f\data\map\Diary\signal_ca.paa";
-    x = ANDROID_pixel2Screen_X(OSD_element_px_X(5) + OSD_elementBase_size_px_W - OSD_elementBase_iconSize_px);
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(5) + OSD_elementBase_size_px_W )- OSD_elementBase_iconSize_px);
     colorText[] = COLOR_WHITE;
 };
 class cTab_android_on_screen_dirDegree: cTab_android_on_screen_time {
     idc = IDC_CTAB_OSD_DIR_DEGREE;
     style = ST_LEFT;
-    x = ANDROID_pixel2Screen_X(OSD_element_px_X(2));
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(2)));
 };
 class cTab_android_on_screen_grid: cTab_android_on_screen_dirDegree {
     idc = IDC_CTAB_OSD_GRID;
     style = ST_RIGHT;
-    x = ANDROID_pixel2Screen_X(OSD_element_px_X(4));
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(4)));
 };
 class cTab_android_on_screen_dirOctant: cTab_android_on_screen_dirDegree {
     idc = IDC_CTAB_OSD_DIR_OCTANT;
     style = ST_RIGHT;
-    x = ANDROID_pixel2Screen_X(OSD_element_px_X(1));
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(1)));
 };
 class cTab_android_on_screen_hookGrid: cTab_RscText_Android {
     idc = IDC_CTAB_OSD_HOOK_GRID;
     style = ST_CENTER;
-    x = ANDROID_pixel2Screen_X(OSD_element_px_X(1));
-    y = ANDROID_pixel2Screen_Y(OSD_edge_px_B - OSD_margin_px - OSD_elementBase_size_px_H * 4);
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(1)));
+    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B )- OSD_margin_px - OSD_elementBase_size_px_H * 4);
     colorText[] = {1,1,1,0.5};
     colorBackground[] = {0,0,0,0.25};
 };
 class cTab_android_on_screen_hookElevation: cTab_android_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_ELEVATION;
-    y = ANDROID_pixel2Screen_Y(OSD_edge_px_B - OSD_margin_px - OSD_elementBase_size_px_H * 3);
+    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B )- OSD_margin_px - OSD_elementBase_size_px_H * 3);
 };
 class cTab_android_on_screen_hookDst: cTab_android_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_DST;
-    y = ANDROID_pixel2Screen_Y(OSD_edge_px_B - OSD_margin_px - OSD_elementBase_size_px_H * 2);
+    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B )- OSD_margin_px - OSD_elementBase_size_px_H * 2);
 };
 class cTab_android_on_screen_hookDir: cTab_android_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_DIR;
-    y = ANDROID_pixel2Screen_Y(OSD_edge_px_B - OSD_margin_px - OSD_elementBase_size_px_H);
+    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B )- OSD_margin_px - OSD_elementBase_size_px_H);
 };
 class cTab_android_loadingtxt: cTab_RscText_android {
     idc = IDC_CTAB_LOADINGTXT;
     style = ST_CENTER;
     text = "Loading"; //--- ToDo: Localize;
-    x = ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X);
-    y = ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y);
-    w = ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W);
-    h = ANDROID_pixel2Screen_H(SCREEN_contentRect_px_H);
+    x = QUOTE(ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X));
+    y = QUOTE(ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y));
+    w = QUOTE(ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W));
+    h = QUOTE(ANDROID_pixel2Screen_H(SCREEN_contentRect_px_H));
     colorBackground[] = COLOR_LIGHT_BLUE;
 };
 class cTab_android_windowsBG: cTab_RscPicture {
     idc = IDC_CTAB_WIN_BACK;
     text = "";
-    x = ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X);
-    y = ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y);
-    w = ANDROID_pixel2Screen_W(ANDROID_mapRect_px_W);
-    h = ANDROID_pixel2Screen_H(ANDROID_mapRect_px_H);
+    x = QUOTE(ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X));
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y));
+    w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_mapRect_px_W));
+    h = QUOTE(ANDROID_pixel2Screen_H(ANDROID_mapRect_px_H));
 };
 
 // Define areas around the screen as interaction areas to allow screen movement
@@ -295,41 +295,41 @@ class cTab_android_movingHandle_T: cTab_RscText_android {
     idc = 5;
     moving = 1;
     colorBackground[] = COLOR_TRANSPARENT;
-    x = ANDROID_pixel2Screen_X(0);
-    y = ANDROID_pixel2Screen_Y(0);
-    w = ANDROID_pixel2Screen_W(ANDROID_BackgroundImage_px_W);
-    h = ANDROID_pixel2Screen_H(ANDROID_mapRect_px_Y);
+    x = QUOTE(ANDROID_pixel2Screen_X(0));
+    y = QUOTE(ANDROID_pixel2Screen_Y(0));
+    w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_BackgroundImage_px_W));
+    h = QUOTE(ANDROID_pixel2Screen_H(ANDROID_mapRect_px_Y));
 };
 class cTab_android_movingHandle_B: cTab_android_movingHandle_T {
     idc = 6;
-    y = ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + ANDROID_mapRect_px_H);
-    h = ANDROID_pixel2Screen_H(ANDROID_BackgroundImage_px_H - (ANDROID_mapRect_px_Y + ANDROID_mapRect_px_H));
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + ANDROID_mapRect_px_H));
+    h = QUOTE(ANDROID_pixel2Screen_H(ANDROID_BackgroundImage_px_H )- (ANDROID_mapRect_px_Y + ANDROID_mapRect_px_H));
 };
 class cTab_android_movingHandle_L: cTab_android_movingHandle_T {
     idc = 7;
-    y = ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y);
-    w = ANDROID_pixel2Screen_W(ANDROID_mapRect_px_X);
-    h = ANDROID_pixel2Screen_H(ANDROID_mapRect_px_H);
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y));
+    w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_mapRect_px_X));
+    h = QUOTE(ANDROID_pixel2Screen_H(ANDROID_mapRect_px_H));
 };
 class cTab_android_movingHandle_R: cTab_android_movingHandle_L {
     idc = 8;
-    x = ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X + ANDROID_mapRect_px_W);
-    w = ANDROID_pixel2Screen_W(ANDROID_BackgroundImage_px_W - (ANDROID_mapRect_px_X + ANDROID_mapRect_px_W));
+    x = QUOTE(ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X + ANDROID_mapRect_px_W));
+    w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_BackgroundImage_px_W )- (ANDROID_mapRect_px_X + ANDROID_mapRect_px_W));
 };
 
 // transparent control that gets placed on top of the GUI to adjust brightness
 class cTab_android_brightness: cTab_RscText_Android {
     idc = IDC_CTAB_BRIGHTNESS;
-    x = ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X);
-    y = ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y);
-    w = ANDROID_pixel2Screen_W(ANDROID_mapRect_px_W);
-    h = ANDROID_pixel2Screen_H(ANDROID_mapRect_px_H);
+    x = QUOTE(ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X));
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y));
+    w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_mapRect_px_W));
+    h = QUOTE(ANDROID_pixel2Screen_H(ANDROID_mapRect_px_H));
     colorBackground[] = COLOR_TRANSPARENT;
 };
 class cTab_android_notification: cTab_RscText_Android {
     idc = IDC_CTAB_NOTIFICATION;
-    x = ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X + (SCREEN_contentRect_px_W * 0.2) / 2);
-    y = ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H - 2 * OSD_elementBase_textSize_px);
-    w = ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W * 0.8);
+    x = QUOTE(ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X + (SCREEN_contentRect_px_W * 0.2) )/ 2);
+    y = QUOTE(ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H )- 2 * OSD_elementBase_textSize_px);
+    w = QUOTE(ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W * 0.8));
     colorBackground[] = COLOR_BLACK;
 };

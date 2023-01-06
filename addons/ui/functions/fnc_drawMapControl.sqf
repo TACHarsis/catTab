@@ -21,30 +21,35 @@ private _drawOptions = GVAR(displayDrawOptions) getOrDefault [_displayName, nil]
 if(isNil "_drawOptions") exitWith { diag_log format["[Ctab] draMapControl(): ""%1"" has no draw options", _displayName]; };
 
 private _condition = _drawOptions getOrDefault [DMC_CONDITION, {true}];
-if(!([] call _condition)) exitWith {};
+if(!([_displayName,_displaySettings] call _condition)) exitWith {};
 
 _fnc_getValue = {
-    if((typeName _this) isEqualTo "CODE") then { [] call _this } else { _this }
+    if((typeName _this) isEqualTo "CODE") then { [_displayName,_displaySettings] call _this } else { _this }
 };
-
 {
     private _optionName = _x;
     private _params = _y call _fnc_getValue;
 
     switch (_optionName) do {
         case (DMC_SAVE_SCALE_POSITION) : {
+            if (!_params) exitWith {};
+
             GVAR(mapWorldPos) = [_ctrlScreen] call FUNC(ctrlMapCenter);
             GVAR(mapScale) = ctrlMapScale _ctrlScreen;
         };
         case (DMC_RECENTER) : {
             // change scale of map and centre to given unit's position or player's as default
-            _params params [["_unit",_playerVehicle], ["_mapScale",GVAR(mapScale)]];
+            _params params [["_animSpeed", 0], ["_unit",_playerVehicle], ["_mapScale",GVAR(mapScale)]];
+            if(_animSpeed < 0) exitWith {};
+            
             private _unit = _unit call _fnc_getValue;
-            private _mapScale = _mapScale call _fnc_getValue;
+            if(isNull _unit) exitWith {};
 
-            private _pos = if (isNull _unit) then { _playerPos } else { getPosASL _unit };
-            _ctrlScreen ctrlMapAnimAdd [0, _mapScale, _pos];
-            ctrlMapAnimCommit _ctrlScreen;
+            private _pos = getPosASL _unit;
+            if(ctrlMapAnimDone _ctrlScreen) then {
+                _ctrlScreen ctrlMapAnimAdd [_animSpeed, _mapScale, _pos];
+                ctrlMapAnimCommit _ctrlScreen;
+            };
         };
         case (DMC_DRAW_MARKERS): {
             _params params ["_highlights", "_bftOptions"];

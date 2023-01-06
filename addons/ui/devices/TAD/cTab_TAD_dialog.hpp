@@ -15,7 +15,7 @@
 
 class GVARMAIN(TAD_dlg) {
     idd = 1755424;
-    movingEnable = true;
+    movingEnable = "true";
     onLoad = QUOTE(_this call FUNC(onIfOpen));
     onUnload = QUOTE([] call FUNC(onIfClose));
     onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
@@ -95,7 +95,7 @@ class GVARMAIN(TAD_dlg) {
         */
         class pwrbtn: cTab_RscButton_TAD_DNO {
             idc = IDC_CTAB_BTNMAIN;
-            onMouseButtonUp = QUOTE(if (_this select 1 == 0) then {['GVARMAIN(TAD_dlg)'] call FUNC(caseButtonsToggleNightMode)} else {if (_this select 1 == 1) then {[] call FUNC(close)};});
+            onMouseButtonUp = QUOTE(if (_this select 1 == 0) then {[QQGVARMAIN(TAD_dlg)] call FUNC(caseButtonsToggleNightMode)} else {if (_this select 1 == 1) then {[] call FUNC(close)};});
             tooltip = "left-click: Toggle DAY / NIGHT mode; right-click: Close interface";
         };
         class btnSymInc: cTab_RscButton_TAD_SYM_INC {
@@ -110,32 +110,32 @@ class GVARMAIN(TAD_dlg) {
         };
         class btnBrtInc: cTab_RscButton_TAD_BRT_INC {
             idc = 18;
-            action = QUOTE([ARR_2('GVARMAIN(TAD_dlg)', 0.1)]  call FUNC(caseButtonsAdjustBrightness););
+            action = QUOTE([ARR_2(QQGVARMAIN(TAD_dlg), 0.1)]  call FUNC(caseButtonsAdjustBrightness););
             tooltip = "Increase Brightness";
         };
         class btnBrtDec: cTab_RscButton_TAD_BRT_DEC {
             idc = 19;
-            action = QUOTE([ARR_2('GVARMAIN(TAD_dlg)', -0.1)] call FUNC(caseButtonsAdjustBrightness););
+            action = QUOTE([ARR_2(QQGVARMAIN(TAD_dlg), -0.1)] call FUNC(caseButtonsAdjustBrightness););
             tooltip = "Decrease Brightness";
         };
         class btnfunction: cTab_RscButton_TAD_OSB10 {
             idc = IDC_CTAB_BTNFN;
-            action = QUOTE(['GVARMAIN(TAD_dlg)']  call FUNC(caseButtonsIconTextToggle););
+            action = QUOTE([QQGVARMAIN(TAD_dlg)]  call FUNC(caseButtonsIconTextToggle););
             tooltip = "Toggle Text on/off";
         };
         class btnMapType: cTab_RscButton_TAD_OSB20 {
             idc = 20;
-            action = QUOTE(['GVARMAIN(TAD_dlg)']  call FUNC(caseButtonsMapTypeToggle););
+            action = QUOTE([QQGVARMAIN(TAD_dlg)]  call FUNC(caseButtonsMapTypeToggle););
             tooltip = "Toggle Map Type (F6)";
         };
         class btnMapTools: cTab_RscButton_TAD_OSB18 {
             idc = 21;
-            action = QUOTE(['GVARMAIN(TAD_dlg)'] call FUNC(toggleMapToolReferenceMode));
+            action = QUOTE([QQGVARMAIN(TAD_dlg)] call FUNC(toggleMapToolReferenceMode));
             tooltip = "Toggle Reference Mode (F5)";
         };
         class btnF7: cTab_RscButton_TAD_OSB19 {
             idc = 22;
-            action = QUOTE(['GVARMAIN(TAD_dlg)'] call FUNC(caseButtonsCenterMapOnPlayerPosition));
+            action = QUOTE([QQGVARMAIN(TAD_dlg)] call FUNC(caseButtonsCenterMapOnPlayerPosition));
             tooltip = "Center Map On Current Position (F7)";
         };
     };

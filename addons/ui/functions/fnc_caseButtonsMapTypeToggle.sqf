@@ -16,4 +16,6 @@ private _nextMapTypeIndex = [
     _mapTypes # 0 # 0
     ] select (_currentMapTypeIndex == count _mapTypes - 1);
 
-[_displayName,[[QSETTING_CURRENT_MAP_TYPE,_nextMapTypeIndex]]] call FUNC(setSettings);
+[_displayName,[[QSETTING_CURRENT_MAP_TYPE,_nextMapTypeIndex]],true,true] call FUNC(setSettings);
+
+true

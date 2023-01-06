@@ -16,7 +16,7 @@
 
 class GVARMAIN(TAD_dsp) {
     idd = 1775134;
-    movingEnable = true;
+    movingEnable = "true";
     duration = 10e10;
     fadeIn = 0;
     fadeOut = 0;
@@ -27,7 +27,7 @@ class GVARMAIN(TAD_dsp) {
             idc = IDC_CTAB_SCREEN;
             onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(TAD_dsp),_this)] call FUNC(drawMapControl););
             // set initial map scale
-            scaleDefault = QUOTE(missionNamespace getVariable 'GVAR(mapScale)');
+            scaleDefault = QUOTE(missionNamespace getVariable QQGVAR(mapScale));
             // hide grid lines
             colorGrid[] = {0.1,0.1,0.1,0};
             colorGridMap[] = {0.1,0.1,0.1,0};
@@ -40,7 +40,7 @@ class GVARMAIN(TAD_dsp) {
             idc = IDC_CTAB_SCREEN_BLACK;
             onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(TAD_dsp),_this)] call FUNC(drawMapControl););
             // set initial map scale
-            scaleDefault = QUOTE(missionNamespace getVariable 'GVAR(mapScale)');
+            scaleDefault = QUOTE(missionNamespace getVariable QQGVAR(mapScale));
             // hide grid lines
             colorGrid[] = {0.1,0.1,0.1,0};
             colorGridMap[] = {0.1,0.1,0.1,0};
@@ -52,8 +52,8 @@ class GVARMAIN(TAD_dsp) {
             ### OSD GUI controls ###
         */
         class navModeOrScale: cTab_TAD_OSD_navModeOrScale {
-            x = TAD_pixel2Screen_X(OSD_edge_px_R - OSD_elementMode_size_px_W * 2);
-            w = TAD_pixel2Screen_W(OSD_elementMode_size_px_W * 2);
+            x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_R )- OSD_elementMode_size_px_W * 2);
+            w = QUOTE(TAD_pixel2Screen_W(OSD_elementMode_size_px_W * 2));
         };
         class modeTAD: cTab_TAD_OSD_modeTAD {};
         class txtToggleIconBg: cTab_TAD_OSD_txtToggleIconBg {};

@@ -1,4 +1,5 @@
 #include "script_component.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 /*
      Name: Ctab_ui_fnc_createHelmetCam
      
@@ -16,9 +17,9 @@
         BOOLEAN - If helmet cam could be set up or not
      
      Example:
-        ["rendertarget12",str player] spawn Ctab_ui_fnc_createHelmetCam;
+        ["helmetCamRenderTarget",str player] spawn Ctab_ui_fnc_createHelmetCam;
 */
-params ["_renderTarget","_data"];
+params ["_renderTarget", "_data", "_videoImage"];
 
 private _unit = _data call BIS_fnc_objectFromNetId;
 private _camOffSet = [];
@@ -49,21 +50,11 @@ if (IsNull _unit) exitWith {
     [QGVARMAIN(Tablet_dlg),[[QSETTING_MODE,QSETTING_MODE_CAM_HELMET]]] call FUNC(setSettings);
 };
 
-// if there is already a camera, see if its the same one we are about to set up
-// if true, render to given target (in case the target has changed), else delete the camera so we can create a new one
-if !(isNil QGVAR(helmetCams)) then {
-    private _oldCam = GVAR(helmetCams) select 0;
-    private _oldUnit = GVAR(helmetCams) select 2;
-    if (_oldUnit isEqualTo _unit) then {
-        _oldCam cameraEffect ["INTERNAL","BACK",_renderTarget];
-    } else {
-        private _nop = [] call FUNC(deleteHelmetCam);
-        waitUntil {_nop};
-    };
-};
+// delete old camera, fuck optimization
+[] call FUNC(deleteHelmetCam);
 
 // only continue if there is no helmet cam currently set up
-if !(isNil QGVAR(helmetCams)) exitWith {true};
+if !(isNil QGVAR(helmetCamData)) exitWith {true};
 
 private _target = "Sign_Sphere10cm_F" createVehicleLocal position player;
 hideObject _target;
@@ -81,4 +72,49 @@ if (vehicle _unit == _unit) then {
 };
 _cam cameraEffect ["INTERNAL","BACK",_renderTarget];
 
-GVAR(helmetCams) = [_cam,_target,_unit];
+GVAR(helmetCamData) = [_cam,_target,_unit];
+
+_videoImage ctrlEnable true;
+_videoImage setVariable [QGVAR(cameraTarget), _unit];
+_videoImage setVariable [QGVAR(cameraTargetType), "HelmetCam"];
+private _visionModes = _unit getVariable [QGVAR(visionModes), [[0,0],[1,0],[2,0]]];
+private _currentVisionMode = _unit getVariable [QGVAR(currentVisionMode), 0];
+_unit setVariable [QGVAR(visionModes), _visionModes];
+_unit setVariable [QGVAR(currentVisionMode), _currentVisionMode];
+private _fov = _unit getVariable [QGVAR(targetFovHash),0.75];
+_unit setVariable [QGVAR(targetFovHash),_fov];
+
+[QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_HELMET,_unit call BIS_fnc_netId]]] call FUNC(setSettings);
+
+GVAR(helmetEventHandle) = [
+    {
+        if(isNil QGVAR(helmetCamData)) exitWith {};
+
+        params ["_params", "_handle"];
+        _params params ["_videoImage", "_renderTarget"];
+        if(ctrlShown _videoImage) then {
+
+            private _removedHCams = [];
+            
+            GVAR(helmetCamData) params  ["_cam","_target","_unit"];;
+
+            if (alive _unit) then {
+                private _fov = _unit getVariable [QGVAR(targetFovHash),0.7];
+                _cam camSetFov _fov;
+                // private _visionMode = currentVisionMode [_unit];
+                private _visionModes = _uav getVariable [QGVAR(visionModes), [[0,0]]];
+                private _currentVisionMode = _uav getVariable [QGVAR(currentVisionMode), 0];
+                private _visionMode = _visionModes # _currentVisionMode;
+                _renderTarget setPiPEffect [_visionMode # 0, _visionMode # 1];
+                _cam camCommit 0.1;
+            } else {
+                [] call FUNC(deleteHelmetCam);
+            };
+        };
+    },
+    0,
+    [_videoImage,_renderTarget]
+] call CBA_fnc_addPerFrameHandler;
+
+[QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_HELMET,_unit call BIS_fnc_netId]]] call FUNC(setSettings);
+

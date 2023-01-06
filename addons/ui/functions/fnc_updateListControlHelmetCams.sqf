@@ -12,11 +12,14 @@ if (isNil "_mode") exitWith {};
 
 if (_mode isEqualTo QSETTING_MODE_CAM_HELMET) then {
     private _data = [_displayName,QSETTING_CAM_HELMET] call FUNC(getSettings);
-    private _hcamListCtrl = _display displayCtrl IDC_CTAB_CTABHCAMLIST;
+    private _unit = _data call BIS_fnc_objectFromNetId;
+    private _hcamListCtrl = _display displayCtrl IDC_CTAB_HCAMLIST;
 
     // Populate list of HCAMs
     lbClear _hcamListCtrl;
     _hcamListCtrl lbSetCurSel -1;
+    private _deselectIndex = _hcamListCtrl lbAdd format ["*DESELECT"];
+    _hcamListCtrl lbSetData [_deselectIndex, ""];
     {
         private _index = _hcamListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,name _x];
         _hcamListCtrl lbSetData [_index,_x call BIS_fnc_netId];
@@ -35,6 +38,9 @@ if (_mode isEqualTo QSETTING_MODE_CAM_HELMET) then {
         // If no hCam could be selected, clear last selected hCam
         if ((lbCurSel _hcamListCtrl )isEqualTo -1) then {
             [_displayName,[[QSETTING_CAM_HELMET,""]]] call FUNC(setSettings);
+            _hcamListCtrl lbSetCurSel _deselectIndex;
         };
+    } else {
+        _hcamListCtrl lbSetCurSel _deselectIndex;
     };
 };

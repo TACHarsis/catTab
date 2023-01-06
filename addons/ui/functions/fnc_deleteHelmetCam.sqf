@@ -19,12 +19,18 @@
 
 */
 
-if !(isNil QGVAR(helmetCams)) then {
-    private _cam = GVAR(helmetCams) select 0;
+if !(isNil QGVAR(helmetCamData)) then {
+    private _cam = GVAR(helmetCamData) select 0;
     _cam cameraEffect ["TERMINATE","BACK"];
     camDestroy _cam;
-    deleteVehicle (GVAR(helmetCams) select 1);
-    GVAR(helmetCams) = nil;
+    deleteVehicle (GVAR(helmetCamData) select 1);
+
+    if !(isNil QGVAR(helmetEventHandle)) then {
+        [GVAR(helmetEventHandle)] call CBA_fnc_removePerFrameHandler;
+        GVAR(helmetEventHandle) = nil;
+    };
+
+    GVAR(helmetCamData) = nil;
 };
 
 true

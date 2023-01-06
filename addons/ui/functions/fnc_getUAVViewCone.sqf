@@ -20,13 +20,13 @@ private _leftCorner = _leftLeg vectorAdd _losOrigin;
 private _rightCorner = _rightLeg vectorAdd _losOrigin;
 
 private _uavViewConeVertices = [_losOrigin,_leftCorner];
-private _archVertices = [];
+private _arcVertices = [];
 private _angle = 2 * -_halfAngleOfView;
 for "_i" from 0 to 1 step 0.05 do {
-    _archVertices pushBack (_losOrigin vectorAdd ([_leftLeg, (_i * _angle),2] call BIS_fnc_rotateVector3D));
+    _arcVertices pushBack (_losOrigin vectorAdd ([_leftLeg, (_i * _angle),2] call BIS_fnc_rotateVector3D));
 };
 
-_uavViewConeVertices append _archVertices;
+_uavViewConeVertices append _arcVertices;
 _uavViewConeVertices pushBack _rightCorner;
-
+    
 _uavViewConeVertices

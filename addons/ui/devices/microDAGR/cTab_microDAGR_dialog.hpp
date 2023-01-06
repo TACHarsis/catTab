@@ -16,7 +16,7 @@
 
 class GVARMAIN(microDAGR_dlg) {
     idd = 1776134;
-    movingEnable = true;
+    movingEnable = "true";
     onLoad = QUOTE(_this call FUNC(onIfOpen));
     onUnload = QUOTE([] call FUNC(onIfClose));
     onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
@@ -26,7 +26,7 @@ class GVARMAIN(microDAGR_dlg) {
             onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(microDAGR_dlg),_this)] call FUNC(drawMapControl););
             onMouseMoving = QUOTE(GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
             // set initial map scale
-            scaleDefault = QUOTE((missionNamespace getVariable 'GVAR(mapScale)') * 0.86 / (safezoneH * 0.8));
+            scaleDefault = QUOTE((missionNamespace getVariable QQGVAR(mapScale)) * 0.86 / (safezoneH * 0.8));
         };
         class screenTopo: screen {
             idc = IDC_CTAB_SCREEN_TOPO;
@@ -73,16 +73,16 @@ class GVARMAIN(microDAGR_dlg) {
             ### PHYSICAL BUTTONS ###
         */
         class btnMapType: cTab_microDAGR_btnMapType {
-            action = QUOTE(['GVARMAIN(microDAGR_dlg)']  call FUNC(caseButtonsMapTypeToggle););
+            action = QUOTE([QQGVARMAIN(microDAGR_dlg)]  call FUNC(caseButtonsMapTypeToggle););
         };
         class btnMapTools: cTab_microDAGR_btnMapTools {
-            action = QUOTE(['GVARMAIN(microDAGR_dlg)'] call FUNC(toggleMapTools));
+            action = QUOTE([QQGVARMAIN(microDAGR_dlg)] call FUNC(toggleMapTools));
         };
         class btnF7: cTab_microDAGR_btnF7 {
-            action = QUOTE(['GVARMAIN(microDAGR_dlg)'] call FUNC(caseButtonsCenterMapOnPlayerPosition));
+            action = QUOTE([QQGVARMAIN(microDAGR_dlg)] call FUNC(caseButtonsCenterMapOnPlayerPosition));
         };
         class btnfunction: cTab_microDAGR_btnfunction {
-            action = QUOTE(['GVARMAIN(microDAGR_dlg)']  call FUNC(caseButtonsIconTextToggle););
+            action = QUOTE([QQGVARMAIN(microDAGR_dlg)]  call FUNC(caseButtonsIconTextToggle););
         };
     };
 };

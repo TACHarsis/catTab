@@ -21,8 +21,8 @@ GVAR(userMarkerListTranslated) = [];
 
 GVAR(displayPropertyGroups) = createHashMapFromArray [
     [QGVARMAIN(Tablet_dlg),QSETTINGS_TABLET],
-    [QGVAR(TAD_UAVS),QSETTINGS_UAVS],
-    [QGVAR(TAD_HCAMS),QSETTINGS_HCAMS],
+    [QGVAR(TABLET_UAVS),QSETTINGS_UAVS],
+    [QGVAR(TABLET_HCAM),QSETTINGS_HCAMS],
     [QGVARMAIN(Android_dlg),QSETTINGS_ANDROID],
     [QGVARMAIN(Android_dsp),QSETTINGS_ANDROID],
     [QGVARMAIN(FBCB2_dlg),QSETTINGS_FBCB2],
@@ -37,6 +37,7 @@ GVAR(displayPropertyGroups) = createHashMapFromArray [
 
 GVAR(mapScaleInitialized) = false;
 [] call FUNC(initializeMapScale);
+
 [
     { GVAR(mapScaleInitialized)    },
     {
@@ -102,7 +103,7 @@ GVAR(mapToolsRangeFormatThreshold) = 750;
 
 // Base defines.
 GVAR(uavViewActive) = false;
-GVAR(uAVcams) = [];
+GVAR(uAVcamsData) = [];
 GVAR(cursorOnMap) = false;
 GVAR(mapCursorPos) = [0,0];
 GVAR(mapWorldPos) = [];
@@ -127,6 +128,8 @@ GVAR(msgReceiveEHID) = [
 ] call CBA_fnc_addEventHandler;
 
 GVAR(currentUAV) = objNull;
+GVAR(trackCurrentUAV)= false;
+GVAR(trackCurrentHCam) = false;
 
 GVAR(notificationCache) = [];
 
@@ -153,6 +156,11 @@ GVAR(bftVehicleListUpdateEHID) = [
 
 GVAR(uavListUpdateEHID) = [
     QEGVAR(core,uavListUpdate),
+    FUNC(updateListControlUAV)
+] call CBA_fnc_addEventHandler;
+
+GVAR(currentUAVChangedEHID) = [
+    QGVAR(UAVSelected),
     FUNC(updateListControlUAV)
 ] call CBA_fnc_addEventHandler;
 

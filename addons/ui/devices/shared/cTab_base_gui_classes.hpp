@@ -17,12 +17,12 @@
 #define GUI_FONT_SYSTEM         TahomaB
 
 // Colors
-#define COLOR_NEON_GREEN {57/255,255/255,20/255,1}
+#define COLOR_NEON_GREEN {"57/255","255/255","20/255",1}
 #define COLOR_BLACK {0,0,0,1}
 #define COLOR_WHITE {1,1,1,1}
 #define COLOR_LIGHT_BLUE {0.2,0.431,0.647,1}
 #define COLOR_TRANSPARENT {0,0,0,0}
-#define COLOR_NAVYBLUE {0,0,128/255,1}
+#define COLOR_NAVYBLUE {0,0,"128/255",1}
 
 ///////////////////////////////////////////////////////////////////////////
 /// Base Classes
@@ -47,10 +47,10 @@ class cTab_RscText {
     };
     text = "";
     fixedWidth = 0;
-    x = 0;
-    y = 0;
-    h = 0.037;
-    w = 0.3;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    h = QUOTE(0.037);
+    w = QUOTE(0.3);
     style = 0;
     shadow = 1;
     colorShadow[] =
@@ -66,7 +66,7 @@ class cTab_RscText {
 };
 class cTab_RscStructuredText {
     access = 0;
-    type = CT_STRUCTURED_TEXT ;
+    type = CT_STRUCTURED_TEXT;
     idc = -1;
     style = 0;
     colorText[] =
@@ -82,10 +82,10 @@ class cTab_RscStructuredText {
         align = "left";
         shadow = 1;
     };
-    x = 0;
-    y = 0;
-    h = 0.035;
-    w = 0.1;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    h = QUOTE(0.035);
+    w = QUOTE(0.1);
     text = "";
     size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
     shadow = 1;
@@ -110,23 +110,23 @@ class cTab_RscPicture {
         1
     };
     font = "TahomaB";
-    sizeEx = 0;
+    sizeEx = QUOTE(0);
     lineSpacing = 0;
     text = "";
     fixedWidth = 0;
     shadow = 0;
-    x = 0;
-    y = 0;
-    w = 0.2;
-    h = 0.15;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    w = QUOTE(0.2);
+    h = QUOTE(0.15);
 };
 class cTab_RscEdit {
     access = 0;
     type = CT_EDIT;
-    x = 0;
-    y = 0;
-    h = 0.04;
-    w = 0.2;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    h = QUOTE(0.04);
+    w = QUOTE(0.2);
     colorBackground[] =
     {
         0,
@@ -161,7 +161,7 @@ class cTab_RscEdit {
     style = "0x00 + 0x40";
     font = "PuristaMedium";
     shadow = 2;
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1));
     canModify = 1;
 };
 class cTab_RscCombo {
@@ -243,10 +243,10 @@ class cTab_RscCombo {
         border = "\A3\ui_f\data\gui\cfg\scrollbar\border_ca.paa";
     };
     style = 16;
-    x = 0;
-    y = 0;
-    w = 0.12;
-    h = 0.035;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    w = QUOTE(0.12);
+    h = QUOTE(0.035);
     shadow = 0;
     colorSelectBackground[] =
     {
@@ -280,13 +280,13 @@ class cTab_RscCombo {
         0.25
     };
     font = "PuristaMedium";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1));
 };
 class cTab_RscListBox {
     access = 0;
     type = CT_LISTBOX;
-    w = 0.4;
-    h = 0.4;
+    w = QUOTE(0.4);
+    h = QUOTE(0.4);
     rowHeight = 0;
     colorText[] =
     {
@@ -388,7 +388,7 @@ class cTab_RscListBox {
     };
     style = 16;
     font = "PuristaMedium";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1));
     shadow = 0;
     colorShadow[] =
     {
@@ -456,7 +456,7 @@ class cTab_RscButton {
         0.4,
         1
     };
-    colorBackground[] = {0.118, 0.118, 0.118,.7};
+    colorBackground[] = {0.118, 0.118, 0.118,0.7};
     colorBackgroundDisabled[] =
     {
         0.95,
@@ -505,13 +505,13 @@ class cTab_RscButton {
         1
     };
     style = 2;
-    x = 0;
-    y = 0;
-    w = 0.095589;
-    h = 0.039216;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    w = QUOTE(0.095589);
+    h = QUOTE(0.039216);
     shadow = 2;
     font = "PuristaMedium";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1));
     offsetX = 0.003;
     offsetY = 0.003;
     offsetPressedX = 0.002;
@@ -606,13 +606,13 @@ class cTab_ActiveText {
         0.09,
         1
     };
-    x = 0;
-    y = 0;
-    w = 0.095589;
-    h = 0.039216;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    w = QUOTE(0.095589);
+    h = QUOTE(0.039216);
     shadow = 2;
     font = "PuristaMedium";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1));
     offsetX = 0.003;
     offsetY = 0.003;
     offsetPressedX = 0.002;
@@ -650,7 +650,7 @@ class cTab_HTML {
     class P // Paragraph style {
         font = GUI_FONT_NORMAL; // Font from CfgFontFamilies
         fontBold = GUI_FONT_BOLD; // Vold font from CfgFontFamilies
-        sizeEx = CUSTOM_GRID_CENTER_H; // Text size
+        sizeEx = QUOTE(CUSTOM_GRID_CENTER_H); // Text size
         align = "left"; // Text align (can be "left", "center" or "right")
     };
     class H1:P{}; // Header 1 style (uses same attributes as P)
@@ -685,7 +685,7 @@ class cTab_HTML {
 
 class cTab_RscButtonInv {
     access = 0;
-    type = CT_BUTTON ;
+    type = CT_BUTTON;
     text = "";
     colorText[] =
     {
@@ -768,13 +768,13 @@ class cTab_RscButtonInv {
         1
     };
     style = 2;
-    x = 0;
-    y = 0;
-    w = 0.095589;
-    h = 0.039216;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    w = QUOTE(0.095589);
+    h = QUOTE(0.039216);
     shadow = 2;
     font = "PuristaMedium";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1));
     offsetX = 0.003;
     offsetY = 0.003;
     offsetPressedX = 0.002;
@@ -787,8 +787,8 @@ class cTab_RscButtonInv {
 
 class cTab_RscShortcutButton {
     type = CT_SHORTCUTBUTTON;
-    x = 0.1;
-    y = 0.1;
+    x = QUOTE(0.1);
+    y = QUOTE(0.1);
     class HitZone {
         left = 0;
         top = 0;
@@ -880,7 +880,7 @@ class cTab_RscShortcutButton {
     style = 0;
     default = 0;
     shadow = 1;
-    w = 0.183825;
+    w = QUOTE(0.183825);
     h = "((((safezoneW / safezoneH) min 1.2) / 1.2) / 20)";
     animTextureDefault = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
     animTextureNormal = "\A3\ui_f\data\GUI\RscCommon\RscShortcutButton\normal_ca.paa";
@@ -893,7 +893,7 @@ class cTab_RscShortcutButton {
     period = 0.4;
     font = "PuristaMedium";
     size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1));
     text = "";
     action = "";
     class AttributesImage {
@@ -906,8 +906,8 @@ class cTab_RscShortcutButtonMain {
     idc = -1;
     style = 0;
     default = 0;
-    w = 0.313726;
-    h = 0.104575;
+    w = QUOTE(0.313726);
+    h = QUOTE(0.104575);
     color[] =
     {
         1,
@@ -949,7 +949,7 @@ class cTab_RscShortcutButtonMain {
     period = 0.5;
     font = "PuristaMedium";
     size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.2));
     text = "";
     action = "";
     class Attributes {
@@ -984,14 +984,14 @@ class cTab_RscFrame {
         1
     };
     font = "PuristaMedium";
-    sizeEx = 0.02;
+    sizeEx = QUOTE(0.02);
     text = "";
 };
 class cTab_RscSlider {
     access = 0;
     type = CT_SLIDER;
     style = 1024;
-    w = 0.3;
+    w = QUOTE(0.3);
     color[] =
     {
         1,
@@ -1007,7 +1007,7 @@ class cTab_RscSlider {
         1
     };
     shadow = 0;
-    h = 0.025;
+    h = QUOTE(0.025);
 };
 class cTab_IGUIBack {
     type = CT_STATIC;
@@ -1022,12 +1022,12 @@ class cTab_IGUIBack {
         0
     };
     font = "PuristaMedium";
-    sizeEx = 0;
+    sizeEx = QUOTE(0);
     shadow = 0;
-    x = 0.1;
-    y = 0.1;
-    w = 0.1;
-    h = 0.1;
+    x = QUOTE(0.1);
+    y = QUOTE(0.1);
+    w = QUOTE(0.1);
+    h = QUOTE(0.1);
     colorbackground[] =
     {
         "(profilenamespace getvariable ['IGUI_BCG_RGB_R',0])",
@@ -1043,7 +1043,7 @@ class cTab_RscCheckbox {
     x = "LINE_X(XVAL)";
     y = "LINE_Y";
     w = "LINE_W(WVAL)";
-    h = 0.029412;
+    h = QUOTE(0.029412);
     colorText[] =
     {
         1,
@@ -1101,7 +1101,7 @@ class cTab_RscCheckbox {
         1
     };
     font = "PuristaMedium";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8));
     rows = 1;
     columns = 1;
     strings[] =
@@ -1119,10 +1119,10 @@ class cTab_RscButtonMenu {
     style = "0x02 + 0xC0";
     default = 0;
     shadow = 0;
-    x = 0;
-    y = 0;
-    w = 0.095589;
-    h = 0.039216;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    w = QUOTE(0.095589);
+    h = QUOTE(0.039216);
     animTextureNormal = "#(argb,8,8,3)color(1,1,1,1)";
     animTextureDisabled = "#(argb,8,8,3)color(1,1,1,1)";
     animTextureOver = "#(argb,8,8,3)color(1,1,1,0.5)";
@@ -1184,7 +1184,7 @@ class cTab_RscButtonMenu {
     periodFocus = 1.2;
     periodOver = 1.2;
     size = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-    sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
+    sizeEx = QUOTE((((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1));
     class TextPos {
         left = "0.25 * (((safezoneW / safezoneH) min 1.2) / 40)";
         top = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) - (((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)) / 2";
@@ -1200,8 +1200,8 @@ class cTab_RscButtonMenu {
     class ShortcutPos {
         left = "(6.25 * (((safezoneW / safezoneH) min 1.2) / 40)) - 0.0225 - 0.005";
         top = 0.005;
-        w = 0.0225;
-        h = 0.03;
+        w = QUOTE(0.0225);
+        h = QUOTE(0.03);
     };
     soundEnter[] =
     {
@@ -1312,10 +1312,10 @@ class cTab_RscControlsGroup {
     };
     type = CT_CONTROLS_GROUP;
     idc = -1;
-    x = 0;
-    y = 0;
-    w = 1;
-    h = 1;
+    x = QUOTE(0);
+    y = QUOTE(0);
+    w = QUOTE(1);
+    h = QUOTE(1);
     shadow = 0;
     style = 16;
 };
@@ -1328,7 +1328,7 @@ class cTab_RscFrame {
     colorBackground[] = {0,0,0,0.518};
     colorText[] = {1,1,1,1};
     font = "Zeppelin32";
-    sizeEx = 0.02;
+    sizeEx = QUOTE(0.02);
     text = "";
 };
 */
@@ -1337,11 +1337,11 @@ class cTab_RscSlider {
     access = 0;
     type = CT_SLIDER;
     style = 1024;
-    w = 0.3;
+    w = QUOTE(0.3);
     color[] = {1,1,1,0.8};
     colorActive[] = {1,1,1,1};
     shadow = 0;
-    h = 0.025;
+    h = QUOTE(0.025);
 };
 */
 
@@ -1351,22 +1351,22 @@ class cTab_RscMapControl {
   type = CT_MAP_MAIN;
   style = ST_PICTURE;
 
-  x = 0.10;
-  y = 0.10;
-  w = 0.80;
-  h = 0.60;
+  x = QUOTE(0.10);
+  y = QUOTE(0.10);
+  w = QUOTE(0.80);
+  h = QUOTE(0.60);
 
     moveOnEdges = 1;
     shadow = 0;
-    ptsPerSquareSea = 5;
-    ptsPerSquareTxt = 3;
-    ptsPerSquareCLn = 10;
-    ptsPerSquareExp = 10;
-    ptsPerSquareCost = 10;
-    ptsPerSquareFor = 9;
-    ptsPerSquareForEdge = 9;
-    ptsPerSquareRoad = 6;
-    ptsPerSquareObj = 9;
+    ptsPerSquareSea = QUOTE( 5);
+    ptsPerSquareTxt = QUOTE( 3);
+    ptsPerSquareCLn = QUOTE( 10);
+    ptsPerSquareExp = QUOTE( 10);
+    ptsPerSquareCost = QUOTE( 10);
+    ptsPerSquareFor = QUOTE( 9);
+    ptsPerSquareForEdge = QUOTE( 9);
+    ptsPerSquareRoad = QUOTE( 6);
+    ptsPerSquareObj = QUOTE( 9);
     showCountourInterval = 0;
     scaleMin = 0.001;
     scaleMax = 1.0;
@@ -1423,7 +1423,7 @@ class cTab_RscMapControl {
         lineWidthThin=0.0080000004;
         lineWidthThick=0.014;
         lineLengthMin=5;
-        lineDistanceMin=2.9999999e-005;
+        lineDistanceMin="2.9999999e-005";
         textureComboBoxColor="#(argb,8,8,3)color(1,1,1,1)";
     };
     
@@ -1433,7 +1433,7 @@ class cTab_RscMapControl {
         w = "10 *                     (            ((safezoneW / safezoneH) min 1.2) / 40)";
         h = "3.5 *                     (            (            ((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";
         font = "PuristaMedium";
-        sizeEx = "(            (            (            ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8)";
+        sizeEx = QUOTE((            (            (            ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 0.8));
         colorBackground[] = {1,1,1,0.5};
         color[] = {0,0,0,1};
     };
@@ -1702,13 +1702,10 @@ class cTab_RscMapControl {
         coefMax = 1;
         color[] = {0,0,0,1};
     };
-
-
-
 };
 
 class cTab_MenuItem: cTab_ActiveText {
-    colorActive[] = {255/255,165/255,0/255,1};
+    colorActive[] = {"(255/255)","165/255","0/255","1"};
 };
 
 class cTab_MenuExit: cTab_MenuItem {

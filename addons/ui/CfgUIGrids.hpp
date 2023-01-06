@@ -5,10 +5,10 @@ class CfgUIGrids {
                 class Variables {
                     GVARMAIN(Android_dsp)[] = {
                         { // Values from ctab_android_display.hpp
-                    /*X*/   (safezoneX - (0.86) * 0.17),
-                    /*Y*/   (safezoneY + safezoneH * 0.88 - ((0.86) * 4/3) * 0.72),
-                    /*W*/   (0.86),
-                    /*H*/   ((0.86) * 4/3)
+                    /*X*/   QUOTE((safezoneX - (0.86) * 0.17)),
+                    /*Y*/   QUOTE((safezoneY + safezoneH * 0.88 - ((0.86) * 4/3) * 0.72)),
+                    /*W*/   QUOTE((0.86)),
+                    /*H*/   QUOTE(((0.86) * 4/3))
                         },
                 /*?*/ "1",
                       "1"
@@ -16,20 +16,20 @@ class CfgUIGrids {
                     GVARMAIN(Android_dsp_alt)[] = {
                         {
                             // default position         +  offset // 2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
-                    /*X*/   (safezoneX - (0.86) * 0.17) +           (2 * safeZoneX + safeZoneW - (0.86)       - 2 * (safezoneX - (0.86 * 0.17))),
-                    /*Y*/   (safezoneY + safezoneH * 0.88 - (0.86 * 4/3) * 0.72),
-                    /*W*/   (0.86),
-                    /*H*/   (0.86 * 4/3)
+                    /*X*/   QUOTE((safezoneX - (0.86) * 0.17) +           (2 * safeZoneX + safeZoneW - (0.86)       - 2 * (safezoneX - (0.86 * 0.17)))),
+                    /*Y*/   QUOTE((safezoneY + safezoneH * 0.88 - (0.86 * 4/3) * 0.72)),
+                    /*W*/   QUOTE((0.86)),
+                    /*H*/   QUOTE((0.86 * 4/3))
                         },
                         "1",
                         "1"
                     };
                     GVARMAIN(TAD_dsp)[] = {
                         { // Values from ctab_TAD_display.hpp
-                    /*X*/   (safeZoneX + 0.05 * 3/4),
-                    /*Y*/   (safeZoneY + safeZoneH - 0.86 - 0.2),
-                    /*W*/   (0.86 * 3/4),
-                    /*H*/   (0.86)
+                    /*X*/   QUOTE((safeZoneX + 0.05 * 3/4)),
+                    /*Y*/   QUOTE((safeZoneY + safeZoneH - 0.86 - 0.2)),
+                    /*W*/   QUOTE((0.86 * 3/4)),
+                    /*H*/   QUOTE((0.86))
                         },
                         "1",
                         "1"
@@ -37,20 +37,20 @@ class CfgUIGrids {
                     GVARMAIN(TAD_dsp_alt)[] = {
                         {
                             // default position      +  offset //  2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
-                    /*X*/   (safeZoneX + 0.05 * 3/4) +            (2 * safeZoneX + safeZoneW - (0.86 * 3/4) - 2 * (safeZoneX + (0.05) * 3/4)),
-                    /*Y*/   (safeZoneY + safeZoneH - 0.86 - 0.2),
-                    /*W*/   (0.86 * 3/4),
-                    /*H*/   (0.86)
+                    /*X*/   QUOTE((safeZoneX + 0.05 * 3/4) +            (2 * safeZoneX + safeZoneW - (0.86 * 3/4) - 2 * (safeZoneX + (0.05) * 3/4))),
+                    /*Y*/   QUOTE((safeZoneY + safeZoneH - 0.86 - 0.2)),
+                    /*W*/   QUOTE((0.86 * 3/4)),
+                    /*H*/   QUOTE((0.86))
                         },
                         "1",
                         "1"
                     };
                     GVARMAIN(microDAGR_dsp)[] = {
                         { // Values from ctab_microDAGR_display.hpp
-                    /*X*/   (safeZoneX + (-0.05 * 3/4)),
-                    /*Y*/   (safeZoneY + safeZoneH - 0.86 - 0.2),
-                    /*W*/   (0.86 * 3/4),
-                    /*H*/   (0.86)
+                    /*X*/   QUOTE((safeZoneX + (-0.05 * 3/4))),
+                    /*Y*/   QUOTE((safeZoneY + safeZoneH - 0.86 - 0.2)),
+                    /*W*/   QUOTE((0.86 * 3/4)),
+                    /*H*/   QUOTE((0.86))
                         },
                         "1",
                         "1"
@@ -58,10 +58,10 @@ class CfgUIGrids {
                     GVARMAIN(microDAGR_dsp_alt)[] = {
                         {
                             // default position         +  offset //  2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
-                    /*X*/   (safeZoneX + (-0.05 * 3/4)) +            (2 * safezoneX + safezoneW - (0.86 * 3/4) - 2 * (safeZoneX + (-0.05 * 3/4))),
-                    /*Y*/   (safeZoneY + safeZoneH - 0.86 - 0.2),
-                    /*W*/   (0.86 * 3/4),
-                    /*H*/   (0.86)
+                    /*X*/   QUOTE((safeZoneX + (-0.05 * 3/4)) +            (2 * safezoneX + safezoneW - (0.86 * 3/4) - 2 * (safeZoneX + (-0.05 * 3/4)))),
+                    /*Y*/   QUOTE((safeZoneY + safeZoneH - 0.86 - 0.2)),
+                    /*W*/   QUOTE((0.86 * 3/4)),
+                    /*H*/   QUOTE((0.86))
                         },
                         "1",
                         "1"

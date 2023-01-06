@@ -1,5 +1,5 @@
 #define HEMTT_FIRST_LINE_COMMENT_FIX
-//#include "..\shared\cTab_base_gui_classes.hpp"
+#include "..\shared\cTab_base_gui_classes.hpp"
 // Background definition
 #define TAD_BackgroundImage_px_W 2048 // width in pixels
 #define TAD_BackgroundImage_px_H 2048 // hight in pixels
@@ -72,140 +72,139 @@
 #define OSD_button_20_px_Y (OSD_button_06_px_Y)
 
 class cTab_RscButton_TAD_OSB: cTab_RscButtonInv {
-    w = TAD_pixel2Screen_W(134);
-    h = TAD_pixel2Screen_H(134);
+    w = QUOTE(TAD_pixel2Screen_W(134));
+    h = QUOTE(TAD_pixel2Screen_H(134));
 };
 class cTab_RscButton_TAD_OSB01: cTab_RscButton_TAD_OSB {
-    x = TAD_pixel2Screen_X(577);
-    y = TAD_pixel2Screen_Y(146);
+    x = QUOTE(TAD_pixel2Screen_X(577));
+    y = QUOTE(TAD_pixel2Screen_Y(146));
 };
 class cTab_RscButton_TAD_OSB02: cTab_RscButton_TAD_OSB01 {
-    x = TAD_pixel2Screen_X(767);
+    x = QUOTE(TAD_pixel2Screen_X(767));
 };
 class cTab_RscButton_TAD_OSB03: cTab_RscButton_TAD_OSB01 {
-    x = TAD_pixel2Screen_X(957);
+    x = QUOTE(TAD_pixel2Screen_X(957));
 };
 class cTab_RscButton_TAD_OSB04: cTab_RscButton_TAD_OSB01 {
-    x = TAD_pixel2Screen_X(1147);
+    x = QUOTE(TAD_pixel2Screen_X(1147));
 };
 class cTab_RscButton_TAD_OSB05: cTab_RscButton_TAD_OSB01 {
-    x = TAD_pixel2Screen_X(1337);
+    x = QUOTE(TAD_pixel2Screen_X(1337));
 };
 class cTab_RscButton_TAD_OSB06: cTab_RscButton_TAD_OSB {
-    x = TAD_pixel2Screen_X(1782);
-    y = TAD_pixel2Screen_Y(563);
+    x = QUOTE(TAD_pixel2Screen_X(1782));
+    y = QUOTE(TAD_pixel2Screen_Y(563));
 };
 class cTab_RscButton_TAD_OSB07: cTab_RscButton_TAD_OSB06 {
-    y = TAD_pixel2Screen_Y(760);
+    y = QUOTE(TAD_pixel2Screen_Y(760));
 };
 class cTab_RscButton_TAD_OSB08: cTab_RscButton_TAD_OSB06 {
-    y = TAD_pixel2Screen_Y(957);
+    y = QUOTE(TAD_pixel2Screen_Y(957));
 };
 class cTab_RscButton_TAD_OSB09: cTab_RscButton_TAD_OSB06 {
-    y = TAD_pixel2Screen_Y(1155);
+    y = QUOTE(TAD_pixel2Screen_Y(1155));
 };
 class cTab_RscButton_TAD_OSB10: cTab_RscButton_TAD_OSB06 {
-    y = TAD_pixel2Screen_Y(1352);
+    y = QUOTE(TAD_pixel2Screen_Y(1352));
 };
 class cTab_RscButton_TAD_OSB11: cTab_RscButton_TAD_OSB {
-    x = TAD_pixel2Screen_X(1337);
-    y = TAD_pixel2Screen_Y(1811);
+    x = QUOTE(TAD_pixel2Screen_X(1337));
+    y = QUOTE(TAD_pixel2Screen_Y(1811));
 };
 class cTab_RscButton_TAD_OSB12: cTab_RscButton_TAD_OSB11 {
-    x = TAD_pixel2Screen_X(1147);
+    x = QUOTE(TAD_pixel2Screen_X(1147));
 };
 class cTab_RscButton_TAD_OSB13: cTab_RscButton_TAD_OSB11 {
-    x = TAD_pixel2Screen_X(957);
+    x = QUOTE(TAD_pixel2Screen_X(957));
 };
 class cTab_RscButton_TAD_OSB14: cTab_RscButton_TAD_OSB11 {
-    x = TAD_pixel2Screen_X(767);
+    x = QUOTE(TAD_pixel2Screen_X(767));
 };
 class cTab_RscButton_TAD_OSB15: cTab_RscButton_TAD_OSB11 {
-    x = TAD_pixel2Screen_X(577);
+    x = QUOTE(TAD_pixel2Screen_X(577));
 };
 class cTab_RscButton_TAD_OSB16: cTab_RscButton_TAD_OSB {
-    x = TAD_pixel2Screen_X(132);
-    y = TAD_pixel2Screen_Y(1352);
+    x = QUOTE(TAD_pixel2Screen_X(132));
+    y = QUOTE(TAD_pixel2Screen_Y(1352));
 };
 class cTab_RscButton_TAD_OSB17: cTab_RscButton_TAD_OSB16 {
-    y = TAD_pixel2Screen_Y(1155);
+    y = QUOTE(TAD_pixel2Screen_Y(1155));
 };
 class cTab_RscButton_TAD_OSB18: cTab_RscButton_TAD_OSB16 {
-    y = TAD_pixel2Screen_Y(957);
+    y = QUOTE(TAD_pixel2Screen_Y(957));
 };
 class cTab_RscButton_TAD_OSB19: cTab_RscButton_TAD_OSB16 {
-    y = TAD_pixel2Screen_Y(760);
+    y = QUOTE(TAD_pixel2Screen_Y(760));
 };
 class cTab_RscButton_TAD_OSB20: cTab_RscButton_TAD_OSB16 {
-    y = TAD_pixel2Screen_Y(563);
+    y = QUOTE(TAD_pixel2Screen_Y(563));
 };
 class cTab_RscButton_TAD_ADJ_INC: cTab_RscButtonInv {
-    x = TAD_pixel2Screen_X(124);
-    y = TAD_pixel2Screen_Y(257);
-    w = TAD_pixel2Screen_W(142);
-    h = TAD_pixel2Screen_H(119);
+    x = QUOTE(TAD_pixel2Screen_X(124));
+    y = QUOTE(TAD_pixel2Screen_Y(257));
+    w = QUOTE(TAD_pixel2Screen_W(142));
+    h = QUOTE(TAD_pixel2Screen_H(119));
 };
 class cTab_RscButton_TAD_ADJ_DEC: cTab_RscButton_TAD_ADJ_INC {
-    y = TAD_pixel2Screen_Y(376);
+    y = QUOTE(TAD_pixel2Screen_Y(376));
 };
 class cTab_RscButton_TAD_DSP_INC: cTab_RscButton_TAD_ADJ_INC {
-    x = TAD_pixel2Screen_X(1782);
+    x = QUOTE(TAD_pixel2Screen_X(1782));
 };
 class cTab_RscButton_TAD_DSP_DEC: cTab_RscButton_TAD_DSP_INC {
-    y = TAD_pixel2Screen_Y(376);
+    y = QUOTE(TAD_pixel2Screen_Y(376));
 };
 class cTab_RscButton_TAD_CON_INC: cTab_RscButton_TAD_ADJ_INC {
-    y = TAD_pixel2Screen_Y(1539);
+    y = QUOTE(TAD_pixel2Screen_Y(1539));
 };
 class cTab_RscButton_TAD_CON_DEC: cTab_RscButton_TAD_CON_INC {
-    y = TAD_pixel2Screen_Y(1658);
+    y = QUOTE(TAD_pixel2Screen_Y(1658));
 };
 class cTab_RscButton_TAD_BRT_INC: cTab_RscButton_TAD_CON_INC {
-    x = TAD_pixel2Screen_X(1782);
+    x = QUOTE(TAD_pixel2Screen_X(1782));
 };
 class cTab_RscButton_TAD_BRT_DEC: cTab_RscButton_TAD_BRT_INC {
-    y = TAD_pixel2Screen_Y(1658);
+    y = QUOTE(TAD_pixel2Screen_Y(1658));
 };
 class cTab_RscButton_TAD_SYM_INC: cTab_RscButtonInv {
-    x = TAD_pixel2Screen_X(1663);
-    y = TAD_pixel2Screen_Y(1811);
-    w = TAD_pixel2Screen_W(119);
-    h = TAD_pixel2Screen_H(142);
+    x = QUOTE(TAD_pixel2Screen_X(1663));
+    y = QUOTE(TAD_pixel2Screen_Y(1811));
+    w = QUOTE(TAD_pixel2Screen_W(119));
+    h = QUOTE(TAD_pixel2Screen_H(142));
 };
 class cTab_RscButton_TAD_SYM_DEC: cTab_RscButton_TAD_SYM_INC {
-    x = TAD_pixel2Screen_X(1544);
+    x = QUOTE(TAD_pixel2Screen_X(1544));
 };
 class cTab_RscButton_TAD_DNO: cTab_RscButtonInv {
-    x = TAD_pixel2Screen_X(234);
-    y = TAD_pixel2Screen_Y(1894);
-    w = TAD_pixel2Screen_W(142);
-    h = TAD_pixel2Screen_H(142);
+    x = QUOTE(TAD_pixel2Screen_X(234));
+    y = QUOTE(TAD_pixel2Screen_Y(1894));
+    w = QUOTE(TAD_pixel2Screen_W(142));
+    h = QUOTE(TAD_pixel2Screen_H(142));
 };
 
-#define COLOR_BLACK {x}
 class cTab_RscText_TAD: cTab_RscText {
     style = ST_CENTER;
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W);
-    h = TAD_pixel2Screen_H(OSD_elementBase_size_px_H);
-    font = GUI_FONT_MONO;
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W));
+    h = QUOTE(TAD_pixel2Screen_H(OSD_elementBase_size_px_H));
+    font = QUOTE(GUI_FONT_MONO);
     colorText[] = COLOR_NEON_GREEN;
-    sizeEx = TAD_pixel2Screen_H(OSD_text_size_base_px);
+    sizeEx = QUOTE(TAD_pixel2Screen_H(OSD_text_size_base_px));
     colorBackground[] = COLOR_BLACK;
     shadow = 0;
 };
 class cTab_TAD_upDownArrow: cTab_RscPicture {
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W);
-    h = TAD_pixel2Screen_H(OSD_icon_size_px_H);
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W));
+    h = QUOTE(TAD_pixel2Screen_H(OSD_icon_size_px_H));
     colorText[] = COLOR_NEON_GREEN;
     colorBackground[] = COLOR_BLACK;
     text = "\a3\ui_f\data\IGUI\Cfg\Actions\autohover_ca.paa";
 };
 class cTab_TAD_RscMapControl: cTab_RscMapControl {
     text = "#(argb,8,8,3)color(1,1,1,1)";
-    x = TAD_pixel2Screen_X(TAD_mapContent_px_X);
-    y = TAD_pixel2Screen_Y(TAD_mapContent_px_Y);
-    w = TAD_pixel2Screen_W(TAD_mapContent_px_W);
-    h = TAD_pixel2Screen_H(TAD_mapContent_px_H);
+    x = QUOTE(TAD_pixel2Screen_X(TAD_mapContent_px_X));
+    y = QUOTE(TAD_pixel2Screen_Y(TAD_mapContent_px_Y));
+    w = QUOTE(TAD_pixel2Screen_W(TAD_mapContent_px_W));
+    h = QUOTE(TAD_pixel2Screen_H(TAD_mapContent_px_H));
     //type = CT_MAP;
     // allow to zoom out further (defines the maximum map scale, usually 1)
     scaleMax = 1000;
@@ -217,17 +216,17 @@ class cTab_TAD_RscMapControl: cTab_RscMapControl {
     alphaFadeEndScale = 10;
 
     // Rendering density coefficients
-    ptsPerSquareSea = 8 / cTab_TAD_DLGtoDSP_fctr;        // seas
-    ptsPerSquareTxt = 8 / cTab_TAD_DLGtoDSP_fctr;        // textures
-    ptsPerSquareCLn = 8 / cTab_TAD_DLGtoDSP_fctr;        // count-lines
-    ptsPerSquareExp = 8 / cTab_TAD_DLGtoDSP_fctr;        // exposure
-    ptsPerSquareCost = 8 / cTab_TAD_DLGtoDSP_fctr;        // cost
+    ptsPerSquareSea = QUOTE(8 / cTab_TAD_DLGtoDSP_fctr);        // seas
+    ptsPerSquareTxt = QUOTE(8 / cTab_TAD_DLGtoDSP_fctr);        // textures
+    ptsPerSquareCLn = QUOTE(8 / cTab_TAD_DLGtoDSP_fctr);        // count-lines
+    ptsPerSquareExp = QUOTE(8 / cTab_TAD_DLGtoDSP_fctr);        // exposure
+    ptsPerSquareCost = QUOTE(8 / cTab_TAD_DLGtoDSP_fctr);        // cost
 
     // Rendering thresholds
-    ptsPerSquareFor = 3 / cTab_TAD_DLGtoDSP_fctr;        // forests
-    ptsPerSquareForEdge = 100 / cTab_TAD_DLGtoDSP_fctr;    // forest edges
-    ptsPerSquareRoad = 1.5 / cTab_TAD_DLGtoDSP_fctr;        // roads
-    ptsPerSquareObj = 4 / cTab_TAD_DLGtoDSP_fctr;        // other objects
+    ptsPerSquareFor = QUOTE( 3 / cTab_TAD_DLGtoDSP_fctr);        // forests
+    ptsPerSquareForEdge = QUOTE(100 / cTab_TAD_DLGtoDSP_fctr);    // forest edges
+    ptsPerSquareRoad = QUOTE(1.5 / cTab_TAD_DLGtoDSP_fctr);        // roads
+    ptsPerSquareObj = QUOTE(4 / cTab_TAD_DLGtoDSP_fctr);        // other objects
 
     /*
     // replace CustomMark with wedding cake icon
@@ -244,7 +243,7 @@ class cTab_TAD_RscMapControl: cTab_RscMapControl {
 };
 class cTab_TAD_RscMapControl_BLACK: cTab_TAD_RscMapControl {
     font = "TahomaB";
-    sizeEx = 0.0;
+    sizeEx = QUOTE(0.0);
     maxSatelliteAlpha = 0.0;
     colorBackground[] = {0,0,0,0};
     colorLevels[] = {0,0,0,0};
@@ -290,15 +289,15 @@ class cTab_TAD_RscMapControl_BLACK: cTab_TAD_RscMapControl {
     sizeExLevel = 0.0;
     stickX[] = {0.0,{ "Gamma",0,0.0 }};
     stickY[] = {0.0,{ "Gamma",0,0.0 }};
-    ptsPerSquareSea = 10000;
-    ptsPerSquareTxt = 10000;
-    ptsPerSquareCLn = 10000;
-    ptsPerSquareExp = 10000;
-    ptsPerSquareCost = 10000;
-    ptsPerSquareFor = 10000;
-    ptsPerSquareForEdge = 10000;
-    ptsPerSquareRoad = 10000;
-    ptsPerSquareObj = 10000;
+    ptsPerSquareSea = QUOTE( 10000);
+    ptsPerSquareTxt = QUOTE( 10000);
+    ptsPerSquareCLn = QUOTE( 10000);
+    ptsPerSquareExp = QUOTE( 10000);
+    ptsPerSquareCost = QUOTE( 10000);
+    ptsPerSquareFor = QUOTE( 10000);
+    ptsPerSquareForEdge = QUOTE( 10000);
+    ptsPerSquareRoad = QUOTE( 10000);
+    ptsPerSquareObj = QUOTE( 10000);
     class Task {
         icon = "";
         color[] = {0,0,0,0};
@@ -559,86 +558,86 @@ class cTab_TAD_RscMapControl_BLACK: cTab_TAD_RscMapControl {
 
 class cTab_TAD_Map_Background: cTab_RscText {
     idc = 1;
-    x = TAD_pixel2Screen_X(TAD_mapContent_px_X);
-    y = TAD_pixel2Screen_Y(TAD_mapContent_px_Y);
-    w = TAD_pixel2Screen_W(TAD_mapContent_px_W);
-    h = TAD_pixel2Screen_H(TAD_mapContent_px_H);
+    x = QUOTE(TAD_pixel2Screen_X(TAD_mapContent_px_X));
+    y = QUOTE(TAD_pixel2Screen_Y(TAD_mapContent_px_Y));
+    w = QUOTE(TAD_pixel2Screen_W(TAD_mapContent_px_W));
+    h = QUOTE(TAD_pixel2Screen_H(TAD_mapContent_px_H));
     colorBackground[] = COLOR_BLACK;
 };
 
 class cTab_TAD_background: cTab_RscPicture {
     idc = IDC_CTAB_BACKGROUND;
     text = ""; // will be set during onLoad event
-    x = CUSTOM_GRID_X;
-    y = CUSTOM_GRID_Y;
-    w = CUSTOM_GRID_WAbs;
-    h = CUSTOM_GRID_HAbs;
+    x = QUOTE(CUSTOM_GRID_X);
+    y = QUOTE(CUSTOM_GRID_Y);
+    w = QUOTE(CUSTOM_GRID_WAbs);
+    h = QUOTE(CUSTOM_GRID_HAbs);
 };
 class cTab_TAD_OSD_hookGrid: cTab_RscText_TAD {
     idc = IDC_CTAB_OSD_HOOK_GRID;
     style = ST_CENTER;
-    x = TAD_pixel2Screen_X(OSD_button_11_px_X - OSD_elementBase_size_px_W * 4);
-    y = TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H * 0.5 + OSD_elementBase_size_px_H * 1);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 6);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_button_11_px_X - OSD_elementBase_size_px_W * 4));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H * 0.5 + OSD_elementBase_size_px_H * 1));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 6));
 };
 class cTab_TAD_OSD_hookElevation: cTab_TAD_OSD_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_ELEVATION;
-    x = TAD_pixel2Screen_X(OSD_button_11_px_X - OSD_elementBase_size_px_W * 2);
-    y = TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H * 0.5 + OSD_elementBase_size_px_H * 2);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 4);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_button_11_px_X - OSD_elementBase_size_px_W * 2));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H * 0.5 + OSD_elementBase_size_px_H * 2));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 4));
 };
 class cTab_TAD_OSD_hookDir: cTab_TAD_OSD_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_DIR;
-    x = TAD_pixel2Screen_X(OSD_button_11_px_X - OSD_elementBase_size_px_W * 6);
-    y = TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H * 0.5 + OSD_elementBase_size_px_H * 0);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 8);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_button_11_px_X - OSD_elementBase_size_px_W * 6));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H * 0.5 + OSD_elementBase_size_px_H * 0));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 8));
 };
 class cTab_TAD_OSD_hookToggleIconBackground: cTab_RscText_TAD {
     idc = 2;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px - OSD_elementBase_size_px_W);
-    y = TAD_pixel2Screen_Y(OSD_button_18_px_Y - OSD_elementBase_size_px_H     / 2);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px - OSD_elementBase_size_px_W));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_18_px_Y - OSD_elementBase_size_px_H     / 2));
 };
 class cTab_TAD_OSD_hookToggleIcon: cTab_TAD_upDownArrow {
     idc = 3;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px - OSD_elementBase_size_px_W);
-    y = TAD_pixel2Screen_Y(OSD_button_18_px_Y - OSD_icon_size_px_H / 2);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px - OSD_elementBase_size_px_W));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_18_px_Y - OSD_icon_size_px_H / 2));
 };
 class cTab_TAD_OSD_hookToggleText1: cTab_RscText_TAD {
     idc = IDC_CTAB_OSD_HOOK_TGGL1;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px);
-    y = TAD_pixel2Screen_Y(OSD_button_18_px_Y - OSD_elementBase_size_px_H);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 4);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_18_px_Y - OSD_elementBase_size_px_H));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 4));
 };
 class cTab_TAD_OSD_hookToggleText2: cTab_TAD_OSD_hookToggleText1 {
     idc = IDC_CTAB_OSD_HOOK_TGGL2;
-    y = TAD_pixel2Screen_Y(OSD_button_18_px_Y);
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_18_px_Y));
 };
 class cTab_TAD_OSD_currentDirection: cTab_RscText_TAD {
     idc = IDC_CTAB_OSD_DIR_DEGREE;
-    x = TAD_pixel2Screen_X(OSD_button_14_px_X - OSD_elementBase_size_px_W * 4 / 2);
-    y = TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H * 2);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 4);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_button_14_px_X - OSD_elementBase_size_px_W * 4 / 2));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H * 2));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 4));
 };
 class cTab_TAD_OSD_currentElevation: cTab_TAD_OSD_currentDirection {
     idc = IDC_CTAB_OSD_ELEVATION;
-    x = TAD_pixel2Screen_X(OSD_button_12_px_X - OSD_elementBase_size_px_W * 5 / 2);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 5);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_button_12_px_X - OSD_elementBase_size_px_W * 5 / 2));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 5));
 };
 class cTab_TAD_OSD_centerMapText: cTab_RscText_TAD {
     idc = 4;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px);
-    y = TAD_pixel2Screen_Y(OSD_button_19_px_Y - OSD_elementBase_size_px_H / 2);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_19_px_Y - OSD_elementBase_size_px_H / 2));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3));
     text = "CTR";
 };
 class cTab_TAD_loadingtxt: cTab_RscText_TAD {
     idc = IDC_CTAB_LOADINGTXT;
     style = ST_CENTER;
     text = "Loading"; //--- ToDo: Localize;
-    x = TAD_pixel2Screen_X(TAD_mapContent_px_X);
-    y = TAD_pixel2Screen_Y(TAD_mapContent_px_Y);
-    w = TAD_pixel2Screen_W(TAD_mapContent_px_W);
-    h = TAD_pixel2Screen_H(TAD_mapContent_px_H);
+    x = QUOTE(TAD_pixel2Screen_X(TAD_mapContent_px_X));
+    y = QUOTE(TAD_pixel2Screen_Y(TAD_mapContent_px_Y));
+    w = QUOTE(TAD_pixel2Screen_W(TAD_mapContent_px_W));
+    h = QUOTE(TAD_pixel2Screen_H(TAD_mapContent_px_H));
 };
 class cTab_TAD_OSD_cursor: cTab_RscPicture {
     idc = 5;
@@ -646,86 +645,86 @@ class cTab_TAD_OSD_cursor: cTab_RscPicture {
         // "\a3\ui_f\data\map\Markers\Military\destroy_ca.paa";
         // "\a3\ui_f\data\IGUI\Cfg\WeaponCursors\cursoraimon_gs.paa"
         // "\a3\ui_f\data\map\MarkerBrushes\cross_ca.paa"
-    x = TAD_pixel2Screen_X(TAD_mapContent_px_X + TAD_mapContent_px_W / 2 - 128 / 33 * CURSOR_size_px / 2);
-    y = TAD_pixel2Screen_Y(TAD_mapContent_px_Y + TAD_mapContent_px_H / 2 - 128 / 33 * CURSOR_size_px / 2);
-    w = TAD_pixel2Screen_W(128 / 33 * CURSOR_size_px);
-    h = TAD_pixel2Screen_H(128 / 33 * CURSOR_size_px);
+    x = QUOTE(TAD_pixel2Screen_X(TAD_mapContent_px_X + TAD_mapContent_px_W / 2 - 128 / 33 * CURSOR_size_px / 2));
+    y = QUOTE(TAD_pixel2Screen_Y(TAD_mapContent_px_Y + TAD_mapContent_px_H / 2 - 128 / 33 * CURSOR_size_px / 2));
+    w = QUOTE(TAD_pixel2Screen_W(128 / 33 * CURSOR_size_px));
+    h = QUOTE(TAD_pixel2Screen_H(128 / 33 * CURSOR_size_px));
     colorText[] = COLOR_NEON_GREEN;
 };
 class cTab_TAD_OSD_navModeOrScale: cTab_RscText_TAD {
     idc = IDC_CTAB_OSD_MAP_SCALE;
-    x = TAD_pixel2Screen_X(OSD_edge_px_R - OSD_elementMode_size_px_W * 4);
-    y = TAD_pixel2Screen_Y(OSD_edge_px_T);
-    w = TAD_pixel2Screen_W(OSD_elementMode_size_px_W * 4);
-    h = TAD_pixel2Screen_H(OSD_elementMode_size_px_H);
-    sizeEx = TAD_pixel2Screen_H(OSD_text_size_mode_px);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_R - OSD_elementMode_size_px_W * 4));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_edge_px_T));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementMode_size_px_W * 4));
+    h = QUOTE(TAD_pixel2Screen_H(OSD_elementMode_size_px_H));
+    sizeEx = QUOTE(TAD_pixel2Screen_H(OSD_text_size_mode_px));
 };
 class cTab_TAD_OSD_modeTAD: cTab_RscText_TAD {
     idc = 6;
-    x = TAD_pixel2Screen_X(OSD_button_15_px_X - OSD_elementBase_size_px_W * 3 / 2);
-    y = TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_button_15_px_X - OSD_elementBase_size_px_W * 3 / 2));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3));
     colorText[] = COLOR_BLACK;
     colorBackground[] = COLOR_NEON_GREEN;
     text = "TAD";
 };
 class cTab_TAD_OSD_txtToggleIconBg: cTab_RscText_TAD {
     idc = 7;
-    x = TAD_pixel2Screen_X(OSD_edge_px_R - OSD_text_offset_px);
-    y = TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H / 2);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_R - OSD_text_offset_px));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H / 2));
 };
 class cTab_TAD_OSD_txtToggleIcon: cTab_TAD_upDownArrow {
     idc = 8;
-    x = TAD_pixel2Screen_X(OSD_edge_px_R - OSD_text_offset_px);
-    y = TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_icon_size_px_H / 2);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_R - OSD_text_offset_px));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_icon_size_px_H / 2));
 };
 class cTab_TAD_OSD_txtToggleText1: cTab_RscText_TAD {
     idc = 9;
-    x = TAD_pixel2Screen_X(OSD_edge_px_R - OSD_text_offset_px - OSD_elementBase_size_px_W * 3);
-    y = TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_R - OSD_text_offset_px - OSD_elementBase_size_px_W * 3));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_10_px_Y - OSD_elementBase_size_px_H));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3));
     text = "TXT";
 };
 class cTab_TAD_OSD_txtToggleText2: cTab_RscText_TAD {
     idc = IDC_CTAB_OSD_TXT_TGGL;
-    x = TAD_pixel2Screen_X(OSD_edge_px_R - OSD_text_offset_px - OSD_elementBase_size_px_W * 3);
-    y = TAD_pixel2Screen_Y(OSD_button_10_px_Y);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_R - OSD_text_offset_px - OSD_elementBase_size_px_W * 3));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_10_px_Y));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3));
 };
 class cTab_TAD_OSD_time: cTab_RscText_TAD {
     idc = IDC_CTAB_OSD_TIME;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L);
-    y = TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 5);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 5));
 };
 class cTab_TAD_OSD_currentGrid: cTab_RscText_TAD {
     idc = IDC_CTAB_OSD_GRID;
-    x = TAD_pixel2Screen_X(OSD_button_13_px_X - OSD_elementBase_size_px_W * 6 / 2);
-    y = TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H * 2);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 6);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_button_13_px_X - OSD_elementBase_size_px_W * 6 / 2));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H * 2));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 6));
 };
 class cTab_TAD_OSD_mapToggleIconBg: cTab_RscText_TAD {
     idc = 10;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px - OSD_elementBase_size_px_W);
-    y = TAD_pixel2Screen_Y(OSD_button_20_px_Y - OSD_elementBase_size_px_H / 2);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px - OSD_elementBase_size_px_W));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_20_px_Y - OSD_elementBase_size_px_H / 2));
 };
 class cTab_TAD_OSD_mapToggleIcon: cTab_TAD_upDownArrow {
     idc = 11;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px - OSD_elementBase_size_px_W);
-    y = TAD_pixel2Screen_Y(OSD_button_20_px_Y - OSD_icon_size_px_H / 2);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px - OSD_elementBase_size_px_W));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_20_px_Y - OSD_icon_size_px_H / 2));
 };
 class cTab_TAD_OSD_mapToggleText1: cTab_RscText_TAD {
     idc = 12;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px);
-    y = TAD_pixel2Screen_Y(OSD_button_20_px_Y - OSD_elementBase_size_px_H);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_20_px_Y - OSD_elementBase_size_px_H));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 3));
     text = "MAP";
 };
 class cTab_TAD_OSD_mapToggleText2: cTab_RscText_TAD {
     idc = IDC_CTAB_OSD_MAP_TGGL;
-    x = TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px);
-    y = TAD_pixel2Screen_Y(OSD_button_20_px_Y);
-    w = TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 4);
+    x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_L + OSD_text_offset_px));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_button_20_px_Y));
+    w = QUOTE(TAD_pixel2Screen_W(OSD_elementBase_size_px_W * 4));
 };
 
 // Define areas around the screen as interaction areas to allow screen movement
@@ -733,42 +732,42 @@ class cTab_TAD_movingHandle_T: cTab_RscText_TAD {
     idc = 14;
     moving = 1;
     colorBackground[] = COLOR_TRANSPARENT;
-    x = TAD_pixel2Screen_X(0);
-    y = TAD_pixel2Screen_Y(0);
-    w = TAD_pixel2Screen_W(TAD_BackgroundImage_px_W);
-    h = TAD_pixel2Screen_H(TAD_mapContent_px_Y);
+    x = QUOTE(TAD_pixel2Screen_X(0));
+    y = QUOTE(TAD_pixel2Screen_Y(0));
+    w = QUOTE(TAD_pixel2Screen_W(TAD_BackgroundImage_px_W));
+    h = QUOTE(TAD_pixel2Screen_H(TAD_mapContent_px_Y));
 };
 class cTab_TAD_movingHandle_B: cTab_TAD_movingHandle_T {
     idc = 15;
-    y = TAD_pixel2Screen_Y(TAD_mapContent_px_Y + TAD_mapContent_px_H);
-    h = TAD_pixel2Screen_H(TAD_BackgroundImage_px_H - (TAD_mapContent_px_Y + TAD_mapContent_px_H));
+    y = QUOTE(TAD_pixel2Screen_Y(TAD_mapContent_px_Y + TAD_mapContent_px_H));
+    h = QUOTE(TAD_pixel2Screen_H(TAD_BackgroundImage_px_H - (TAD_mapContent_px_Y + TAD_mapContent_px_H)));
 };
 class cTab_TAD_movingHandle_L: cTab_TAD_movingHandle_T {
     idc = 16;
-    y = TAD_pixel2Screen_Y(TAD_mapContent_px_Y);
-    w = TAD_pixel2Screen_W(TAD_mapContent_px_X);
-    h = TAD_pixel2Screen_H(TAD_mapContent_px_H);
+    y = QUOTE(TAD_pixel2Screen_Y(TAD_mapContent_px_Y));
+    w = QUOTE(TAD_pixel2Screen_W(TAD_mapContent_px_X));
+    h = QUOTE(TAD_pixel2Screen_H(TAD_mapContent_px_H));
 };
 class cTab_TAD_movingHandle_R: cTab_TAD_movingHandle_L {
     idc = 17;
-    x = TAD_pixel2Screen_X(TAD_mapContent_px_X + TAD_mapContent_px_W);
-    w = TAD_pixel2Screen_W(TAD_BackgroundImage_px_W - (TAD_mapContent_px_X + TAD_mapContent_px_W));
+    x = QUOTE(TAD_pixel2Screen_X(TAD_mapContent_px_X + TAD_mapContent_px_W));
+    w = QUOTE(TAD_pixel2Screen_W(TAD_BackgroundImage_px_W - (TAD_mapContent_px_X + TAD_mapContent_px_W)));
 };
 
 // transparent control that gets placed on top of the GUI to adjust brightness
 class cTab_TAD_brightness: cTab_RscText_TAD {
     idc = IDC_CTAB_BRIGHTNESS;
-    x = TAD_pixel2Screen_X(TAD_mapContent_px_X);
-    y = TAD_pixel2Screen_Y(TAD_mapContent_px_Y);
-    w = TAD_pixel2Screen_W(TAD_mapContent_px_W);
-    h = TAD_pixel2Screen_H(TAD_mapContent_px_H);
+    x = QUOTE(TAD_pixel2Screen_X(TAD_mapContent_px_X));
+    y = QUOTE(TAD_pixel2Screen_Y(TAD_mapContent_px_Y));
+    w = QUOTE(TAD_pixel2Screen_W(TAD_mapContent_px_W));
+    h = QUOTE(TAD_pixel2Screen_H(TAD_mapContent_px_H));
     colorBackground[] = COLOR_TRANSPARENT;
 };
 class cTab_TAD_notification: cTab_RscText_TAD {
     idc = IDC_CTAB_NOTIFICATION;
-    x = TAD_pixel2Screen_X(TAD_mapContent_px_X + (TAD_mapContent_px_W * 0.2) / 2);
-    y = TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H * 3);
-    w = TAD_pixel2Screen_W(TAD_mapContent_px_W * 0.8);
+    x = QUOTE(TAD_pixel2Screen_X(TAD_mapContent_px_X + (TAD_mapContent_px_W * 0.2) / 2));
+    y = QUOTE(TAD_pixel2Screen_Y(OSD_edge_px_B - OSD_elementBase_size_px_H * 3));
+    w = QUOTE(TAD_pixel2Screen_W(TAD_mapContent_px_W * 0.8));
     colorText[] = COLOR_NAVYBLUE;
     colorBackground[] = COLOR_WHITE;
 };

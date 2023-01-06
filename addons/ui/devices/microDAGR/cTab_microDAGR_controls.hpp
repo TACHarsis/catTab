@@ -51,58 +51,58 @@
 class cTab_microDAGR_header: cTab_RscPicture {
     idc = 1;
     text = "#(argb,8,8,3)color(0,0,0,1)";
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X);
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y);
-    w = MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_MAP_W);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_HEADER_H);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_MAP_W));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_HEADER_H));
 };
 class cTab_microDAGR_footer: cTab_microDAGR_header {
     idc = 2;
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H - cTab_GUI_microDAGR_OSD_FOOTER_H);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_FOOTER_H);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H )- cTab_GUI_microDAGR_OSD_FOOTER_H);
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_FOOTER_H));
 };
 class cTab_RscButton_microDAGR_LeftUp: cTab_RscButtonInv {
-    x = MICRODAGR_pixel2Screen_X(373);
-    y = MICRODAGR_pixel2Screen_Y(400);
-    w = MICRODAGR_pixel2Screen_W(26);
-    h = MICRODAGR_pixel2Screen_H(171);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(373));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(400));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(26));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(171));
 };
 class cTab_RscButton_microDAGR_LeftDown: cTab_RscButton_microDAGR_LeftUp {
-    y = MICRODAGR_pixel2Screen_Y(571);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(571));
 };
 class cTab_RscButton_microDAGR_LeftBtn: cTab_RscButtonInv {
-    x = MICRODAGR_pixel2Screen_X(368);
-    y = MICRODAGR_pixel2Screen_Y(829);
-    w = MICRODAGR_pixel2Screen_W(31);
-    h = MICRODAGR_pixel2Screen_H(184);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(368));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(829));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(31));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(184));
 };
 class cTab_RscButton_microDAGR_RightUp: cTab_RscButton_microDAGR_LeftUp {
-    x = MICRODAGR_pixel2Screen_X(1689);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(1689));
 };
 class cTab_RscButton_microDAGR_RightDown: cTab_RscButton_microDAGR_LeftDown {
-    x = MICRODAGR_pixel2Screen_X(1689);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(1689));
 };
 class cTab_RscButton_microDAGR_RightBtn: cTab_RscButton_microDAGR_LeftBtn {
-    x = MICRODAGR_pixel2Screen_X(1689);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(1689));
 };
 
 class cTab_RscText_microDAGR: cTab_RscText {
     style = ST_CENTER;
-    w = MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_OSD_ELEMENT_STD_W);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_ELEMENT_STD_H);
-    font = GUI_FONT_MONO;
+    w = QUOTE(MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_OSD_ELEMENT_STD_W));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_ELEMENT_STD_H));
+    font = QUOTE(GUI_FONT_MONO);
     colorText[] = COLOR_WHITE;
-    sizeEx = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_TEXT_STD_SIZE);
+    sizeEx = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_TEXT_STD_SIZE));
     colorBackground[] = COLOR_TRANSPARENT;
     shadow = 0;
 };
 class cTab_microDAGR_RscMapControl: cTab_RscMapControl {
     idc = IDC_CTAB_SCREEN;
     text = "#(argb,8,8,3)color(1,1,1,1)";
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_SCREEN_CONTENT_X);
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_SCREEN_CONTENT_Y);
-    w = MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_SCREEN_CONTENT_W);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_SCREEN_CONTENT_H);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_SCREEN_CONTENT_X));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_SCREEN_CONTENT_Y));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_SCREEN_CONTENT_W));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_SCREEN_CONTENT_H));
     //type = CT_MAP;
     // allow to zoom out further (defines the maximum map scale, usually 1)
     scaleMax = 1000;
@@ -112,17 +112,17 @@ class cTab_microDAGR_RscMapControl: cTab_RscMapControl {
     alphaFadeEndScale = 10;
 
     // Rendering density coefficients
-    ptsPerSquareSea = 8 / cTab_microDAGR_DLGtoDSP_fctr;        // seas
-    ptsPerSquareTxt = 8 / cTab_microDAGR_DLGtoDSP_fctr;        // textures
-    ptsPerSquareCLn = 8 / cTab_microDAGR_DLGtoDSP_fctr;        // count-lines
-    ptsPerSquareExp = 8 / cTab_microDAGR_DLGtoDSP_fctr;        // exposure
-    ptsPerSquareCost = 8 / cTab_microDAGR_DLGtoDSP_fctr;        // cost
+    ptsPerSquareSea = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // seas
+    ptsPerSquareTxt = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // textures
+    ptsPerSquareCLn = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // count-lines
+    ptsPerSquareExp = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // exposure
+    ptsPerSquareCost = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // cost
 
     // Rendering thresholds
-    ptsPerSquareFor = 3 / cTab_microDAGR_DLGtoDSP_fctr;        // forests
-    ptsPerSquareForEdge = 100 / cTab_microDAGR_DLGtoDSP_fctr;    // forest edges
-    ptsPerSquareRoad = 1.5 / cTab_microDAGR_DLGtoDSP_fctr;        // roads
-    ptsPerSquareObj = 4 / cTab_microDAGR_DLGtoDSP_fctr;        // other objects
+    ptsPerSquareFor = QUOTE( 3 / cTab_microDAGR_DLGtoDSP_fctr);        // forests
+    ptsPerSquareForEdge = QUOTE( 100 / cTab_microDAGR_DLGtoDSP_fctr);    // forest edges
+    ptsPerSquareRoad = QUOTE( 1.5 / cTab_microDAGR_DLGtoDSP_fctr);        // roads
+    ptsPerSquareObj = QUOTE( 4 / cTab_microDAGR_DLGtoDSP_fctr);        // other objects
 
     /*
     // replace CustomMark with wedding cake icon
@@ -140,10 +140,10 @@ class cTab_microDAGR_RscMapControl: cTab_RscMapControl {
 class cTab_microDAGR_background: cTab_RscPicture {
     idc = IDC_CTAB_BACKGROUND;
     text = ""; // will be set during onLoad event
-    x = CUSTOM_GRID_X;
-    y = CUSTOM_GRID_Y;
-    w = CUSTOM_GRID_WAbs;
-    h = CUSTOM_GRID_HAbs;
+    x = QUOTE(CUSTOM_GRID_X);
+    y = QUOTE(CUSTOM_GRID_Y);
+    w = QUOTE(CUSTOM_GRID_WAbs);
+    h = QUOTE(CUSTOM_GRID_HAbs);
 };
 class cTab_microDAGR_cursor: cTab_RscPicture {
     idc = 3;
@@ -151,10 +151,10 @@ class cTab_microDAGR_cursor: cTab_RscPicture {
         // "\a3\ui_f\data\map\Markers\Military\destroy_ca.paa";
         // "\a3\ui_f\data\IGUI\Cfg\WeaponCursors\cursoraimon_gs.paa"
         // "\a3\ui_f\data\map\MarkerBrushes\cross_ca.paa"
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W / 2 - 128 / 33 * cTab_GUI_microDAGR_CURSOR / 2);
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H / 2 - 128 / 33 * cTab_GUI_microDAGR_CURSOR / 2);
-    w = MICRODAGR_pixel2Screen_W(128 / 33 * cTab_GUI_microDAGR_CURSOR);
-    h = MICRODAGR_pixel2Screen_H(128 / 33 * cTab_GUI_microDAGR_CURSOR);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W / 2 - 128 / 33 * cTab_GUI_microDAGR_CURSOR / 2));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H / 2 - 128 / 33 * cTab_GUI_microDAGR_CURSOR / 2));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(128 / 33 * cTab_GUI_microDAGR_CURSOR));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(128 / 33 * cTab_GUI_microDAGR_CURSOR));
     colorText[] = COLOR_NEON_GREEN;
 };
 class cTab_microDAGR_btnF7: cTab_RscButton_microDAGR_LeftBtn {
@@ -186,74 +186,74 @@ class cTab_microDAGR_btnMapTools: cTab_RscButton_microDAGR_LeftDown {
 class cTab_microDAGR_on_screen_battery: cTab_RscPicture {
     idc = 7;
     text = QPATHTOEF(data,img\ui\icon_battery_ca.paa);
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_LEFT_X);
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_T + (cTab_GUI_microDAGR_OSD_ELEMENT_STD_H - cTab_GUI_microDAGR_OSD_ICON_STD_SIZE) / 2);
-    w = MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_OSD_ICON_STD_SIZE);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_ICON_STD_SIZE);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_LEFT_X));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_T + (cTab_GUI_microDAGR_OSD_ELEMENT_STD_H - cTab_GUI_microDAGR_OSD_ICON_STD_SIZE) / 2));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_OSD_ICON_STD_SIZE));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_ICON_STD_SIZE));
     colorText[] = COLOR_WHITE;
 };
 class cTab_microDAGR_on_screen_time: cTab_RscText_microDAGR {
     idc = IDC_CTAB_OSD_TIME;
     style = ST_CENTER;
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_CENTER_X);
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_T);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_CENTER_X));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_T));
 };
 class cTab_microDAGR_on_screen_signalStrength: cTab_microDAGR_on_screen_battery {
     idc = 8;
-    text = QPATHTOEF(data,img\icon_signalStrength_ca.paa);
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_RIGHT_X + cTab_GUI_microDAGR_OSD_ELEMENT_STD_W - cTab_GUI_microDAGR_OSD_ICON_STD_SIZE * 2);
+    text = QPATHTOEF(data,img\ui\icon_signalStrength_ca.paa);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_RIGHT_X + cTab_GUI_microDAGR_OSD_ELEMENT_STD_W - cTab_GUI_microDAGR_OSD_ICON_STD_SIZE * 2));
     colorText[] = COLOR_WHITE;
 };
 class cTab_microDAGR_on_screen_satellite: cTab_microDAGR_on_screen_battery {
     idc = 9;
     text = "\a3\ui_f\data\map\Diary\signal_ca.paa";
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_RIGHT_X + cTab_GUI_microDAGR_OSD_ELEMENT_STD_W - cTab_GUI_microDAGR_OSD_ICON_STD_SIZE);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_RIGHT_X + cTab_GUI_microDAGR_OSD_ELEMENT_STD_W - cTab_GUI_microDAGR_OSD_ICON_STD_SIZE));
     colorText[] = COLOR_WHITE;
 };
 class cTab_microDAGR_on_screen_dirDegree: cTab_RscText_microDAGR {
     idc = IDC_CTAB_OSD_DIR_DEGREE;
     style = ST_LEFT;
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B);
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_LEFT_X);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B));
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_LEFT_X));
 };
 class cTab_microDAGR_on_screen_grid: cTab_microDAGR_on_screen_dirDegree {
     idc = IDC_CTAB_OSD_GRID;
     style = ST_CENTER;
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_CENTER_X);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_CENTER_X));
 };
 class cTab_microDAGR_on_screen_dirOctant: cTab_microDAGR_on_screen_dirDegree {
     idc = IDC_CTAB_OSD_DIR_OCTANT;
     style = ST_RIGHT;
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_RIGHT_X);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_RIGHT_X));
 };
 class cTab_microDAGR_on_screen_hookGrid: cTab_RscText_microDAGR {
     idc = IDC_CTAB_OSD_HOOK_GRID;
     style = ST_CENTER;
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_RIGHT_X);
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B - cTab_GUI_microDAGR_OSD_MARGIN - cTab_GUI_microDAGR_OSD_ELEMENT_STD_H * 4);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_OSD_RIGHT_X));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B - cTab_GUI_microDAGR_OSD_MARGIN - cTab_GUI_microDAGR_OSD_ELEMENT_STD_H * 4));
     colorText[] = {1,1,1,0.5};
     colorBackground[] = {0,0,0,0.25};
 };
 class cTab_microDAGR_on_screen_hookElevation: cTab_microDAGR_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_ELEVATION;
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B - cTab_GUI_microDAGR_OSD_MARGIN - cTab_GUI_microDAGR_OSD_ELEMENT_STD_H * 3);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B - cTab_GUI_microDAGR_OSD_MARGIN - cTab_GUI_microDAGR_OSD_ELEMENT_STD_H * 3));
 };
 class cTab_microDAGR_on_screen_hookDst: cTab_microDAGR_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_DST;
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B - cTab_GUI_microDAGR_OSD_MARGIN - cTab_GUI_microDAGR_OSD_ELEMENT_STD_H * 2);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B - cTab_GUI_microDAGR_OSD_MARGIN - cTab_GUI_microDAGR_OSD_ELEMENT_STD_H * 2));
 };
 class cTab_microDAGR_on_screen_hookDir: cTab_microDAGR_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_DIR;
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B - cTab_GUI_microDAGR_OSD_MARGIN - cTab_GUI_microDAGR_OSD_ELEMENT_STD_H);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_OSD_EDGE_B - cTab_GUI_microDAGR_OSD_MARGIN - cTab_GUI_microDAGR_OSD_ELEMENT_STD_H));
 };
 class cTab_microDAGR_loadingtxt: cTab_RscText_microDAGR {
     idc = IDC_CTAB_LOADINGTXT;
     style = ST_CENTER;
     text = "Loading"; //--- ToDo: Localize;
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_SCREEN_CONTENT_X);
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_SCREEN_CONTENT_Y);
-    w = MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_SCREEN_CONTENT_W);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_SCREEN_CONTENT_H);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_SCREEN_CONTENT_X));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_SCREEN_CONTENT_Y));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_SCREEN_CONTENT_W));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_SCREEN_CONTENT_H));
     colorBackground[] = COLOR_TRANSPARENT;
 };
 
@@ -262,34 +262,34 @@ class cTab_microDAGR_movingHandle_T: cTab_RscText_microDAGR {
     idc = 10;
     moving = 1;
     colorBackground[] = COLOR_TRANSPARENT;
-    x = MICRODAGR_pixel2Screen_X(0);
-    y = MICRODAGR_pixel2Screen_Y(0);
-    w = MICRODAGR_pixel2Screen_W(MICRODAGR_BackgroundImage_px_W);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_MAP_Y);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(0));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(0));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(MICRODAGR_BackgroundImage_px_W));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_MAP_Y));
 };
 class cTab_microDAGR_movingHandle_B: cTab_microDAGR_movingHandle_T {
     idc = 11;
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H);
-    h = MICRODAGR_pixel2Screen_H(MICRODAGR_BackgroundImage_px_H - (cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(MICRODAGR_BackgroundImage_px_H - (cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H)));
 };
 class cTab_microDAGR_movingHandle_L: cTab_microDAGR_movingHandle_T {
     idc = 12;
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y);
-    w = MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_MAP_X);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_MAP_H);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_MAP_X));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_MAP_H));
 };
 class cTab_microDAGR_movingHandle_R: cTab_microDAGR_movingHandle_L {
     idc = 14;
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W);
-    w = MICRODAGR_pixel2Screen_W(MICRODAGR_BackgroundImage_px_W - (cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W));
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(MICRODAGR_BackgroundImage_px_W )- (cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W));
 };
 
 // transparent control that gets placed on top of the GUI to adjust brightness
 class cTab_microDAGR_brightness: cTab_RscText_microDAGR {
     idc = IDC_CTAB_BRIGHTNESS;
-    x = MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X);
-    y = MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y);
-    w = MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_MAP_W);
-    h = MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_MAP_H);
+    x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X));
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(cTab_GUI_microDAGR_MAP_W));
+    h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_MAP_H));
     colorBackground[] = COLOR_TRANSPARENT;
 };

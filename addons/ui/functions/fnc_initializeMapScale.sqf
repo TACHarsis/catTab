@@ -1,4 +1,5 @@
 #include "script_component.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 /*
 Figure out the scaling factor based on the current map (island) being played
 Requires the scale of the map control to be at 0.001
@@ -6,8 +7,7 @@ Requires the scale of the map control to be at 0.001
 
 private _displayName = QGVAR(mapSize_dsp);
 GVAR(RscLayer) cutRsc [_displayName,"PLAIN",0, false];
-
-[    
+[
     {
         !isNull (uiNamespace getVariable _this)
     },
@@ -15,7 +15,7 @@ GVAR(RscLayer) cutRsc [_displayName,"PLAIN",0, false];
         params ["_displayName"];
 
         private _display = uiNamespace getVariable _displayName;
-        private _mapCtrl = _display displayCtrl 1110;
+        private _mapCtrl = _display displayCtrl IDC_CTAB_MAPSCALE;
 
         // get the screen postition of _mapCtrl as [x, y, w, h]
         private _mapScreenPos = ctrlPosition _mapCtrl;
@@ -45,12 +45,12 @@ GVAR(RscLayer) cutRsc [_displayName,"PLAIN",0, false];
 
         // Beginning text and icon size
         GVAR(txtFctr) = 12;
-        [] call FUNC(caseButtonsApplyTextSize);
+        [] call FUNC(applyTextSize);
 
         GVAR(mapScaleInitialized) = true;
     },
     _displayName,
-    1, // 5 second timeout
+    1, // 1 second timeout
     {
         throw "Unable to create map scale testing display.";
     }

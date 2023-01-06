@@ -156,15 +156,18 @@ if (isNil "_mode") then {
                     [3301,3302,3303,3304,3305,3306,3307,
                     IDC_CTAB_MARKER_MENU_MAIN,
                     IDC_CTAB_GROUP_DESKTOP,
-                    IDC_CTAB_GROUP_UAV,
-                    IDC_CTAB_GROUP_HCAM,
+                    IDC_CTAB_GROUP_UAV_LIST,
+                    IDC_CTAB_GROUP_UAV_VIDEO,
+                    IDC_CTAB_GROUP_HCAM_VIDEO,
+                    IDC_CTAB_GROUP_HCAM_LIST,
                     IDC_CTAB_GROUP_MESSAGE,
                     IDC_CTAB_MINIMAPBG,
-                    IDC_CTAB_CTABHCAMMAP,
-                    IDC_CTAB_CTABUAVMAP,
+                    //IDC_CTAB_HCAMMAP,
+                    //IDC_CTAB_UAVMAP,
                     IDC_CTAB_SCREEN,
                     IDC_CTAB_SCREEN_TOPO,
                     IDC_CTAB_HCAM_FULL,
+                    IDC_CTAB_UAVGUNNER_FULL,
                     IDC_CTAB_OSD_HOOK_GRID,
                     IDC_CTAB_OSD_HOOK_ELEVATION,
                     IDC_CTAB_OSD_HOOK_DST,
@@ -209,26 +212,6 @@ if (isNil "_mode") then {
                 private _btnActCtrl = _display displayCtrl IDC_CTAB_BTNACT;
                 private _displayItemsToShow = [];
 
-                // ---------- _NOT_ BFT -----------
-                if (_isDialog && (_mode isNotEqualTo QSETTING_MODE_BFT)) then {
-                    private _mapTypes = [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings);
-                    if (count _mapTypes > 1) then {
-                        _targetMapCtrl = _display displayCtrl ([
-                                _mapTypes, 
-                                [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
-                            ] call BIS_fnc_getFromPairs);
-                        
-                        // If we find the map to be shown, we are switching away from BFT. Lets save map scale and position
-                        if (ctrlShown _targetMapCtrl) then {
-                            _mapScale = GVAR(mapScale) * GVAR(mapScaleFactor) / 0.86 * (safezoneH * 0.8);
-                            [_displayName,[
-                                    [QSETTING_MAP_WORLD_POS,GVAR(mapWorldPos)],
-                                    [QSETTING_MAP_SCALE_DIALOG,_mapScale]
-                                ],false] call FUNC(setSettings);
-                        };
-                    };
-                };
-                
                 switch (_mode) do {
                     // ---------- DESKTOP -----------
                     case (QSETTING_MODE_DESKTOP) : {
@@ -253,10 +236,11 @@ if (isNil "_mode") then {
                             ];
                         };
                         
+                        //CC: this is 100% android specific code >
                         private _showMenu = [_displayName,QSETTING_SHOW_MENU] call FUNC(getSettings);
                         if (!isNil "_showMenu" && {_showMenu}) then    {
                             _displayItemsToShow pushBack IDC_CTAB_GROUP_MENU;
-                        };
+                        }; //<
                         
                         _btnActCtrl ctrlSetTooltip "";
                         // update scale and world position when not on interface init
@@ -271,29 +255,86 @@ if (isNil "_mode") then {
                     };
                     // ---------- UAV -----------
                     case (QSETTING_MODE_CAM_UAV) : {
+                        _displayItemsToShow pushBack ([
+                            [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings),
+                            [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+                        ] call BIS_fnc_getFromPairs);
+
                         _displayItemsToShow append [
-                            IDC_CTAB_GROUP_UAV,
-                            IDC_CTAB_MINIMAPBG,
-                            IDC_CTAB_CTABUAVMAP
+                            IDC_CTAB_GROUP_UAV_LIST
+                            //IDC_CTAB_GROUP_UAV_VIDEO
+                            //IDC_CTAB_MINIMAPBG,
+                            //IDC_CTAB_UAVMAP
                         ];
+
+                        if(!isNull GVAR(currentUAV)) then {
+                            _displayItemsToShow pushBack IDC_CTAB_GROUP_UAV_VIDEO;
+                        };
                         _btnActCtrl ctrlSetTooltip "View Gunner Optics";
-                        [] call FUNC(updateListControlUAV);
                         [_displayName,[
                                 [QSETTING_CAM_UAV,[_displayName,QSETTING_CAM_UAV] call FUNC(getSettings)]
                             ],true,true] call FUNC(setSettings);
+
+                        // update scale and world position when not on interface init
+                        if !(_interfaceInit) then {
+                            if (_isDialog) then {
+                                [_displayName,[
+                                        [QSETTING_MAP_SCALE_DIALOG,[_displayName,QSETTING_MAP_SCALE_DIALOG] call FUNC(getSettings)],
+                                        [QSETTING_MAP_WORLD_POS,[_displayName,QSETTING_MAP_WORLD_POS] call FUNC(getSettings)]
+                                    ],true,true] call FUNC(setSettings);
+                            };
+                        };
                     };
                     // ---------- HELMET CAM -----------
                     case (QSETTING_MODE_CAM_HELMET) : {
+                        _displayItemsToShow pushBack ([
+                            [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings),
+                            [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+                        ] call BIS_fnc_getFromPairs);
+
                         _displayItemsToShow append [
-                            IDC_CTAB_GROUP_HCAM,
-                            IDC_CTAB_MINIMAPBG,
-                            IDC_CTAB_CTABHCAMMAP
+                            IDC_CTAB_GROUP_HCAM_LIST
+                            // IDC_CTAB_MINIMAPBG,
+                            // IDC_CTAB_HCAMMAP
                         ];
+                        if(!isNil QGVAR(helmetCamData)) then {
+                            _displayItemsToShow pushBack IDC_CTAB_GROUP_HCAM_VIDEO;
+                        };
                         _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
                         [] call FUNC(updateListControlHelmetCams);
                         [_displayName,[
                                 [QSETTING_CAM_HELMET,[_displayName,QSETTING_CAM_HELMET] call FUNC(getSettings)]
                             ],true,true] call FUNC(setSettings);
+
+                        if !(_interfaceInit) then {
+                            if (_isDialog) then {
+                                [_displayName,[
+                                        [QSETTING_MAP_SCALE_DIALOG,[_displayName,QSETTING_MAP_SCALE_DIALOG] call FUNC(getSettings)],
+                                        [QSETTING_MAP_WORLD_POS,[_displayName,QSETTING_MAP_WORLD_POS] call FUNC(getSettings)]
+                                    ],true,true] call FUNC(setSettings);
+                            };
+                        };
+                    };
+                    // ---------- FULLSCREEN UAV GUNNER -----------
+                    case (QSETTING_MODE_CAM_UAVGUNNER_FULL) : {
+                        _displayItemsToShow pushBack IDC_CTAB_UAVGUNNER_FULL;
+                        private _data = [_displayName,QSETTING_CAM_UAV] call FUNC(getSettings);
+                        _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
+                        private _uavGunnerFullVideoImage = _display displayCtrl IDC_CTAB_UAVGUNNER_FULL;
+                        [
+                            (_data call BIS_fnc_objectFromNetId),
+                            [
+                                [1,"UAVGunnerFullRenderTarget",_uavGunnerFullVideoImage]
+                            ]
+                        ] spawn FUNC(createUAVCam);
+                    };
+                    // ---------- FULLSCREEN HELMET CAM -----------
+                    case (QSETTING_MODE_CAM_HELMET_FULL) : {
+                        _displayItemsToShow pushBack IDC_CTAB_HCAM_FULL;
+                        private _data = [_displayName,QSETTING_CAM_HELMET] call FUNC(getSettings);
+                        _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
+                        private _helmetFullVideoImage = _display displayCtrl IDC_CTAB_HCAM_FULL;
+                        ['helmetCamFullRenderTarget', _data, _helmetFullVideoImage] spawn FUNC(createHelmetCam);
                     };
                     // ---------- MESSAGING -----------
                     case (QSETTING_MODE_MESSAGES) : {
@@ -306,13 +347,6 @@ if (isNil "_mode") then {
                     case (QSETTING_MODE_MESSAGES_COMPOSE) : {
                         _displayItemsToShow pushBack IDC_CTAB_GROUP_COMPOSE;
                         [] call FUNC(messagingLoadGUI);
-                    };
-                    // ---------- FULLSCREEN HELMET CAM -----------
-                    case (QSETTING_MODE_CAM_HELMET_FULL) : {
-                        _displayItemsToShow pushBack IDC_CTAB_HCAM_FULL;
-                        private _data = [_displayName,QSETTING_CAM_HELMET] call FUNC(getSettings);
-                        _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
-                        ['rendertarget13',_data] spawn FUNC(createHelmetCam);
                     };
                 };
                 
@@ -368,7 +402,7 @@ if (isNil "_mode") then {
         };
         // ------------ MAP WORLD POSITION ------------
         case (QSETTING_MAP_WORLD_POS) : {
-            if (_mode isEqualTo QSETTING_MODE_BFT) then {
+            if (_mode in [QSETTING_MODE_BFT,QSETTING_MODE_CAM_UAV,QSETTING_MODE_CAM_HELMET]) then {
                 if (_isDialog) then {
                     _mapWorldPos = _value;
                     if !(_mapWorldPos isEqualTo []) then {
@@ -377,11 +411,28 @@ if (isNil "_mode") then {
                 };
             };
         };
+        
+        // ------------ FOLLOW UAV POSITION ------------
+        case (QSETTING_FOLLOW_UAV) : {
+            if (_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
+                if (_isDialog) then {
+                    GVAR(trackCurrentUAV) = _value;
+                };
+            };
+        };
+        // ------------ FOLLOW HCAM POSITION ------------
+        case (QSETTING_FOLLOW_HCAM) : {
+            if (_mode isEqualTo QSETTING_MODE_CAM_HELMET) then {
+                if (_isDialog) then {
+                    GVAR(trackCurrentHCam) = _value;
+                };
+            };
+        };
         // ------------ MAP TYPE ------------
         case (QSETTING_CURRENT_MAP_TYPE) : {
             private _targetMapName = _value;
             private _mapTypes = [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings);
-            if ((count _mapTypes > 1) && (_mode isEqualTo QSETTING_MODE_BFT)) then {
+            if ((count _mapTypes > 1) && (_mode in [QSETTING_MODE_BFT,QSETTING_MODE_CAM_UAV,QSETTING_MODE_CAM_HELMET])) then {
                 
                 _targetMapCtrl = _display displayCtrl ([
                     _mapTypes,
@@ -426,29 +477,59 @@ if (isNil "_mode") then {
         // ------------ UAV CAM ------------
         case (QSETTING_CAM_UAV) : {
             if (_mode isNotEqualTo QSETTING_MODE_CAM_UAV) exitWith {};
+            private _gunnerRenderTarget = switch (_mode) do {
+                case (QSETTING_MODE_CAM_UAV) : {"uavGunnerRenderTarget"};
+                case (QSETTING_MODE_CAM_UAVGUNNER_FULL) : {"UAVGunnerFullRenderTarget"};
+                default {nil};
+            };
             private _uav = _value call BIS_fnc_objectFromNetId;
-            if !(isNull _uav) then {
-                private _uavMapControl = _display displayCtrl IDC_CTAB_CTABUAVMAP;
+            GVAR(currentUAV) = _uav;
 
-                [_uav,[[0,"rendertarget8"],[1,"rendertarget9"]],_uavMapControl] spawn FUNC(createUavCam);
+            private _videoGroup = _display displayCtrl IDC_CTAB_GROUP_UAV_VIDEO;
+            private _gunnerVideoImage = _display displayCtrl IDC_CTAB_UAVGUNNERDISPLAY;
+            private _driverVideoImage = _display displayCtrl IDC_CTAB_UAVDRIVERDISPLAY;
+            
+            
+            if !(isNull _uav) then {
+                private _mapCtrl = _display displayCtrl ([
+                            [_displayName,QSETTING_MAP_TYPES] call FUNC(getSettings),
+                            [_displayName,QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+                        ] call BIS_fnc_getFromPairs);
+
+                [
+                    _uav,
+                    [
+                        [0,"uavDriverRenderTarget",_driverVideoImage],
+                        [1,_gunnerRenderTarget,_gunnerVideoImage]
+                    ]
+                ] spawn FUNC(createUavCam);
+                _videoGroup ctrlShow true;
             } else {
                 [] call FUNC(deleteUAVcam);
+                _videoGroup ctrlShow false;
             };
+            [QGVAR(UAVSelected), [GVAR(currentUAV)]] call CBA_fnc_localEvent;
         };
         // ------------ HCAM ------------
         case (QSETTING_CAM_HELMET) : {
             if (_mode isNotEqualTo QSETTING_MODE_CAM_HELMET) exitWith {};
             private _renderTarget = switch (_mode) do {
-                case (QSETTING_MODE_CAM_HELMET) : {"rendertarget12"};
-                case (QSETTING_MODE_CAM_HELMET_FULL) : {"rendertarget13"};
+                case (QSETTING_MODE_CAM_HELMET) : {"helmetCamRenderTarget"};
+                case (QSETTING_MODE_CAM_HELMET_FULL) : {"helmetCamFullRenderTarget"};
                 default {nil};
             };
             if (isNil "_renderTarget") exitWith {};
+            
+            private _videoGroup = _display displayCtrl IDC_CTAB_GROUP_HCAM_VIDEO;
+            private _helmetVideoImage = _display displayCtrl IDC_CTAB_HCAMDISPLAY;
 
-            if (_value != "") then {
-                [_renderTarget,_value] spawn FUNC(createHelmetCam);
+            private _unit = _value call BIS_fnc_objectFromNetId;
+            if (!isNull _unit) then {
+                [_renderTarget,_value,_helmetVideoImage] spawn FUNC(createHelmetCam);
+                _videoGroup ctrlShow true;
             } else {
                 [] call FUNC(deleteHelmetCam);
+                _videoGroup ctrlShow false;
             };
         };
         // ------------ MAP TOOLS ------------

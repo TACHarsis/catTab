@@ -13,6 +13,7 @@ GVAR(settings) set [QSETTINGS_COMMON, createHashMapFromArray [
 GVAR(settings) set [QSETTINGS_MAIN,    [] ];
 
 GVAR(settings) set [QSETTINGS_TABLET, createHashMapFromArray [
+        [QSETTING_DEVICE_ENVIRONMENT,   QDEVICE_GROUND],
         [QSETTING_POSITION_DIALOG,      []],
         [QSETTING_MODE,                 QSETTING_MODE_DESKTOP],
         [QSETTING_SHOW_ICON_TEXT,       true],
@@ -25,6 +26,8 @@ GVAR(settings) set [QSETTINGS_TABLET, createHashMapFromArray [
                                         ]],
         [QSETTING_CURRENT_MAP_TYPE,     QMAP_TYPE_SAT],
         [QSETTING_CAM_UAV,              ""],
+        [QSETTING_FOLLOW_UAV,           false],
+        [QSETTING_FOLLOW_HCAM,          false],
         [QSETTING_CAM_HELMET,           ""],
         [QSETTING_MAP_TOOLS,            true],
         [QSETTING_HOOK_REFERENCE_MODE,  true],
