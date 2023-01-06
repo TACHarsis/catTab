@@ -11,10 +11,11 @@ files = [
     "settings/",
     "settings/ctab_settings.hpp",
     "custom_backgrounds/",
-    "custom_backgrounds/*.paa",
-    "custom_backgrounds/*.jpg",
 ]
 exclude = [
     "*.png",
     "*.pdn",
 ]
+
+[version]
+git_hash = 0 # Disabled
