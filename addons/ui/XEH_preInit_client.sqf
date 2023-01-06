@@ -21,8 +21,6 @@ GVAR(userMarkerListTranslated) = [];
 
 GVAR(displayPropertyGroups) = createHashMapFromArray [
     [QGVARMAIN(Tablet_dlg),QSETTINGS_TABLET],
-    [QGVAR(TABLET_UAVS),QSETTINGS_UAVS],
-    [QGVAR(TABLET_HCAM),QSETTINGS_HCAMS],
     [QGVARMAIN(Android_dlg),QSETTINGS_ANDROID],
     [QGVARMAIN(Android_dsp),QSETTINGS_ANDROID],
     [QGVARMAIN(FBCB2_dlg),QSETTINGS_FBCB2],

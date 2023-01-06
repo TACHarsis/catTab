@@ -36,38 +36,6 @@ GVAR(settings) set [QSETTINGS_TABLET, createHashMapFromArray [
     ]
 ];
 
-GVAR(settings) set [QSETTINGS_UAVS, createHashMapFromArray [
-        [QSETTING_DEVICE_ENVIRONMENT,   QDEVICE_GROUND],
-        [QSETTING_MAP_SCALE_DISPLAY,    0.4],
-        [QSETTING_MAP_SCALE_DIALOG,     0.4],
-        [QSETTING_MAP_TYPES,            [
-                                            [QMAP_TYPE_SAT,IDC_CTAB_SCREEN],
-                                            [QMAP_TYPE_TOPO,IDC_CTAB_SCREEN_TOPO]
-                                        ]],
-        [QSETTING_CURRENT_MAP_TYPE,     QMAP_TYPE_SAT],
-        [QSETTING_MAP_TOOLS,            false],
-        [QSETTING_HOOK_REFERENCE_MODE,  true],
-        [QSETTING_NIGHT_MODE,           2],
-        [QSETTING_BRIGHTNESS,           0.9]
-    ]
-];
-
-GVAR(settings) set [QSETTINGS_HCAMS, createHashMapFromArray [
-        [QSETTING_DEVICE_ENVIRONMENT,   QDEVICE_GROUND],
-        [QSETTING_MAP_SCALE_DISPLAY,    0.4],
-        [QSETTING_MAP_SCALE_DIALOG,     0.4],
-        [QSETTING_MAP_TYPES,            [
-                                            [QMAP_TYPE_SAT,IDC_CTAB_SCREEN],
-                                            [QMAP_TYPE_TOPO,IDC_CTAB_SCREEN_TOPO]
-                                        ]],
-        [QSETTING_CURRENT_MAP_TYPE,     QMAP_TYPE_SAT],
-        [QSETTING_MAP_TOOLS,            false],
-        [QSETTING_HOOK_REFERENCE_MODE,  true],
-        [QSETTING_NIGHT_MODE,           2],
-        [QSETTING_BRIGHTNESS,           0.9]
-    ]
-];
-
 GVAR(settings) set [QSETTINGS_ANDROID, createHashMapFromArray [
         [QSETTING_DEVICE_ENVIRONMENT,   QDEVICE_GROUND],
         [QSETTING_POSITION_DIALOG,      []],

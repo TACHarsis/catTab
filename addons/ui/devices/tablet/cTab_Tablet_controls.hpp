@@ -406,8 +406,8 @@ class cTab_Tablet_RscMapControl: cTab_RscMapControl {
 };
 class cTab_Tablet_notification: cTab_RscText_Tablet {
     idc = IDC_CTAB_NOTIFICATION;
-    x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X + (SCREEN_contentRect_px_W * 0.5) )/ 2);
-    y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H - 2 * OSD_elementBase_textSize_px));
+    x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X + (SCREEN_contentRect_px_W * 0.5) / 2));
+    y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y + (2 * OSD_elementBase_textSize_px)));
     w = QUOTE(TABLET_pixel2Screen_W(SCREEN_contentRect_px_W * 0.5));
     colorBackground[] = COLOR_BLACK;
 };

@@ -30,6 +30,15 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
 
                                         _options
                                     }],
+                                    //TODO: this still needs to be made compatible with helmet cam and uav mode.
+                                    // [QGVAR(TABLET_UAVS),        createHashMapFromArray [
+                                    //                                 [DMC_CONDITION,             {/* !(isNull GVAR(currentUAV)) &&  */(GVAR(currentUAV) isNotEqualTo Ctab_player)}],
+                                    //                                 [DMC_SAVE_SCALE_POSITION,   {isNull GVAR(currentUAV)}],
+                                    //                                 [DMC_HUMAN_AVATAR,          {[[objNull], [GVAR(currentUAV), objNull]] select GVAR(trackCurrentUAV)}]
+                                    // [QGVAR(TABLET_HCAM),          createHashMapFromArray [
+                                    //                                 [DMC_CONDITION,             {!(isNil QGVAR(helmetCamData))}],
+                                    //                                 [DMC_SAVE_SCALE_POSITION,   {isNil QGVAR(helmetCamData)}],
+                                    //                                 [DMC_HUMAN_AVATAR,          {[[objNull], [GVAR(helmetCamData) select 2, objNull]] select !isNil QGVAR(helmetCamData)}]
                                     [DMC_SAVE_SCALE_POSITION,   {true}],
                                     [DMC_RECENTER,              {
                                         params ["_displayName", "_displaySettinggs"];
@@ -126,31 +135,6 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                     [DMC_SAVE_SCALE_POSITION,   true],
                                     [DMC_HUMAN_AVATAR,          [objNull]],
                                     [DMC_DRAW_HOOK,             nil]
-                                ]
-    ],
-    [QGVAR(TABLET_UAVS),        createHashMapFromArray [
-                                    [DMC_CONDITION,             {/* !(isNull GVAR(currentUAV)) &&  */(GVAR(currentUAV) isNotEqualTo Ctab_player)}],
-                                    [DMC_DRAW_MARKERS,          [false,[
-                                        DMC_BFT_VEHICLES,
-                                        DMC_BFT_GROUPS,
-                                        DMC_BFT_MEMBERS,
-                                        DMC_BFT_UAV
-                                    ]]],
-                                    [DMC_SAVE_SCALE_POSITION,   {isNull GVAR(currentUAV)}],
-                                    [DMC_RECENTER,              {[[-1,0] select GVAR(trackCurrentUAV), GVAR(currentUAV), GVAR(mapScaleUAV)]}],
-                                    [DMC_HUMAN_AVATAR,          {[[objNull], [GVAR(currentUAV), objNull]] select GVAR(trackCurrentUAV)}]
-                                ]
-    ],
-    [QGVAR(TABLET_HCAM),          createHashMapFromArray [
-                                    [DMC_CONDITION,             {!(isNil QGVAR(helmetCamData))}],
-                                    [DMC_DRAW_MARKERS,          [false,[
-                                        DMC_BFT_VEHICLES,
-                                        DMC_BFT_GROUPS,
-                                        DMC_BFT_MEMBERS
-                                    ]]],
-                                    [DMC_SAVE_SCALE_POSITION,   {isNil QGVAR(helmetCamData)}],
-                                    [DMC_RECENTER,              {[[-1,0] select GVAR(trackCurrentHCam), GVAR(helmetCamData) select 2, GVAR(mapScaleHCam)]}],
-                                    [DMC_HUMAN_AVATAR,          {[[objNull], [GVAR(helmetCamData) select 2, objNull]] select !isNil QGVAR(helmetCamData)}]
                                 ]
     ]
 ];
