@@ -1,4 +1,5 @@
 #define COMPONENT data
+#define COMPONENT_BEAUTIFIED Data
 #include "\z\Ctab\addons\main\script_mod.hpp"
 
 // #define DEBUG_MODE_FULL

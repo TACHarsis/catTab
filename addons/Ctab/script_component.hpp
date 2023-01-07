@@ -1,4 +1,5 @@
 #define COMPONENT Ctab
+#define COMPONENT_BEAUTIFIED CatTab
 #include "\z\Ctab\addons\main\script_mod.hpp"
 
 // #define DEBUG_MODE_FULL

@@ -2,12 +2,21 @@
 * hook up notifications?
 * names instead of group id (option)?
 * movable markers
-* (fullscreen) headcam not working when unit in vehicle?
-* Turn pair business into hashmaps
+
 * Handle switch of active interface on enter/leave vehicle?
-* Switch UAV camera modes
+
 * desktop bar shows actual time
 * tasks?
 * Font option
 * FBCB2 messages uses vehicle for key?
 * simulate radio connection/interference between devices?
+* Helmet cam death effect instead of delete
+* helmet cam synched to actual helmet orientation
+* better helmet/UAV NV effects?
+* background and ratio for fullscreen cameras
+* unavailable/broken connections -> static?
+
+ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca
+ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca
+ui_f\data\IGUI\Cfg\Revive\overlayIcons\u100_ca
+ui_f\data\IGUI\Cfg\Revive\overlayIcons\f100_ca
