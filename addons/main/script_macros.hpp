@@ -24,3 +24,6 @@
         MACRO_ADDITEM(OBJECT),1); \
     }; \
 }
+
+// AFM macros
+#define IS_MOD_LOADED(modclass)     (isClass (configFile >> "CfgPatches" >> #modclass))

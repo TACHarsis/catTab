@@ -6,6 +6,7 @@ PREP(distance2D);
 PREP(getCopilot);
 PREP(getPlayerEncryptionKey);
 PREP(getPlayerSides);
+PREP(getUnitHealthData);
 PREP(onPlayerInventoryChanged);
 PREP(processCuratorKey);
 PREP(unitInEnabledVehicleSeat);
