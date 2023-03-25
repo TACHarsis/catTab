@@ -11,13 +11,13 @@
 
     Parameters:
     (Optional)
-        0: ARRAY - Property pairs in the form of [["propertyName", propertyValue],[...]]
+        0: ARRAY - Property pairs in the form of [["propertyName", propertyValue], [...]]
 
      Returns:
         BOOLEAN - Always true
 
      Example:
-        [[[QSETTING_CURRENT_MAP_TYPE, QMAP_TYPE_SAT],[QSETTING_MAP_SCALE_DISPLAY,"4"]]] call Ctab_ui_fnc_updateInterface;
+        [[[QSETTING_CURRENT_MAP_TYPE, QMAP_TYPE_SAT], [QSETTING_MAP_SCALE_DISPLAY, "4"]]] call Ctab_ui_fnc_updateInterface;
 */
 #include "..\devices\shared\cTab_defines.hpp"
 
@@ -37,13 +37,18 @@ private _isDialog = [_displayName] call FUNC(isDialog);
 
 if (isNil "_displaySettings") then {
     // Retrieve all settings for the currently open interface
-    _displaySettings = [_displayName] call FUNC(getSettings);
+    _displaySettings = [
+            _displayName
+        ] call FUNC(getSettings);
     _interfaceInit = true;
 };
 
 private _mode = _displaySettings get QSETTING_MODE;
 if (isNil "_mode") then {
-    _mode = [_displayName, QSETTING_MODE] call FUNC(getSettings);
+    _mode = [
+        _displayName,
+        QSETTING_MODE
+    ] call FUNC(getSettings);
     _loadingCtrl = displayNull;
 } else {
     // show "Loading" control to hide all the action while its going on
@@ -76,7 +81,7 @@ if (isNil "_mode") then {
                 profilenamespace getVariable format["IGUI_%1_alt_Y", _displayName]
             ];
 
-            private _backgroundProxy = [_configBackgroundPos#0, _configBackgroundPos#1];
+            private _backgroundProxy = [_configBackgroundPos # 0, _configBackgroundPos # 1];
             private _offset = ([_position, _positionAlt] select _useAltPosition) vectorDiff _backgroundProxy;
 
             [_displayName, _offset] call FUNC(setInterfacePosition);
@@ -106,7 +111,10 @@ if (isNil "_mode") then {
             private _osdCtrl = _display displayCtrl IDC_CTAB_BRIGHTNESS;
             if !(isNull _osdCtrl) then {
                 private _brightness = _value;
-                private _nightMode = [_displayName, QSETTING_NIGHT_MODE] call FUNC(getSettings);
+                private _nightMode = [
+                        _displayName,
+                        QSETTING_NIGHT_MODE
+                    ] call FUNC(getSettings);
                 // if we are running night mode, lower the brightness proportionally
                 if !(isNil "_nightMode") then {
                     if (_nightMode isEqualTo 1 || {_nightMode isEqualTo 2 && (sunOrMoon < 0.2)}) then {_brightness = _brightness * 0.7};
@@ -139,9 +147,20 @@ if (isNil "_mode") then {
                 (_display displayCtrl IDC_CTAB_BACKGROUND) ctrlSetText _background;
                 // call brightness adjustment if this is outside of interface init
                 if !(_interfaceInit) then {
-                    [_displayName,[
-                            [QSETTING_BRIGHTNESS,[_displayName, QSETTING_BRIGHTNESS] call FUNC(getSettings)]
-                        ], true, true] call FUNC(setSettings);
+                    [
+                        _displayName,
+                        [
+                            [
+                                QSETTING_BRIGHTNESS,
+                                [
+                                    _displayName,
+                                    QSETTING_BRIGHTNESS
+                                ] call FUNC(getSettings)
+                            ]
+                        ],
+                        true,
+                        true
+                    ] call FUNC(setSettings);
                 };
             };
         };
@@ -226,11 +245,20 @@ if (isNil "_mode") then {
                     // ---------- BFT -----------
                     case (QSETTING_MODE_BFT) : {
                         _displayItemsToShow pushBack ([
-                            [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings),
-                            [_displayName, QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+                            [
+                                _displayName,
+                                QSETTING_MAP_TYPES
+                            ] call FUNC(getSettings),
+                            [
+                                _displayName,
+                                QSETTING_CURRENT_MAP_TYPE
+                            ] call FUNC(getSettings)
                         ] call BIS_fnc_getFromPairs);
 
-                        private _mapTools = [_displayName, QSETTING_MAP_TOOLS] call FUNC(getSettings);
+                        private _mapTools = [
+                                _displayName,
+                                QSETTING_MAP_TOOLS
+                            ] call FUNC(getSettings);
                         if (!isNil "_mapTools" && {_mapTools}) then {
                             _displayItemsToShow append [
                                 IDC_CTAB_OSD_HOOK_GRID,
@@ -241,8 +269,11 @@ if (isNil "_mode") then {
                         };
 
                         //CC: this is 100% android specific code >
-                        private _showMenu = [_displayName, QSETTING_SHOW_MENU] call FUNC(getSettings);
-                        if (!isNil "_showMenu" && {_showMenu}) then    {
+                        private _showMenu = [
+                                _displayName,
+                                QSETTING_SHOW_MENU
+                            ] call FUNC(getSettings);
+                        if (!isNil "_showMenu" && {_showMenu}) then {
                             _displayItemsToShow pushBack IDC_CTAB_GROUP_MENU;
                         }; //<
 
@@ -253,17 +284,38 @@ if (isNil "_mode") then {
                                 [
                                     _displayName,
                                     [
-                                        [QSETTING_MAP_SCALE_DIALOG, [_displayName, QSETTING_MAP_SCALE_DIALOG] call FUNC(getSettings)],
-                                        [QSETTING_MAP_WORLD_POS, [_displayName, QSETTING_MAP_WORLD_POS] call FUNC(getSettings)]
-                                    ], true, true] call FUNC(setSettings);
+                                        [
+                                            QSETTING_MAP_SCALE_DIALOG,
+                                            [
+                                                _displayName,
+                                                QSETTING_MAP_SCALE_DIALOG
+                                            ] call FUNC(getSettings)
+                                        ],
+                                        [
+                                            QSETTING_MAP_WORLD_POS,
+                                            [
+                                                _displayName,
+                                                QSETTING_MAP_WORLD_POS
+                                            ] call FUNC(getSettings)
+                                        ]
+                                    ],
+                                    true,
+                                    true
+                                ] call FUNC(setSettings);
                             };
                         };
                     };
                     // ---------- UAV -----------
                     case (QSETTING_MODE_CAM_UAV) : {
                         _displayItemsToShow pushBack ([
-                            [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings),
-                            [_displayName, QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+                            [
+                                _displayName,
+                                QSETTING_MAP_TYPES
+                            ] call FUNC(getSettings),
+                            [
+                                _displayName,
+                                QSETTING_CURRENT_MAP_TYPE
+                            ] call FUNC(getSettings)
                         ] call BIS_fnc_getFromPairs);
 
                         _displayItemsToShow append [
@@ -274,25 +326,59 @@ if (isNil "_mode") then {
                             _displayItemsToShow pushBack IDC_CTAB_GROUP_UAV_VIDEO;
                         };
                         _btnActCtrl ctrlSetTooltip "View Gunner Optics";
-                        [_displayName,[
-                                [QSETTING_CAM_UAV,[_displayName, QSETTING_CAM_UAV] call FUNC(getSettings)]
-                            ], true, true] call FUNC(setSettings);
+                        [
+                            _displayName,
+                            [
+                                [
+                                    QSETTING_CAM_UAV,
+                                    [
+                                        _displayName,
+                                        QSETTING_CAM_UAV
+                                    ] call FUNC(getSettings)
+                                ]
+                            ],
+                            true,
+                            true
+                        ] call FUNC(setSettings);
 
                         // update scale and world position when not on interface init
                         if !(_interfaceInit) then {
                             if (_isDialog) then {
-                                [_displayName,[
-                                        [QSETTING_MAP_SCALE_DIALOG,[_displayName, QSETTING_MAP_SCALE_DIALOG] call FUNC(getSettings)],
-                                        [QSETTING_MAP_WORLD_POS,[_displayName, QSETTING_MAP_WORLD_POS] call FUNC(getSettings)]
-                                    ], true, true] call FUNC(setSettings);
+                                [
+                                    _displayName,
+                                    [
+                                        [
+                                            QSETTING_MAP_SCALE_DIALOG,
+                                            [
+                                                _displayName,
+                                                QSETTING_MAP_SCALE_DIALOG
+                                            ] call FUNC(getSettings)
+                                        ],
+                                        [
+                                            QSETTING_MAP_WORLD_POS,
+                                            [
+                                                _displayName,
+                                                QSETTING_MAP_WORLD_POS
+                                            ] call FUNC(getSettings)
+                                        ]
+                                    ],
+                                    true,
+                                    true
+                                ] call FUNC(setSettings);
                             };
                         };
                     };
                     // ---------- HELMET CAM -----------
                     case (QSETTING_MODE_CAM_HELMET) : {
                         _displayItemsToShow pushBack ([
-                            [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings),
-                            [_displayName, QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+                            [
+                                _displayName,
+                                QSETTING_MAP_TYPES
+                            ] call FUNC(getSettings),
+                            [
+                                _displayName,
+                                QSETTING_CURRENT_MAP_TYPE
+                            ] call FUNC(getSettings)
                         ] call BIS_fnc_getFromPairs);
 
                         _displayItemsToShow append [
@@ -308,42 +394,75 @@ if (isNil "_mode") then {
                         [
                             _displayName,
                             [
-                                [QSETTING_CAM_HELMET,[_displayName, QSETTING_CAM_HELMET] call FUNC(getSettings)]
+                                [
+                                    QSETTING_CAM_HELMET,
+                                    [
+                                        _displayName,
+                                        QSETTING_CAM_HELMET
+                                    ] call FUNC(getSettings)]
                             ],
-                            true, true] call FUNC(setSettings);
+                            true,
+                            true
+                        ] call FUNC(setSettings);
 
                         if !(_interfaceInit) then {
                             if (_isDialog) then {
                                 [
                                     _displayName,
                                     [
-                                        [QSETTING_MAP_SCALE_DIALOG,[_displayName, QSETTING_MAP_SCALE_DIALOG] call FUNC(getSettings)],
-                                        [QSETTING_MAP_WORLD_POS,[_displayName, QSETTING_MAP_WORLD_POS] call FUNC(getSettings)]
+                                        [
+                                            QSETTING_MAP_SCALE_DIALOG,
+                                            [
+                                                _displayName,
+                                                QSETTING_MAP_SCALE_DIALOG
+                                            ] call FUNC(getSettings)
+                                        ],
+                                        [
+                                            QSETTING_MAP_WORLD_POS,
+                                            [
+                                                _displayName,
+                                                QSETTING_MAP_WORLD_POS
+                                            ] call FUNC(getSettings)
+                                        ]
                                     ],
-                                    true, true] call FUNC(setSettings);
+                                    true,
+                                    true
+                                ] call FUNC(setSettings);
                             };
                         };
                     };
                     // ---------- FULLSCREEN UAV GUNNER -----------
                     case (QSETTING_MODE_CAM_UAVGUNNER_FULL) : {
                         _displayItemsToShow pushBack IDC_CTAB_UAVGUNNER_FULL;
-                        private _data = [_displayName, QSETTING_CAM_UAV] call FUNC(getSettings);
+                        private _data = [
+                                _displayName,
+                                QSETTING_CAM_UAV
+                            ] call FUNC(getSettings);
                         _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
                         private _uavGunnerFullVideoImage = _display displayCtrl IDC_CTAB_UAVGUNNER_FULL;
                         [
                             (_data call BIS_fnc_objectFromNetId),
                             [
-                                [1,"UAVGunnerFullRenderTarget", _uavGunnerFullVideoImage]
+                                [1, "UAVGunnerFullRenderTarget", _uavGunnerFullVideoImage]
                             ]
                         ] spawn FUNC(createUAVCam);
                     };
                     // ---------- FULLSCREEN HELMET CAM -----------
                     case (QSETTING_MODE_CAM_HELMET_FULL) : {
                         _displayItemsToShow pushBack IDC_CTAB_HCAM_FULL;
-                        private _data = [_displayName, QSETTING_CAM_HELMET] call FUNC(getSettings);
+                        private _data = [
+                                _displayName,
+                                QSETTING_CAM_HELMET
+                            ] call FUNC(getSettings);
                         _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
                         private _helmetFullVideoImage = _display displayCtrl IDC_CTAB_HCAM_FULL;
-                        ['helmetCamFullRenderTarget', _data, _helmetFullVideoImage, _helmetFullVideoImage] spawn FUNC(createHelmetCam);
+
+                        [
+                            'helmetCamFullRenderTarget',
+                            _data,
+                            _helmetFullVideoImage,
+                            _helmetFullVideoImage
+                        ] spawn FUNC(createHelmetCam);
                     };
                     // ---------- MESSAGING -----------
                     case (QSETTING_MODE_MESSAGES) : {
@@ -376,8 +495,14 @@ if (isNil "_mode") then {
             if (_mode isEqualTo QSETTING_MODE_BFT && !_isDialog) then {
                 private _mapScaleKm = _value;
                 // pre-Calculate map scales
-                private _mapScaleMin = [_displayName, QSETTING_MAP_SCALE_MIN] call FUNC(getSettings);
-                private _mapScaleMax = [_displayName, QSETTING_MAP_SCALE_MAX] call FUNC(getSettings);
+                private _mapScaleMin = [
+                        _displayName,
+                        QSETTING_MAP_SCALE_MIN
+                    ] call FUNC(getSettings);
+                private _mapScaleMax = [
+                        _displayName,
+                        QSETTING_MAP_SCALE_MAX
+                    ] call FUNC(getSettings);
 
                 // pick the next best scale that is an even multiple of the minimum map scale... It does tip in favour of the larger scale due to the use of logarithm, so its not perfect
                 _mapScaleKm = _mapScaleMin * 2 ^ round (log (_mapScaleKm / _mapScaleMin) / log (2));
@@ -389,7 +514,8 @@ if (isNil "_mode") then {
                         [
                             [QSETTING_MAP_SCALE_DISPLAY, _mapScaleKm]
                         ],
-                    false] call FUNC(setSettings);
+                        false
+                    ] call FUNC(setSettings);
                 };
                 GVAR(mapScale) = _mapScaleKm / GVAR(mapScaleFactor);
 
@@ -442,7 +568,10 @@ if (isNil "_mode") then {
         // ------------ MAP TYPE ------------
         case (QSETTING_CURRENT_MAP_TYPE) : {
             private _targetMapName = _value;
-            private _mapTypes = [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings);
+            private _mapTypes = [
+                    _displayName,
+                    QSETTING_MAP_TYPES
+                ] call FUNC(getSettings);
             if ((count _mapTypes > 1) && (_mode in [QSETTING_MODE_BFT, QSETTING_MODE_CAM_UAV, QSETTING_MODE_CAM_HELMET])) then {
 
                 _targetMapCtrl = _display displayCtrl ([
@@ -502,14 +631,20 @@ if (isNil "_mode") then {
 
             if !(isNull _uav) then {
                 private _mapCtrl = _display displayCtrl ([
-                            [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings),
-                            [_displayName, QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+                            [
+                                _displayName,
+                                QSETTING_MAP_TYPES
+                            ] call FUNC(getSettings),
+                            [
+                                _displayName,
+                                QSETTING_CURRENT_MAP_TYPE
+                            ] call FUNC(getSettings)
                         ] call BIS_fnc_getFromPairs);
 
                 [
                     _uav,
                     [
-                        [0,"uavDriverRenderTarget", _driverVideoImage],
+                        [0, "uavDriverRenderTarget", _driverVideoImage],
                         [1, _gunnerRenderTarget, _gunnerVideoImage]
                     ]
                 ] spawn FUNC(createUavCam);
@@ -585,8 +720,14 @@ if (isNil "_mode") then {
 if ((!isNil "_targetMapScale") || (!isNil "_targetMapWorldPos")) then {
     if (isNull _targetMapCtrl) then {
         _targetMapCtrl = _display displayCtrl ([
-            [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings),
-            [_displayName, QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
+            [
+                _displayName,
+                QSETTING_MAP_TYPES
+            ] call FUNC(getSettings),
+            [
+                _displayName,
+                QSETTING_CURRENT_MAP_TYPE
+            ] call FUNC(getSettings)
         ] call BIS_fnc_getFromPairs);
     };
     if (isNil "_targetMapScale") then {
@@ -608,10 +749,14 @@ if !(isNull _loadingCtrl) then {
         // put the mouse position in the center of the screen
         private _mousePos = [(_ctrlPos select 0) + ((_ctrlPos select 2) / 2),(_ctrlPos select 1) + ((_ctrlPos select 3) / 2)];
         // delay moving the mouse cursor by one frame using a PFH, for some reason its not working without
-        [{
-            [_this select 1] call CBA_fnc_removePerFrameHandler;
-            setMousePosition (_this select 0);
-        }, 0, _mousePos] call CBA_fnc_addPerFrameHandler;
+        [
+            {
+                [_this select 1] call CBA_fnc_removePerFrameHandler;
+                setMousePosition (_this select 0);
+            },
+            0,
+            _mousePos
+        ] call CBA_fnc_addPerFrameHandler;
     };
 
     _loadingCtrl ctrlShow false;
