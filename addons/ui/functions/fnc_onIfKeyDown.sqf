@@ -23,7 +23,7 @@
         [_display,_dikCode,_shiftKey,_ctrlKey,_altKey] call Ctab_ui_fnc_onIfKeyDown;
 */
 
-#include "\a3\editor_f\Data\Scripts\dikCodes.h"
+#include "\a3\ui_f\hpp\defineDIKCodes.inc"
 
 params ["_display","_dikCode","_shiftKey","_ctrlKey","_altKey"];
 

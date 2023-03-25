@@ -10,19 +10,19 @@ class CfgUIGrids {
                     /*W*/   QUOTE((0.86)),
                     /*H*/   QUOTE(((0.86) * 4/3))
                         },
-                /*?*/ "1",
-                      "1"
+            /*deltaW*/ "1",
+            /*deltaH*/ "1"
                     };
                     GVARMAIN(Android_dsp_alt)[] = {
                         {
-                            // default position         +  offset // 2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
+                            // default position               +  offset // 2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
                     /*X*/   QUOTE((safezoneX - (0.86) * 0.17) +           (2 * safeZoneX + safeZoneW - (0.86)       - 2 * (safezoneX - (0.86 * 0.17)))),
                     /*Y*/   QUOTE((safezoneY + safezoneH * 0.88 - (0.86 * 4/3) * 0.72)),
                     /*W*/   QUOTE((0.86)),
                     /*H*/   QUOTE((0.86 * 4/3))
                         },
-                        "1",
-                        "1"
+            /*deltaW*/ "1",
+            /*deltaH*/ "1"
                     };
                     GVARMAIN(TAD_dsp)[] = {
                         { // Values from ctab_TAD_display.hpp
@@ -31,19 +31,19 @@ class CfgUIGrids {
                     /*W*/   QUOTE((0.86 * 3/4)),
                     /*H*/   QUOTE((0.86))
                         },
-                        "1",
-                        "1"
+            /*deltaW*/ "1",
+            /*deltaH*/ "1"
                     };
                     GVARMAIN(TAD_dsp_alt)[] = {
                         {
-                            // default position      +  offset //  2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
+                            // default position            +  offset //  2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
                     /*X*/   QUOTE((safeZoneX + 0.05 * 3/4) +            (2 * safeZoneX + safeZoneW - (0.86 * 3/4) - 2 * (safeZoneX + (0.05) * 3/4))),
                     /*Y*/   QUOTE((safeZoneY + safeZoneH - 0.86 - 0.2)),
                     /*W*/   QUOTE((0.86 * 3/4)),
                     /*H*/   QUOTE((0.86))
                         },
-                        "1",
-                        "1"
+            /*deltaW*/ "1",
+            /*deltaH*/ "1"
                     };
                     GVARMAIN(microDAGR_dsp)[] = {
                         { // Values from ctab_microDAGR_display.hpp
@@ -52,19 +52,19 @@ class CfgUIGrids {
                     /*W*/   QUOTE((0.86 * 3/4)),
                     /*H*/   QUOTE((0.86))
                         },
-                        "1",
-                        "1"
+            /*deltaW*/ "1",
+            /*deltaH*/ "1"
                     };
                     GVARMAIN(microDAGR_dsp_alt)[] = {
                         {
-                            // default position         +  offset //  2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
+                            // default position               +  offset //  2 * safeZoneX + safeZoneW - elementWidth - 2 * defaultPosX
                     /*X*/   QUOTE((safeZoneX + (-0.05 * 3/4)) +            (2 * safezoneX + safezoneW - (0.86 * 3/4) - 2 * (safeZoneX + (-0.05 * 3/4)))),
                     /*Y*/   QUOTE((safeZoneY + safeZoneH - 0.86 - 0.2)),
                     /*W*/   QUOTE((0.86 * 3/4)),
                     /*H*/   QUOTE((0.86))
                         },
-                        "1",
-                        "1"
+            /*deltaW*/ "1",
+            /*deltaH*/ "1"
                     };
                 };
             };

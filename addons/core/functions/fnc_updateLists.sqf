@@ -51,24 +51,26 @@ Else, search through the group and use the first member we find equipped with a 
 private _playerGroup = group Ctab_player;
 private _bftGroups = []; // other groups
 {
-    private _group = _x;
-    if ((side _group in _validSides) && {_group != _playerGroup}) then {
-        _ctabLeader = objNull;
-        if ([leader _group,["ItemcTab","ItemAndroid"]] call FUNC(checkGear)) then {
-            _ctabLeader = leader _group;
-        } else {
-            {
-                private _unit = _x;
-                if ([_unit,["ItemcTab","ItemAndroid"]] call FUNC(checkGear)) then {
-                    _ctabLeader = _unit;
-                };
-            } foreach units _group;
+    {
+        private _group = _x;
+        if (_group != _playerGroup) then {
+            _ctabLeader = objNull;
+            if ([leader _group,["ItemcTab","ItemAndroid"]] call FUNC(checkGear)) then {
+                _ctabLeader = leader _group;
+            } else {
+                {
+                    private _unit = _x;
+                    if ([_unit,["ItemcTab","ItemAndroid"]] call FUNC(checkGear)) then {
+                        _ctabLeader = _unit;
+                    };
+                } foreach units _group;
+            };
+            if !(IsNull _ctabLeader) then {
+                _bftGroups pushBack [_group, _ctabLeader];
+            };
         };
-        if !(IsNull _ctabLeader) then {
-            _bftGroups pushBack [_group, _ctabLeader];
-        };
-    };
-} foreach allGroups;
+    } foreach (groups _x);
+} foreach _validSides;
 
 if !(GVARMAIN(BFTGroups) isEqualTo _bftGroups) then {
     GVARMAIN(BFTGroups) = [] + _bftGroups;
@@ -105,7 +107,7 @@ if !(GVARMAIN(UAVList) isEqualTo _uavList) then {
 GVARMAIN(hCamList) --- HELMET CAMS
 Units on our side, that have either helmets that have been specified to include a helmet cam, or ItemCTabHCAM in their inventory.
 */
-private _hCamList = allUnits select {
+private _hCamList = (allUnits + (allDeadMen)) select {
     if (side _x in _validSides) then {
         private _headgear = headgear _x;
         private _camera = getNumber (configfile >> "CfgWeapons" >> _headgear >> "CTAB_Camera");

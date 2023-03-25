@@ -20,7 +20,7 @@
 */
 params ["_displayName"];
 
-uiNamespace setVariable [GVAR(ifOpen) select 1,_displayName];
+uiNamespace setVariable [GVAR(ifOpen) select 1, _displayName];
 
 [] call FUNC(updateInterface);
 

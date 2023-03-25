@@ -5,13 +5,16 @@ template = "cba"
 mainprefix = "z"
 folder_optionals = true
 sig_version = 3
-files = [
+
+[files]
+include = [
     "mod.cpp",
+    "settings/ctab_class_settings.hpp",
+    "custom_backgrounds/*.paa",
+    "custom_backgrounds/*.jpg",
     "*.paa",
-    "settings/",
-    "settings/ctab_settings.hpp",
-    "custom_backgrounds/",
 ]
+
 exclude = [
     "*.png",
     "*.pdn",

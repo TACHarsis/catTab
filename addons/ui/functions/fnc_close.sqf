@@ -18,8 +18,6 @@
         [] call Ctab_ui_fnc_close;
 */
 
-private ["_displayName","_display"];
-
 if !(isNil QGVAR(ifOpen)) then {
     private _displayName = GVAR(ifOpen) select 1;
     private _display = uiNamespace getVariable _displayName;
