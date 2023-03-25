@@ -19,7 +19,12 @@
      Example:
         ["helmetCamRenderTarget",str player] spawn Ctab_ui_fnc_createHelmetCam;
 */
-params ["_renderTarget", "_data", "_videoImage"];
+params ["_renderTarget", "_data", "_videoImage", "_videoController"];
+
+private _ctrlGrp = ctrlParentControlsGroup _videoImage;
+private _heartIcon = _ctrlGrp controlsGroupCtrl IDC_CTAB_HCAMICON1;
+private _heartTextIcon = _ctrlGrp controlsGroupCtrl IDC_CTAB_HCAMICON2;
+private _nameIcon = _ctrlGrp controlsGroupCtrl IDC_CTAB_HCAMICON3;
 
 private _unit = _data call BIS_fnc_objectFromNetId;
 private _camOffSet = [];
@@ -62,11 +67,11 @@ _target attachTo [_unit,_targetOffSet];
 
 private _cam = "camera" camCreate getPosATL _unit;
 _cam camPrepareFov 0.700;
-_cam camPrepareTarget _target;
+//_cam camPrepareTarget _target;
 _cam camCommitPrepared 0;
 
 if (vehicle _unit == _unit) then {
-    _cam attachTo [_unit,_camOffSet,"Head"];
+    _cam attachTo [_unit,_camOffSet,"head", true];
 } else {
     _cam attachTo [_unit,_camOffSet];
 };
@@ -74,9 +79,12 @@ _cam cameraEffect ["INTERNAL","BACK",_renderTarget];
 
 GVAR(helmetCamData) = [_cam,_target,_unit];
 
+
 _videoImage ctrlEnable true;
 _videoImage setVariable [QGVAR(cameraTarget), _unit];
 _videoImage setVariable [QGVAR(cameraTargetType), "HelmetCam"];
+_videoController setVariable [QGVAR(videoTarget), _videoImage];
+
 private _visionModes = _unit getVariable [QGVAR(visionModes), [[0,0],[1,0]]];
 private _currentVisionMode = _unit getVariable [QGVAR(currentVisionMode), 0];
 _unit setVariable [QGVAR(visionModes), _visionModes];
@@ -84,37 +92,70 @@ _unit setVariable [QGVAR(currentVisionMode), _currentVisionMode];
 private _fov = _unit getVariable [QGVAR(targetFovHash),0.75];
 _unit setVariable [QGVAR(targetFovHash),_fov];
 
+_nameIcon ctrlSetText (name _unit);
+_heartTextIcon ctrlSetText "90bpm 80/60";
+_heartIcon setVariable [QGVAR(time), 0];
+
 [QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_HELMET,_unit call BIS_fnc_netId]]] call FUNC(setSettings);
+
+private _fnc_updateHelmetCam = {
+    if(isNil QGVAR(helmetCamData)) exitWith {};
+
+    params ["_params", "_handle"];
+    _params params ["_videoImage", "_heartIcon", "_heartTextIcon", "_renderTarget"];
+    if(ctrlShown _videoImage) then {
+
+        private _removedHCams = [];
+
+        GVAR(helmetCamData) params  ["_cam","_target","_unit"];;
+
+        private _fov = _unit getVariable [QGVAR(targetFovHash),0.7];
+        _cam camSetFov _fov;
+
+        private _visionModes = _unit getVariable [QGVAR(visionModes), [[0,0]]];
+        private _currentVisionMode = _unit getVariable [QGVAR(currentVisionMode), 0];
+        private _visionMode = _visionModes # _currentVisionMode;
+        _renderTarget setPiPEffect [_visionMode # 0, _visionMode # 1];
+
+        _cam camCommit 0.1;
+
+        private _healthData = [_unit] call EFUNC(core,getUnitHealthData);
+        _healthData params ["_alive", "_conscious", "_health", "_bpm", "_stringHint", "_colorHint"];
+
+        _heartIcon ctrlSetTextColor _colorHint;
+        _heartTextIcon ctrlSetTextColor _colorHint;
+        _heartTextIcon ctrlSetText _stringHint;
+
+        if(_bpm > 0) then {
+            private _wavePeriod = (60/_bpm);
+
+            private _iconTime = _heartIcon getVariable [QGVAR(time), 0];
+
+            _iconTime = (_iconTime + diag_deltaTime) % _wavePeriod;
+
+            _heartIcon setVariable [QGVAR(time), _iconTime];
+
+            private _images = [
+                "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
+                "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa",
+                "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u100_ca.paa",
+                "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa"
+            ];
+            private _timePerImage = _wavePeriod / (count _images + 1);
+            private _imageIdx = floor (_iconTime / _timePerImage);
+            if(_imageIdx == 5) then { diag_log "LOOOOOOOOOOOOOOL"};
+            _heartIcon ctrlSetText (_images # _imageIdx);
+        } else {
+            _heartIcon ctrlSetText "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\d100_ca.paa";
+        };
+    };
+};
 
 GVAR(helmetEventHandle) = [
-    {
-        if(isNil QGVAR(helmetCamData)) exitWith {};
-
-        params ["_params", "_handle"];
-        _params params ["_videoImage", "_renderTarget"];
-        if(ctrlShown _videoImage) then {
-
-            private _removedHCams = [];
-            
-            GVAR(helmetCamData) params  ["_cam","_target","_unit"];;
-
-            if (alive _unit) then {
-                private _fov = _unit getVariable [QGVAR(targetFovHash),0.7];
-                _cam camSetFov _fov;
-                // private _visionMode = currentVisionMode [_unit];
-                private _visionModes = _unit getVariable [QGVAR(visionModes), [[0,0]]];
-                private _currentVisionMode = _unit getVariable [QGVAR(currentVisionMode), 0];
-                private _visionMode = _visionModes # _currentVisionMode;
-                _renderTarget setPiPEffect [_visionMode # 0, _visionMode # 1];
-                _cam camCommit 0.1;
-            } else {
-                [] call FUNC(deleteHelmetCam);
-            };
-        };
-    },
+    _fnc_updateHelmetCam,
     0,
-    [_videoImage,_renderTarget]
+    [_videoImage, _heartIcon, _heartTextIcon, _renderTarget]
 ] call CBA_fnc_addPerFrameHandler;
 
-[QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_HELMET,_unit call BIS_fnc_netId]]] call FUNC(setSettings);
+[QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HELMET, _unit call BIS_fnc_netId]]] call FUNC(setSettings);
 

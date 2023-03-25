@@ -76,7 +76,6 @@ if (isNil "_mode") then {
                 profilenamespace getVariable format["IGUI_%1_alt_Y",_displayName]
             ];
 
-            
             private _backgroundProxy = [_configBackgroundPos#0,_configBackgroundPos#1];
             private _offset = ([_position, _positionAlt] select _useAltPosition) vectorDiff _backgroundProxy;
 
@@ -334,7 +333,7 @@ if (isNil "_mode") then {
                         private _data = [_displayName,QSETTING_CAM_HELMET] call FUNC(getSettings);
                         _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
                         private _helmetFullVideoImage = _display displayCtrl IDC_CTAB_HCAM_FULL;
-                        ['helmetCamFullRenderTarget', _data, _helmetFullVideoImage] spawn FUNC(createHelmetCam);
+                        ['helmetCamFullRenderTarget', _data, _helmetFullVideoImage, _helmetFullVideoImage] spawn FUNC(createHelmetCam);
                     };
                     // ---------- MESSAGING -----------
                     case (QSETTING_MODE_MESSAGES) : {
@@ -522,10 +521,11 @@ if (isNil "_mode") then {
             
             private _videoGroup = _display displayCtrl IDC_CTAB_GROUP_HCAM_VIDEO;
             private _helmetVideoImage = _display displayCtrl IDC_CTAB_HCAMDISPLAY;
+            private _helmetVideoControl = _display displayCtrl IDC_CTAB_HCAMCONTROLLAYER;
 
             private _unit = _value call BIS_fnc_objectFromNetId;
             if (!isNull _unit) then {
-                [_renderTarget,_value,_helmetVideoImage] spawn FUNC(createHelmetCam);
+                [_renderTarget,_value,_helmetVideoImage, _helmetVideoControl] spawn FUNC(createHelmetCam);
                 _videoGroup ctrlShow true;
             } else {
                 [] call FUNC(deleteHelmetCam);

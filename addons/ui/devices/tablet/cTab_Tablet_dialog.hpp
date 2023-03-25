@@ -133,8 +133,8 @@ class GVARMAIN(Tablet_dlg){
                 };
             };
          };
-        //  // ---------- UAV -----------
-         class UAVList : cTab_RscControlsGroup {
+        // ---------- UAV -----------
+        class UAVList : cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_UAV_LIST;
             x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X));
             y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y));
@@ -168,18 +168,20 @@ class GVARMAIN(Tablet_dlg){
                     );
                 };
             };
-         };
-         class UAVVideo: cTab_RscControlsGroup {
+        };
+        class UAVVideo: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_UAV_VIDEO;
             x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X));
             y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H));
             w = QUOTE((TABLET_pixel2Screen_W(SCREEN_contentRect_px_W))/2);
             h = QUOTE(0);
             onLoad = QUOTE(
-                [ARR_3(
+                [ARR_4(
                     _this, // [ctrlsGroup,config]
                     [ARR_3( // ctrlIDs
-                        IDC_CTAB_UAVGUNNERDISPLAY,
+                        [
+                            [ARR_2(IDC_CTAB_UAVGUNNERDISPLAY,[ARR_4(0,0,1,1)])]
+                        ],
                         IDC_CTAB_UAVGUNNERDISPLAYBG,
                         IDC_CTAB_UAVGUNNERDISPLAYBUTTON
                     )],
@@ -188,7 +190,8 @@ class GVARMAIN(Tablet_dlg){
                         TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H),
                         (TABLET_pixel2Screen_W(SCREEN_contentRect_px_W)/2),
                         (TABLET_pixel2Screen_H(SCREEN_contentRect_px_H)/2)
-                    )]
+                    )],
+                    [ARR_2(-1,0)]
                 )] call FUNC(onLoadVideoDisplayFrame);
             );
 
@@ -220,7 +223,7 @@ class GVARMAIN(Tablet_dlg){
             };
          };
         //  // ---------- HELMET CAM -----------
-         class HCAMList : cTab_RscControlsGroup {
+        class HCAMList : cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_HCAM_LIST;
             x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X));
             y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y));
@@ -255,28 +258,35 @@ class GVARMAIN(Tablet_dlg){
                     );
                 };
             };
-         };
-         class HCAMVideo: cTab_RscControlsGroup {
+        };
+        class HCAMVideo: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_HCAM_VIDEO;
             x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X));
             y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H));
-            w = QUOTE((TABLET_pixel2Screen_W(SCREEN_contentRect_px_W))/2);
-            h = QUOTE(0);
+            w = QUOTE((TABLET_pixel2Screen_W(SCREEN_contentRect_px_W)/2));
+            h = QUOTE((TABLET_pixel2Screen_H(SCREEN_contentRect_px_H)/2));
 
             onLoad = QUOTE(
-                [ARR_3(
+                [ARR_4(
                     _this, // [ctrlsGroup,config]
                     [ARR_3( // ctrlIDs
-                        IDC_CTAB_HCAMDISPLAY,
+                        [ARR_5(
+                            [ARR_2(IDC_CTAB_HCAMDISPLAY,[ARR_4(0,0,1,1))]],
+                            [ARR_2(IDC_CTAB_HCAMICON1,[ARR_4(0,0,(0.1 / 1.33333),0.1))]],
+                            [ARR_2(IDC_CTAB_HCAMICON2,[ARR_4((0.1 / 1.33333),0,(0.5/ 1.33333),0.1))]],
+                            [ARR_2(IDC_CTAB_HCAMICON3,[ARR_4(0,0.1,(0.6/ 1.33333),0.1))]],
+                            [ARR_2(IDC_CTAB_HCAMCONTROLLAYER,[ARR_4(0,0,1,1))]]
+                        )],
                         IDC_CTAB_HCAMDISPLAYBG,
                         IDC_CTAB_HCAMDISPLAYBUTTON
                     )],
                     [ARR_4( // screenArea
-                        TABLET_pixel2Screen_X(SCREEN_contentRect_px_X),
-                        TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H),
+                        TABLET_pixel2Screen_X(SCREEN_contentRect_px_X + (0.5 * SCREEN_contentRect_px_W)),
+                        TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y + (0.5 * SCREEN_contentRect_px_H)),
                         (TABLET_pixel2Screen_W(SCREEN_contentRect_px_W)/2),
                         (TABLET_pixel2Screen_H(SCREEN_contentRect_px_H)/2)
-                    )]
+                    )],
+                    [ARR_2(1,0)]
                 )] call FUNC(onLoadVideoDisplayFrame);
             );
 
@@ -298,6 +308,29 @@ class GVARMAIN(Tablet_dlg){
                     y = QUOTE(0);
                     w = QUOTE((TABLET_pixel2Screen_W(SCREEN_contentRect_px_W))/2);
                     h = QUOTE((TABLET_pixel2Screen_H(SCREEN_contentRect_px_W)/2)/(4/3));
+                };
+                class cTabHCamIcon1: cTab_RscPicture {
+                    idc = IDC_CTAB_HCAMICON1;
+                    text = "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa";
+                    //text = "#(rgb,8,8,3)color(0,1,0,0.5)"; // necessary?
+                };
+                class cTabHCamIcon2: cTab_RscText {
+                    idc = IDC_CTAB_HCAMICON2;
+                    text = "132456789";
+                    //text = "#(rgb,8,8,3)color(0,1,0,0.5)"; // necessary?
+                };
+                class cTabHCamIcon3: cTab_RscText {
+                    idc = IDC_CTAB_HCAMICON3;
+                    text = "Name Nameson";
+                    //text = "#(rgb,8,8,3)color(0,1,0,0.5)"; // necessary?
+                };
+                class cTabHCamControlLayer: cTab_RscPicture {
+                    idc = IDC_CTAB_HCAMCONTROLLAYER;
+                    //text = "#(rgb,8,8,3)color(0,1,0,0.5)"; // necessary?
+                    x = QUOTE(0);
+                    y = QUOTE(0);
+                    w = QUOTE((TABLET_pixel2Screen_W(SCREEN_contentRect_px_W))/2);
+                    h = QUOTE((TABLET_pixel2Screen_H(SCREEN_contentRect_px_W)/2)/(4/3));
 
                     onLoad = QUOTE(call FUNC(onLoadVideoDisplay));
                 };
@@ -306,9 +339,9 @@ class GVARMAIN(Tablet_dlg){
                     text = "<<";
                 };
             };
-         };
+        };
         // ---------- MESSAGING -----------
-         class MESSAGE: cTab_RscControlsGroup {
+        class MESSAGE: cTab_RscControlsGroup {
             idc = IDC_CTAB_GROUP_MESSAGE;
             x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X));
             y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y));
@@ -409,14 +442,14 @@ class GVARMAIN(Tablet_dlg){
         // // ---------- FULLSCREEN HCAM -----------
         class cTabHcamFull: cTab_RscPicture {
             idc = IDC_CTAB_HCAM_FULL;
-            text = "#(argb,1024,1024,1)r2t(helmetCamFullRenderTarget,1)";
+            text = "#(argb,1024,1024,1)r2t(helmetCamFullRenderTarget,2)";
             x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X));
             y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y));
             w = QUOTE(TABLET_pixel2Screen_W(SCREEN_contentRect_px_W));
             h = QUOTE(TABLET_pixel2Screen_H(SCREEN_contentRect_px_H));
 
             onLoad = QUOTE(call FUNC(onLoadVideoDisplay));
-         };
+        };
         /*
             ### Overlays ###
         */
@@ -512,5 +545,5 @@ class GVARMAIN(Tablet_dlg){
             action = QUOTE(_null = [] call FUNC(caseButtonsOnACTButton););
             tooltip = "";
         };
-     };
+    };
 };

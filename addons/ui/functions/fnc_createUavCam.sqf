@@ -45,8 +45,7 @@ if !(alive _uav) exitWith {false};
 {
     _x params ["_seat", "_renderTargetName", "_videoImage"];
     if(_videoImage isEqualTo controlNull) then { continue };
-    // check existing cameras
-    _cam = objNull;
+
     private _camPosMemPt = "";
     private _camDirMemPt = "";
     
@@ -63,7 +62,7 @@ if !(alive _uav) exitWith {false};
     // If memory points could be retrieved, create camera
     if ((_camPosMemPt != "") && (_camDirMemPt != "")) then {
         private _cam = "camera" camCreate [0,0,0];
-        _cam attachTo [_uav,[0,0,0],_camPosMemPt];
+        _cam attachTo [_uav, [0,0,0], _camPosMemPt, true];
         // set up cam on render target
         _cam cameraEffect ["INTERNAL","BACK",_renderTargetName];
         private _turretPath = if (_seat == 1) then {
@@ -80,7 +79,7 @@ if !(alive _uav) exitWith {false};
             [-1]
         };
         _cam camCommit 0;
-        private _newCam = [_uav,_renderTargetName,_cam,_videoImage,_camPosMemPt,_camDirMemPt, _turretPath];
+        private _newCam = [_uav,_renderTargetName,_cam,_videoImage];
         GVAR(uAVcamsData) pushBack _newCam;
 
         _videoImage ctrlEnable true;
@@ -102,20 +101,18 @@ if !(GVAR(uAVcamsData) isEqualTo []) exitWith {
             {
                 private _removedUAVs = [];
                 {
-                    _x params  ["_uav","_renderTargetName","_cam","_videoImage", "_camPosMemPt","_camDirMemPt", "_turretPath"];
+                    _x params  ["_uav","_renderTargetName","_cam","_videoImage", "_camPosMemPt","_camDirMemPt"];
 
                     if(ctrlShown _videoImage) then {
                         if (alive _uav) then {
                             private _fov = _uav getVariable [QGVAR(targetFovHash),0.75];
                             _cam camSetFov _fov;
-                            private _dir = (_uav selectionPosition (_camPosMemPt)) vectorFromTo (_uav selectionPosition (_camDirMemPt));
-                            _cam setVectorDirAndUp [_dir,_dir vectorCrossProduct [-(_dir select 1), _dir select 0, 0]];
-                            //private _visionMode = _uav currentVisionMode _turretPath;
+
                             private _visionModes = _uav getVariable [QGVAR(visionModes), [[0,0]]];
                             private _currentVisionMode = _uav getVariable [QGVAR(currentVisionMode), 0];
                             private _visionMode = _visionModes # _currentVisionMode;
-                            //diag_log format["Setting new vision mode on renderTarget (%1): %2", _renderTargetName, [_visionMode # 0, _visionMode # 1]];
                             _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
+
                             _cam camCommit 0.1;
                         } else {
                             _removedUAV pushBack _cam;

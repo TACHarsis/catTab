@@ -22,8 +22,12 @@
 #define IDC_CTAB_HCAMMAP                1220
 #define IDC_CTAB_HCAMLIST               1221
 #define IDC_CTAB_HCAMDISPLAY            1222
-#define IDC_CTAB_HCAMDISPLAYBG          1223
-#define IDC_CTAB_HCAMDISPLAYBUTTON      1224
+#define IDC_CTAB_HCAMCONTROLLAYER       1223
+#define IDC_CTAB_HCAMICON1              1224
+#define IDC_CTAB_HCAMICON2              1225
+#define IDC_CTAB_HCAMICON3              1226
+#define IDC_CTAB_HCAMDISPLAYBG          1227
+#define IDC_CTAB_HCAMDISPLAYBUTTON      1228
 #define IDC_CTAB_HCAM_FULL              1230
 
 #define IDC_CTAB_BTNF1                  1600
