@@ -15,7 +15,7 @@ private _indices = lbSelection _plrLBctrl;
 if (_indices isEqualTo []) exitWith {false};
 
 private _time = call EFUNC(core,currentTime);
-private _msgTitle = format ["%1 - %2:%3 (%4)",_time,groupId group Ctab_player,[Ctab_player] call CBA_fnc_getGroupIndex,name Ctab_player];
+private _msgTitle = format ["%1 - %2:%3 (%4)",_time,groupId group Ctab_player,groupId Ctab_player,name Ctab_player];
 private _msgBody = ctrlText _msgBodyctrl;
 if (_msgBody isEqualTo "") exitWith {false};
 private _recipientNames = "";
@@ -29,7 +29,7 @@ private _recipientNames = "";
     
     if !(IsNull _recip) then {
         if (_recipientNames isEqualTo "") then {
-            _recipientNames = format ["%1:%2 (%3)",groupId group _recip,[_recip] call CBA_fnc_getGroupIndex,name _recip];
+            _recipientNames = format ["%1:%2 (%3)",groupId group _recip,groupId _recip,name _recip];
         } else {
             _recipientNames = format ["%1; %2",_recipientNames,name _recip];
         };

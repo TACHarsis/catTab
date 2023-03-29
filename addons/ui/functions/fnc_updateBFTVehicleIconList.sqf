@@ -12,7 +12,7 @@ GVAR(bftVehicleIcons) = [];
         _name = _customName;
     } else {
         if (group _x == _playerGroup) then {
-            _groudIdx = str([_x] call CBA_fnc_getGroupIndex)
+            _groudIdx = str(groupId _x)
         };
         _name = groupID group _x;
     };

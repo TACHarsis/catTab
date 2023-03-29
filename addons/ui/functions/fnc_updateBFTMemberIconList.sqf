@@ -3,5 +3,5 @@
 params ["_bftMemberList"];
 GVAR(bftMemberIcons) = [];
 {
-    GVAR(bftMemberIcons) pushBack [_x,_x call EFUNC(ui,getInfMarkerIcon),"",name _x,str([_x] call CBA_fnc_getGroupIndex)];
+    GVAR(bftMemberIcons) pushBack [_x,_x call EFUNC(ui,getInfMarkerIcon),"",name _x,str(groupId _x)];
 } foreach _bftMemberList;

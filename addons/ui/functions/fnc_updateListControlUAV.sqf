@@ -22,7 +22,7 @@ if (_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
     _UAVListCtrl lbSetData [_deselectIndex, ""];
     {
         if !((crew _x isEqualTo [])) then {
-            private _index = _UAVListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,getText (configfile >> "cfgVehicles" >> typeOf _x >> "displayname")];
+            private _index = _UAVListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,groupId _x,getText (configfile >> "cfgVehicles" >> typeOf _x >> "displayname")];
             _UAVListCtrl lbSetData [_index, _x call BIS_fnc_netId];
         };
     } foreach GVARMAIN(UAVList);

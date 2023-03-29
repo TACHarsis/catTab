@@ -21,7 +21,7 @@ if (_mode isEqualTo QSETTING_MODE_CAM_HELMET) then {
     private _deselectIndex = _hcamListCtrl lbAdd format ["*DESELECT"];
     _hcamListCtrl lbSetData [_deselectIndex, ""];
     {
-        private _index = _hcamListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,name _x];
+        private _index = _hcamListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,groupId _x,name _x];
         _hcamListCtrl lbSetData [_index,_x call BIS_fnc_netId];
     } foreach GVARMAIN(hCamList);
 

@@ -38,7 +38,7 @@ uiNamespace setVariable [QGVAR(msgPlayerList), _plrList];
 
 {
     if ((side _x in _validSides) && {isPlayer _x} && {[_x,["ItemcTab","ItemAndroid"]] call EFUNC(core,checkGear)}) then {
-        private _index = _plrlistControl lbAdd format ["%1:%2 (%3)",groupId group _x,[_x] call CBA_fnc_getGroupIndex,name _x];
+        private _index = _plrlistControl lbAdd format ["%1:%2 (%3)",groupId group _x,groupId _x,name _x];
         _plrlistControl lbSetData [_index,str _x];
     };
 } foreach _plrList;
