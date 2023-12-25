@@ -1,7 +1,5 @@
-#include "script_component.hpp"
-#include "cTab_defines.hpp"
-
 class MainSubmenu: cTab_RscControlsGroup {
+    #undef cTab_MENU_MAX_ELEMENTS
     #ifndef cTab_IS_TABLET
         #define cTab_MENU_MAX_ELEMENTS 4
     #else
@@ -77,6 +75,7 @@ class MainSubmenu: cTab_RscControlsGroup {
 };
 
 class EnemySub1: cTab_RscControlsGroup {
+    #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 9
     idc = 3301;
     x = QUOTE(MENU_X);
@@ -188,6 +187,7 @@ class EnemySub1: cTab_RscControlsGroup {
 };
 
 class EnemySub2: cTab_RscControlsGroup {
+    #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 8
     idc = 3303;
     x = QUOTE(MENU_X);
@@ -286,6 +286,7 @@ class EnemySub2: cTab_RscControlsGroup {
 };
 
 class EnemySub3: cTab_RscControlsGroup {
+    #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 10
     idc = 3304;
     x = QUOTE(MENU_X);
@@ -403,6 +404,7 @@ class EnemySub3: cTab_RscControlsGroup {
 };
 
 class EnemySub4: cTab_RscControlsGroup {
+    #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 8
     idc = 3307;
     x = QUOTE(MENU_X);
@@ -501,6 +503,7 @@ class EnemySub4: cTab_RscControlsGroup {
 };
 
 class CasulSub1: cTab_RscControlsGroup {
+    #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 5
     idc = 3305;
     x = QUOTE(MENU_X);
@@ -573,6 +576,7 @@ class CasulSub1: cTab_RscControlsGroup {
 };
 
 class GenSub1: cTab_RscControlsGroup {
+    #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 3
     idc = 3306;
     x = QUOTE(MENU_X);

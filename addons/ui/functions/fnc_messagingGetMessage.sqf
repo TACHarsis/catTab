@@ -21,6 +21,6 @@ if (_msgState == 0) then {
 [] call FUNC(messagingLoadGUI);
 
 private _txtControl = _display displayCtrl IDC_CTAB_MSG_CONTENT;
-_txtControl ctrlSetText  _msgtxt;
+_txtControl ctrlSetText _msgtxt;
 
 _return

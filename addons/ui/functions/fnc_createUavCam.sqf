@@ -1,124 +1,121 @@
 #include "script_component.hpp"
+#include "..\devices\shared\cTab_defines.hpp"
 /*
     Name: Ctab_ui_fnc_createUavCam
     
     Author(s):
-        Gundy
+        Gundy, Cat Harsis
 
     Description:
         Set up UAV camera and display on supplied render target
         Modified to include lessons learned from KK's excellent tutorial: http://killzonekid.com/arma-scripting-tutorials-uav-r2t-and-pip/
     
     Parameters:
-        0: STRING - Name of UAV (format used from `str uavObject`)
-        1: ARRAY  - List of arrays with seats with render targets
-            0: INTEGER - Seat
-                0 = DRIVER
-                1 = GUNNER
-            1: STRING  - Name of render target
+        0: OBJECT - UAV
+        1: INTEGER - Camera Index
     
     Returns:
         BOOLEAN - If UAV cam could be set up or not
     
     Example:
-        [str _uavVehicle,[[0,"uavDriverRenderTarget"],[1,"uavGunnerRenderTarget"]]] call Ctab_ui_fnc_createUavCam;
+        [_uavVehicle, 0] call Ctab_ui_fnc_createUavCam;
 */
-params ["_data","_uavCams"];
 
-#include "..\devices\shared\cTab_defines.hpp"
+params [["_uav", objNull, [objNull]], ["_camID", "", [""]]];
 
-private _uav = objNull;
-// see if given UAV name is still in the list of valid UAVs
-{
-    if (_data isEqualTo _x) exitWith {_uav = _x;};
-} foreach GVARMAIN(UAVList);
+if(_camID isEqualTo "") exitWith {false};
 
-// remove exisitng UAV cameras
-[] call FUNC(deleteUAVcam);
+private _camSetting = GVAR(uavCamSettings) getOrDefault [_camID, []];
+if(_camSetting isEqualTo []) exitWith {false};
+_camSetting params ["_camIdx", "_settingsName", "_uavNetID", "_idc"];
 
-// exit if requested UAV could not be found
-if (isNull _uav) exitWith {false};
+private _uavFrameCtrls = uiNamespace getVariable [QGVAR(UAVFrameCtrls), []];
+// if(count _uavFrameCtrls <= _camIdx) exitWith {false};
 
-// exit if requested UAV is not alive
+// also does null-check
 if !(alive _uav) exitWith {false};
 
-{
-    _x params ["_seat", "_renderTargetName", "_videoImage"];
-    if(_videoImage isEqualTo controlNull) then { continue };
+// exit if requested UAV could not be found
+if(!(_uav in GVARMAIN(UAVList))) exitWith {false};
+private _frameCtrls = _uavFrameCtrls # _camIdx;
+_frameCtrls params ["_frameGrp", "", "_videoCtrl"];
+private _videoControllerCtrl = _frameGrp getVariable [QGVAR(videoController), controlNull];
 
-    private _camPosMemPt = "";
-    private _camDirMemPt = "";
-    
-    private _seatName = switch (_seat) do {
-        case (0) : {"Driver"};
-        case (1) : {"Gunner"};
-        default {""};
-    };
-    if (_seatName != "") then {
-        // retrieve memory point names from vehicle config
-        _camPosMemPt = getText (configFile >> "CfgVehicles" >> typeOf _uav >> "uavCamera" + _seatName + "Pos");
-        _camDirMemPt = getText (configFile >> "CfgVehicles" >> typeOf _uav >> "uavCamera" + _seatName + "Dir");
-    };
-    // If memory points could be retrieved, create camera
-    if ((_camPosMemPt != "") && (_camDirMemPt != "")) then {
-        private _cam = "camera" camCreate [0,0,0];
-        _cam attachTo [_uav, [0,0,0], _camPosMemPt, true];
-        // set up cam on render target
-        _cam cameraEffect ["INTERNAL","BACK",_renderTargetName];
-        private _turretPath = if (_seat == 1) then {
-            //private _visionMode = _uav currentVisionMode [];
-            private _visionMode = [0,0];
-            _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
-            _cam camSetFov 0.1; // set zoom
-            []
-        } else { // driver
-            //private _visionMode = _uav currentVisionMode [-1];
-            private _visionMode = [0,0];
-            _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
-            _cam camSetFov 0.75; // set default zoom
-            [-1]
-        };
-        _cam camCommit 0;
-        private _newCam = [_uav,_renderTargetName,_cam,_videoImage];
-        GVAR(uAVcamsData) pushBack _newCam;
+if(_videoControllerCtrl isEqualTo controlNull) exitWith {false};
+if(_videoCtrl isEqualTo controlNull) exitWith {false};
+private _renderTargetName = _videoCtrl getVariable [QGVAR(renderTargetName), ""];
 
-        _videoImage ctrlEnable true;
-        _videoImage setVariable [QGVAR(cameraTarget), _uav];
-        _videoImage setVariable [QGVAR(cameraTargetType), "UAV"];
-        private _visionModes = _uav getVariable [QGVAR(visionModes), [[0,0],[1,0],[2,0]]];
-        private _currentVisionMode = _uav getVariable [QGVAR(currentVisionMode), 0];
-        _uav setVariable [QGVAR(visionModes), _visionModes];
-        _uav setVariable [QGVAR(currentVisionMode), _currentVisionMode];
-        private _fov = _uav getVariable [QGVAR(targetFovHash),0.75];
-        _uav setVariable [QGVAR(targetFovHash),_fov];
-    };
-} foreach _uavCams;
+private _existingTarget = _videoControllerCtrl getVariable [QGVAR(cameraTarget), objNull];
+if(!isNull _existingTarget && _existingTarget == _uav) exitWith {true};
+
+// now that all checks have passed, remove existing UAV camera
+[_camID] call FUNC(deleteUAVcam);
+
+private _content = _frameGrp getVariable [QGVAR(content), []];
+private _nameTextCtrl = _content # 1 # 0;
+
+// retrieve memory point name from vehicle config
+private _config = (configFile >> "CfgVehicles" >> typeOf _uav);
+private _camPosMemPt = getText (_config >> "uavCameraGunnerPos");
+private _camDirMemPt = getText (_config >> "uavCameraGunnerDir");
+
+// If memory points could be retrieved, create camera
+if (_camPosMemPt isNotEqualTo "" && {_camDirMemPt isNotEqualTo ""}) then {
+    private _cam = "camera" camCreate [0, 0,0 ];
+    _cam attachTo [_uav, [0, 0, 0], _camPosMemPt, true];
+    // set up cam on render target
+    _cam cameraEffect ["INTERNAL", "BACK", _renderTargetName];
+    //private _turretPath = [];
+    //private _visionMode = _uav currentVisionMode [];
+    private _visionMode = [0, 0];
+    _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
+    _cam camSetFov 0.1; // set zoom
+    _cam camCommit 0;
+    private _newCam = [_camID, _uav, _renderTargetName, _cam, _frameGrp];
+    GVAR(UAVCamsData) set [_camID, _newCam];
+
+    _videoControllerCtrl ctrlEnable true;
+    _videoControllerCtrl setVariable [QGVAR(cameraTarget), _uav];
+    _videoControllerCtrl setVariable [QGVAR(cameraTargetType), "UAV"];
+    private _visionModes = _uav getVariable [QGVAR(visionModes), [[0, 0], [1, 0], [2, 0]]];
+    private _currentVisionMode = _uav getVariable [QGVAR(currentVisionMode), 0];
+    _uav setVariable [QGVAR(visionModes), _visionModes];
+    _uav setVariable [QGVAR(currentVisionMode), _currentVisionMode];
+    private _fov = _uav getVariable [QGVAR(targetFovHash), 0.75];
+    _uav setVariable [QGVAR(targetFovHash), _fov];
+
+    //_nameTextCtrl ctrlSetText (name _uav);
+    _nameTextCtrl ctrlSetText (getText (configfile >> "cfgVehicles" >> typeOf _uav >> "displayname"));
+};
 
 // set up event handler
-if !(GVAR(uAVcamsData) isEqualTo []) exitWith {
+if (count GVAR(UAVCamsData) > 0) exitWith {
     if (isNil QGVAR(uavEventHandle)) then {
         GVAR(uavEventHandle) = [
             {
                 private _removedUAVs = [];
                 {
-                    _x params  ["_uav","_renderTargetName","_cam","_videoImage", "_camPosMemPt","_camDirMemPt"];
+                    if(count _y == 0) then { continue; };
 
-                    if(ctrlShown _videoImage) then {
+                    _y params ["_camID", "_uav","_renderTargetName","_cam","_frameGrp"];
+
+                    if(ctrlShown _frameGrp) then {
                         if (alive _uav) then {
-                            private _fov = _uav getVariable [QGVAR(targetFovHash),0.75];
+                            private _fov = _uav getVariable [QGVAR(targetFovHash), 0.75];
                             _cam camSetFov _fov;
 
-                            private _visionModes = _uav getVariable [QGVAR(visionModes), [[0,0]]];
+                            private _visionModes = _uav getVariable [QGVAR(visionModes), [[0, 0]]];
                             private _currentVisionMode = _uav getVariable [QGVAR(currentVisionMode), 0];
                             private _visionMode = _visionModes # _currentVisionMode;
                             _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
+                            //TODO: Set the mode on the actual drone with setTurretOpticsMode? Will need a dirty flag so it doesn't just get overridden all the time
 
                             _cam camCommit 0.1;
                         } else {
-                            _removedUAV pushBack _cam;
+                            _removedUAVs pushBack _camID;
                         };
                     };
-                } foreach GVAR(uAVcamsData);
+                } foreach GVAR(UAVCamsData);
                 {
                     [_x] call FUNC(deleteUAVcam);
                 } foreach _removedUAVs;
@@ -126,5 +123,7 @@ if !(GVAR(uAVcamsData) isEqualTo []) exitWith {
             0
         ] call CBA_fnc_addPerFrameHandler;
     };
-    [QGVARMAIN(Tablet_dlg),[[QSETTING_CAM_UAV,_uav call BIS_fnc_netId]]] call FUNC(setSettings);
+    //[QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV, _uav call BIS_fnc_netId]]] call FUNC(setSettings); // that just sets what has been set to call this?!
 };
+
+true

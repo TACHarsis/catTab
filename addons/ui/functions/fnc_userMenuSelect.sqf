@@ -63,7 +63,9 @@ switch (_type) do {
 };
 
 // Hide all menu controls
-{ctrlShow [_x,false];} foreach [IDC_CTAB_MARKER_MENU_MAIN,3301,3302,3303,3304,3305,3306,3307];
+{
+    ctrlShow [_x,false];
+} foreach [IDC_CTAB_MARKER_MENU_MAIN, 3301, 3303, 3304, 3305, 3306, 3307];
 
 // Bring the menu control we want to show into position and show it
 if (_idcToShow != 0) then {

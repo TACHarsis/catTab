@@ -1,13 +1,16 @@
-#include "script_component.hpp"
-
+#undef CUSTOM_GRID_WAbs
+#undef CUSTOM_GRID_HAbs
+#undef CUSTOM_GRID_X
+#undef CUSTOM_GRID_Y
 #define CUSTOM_GRID_WAbs    (safezoneW)
 #define CUSTOM_GRID_HAbs    (CUSTOM_GRID_WAbs * 4/3)
-#define CUSTOM_GRID_X    (safezoneX + (safezoneW - CUSTOM_GRID_WAbs) / 2)
-#define CUSTOM_GRID_Y    (safezoneY + (safezoneH - CUSTOM_GRID_HAbs) / 2)
+#define CUSTOM_GRID_X       (safezoneX + (safezoneW - CUSTOM_GRID_WAbs) / 2)
+#define CUSTOM_GRID_Y       (safezoneY + (safezoneH - CUSTOM_GRID_HAbs) / 2)
 
 #include "cTab_FBCB2_controls.hpp"
 #include "..\shared\cTab_defines.hpp"
 
+#undef MENU_sizeEx
 #define MENU_sizeEx FBCB2_pixel2Screen_H(OSD_elementBase_textSize_px)
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
@@ -49,17 +52,17 @@ class GVARMAIN(FBCB2_dlg){
             alphaFadeEndScale = 10;
 
             // Rendering density coefficients
-            ptsPerSquareSea = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // seas
-            ptsPerSquareTxt = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // textures
-            ptsPerSquareCLn = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // count-lines
-            ptsPerSquareExp = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // exposure
-            ptsPerSquareCost = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // cost
+            ptsPerSquareSea = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // seas
+            ptsPerSquareTxt = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // textures
+            ptsPerSquareCLn = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // count-lines
+            ptsPerSquareExp = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // exposure
+            ptsPerSquareCost = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // cost
 
             // Rendering thresholds
-            ptsPerSquareFor = QUOTE( 3 / (0.86 / CUSTOM_GRID_HAbs));        // forests
-            ptsPerSquareForEdge = QUOTE( 100 / (0.86 / CUSTOM_GRID_HAbs));    // forest edges
-            ptsPerSquareRoad = QUOTE( 1.5 / (0.86 / CUSTOM_GRID_HAbs));        // roads
-            ptsPerSquareObj = QUOTE( 4 / (0.86 / CUSTOM_GRID_HAbs));        // other objects
+            ptsPerSquareFor = QUOTE(3 / (0.86 / CUSTOM_GRID_HAbs));        // forests
+            ptsPerSquareForEdge = QUOTE(100 / (0.86 / CUSTOM_GRID_HAbs));    // forest edges
+            ptsPerSquareRoad = QUOTE(1.5 / (0.86 / CUSTOM_GRID_HAbs));        // roads
+            ptsPerSquareObj = QUOTE(4 / (0.86 / CUSTOM_GRID_HAbs));        // other objects
         };
         class screenTopo: screen {
             idc = IDC_CTAB_SCREEN_TOPO;
@@ -99,7 +102,7 @@ class GVARMAIN(FBCB2_dlg){
                     w = QUOTE(FBCB2_pixel2Screen_W(SCREEN_messages_read_frame_px_W));
                     h = QUOTE(FBCB2_pixel2Screen_H(SCREEN_messages_read_frame_px_H));
                 };
-                class msgListbox: cTab_RscListbox_FBCB2 {
+                class msgListbox: cTab_RscListBox_FBCB2 {
                     idc = IDC_CTAB_MSG_LIST;
                     style = LB_MULTI;
                     x = QUOTE(FBCB2_pixel2GroupRect_X(SCREEN_messages_read_list_px_X));
@@ -128,7 +131,7 @@ class GVARMAIN(FBCB2_dlg){
                     w = QUOTE(FBCB2_pixel2Screen_W(SCREEN_messages_compose_frame_px_W));
                     h = QUOTE(FBCB2_pixel2Screen_H(SCREEN_messages_compose_frame_px_H));
                 };
-                class playerlistbox: cTab_RscListbox_FBCB2 {
+                class playerlistbox: cTab_RscListBox_FBCB2 {
                     idc = IDC_CTAB_MSG_RECIPIENTS;
                     style = LB_MULTI;
                     x = QUOTE(FBCB2_pixel2GroupRect_X(SCREEN_messages_compose_list_px_X));

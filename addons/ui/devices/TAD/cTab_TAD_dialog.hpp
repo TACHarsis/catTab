@@ -1,15 +1,19 @@
-#include "script_component.hpp"
-
+#undef CUSTOM_GRID_WAbs
+#undef CUSTOM_GRID_HAbs
+#undef CUSTOM_GRID_X
+#undef CUSTOM_GRID_Y
 #define CUSTOM_GRID_WAbs    (safezoneH * 0.8 * 3/4)
 #define CUSTOM_GRID_HAbs    (safezoneH * 0.8)
-#define CUSTOM_GRID_X    (safezoneX + (safezoneW - safezoneH * 0.8 * 3/4) / 2)
-#define CUSTOM_GRID_Y    (safezoneY + 0.1 * safezoneH)
+#define CUSTOM_GRID_X       (safezoneX + (safezoneW - safezoneH * 0.8 * 3/4) / 2)
+#define CUSTOM_GRID_Y       (safezoneY + 0.1 * safezoneH)
 
+#undef cTab_TAD_DLGtoDSP_fctr
 #define cTab_TAD_DLGtoDSP_fctr (0.86 / CUSTOM_GRID_HAbs)
 
 #include "cTab_TAD_controls.hpp"
 #include "..\shared\cTab_defines.hpp"
 
+#undef MENU_sizeEx
 #define MENU_sizeEx TAD_pixel2Screen_H(OSD_text_size_base_px)
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
@@ -110,12 +114,12 @@ class GVARMAIN(TAD_dlg) {
         };
         class btnBrtInc: cTab_RscButton_TAD_BRT_INC {
             idc = 18;
-            action = QUOTE([ARR_2(QQGVARMAIN(TAD_dlg), 0.1)]  call FUNC(caseButtonsAdjustBrightness););
+            action = QUOTE([ARR_2(QQGVARMAIN(TAD_dlg),0.1)]  call FUNC(caseButtonsAdjustBrightness););
             tooltip = "Increase Brightness";
         };
         class btnBrtDec: cTab_RscButton_TAD_BRT_DEC {
             idc = 19;
-            action = QUOTE([ARR_2(QQGVARMAIN(TAD_dlg), -0.1)] call FUNC(caseButtonsAdjustBrightness););
+            action = QUOTE([ARR_2(QQGVARMAIN(TAD_dlg),-0.1)] call FUNC(caseButtonsAdjustBrightness););
             tooltip = "Decrease Brightness";
         };
         class btnfunction: cTab_RscButton_TAD_OSB10 {

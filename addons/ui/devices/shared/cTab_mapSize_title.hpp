@@ -1,5 +1,3 @@
-#include "script_component.hpp"
-#include "cTab_defines.hpp"
 // cTab - Commander's Tablet with FBCB2 Blue Force Tracking
 // Battlefield tablet to access real time intel and blue force tracker.
 // By - Gundy
@@ -29,15 +27,15 @@ class GVAR(mapSize_dsp){
             maxSatelliteAlpha = 0; // make the map topographical
 
             // basically prevent that anything gets rendered as its not required
-            ptsPerSquareSea = QUOTE( 10000);
-            ptsPerSquareTxt = QUOTE( 10000);
-            ptsPerSquareCLn = QUOTE( 10000);
-            ptsPerSquareExp = QUOTE( 10000);
-            ptsPerSquareCost = QUOTE( 10000);
-            ptsPerSquareFor = QUOTE( 10000);
-            ptsPerSquareForEdge = QUOTE( 10000);
-            ptsPerSquareRoad = QUOTE( 10000);
-            ptsPerSquareObj = QUOTE( 10000);
+            ptsPerSquareSea = QUOTE(10000);
+            ptsPerSquareTxt = QUOTE(10000);
+            ptsPerSquareCLn = QUOTE(10000);
+            ptsPerSquareExp = QUOTE(10000);
+            ptsPerSquareCost = QUOTE(10000);
+            ptsPerSquareFor = QUOTE(10000);
+            ptsPerSquareForEdge = QUOTE(10000);
+            ptsPerSquareRoad = QUOTE(10000);
+            ptsPerSquareObj = QUOTE(10000);
         };
     };
 };

@@ -1,10 +1,13 @@
-#include "script_component.hpp"
-
-#define CUSTOM_GRID_X    (safezoneX + (safezoneW - safezoneH * 0.8 * 3/4) / 2)
-#define CUSTOM_GRID_Y    (safezoneY + 0.1 * safezoneH)
+#undef CUSTOM_GRID_WAbs
+#undef CUSTOM_GRID_HAbs
+#undef CUSTOM_GRID_X
+#undef CUSTOM_GRID_Y
+#define CUSTOM_GRID_X       (safezoneX + (safezoneW - safezoneH * 0.8 * 3/4) / 2)
+#define CUSTOM_GRID_Y       (safezoneY + 0.1 * safezoneH)
 #define CUSTOM_GRID_WAbs    (safezoneH * 0.8 * 3/4)
 #define CUSTOM_GRID_HAbs    (safezoneH * 0.8)
 
+#undef cTab_microDAGR_DLGtoDSP_fctr
 #define cTab_microDAGR_DLGtoDSP_fctr (0.86 / CUSTOM_GRID_HAbs)
 
 #include "cTab_microDAGR_controls.hpp"

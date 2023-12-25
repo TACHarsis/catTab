@@ -101,7 +101,8 @@ GVAR(mapToolsRangeFormatThreshold) = 750;
 
 // Base defines.
 GVAR(uavViewActive) = false;
-GVAR(uAVcamsData) = [];
+GVAR(UAVCamsData) = createHashMap;
+GVAR(HelmetCamsData) = createHashMap;
 GVAR(cursorOnMap) = false;
 GVAR(mapCursorPos) = [0,0];
 GVAR(mapWorldPos) = [];
@@ -125,14 +126,35 @@ GVAR(msgReceiveEHID) = [
     FUNC(messagingOnMessageReceived)
 ] call CBA_fnc_addEventHandler;
 
+GVAR(uavCamSettings) = createHashMapFromArray [
+    [QSETTING_CAM_UAV_0, [0, QSETTING_CAM_UAV_0, "", IDC_CTAB_UAV_FRAME_0 + 0]],
+    [QSETTING_CAM_UAV_1, [1, QSETTING_CAM_UAV_1, "", IDC_CTAB_UAV_FRAME_0 + 1]],
+    [QSETTING_CAM_UAV_2, [2, QSETTING_CAM_UAV_2, "", IDC_CTAB_UAV_FRAME_0 + 2]],
+    [QSETTING_CAM_UAV_3, [3, QSETTING_CAM_UAV_3, "", IDC_CTAB_UAV_FRAME_0 + 3]],
+    [QSETTING_CAM_UAV_4, [4, QSETTING_CAM_UAV_4, "", IDC_CTAB_UAV_FRAME_0 + 4]],
+    [QSETTING_CAM_UAV_5, [5, QSETTING_CAM_UAV_5, "", IDC_CTAB_UAV_FRAME_0 + 5]],
+    [QSETTING_CAM_UAV_FULL, [-1, QSETTING_CAM_UAV_FULL, "", IDC_CTAB_UAVGUNNER_FULL]]
+];
+
+GVAR(helmetCamSettings) = createHashMapFromArray [
+    [QSETTING_CAM_HCAM_0, [0, QSETTING_CAM_HCAM_0, "", IDC_CTAB_HCAM_FRAME_0 + 0]],
+    [QSETTING_CAM_HCAM_1, [1, QSETTING_CAM_HCAM_1, "", IDC_CTAB_HCAM_FRAME_0 + 1]],
+    [QSETTING_CAM_HCAM_2, [2, QSETTING_CAM_HCAM_2, "", IDC_CTAB_HCAM_FRAME_0 + 2]],
+    [QSETTING_CAM_HCAM_3, [3, QSETTING_CAM_HCAM_3, "", IDC_CTAB_HCAM_FRAME_0 + 3]],
+    [QSETTING_CAM_HCAM_4, [4, QSETTING_CAM_HCAM_4, "", IDC_CTAB_HCAM_FRAME_0 + 4]],
+    [QSETTING_CAM_HCAM_5, [5, QSETTING_CAM_HCAM_5, "", IDC_CTAB_HCAM_FRAME_0 + 5]],
+    [QSETTING_CAM_HCAM_FULL, [-1, QSETTING_CAM_HCAM_FULL, "", IDC_CTAB_HCAM_FULL]]
+];
+
+GVAR(uavCamSettingsNames) = [QSETTING_CAM_UAV_0, QSETTING_CAM_UAV_1, QSETTING_CAM_UAV_2, QSETTING_CAM_UAV_3, QSETTING_CAM_UAV_4, QSETTING_CAM_UAV_5];
+GVAR(helmetCamSettingsNames) = [QSETTING_CAM_HCAM_0, QSETTING_CAM_HCAM_1, QSETTING_CAM_HCAM_2, QSETTING_CAM_HCAM_3, QSETTING_CAM_HCAM_4, QSETTING_CAM_HCAM_5];
+
 GVAR(currentUAV) = objNull;
+GVAR(currentHelmet) = objNull;
 GVAR(trackCurrentUAV)= false;
 GVAR(trackCurrentHCam) = false;
 
 GVAR(notificationCache) = [];
-
-[] call FUNC(initSettings);
-
 
 GVAR(bftMemberIcons) = [];
 GVAR(bftMemberListUpdateEHID) = [
@@ -164,6 +186,11 @@ GVAR(currentUAVChangedEHID) = [
 
 GVAR(helmetCamListUpdateEHID) = [
     QEGVAR(core,helmetCamListUpdate),
+    FUNC(updateListControlHelmetCams)
+] call CBA_fnc_addEventHandler;
+
+GVAR(currentHelmetChangedEHID) = [
+    QGVAR(HelmetSelected),
     FUNC(updateListControlHelmetCams)
 ] call CBA_fnc_addEventHandler;
 

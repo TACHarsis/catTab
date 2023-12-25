@@ -1,5 +1,3 @@
-#include "script_component.hpp"
-
 #include "shared\cTab_defines.hpp"
 #include "shared\cTab_base_gui_classes.hpp"
 

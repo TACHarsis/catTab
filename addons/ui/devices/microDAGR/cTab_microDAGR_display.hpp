@@ -1,12 +1,21 @@
-#define GUI_MARGIN_X    (-0.05)
-#define GUI_MARGIN_Y    (0.2)
-#define GUI_microDAGR_W    (0.86)
-#define GUI_microDAGR_H    (0.86)
+#undef GUI_MARGIN_X
+#undef GUI_MARGIN_Y
+#undef GUI_TAD_W
+#undef GUI_TAD_H
+#define GUI_MARGIN_X        (-0.05)
+#define GUI_MARGIN_Y        (0.2)
+#define GUI_microDAGR_W     (0.86)
+#define GUI_microDAGR_H     (0.86)
 
+#undef cTab_microDAGR_DLGtoDSP_fctr
 #define cTab_microDAGR_DLGtoDSP_fctr (1)
 
-#define CUSTOM_GRID_X    (safeZoneX + GUI_MARGIN_X * 3/4)
-#define CUSTOM_GRID_Y    (safeZoneY + safeZoneH - GUI_microDAGR_H - GUI_MARGIN_Y)
+#undef CUSTOM_GRID_WAbs
+#undef CUSTOM_GRID_HAbs
+#undef CUSTOM_GRID_X
+#undef CUSTOM_GRID_Y
+#define CUSTOM_GRID_X       (safeZoneX + GUI_MARGIN_X * 3/4)
+#define CUSTOM_GRID_Y       (safeZoneY + safeZoneH - GUI_microDAGR_H - GUI_MARGIN_Y)
 #define CUSTOM_GRID_WAbs    (GUI_microDAGR_W * 3/4)
 #define CUSTOM_GRID_HAbs    (GUI_microDAGR_H)
 

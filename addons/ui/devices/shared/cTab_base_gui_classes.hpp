@@ -1,10 +1,9 @@
-#include "script_component.hpp"
 // cTab - 15th Commander's Tablet.
 // Battlefield tablet to access real time intel and blue force tracker.
 // By - Riouken
 // http://forums.bistudio.com/member.php?64032-Riouken
 // You may re-use any of this work as long as you provide credit back to me.
-
+//TODO: Fix spaces and layout
 #include "\a3\ui_f\hpp\defineResincl.inc"
 
 // Fonts
@@ -17,12 +16,12 @@
 #define GUI_FONT_SYSTEM         TahomaB
 
 // Colors
-#define COLOR_NEON_GREEN {"57/255","255/255","20/255",1}
-#define COLOR_BLACK {0,0,0,1}
-#define COLOR_WHITE {1,1,1,1}
-#define COLOR_LIGHT_BLUE {0.2,0.431,0.647,1}
+#define COLOR_NEON_GREEN {"57/255", "255/255", "20/255", 1}
+#define COLOR_BLACK {0, 0, 0, 1}
+#define COLOR_WHITE {1, 1, 1, 1}
+#define COLOR_LIGHT_BLUE {"0.2", "0.431", "0.647", 1}
 #define COLOR_TRANSPARENT {0,0,0,0}
-#define COLOR_NAVYBLUE {0,0,"128/255",1}
+#define COLOR_NAVYBLUE {0, 0, "128/255", 1}
 
 ///////////////////////////////////////////////////////////////////////////
 /// Base Classes
@@ -150,9 +149,9 @@ class cTab_RscEdit {
     };
     colorSelection[] =
     {
-        "(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
-        "(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
-        "(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])",
+        "(profilenamespace getvariable ['GUI_BCG_RGB_R', 0.69])",
+        "(profilenamespace getvariable ['GUI_BCG_RGB_G', 0.75])",
+        "(profilenamespace getvariable ['GUI_BCG_RGB_B', 0.5])",
         1
     };
     autocomplete = "";
@@ -344,12 +343,12 @@ class cTab_RscListBox {
         0,
         0.3
     };
-    colorPicture[] = {1,1,1,1};
-    colorPictureDisabled[] = {1,1,1,0.25};
-    colorPictureRight[] = {1,1,1,1};
-    colorPictureRightDisabled[] = {1,1,1,0.25};
-    colorPictureRightSelected[] = {1,1,1,1};
-    colorPictureSelected[] = {1,1,1,1};
+    colorPicture[] = {1, 1, 1, 1};
+    colorPictureDisabled[] = {1, 1, 1, 0.25};
+    colorPictureRight[] = {1, 1, 1, 1};
+    colorPictureRightDisabled[] = {1, 1, 1, 0.25};
+    colorPictureRightSelected[] = {1, 1, 1, 1};
+    colorPictureSelected[] = {1, 1, 1, 1};
     soundSelect[] =
     {
         "\A3\ui_f\data\sound\RscListbox\soundSelect",
@@ -1358,15 +1357,15 @@ class cTab_RscMapControl {
 
     moveOnEdges = 1;
     shadow = 0;
-    ptsPerSquareSea = QUOTE( 5);
-    ptsPerSquareTxt = QUOTE( 3);
-    ptsPerSquareCLn = QUOTE( 10);
-    ptsPerSquareExp = QUOTE( 10);
-    ptsPerSquareCost = QUOTE( 10);
-    ptsPerSquareFor = QUOTE( 9);
-    ptsPerSquareForEdge = QUOTE( 9);
-    ptsPerSquareRoad = QUOTE( 6);
-    ptsPerSquareObj = QUOTE( 9);
+    ptsPerSquareSea = QUOTE(5);
+    ptsPerSquareTxt = QUOTE(3);
+    ptsPerSquareCLn = QUOTE(10);
+    ptsPerSquareExp = QUOTE(10);
+    ptsPerSquareCost = QUOTE(10);
+    ptsPerSquareFor = QUOTE(9);
+    ptsPerSquareForEdge = QUOTE(9);
+    ptsPerSquareRoad = QUOTE(6);
+    ptsPerSquareObj = QUOTE(9);
     showCountourInterval = 0;
     scaleMin = 0.001;
     scaleMax = 1.0;

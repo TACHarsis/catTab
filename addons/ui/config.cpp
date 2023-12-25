@@ -18,6 +18,8 @@ class CfgPatches {
     };
 };
 
+//#pragma hemtt suppress pw3_padded_arg config
+
 #include "CfgEventHandlers.hpp"
 #include "CfgNotifications.hpp"
 #include "devices\devices.hpp"

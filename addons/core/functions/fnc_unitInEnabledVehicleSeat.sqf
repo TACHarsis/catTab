@@ -24,7 +24,7 @@
 */
 
 params ["_unit","_vehicle","_type"];
-
+//TODO: This whole thing is unnecessarily complex and there are now commands to do it better.
 private _return = false;
 
 // Check if vehicle is a parachute, if so, return false

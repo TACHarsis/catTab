@@ -1,4 +1,4 @@
-#include "..\shared\cTab_base_gui_classes.hpp"
+//#include "..\shared\cTab_base_gui_classes.hpp"
 
 // Background definition
 #define FBCB2_BackgroundImage_px_W 2048 // width in pixels
@@ -17,10 +17,17 @@
 #define FBCB2_mapRect_px_H (810)
 
 // Height of header and footer OSD elements
+#undef OSD_header_px_H
+#undef OSD_footer_px_H
 #define OSD_header_px_H (44)
 #define OSD_footer_px_H (0)
 
 // On-screen edge positions (left, right, top, bottom)
+#undef OSD_margin_px
+#undef OSD_edge_px_L
+#undef OSD_edge_px_R
+#undef OSD_edge_px_T
+#undef OSD_edge_px_B
 #define OSD_margin_px (15)
 #define OSD_edge_px_L (OSD_margin_px + SCREEN_contentRect_px_X)
 #define OSD_edge_px_R (-OSD_margin_px + SCREEN_contentRect_px_X + SCREEN_contentRect_px_W)
@@ -28,26 +35,35 @@
 #define OSD_edge_px_B (-OSD_footer_px_H + FBCB2_mapRect_px_Y + FBCB2_mapRect_px_H)
 
 // On-screen element base width and height
+#undef OSD_elementBase_size_px_W
+#undef OSD_elementBase_size_px_H
 #define OSD_elementBase_size_px_W ((SCREEN_contentRect_px_W - OSD_margin_px * 6) / 5)
 #define OSD_elementBase_size_px_H (OSD_header_px_H - OSD_margin_px)
 
 // On-screen element X-coord for left, center and right elements
+#undef OSD_element_left_px_X
+#undef OSD_element_center_px_X
+#undef OSD_element_right_px_X
 #define OSD_element_left_px_X (OSD_edge_px_L)
 #define OSD_element_center_px_X (OSD_edge_px_L + OSD_margin_px + OSD_elementBase_size_px_W)
 #define OSD_element_right_px_X (OSD_edge_px_R - OSD_elementBase_size_px_W)
 
 // On-screen element X-coord for left, center and right elements
+#undef OSD_element_px_X
 #define OSD_element_px_X(ITEM) (OSD_edge_px_L + (OSD_margin_px + OSD_elementBase_size_px_W) * (ITEM - 1))
 
 // On-screen text sizes, hight in pixels
 // Standard text elements
+#undef OSD_elementBase_textSize_px
+#undef OSD_elementBase_iconSize_px
 #define OSD_elementBase_textSize_px (24)
 #define OSD_elementBase_iconSize_px (28.5)
 
-// On-screen map centre cursor
-#define CURSOR_size_px (76)
-
 // Screen content (the stuff that changes, so map area - header and footer)
+#undef SCREEN_contentRect_px_X
+#undef SCREEN_contentRect_px_Y
+#undef SCREEN_contentRect_px_W
+#undef SCREEN_contentRect_px_H
 #define SCREEN_contentRect_px_X (FBCB2_mapRect_px_X)
 #define SCREEN_contentRect_px_Y (FBCB2_mapRect_px_Y + OSD_header_px_H)
 #define SCREEN_contentRect_px_W (FBCB2_mapRect_px_W)
@@ -59,45 +75,77 @@
 
 
 // Message element positions in pixels
+#undef SCREEN_messages_margin_outer_px
+#undef SCREEN_messages_margin_inner_px
 #define SCREEN_messages_margin_outer_px (10)
 #define SCREEN_messages_margin_inner_px (5)
 
+#undef SCREEN_messages_button_px_W
+#undef SCREEN_messages_button_H
 #define SCREEN_messages_button_px_W (90)
 #define SCREEN_messages_button_H (30)
 
+#undef SCREEN_messages_read_frame_px_X
+#undef SCREEN_messages_read_frame_px_Y
+#undef SCREEN_messages_read_frame_px_W
+#undef SCREEN_messages_read_frame_px_H
 #define SCREEN_messages_read_frame_px_X (SCREEN_contentRect_px_X + SCREEN_messages_margin_outer_px)
 #define SCREEN_messages_read_frame_px_Y (SCREEN_contentRect_px_Y + SCREEN_messages_margin_inner_px)
 #define SCREEN_messages_read_frame_px_W (SCREEN_contentRect_px_W - SCREEN_messages_margin_outer_px * 2)
 #define SCREEN_messages_read_frame_px_H ((SCREEN_contentRect_px_H - SCREEN_messages_margin_inner_px * 3) / 2)
 
+#undef SCREEN_messages_read_list_px_X
+#undef SCREEN_messages_read_list_px_Y
+#undef SCREEN_messages_read_list_px_W
+#undef SCREEN_messages_read_list_px_H
 #define SCREEN_messages_read_list_px_X (SCREEN_messages_read_frame_px_X + SCREEN_messages_margin_inner_px)
 #define SCREEN_messages_read_list_px_Y (SCREEN_messages_read_frame_px_Y + SCREEN_messages_margin_outer_px)
 #define SCREEN_messages_read_list_px_W ((SCREEN_messages_read_frame_px_W - SCREEN_messages_margin_inner_px * 3) / 3)
 #define SCREEN_messages_read_list_px_H (SCREEN_messages_read_frame_px_H - SCREEN_messages_margin_inner_px - SCREEN_messages_margin_outer_px)
 
+#undef SCREEN_messages_read_text_px_X
+#undef SCREEN_messages_read_text_px_Y
+#undef SCREEN_messages_read_text_px_W
+#undef SCREEN_messages_read_text_px_H
 #define SCREEN_messages_read_text_px_X (SCREEN_messages_read_list_px_X + SCREEN_messages_read_list_px_W + SCREEN_messages_margin_inner_px)
 #define SCREEN_messages_read_text_px_Y (SCREEN_messages_read_list_px_Y)
 #define SCREEN_messages_read_text_px_W (SCREEN_messages_read_list_px_W * 2)
 #define SCREEN_messages_read_text_px_H (SCREEN_messages_read_list_px_H - SCREEN_messages_margin_inner_px - SCREEN_messages_button_H)
 
+#undef SCREEN_messages_compose_frame_px_X
+#undef SCREEN_messages_compose_frame_px_Y
+#undef SCREEN_messages_compose_frame_px_W
+#undef SCREEN_messages_compose_frame_px_H
 #define SCREEN_messages_compose_frame_px_X (SCREEN_messages_read_frame_px_X)
 #define SCREEN_messages_compose_frame_px_Y (SCREEN_messages_read_frame_px_Y + SCREEN_messages_read_frame_px_H + SCREEN_messages_margin_inner_px)
 #define SCREEN_messages_compose_frame_px_W (SCREEN_messages_read_frame_px_W)
 #define SCREEN_messages_compose_frame_px_H (SCREEN_messages_read_frame_px_H)
 
+#undef SCREEN_messages_compose_list_px_X
+#undef SCREEN_messages_compose_list_px_Y
+#undef SCREEN_messages_compose_list_px_W
+#undef SCREEN_messages_compose_list_px_H
 #define SCREEN_messages_compose_list_px_X (SCREEN_messages_read_list_px_X)
 #define SCREEN_messages_compose_list_px_Y (SCREEN_messages_compose_frame_px_Y + SCREEN_messages_margin_outer_px)
 #define SCREEN_messages_compose_list_px_W (SCREEN_messages_read_list_px_W)
 #define SCREEN_messages_compose_list_px_H (SCREEN_messages_read_list_px_H)
 
+#undef SCREEN_messages_compose_text_px_X
+#undef SCREEN_messages_compose_text_px_Y
+#undef SCREEN_messages_compose_text_px_W
+#undef SCREEN_messages_compose_text_px_H
 #define SCREEN_messages_compose_text_px_X (SCREEN_messages_read_text_px_X)
 #define SCREEN_messages_compose_text_px_Y (SCREEN_messages_compose_list_px_Y)
 #define SCREEN_messages_compose_text_px_W (SCREEN_messages_read_text_px_W)
 #define SCREEN_messages_compose_text_px_H (SCREEN_messages_read_text_px_H)
 
+#undef SCREEN_messages_button_send_px_X
+#undef SCREEN_messages_button_send_px_Y
 #define SCREEN_messages_button_send_px_X (SCREEN_messages_compose_frame_px_X + SCREEN_messages_compose_frame_px_W - SCREEN_messages_margin_inner_px - SCREEN_messages_button_px_W)
 #define SCREEN_messages_button_send_px_Y (SCREEN_messages_compose_text_px_Y + SCREEN_messages_compose_text_px_H + SCREEN_messages_margin_inner_px)
 
+#undef SCREEN_messages_button_delete_px_X
+#undef SCREEN_messages_button_delete_px_Y
 #define SCREEN_messages_button_delete_px_X (SCREEN_messages_button_send_px_X)
 #define SCREEN_messages_button_delete_px_Y (SCREEN_messages_read_text_px_Y + SCREEN_messages_read_text_px_H + SCREEN_messages_margin_inner_px)
 
@@ -111,7 +159,7 @@ class cTab_RscText_FBCB2: cTab_RscText {
     colorBackground[] = COLOR_TRANSPARENT;
     shadow = 0;
 };
-class cTab_RscListbox_FBCB2: cTab_RscListbox {
+class cTab_RscListBox_FBCB2: cTab_RscListBox {
     sizeEx = QUOTE(FBCB2_pixel2Screen_H(OSD_elementBase_textSize_px * 1.2));
 };
 class cTab_RscEdit_FBCB2: cTab_RscEdit {

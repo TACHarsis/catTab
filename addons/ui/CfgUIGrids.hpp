@@ -74,44 +74,30 @@ class CfgUIGrids {
             class GVARMAIN(Android_dsp) {
                 displayName = "Android";
                 description = "Default position of android in display mode";
-                preview = "#(argb,8,8,3)color(1,0,0.91,0.75)";
-                preview = QPATHTOEF(data,img\ui\display_frames\android_background_ca.paa);
+                preview = QPATHTOEF(data,img\ui\display_frames\android_background_preview_ca.paa);
                 saveToProfile[] = {0,1,2,3};
             };
-            class GVARMAIN(Android_dsp_alt) {
-                displayName = "Android";
+            class GVARMAIN(Android_dsp_alt) : GVARMAIN(Android_dsp) {
                 description = "Alternative position of android in display mode";
-                preview = "#(argb,8,8,3)color(1,0,0.91,0.75)";
-                preview = QPATHTOEF(data,img\ui\display_frames\android_background_ca.paa);
-                saveToProfile[] = {0,1,2,3};
             };
             class GVARMAIN(TAD_dsp) {
                 displayName = "TAD";
                 description = "Default position of TAD in display mode";
-                preview = "#(argb,8,8,3)color(1,0,0.91,0.75)";
-                preview = QPATHTOEF(data,img\ui\display_frames\TAD_background_ca.paa);
+                preview = QPATHTOEF(data,img\ui\display_frames\TAD_background_preview_ca.paa);
                 saveToProfile[] = {0,1,2,3};
             };
-            class GVARMAIN(TAD_dsp_alt) {
-                displayName = "TAD";
+            class GVARMAIN(TAD_dsp_alt) : GVARMAIN(TAD_dsp) {
                 description = "Alternative position of TAD in display mode";
-                preview = "#(argb,8,8,3)color(1,0,0.91,0.75)";
-                preview = QPATHTOEF(data,img\ui\display_frames\TAD_background_ca.paa);
-                saveToProfile[] = {0,1,2,3};
+
             };
             class GVARMAIN(microDAGR_dsp) {
                 displayName = "MicroDAGR";
                 description = "Default position of MicroDAGR in display mode";
-                preview = "#(argb,8,8,3)color(1,0,0.91,0.75)";
-                preview = QPATHTOEF(data,img\ui\display_frames\microDAGR_background_ca.paa);
+                preview = QPATHTOEF(data,img\ui\display_frames\microDAGR_background_preview_ca.paa);
                 saveToProfile[] = {0,1,2,3};
             };
-            class GVARMAIN(microDAGR_dsp_alt) {
-                displayName = "MicroDAGR";
+            class GVARMAIN(microDAGR_dsp_alt) : GVARMAIN(microDAGR_dsp) {
                 description = "Alternative position of MicroDAGR in display mode";
-                preview = "#(argb,8,8,3)color(1,0,0.91,0.75)";
-                preview = QPATHTOEF(data,img\ui\display_frames\microDAGR_background_ca.paa);
-                saveToProfile[] = {0,1,2,3};
             };
         };
     };

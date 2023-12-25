@@ -1,14 +1,21 @@
-#include "script_component.hpp"
-
+#undef GUI_MARGIN_X
+#undef GUI_MARGIN_Y
+#undef GUI_TAD_W
+#undef GUI_TAD_H
 #define GUI_MARGIN_X    (0.05)
 #define GUI_MARGIN_Y    (0.2)
-#define GUI_TAD_W    (0.86)
-#define GUI_TAD_H    (0.86)
+#define GUI_TAD_W       (0.86)
+#define GUI_TAD_H       (0.86)
 
+#undef cTab_TAD_DLGtoDSP_fctr
 #define cTab_TAD_DLGtoDSP_fctr (1)
 
-#define CUSTOM_GRID_X    (safeZoneX + GUI_MARGIN_X * 3/4)
-#define CUSTOM_GRID_Y    (safeZoneY + safeZoneH - GUI_TAD_H - GUI_MARGIN_Y)
+#undef CUSTOM_GRID_WAbs
+#undef CUSTOM_GRID_HAbs
+#undef CUSTOM_GRID_X
+#undef CUSTOM_GRID_Y
+#define CUSTOM_GRID_X       (safeZoneX + GUI_MARGIN_X * 3/4)
+#define CUSTOM_GRID_Y       (safeZoneY + safeZoneH - GUI_TAD_H - GUI_MARGIN_Y)
 #define CUSTOM_GRID_WAbs    (GUI_TAD_W * 3/4)
 #define CUSTOM_GRID_HAbs    (GUI_TAD_H)
 
@@ -29,8 +36,8 @@ class GVARMAIN(TAD_dsp) {
             // set initial map scale
             scaleDefault = QUOTE(missionNamespace getVariable QQGVAR(mapScale));
             // hide grid lines
-            colorGrid[] = {0.1,0.1,0.1,0};
-            colorGridMap[] = {0.1,0.1,0.1,0};
+            colorGrid[] = {0.1, 0.1, 0.1, 0};
+            colorGridMap[] = {0.1, 0.1, 0.1, 0};
         };
         class screenTopo: screen {
             idc = IDC_CTAB_SCREEN_TOPO;
@@ -42,8 +49,8 @@ class GVARMAIN(TAD_dsp) {
             // set initial map scale
             scaleDefault = QUOTE(missionNamespace getVariable QQGVAR(mapScale));
             // hide grid lines
-            colorGrid[] = {0.1,0.1,0.1,0};
-            colorGridMap[] = {0.1,0.1,0.1,0};
+            colorGrid[] = {0.1, 0.1, 0.1, 0};
+            colorGridMap[] = {0.1, 0.1, 0.1, 0};
         };
     };
 
@@ -52,7 +59,7 @@ class GVARMAIN(TAD_dsp) {
             ### OSD GUI controls ###
         */
         class navModeOrScale: cTab_TAD_OSD_navModeOrScale {
-            x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_R )- OSD_elementMode_size_px_W * 2);
+            x = QUOTE(TAD_pixel2Screen_X(OSD_edge_px_R)- OSD_elementMode_size_px_W * 2);
             w = QUOTE(TAD_pixel2Screen_W(OSD_elementMode_size_px_W * 2));
         };
         class modeTAD: cTab_TAD_OSD_modeTAD {};

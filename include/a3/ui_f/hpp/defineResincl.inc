@@ -1670,7 +1670,9 @@ enum
 #define IDC_MULTI_FULL_FILTER                     151
 #define IDC_MULTI_TYPE_FILTER                     152
 #define IDC_MP_NEXT_SESSION                       153
+#undef IDC_MULTI_BATTLEYE_FILTER
 #define IDC_MULTI_BATTLEYE_FILTER                 154
+#undef IDC_MULTI_EXPANSIONS_FILTER
 #define IDC_MULTI_EXPANSIONS_FILTER               155
 #define IDC_MULTI_FAVORITE_COLUMN                 156
 #define IDC_MULTI_FAVORITE_ICON                   157
@@ -1692,7 +1694,6 @@ enum
 #define IDC_MP_QUICK_MAX_PING                     111
 #define IDC_MP_QUICK_BEST_SERVER                  112
 #define IDC_MP_QUICK_FIND_SERVER                  113
-#define IDC_MP_QUICK_SHOW_SERVERS                 114
 #define IDC_MP_QUICK_SHOW_SERVERS                 114
 #define IDC_MP_QUICK_MODE_TITLE                   115
 #define IDC_MP_QUICK_MODE_PICTURE                 116
@@ -2657,7 +2658,6 @@ enum
 #define IDC_SENS_VEHICLE                          103
 #define IDC_SENS_RANGE                            104
 #define IDC_SENS_RADARON                          105
-#define IDC_SENS_RADAROFF                         106
 #define IDC_SENS_RADAROFF                         106
 #define IDC_SENS_TARGET                           107
 #define IDC_SENS_TARGETRANGE                      108

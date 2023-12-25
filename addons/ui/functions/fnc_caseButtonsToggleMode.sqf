@@ -8,7 +8,7 @@ if(isNil "_displayName") then {
     _displayName = GVAR(ifOpen) # 1;
 };
 
-private _mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
+private _mode = [_displayName, QSETTING_MODE] call FUNC(getSettings);
 
 if (_mode != QSETTING_MODE_BFT) then {
     _mode = QSETTING_MODE_BFT;
@@ -16,6 +16,6 @@ if (_mode != QSETTING_MODE_BFT) then {
     _mode = QSETTING_MODE_MESSAGES;
 };
 
-[_displayName,[[QSETTING_MODE,_mode]]] call FUNC(setSettings);
+[_displayName, [[QSETTING_MODE,_mode]]] call FUNC(setSettings);
 
 true

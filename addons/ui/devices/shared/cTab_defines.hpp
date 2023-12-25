@@ -4,6 +4,9 @@
 // http://forums.bistudio.com/member.php?64032-Riouken
 // You may re-use any of this work as long as you provide credit back to me.
 
+#ifndef CTAB_DEFINES
+#define CTAB_DEFINES
+
 #define IDC_CTAB_LOADINGTXT             1000
 #define IDC_CTAB_ACTBFTTXT              1001
 #define IDC_CTAB_ACTUAVTXT              1002
@@ -17,15 +20,14 @@
 #define IDC_CTAB_SCREEN_BLACK           1203
 #define IDC_CTAB_WIN_BACK               1210
 #define IDC_CTAB_WIN_TASKBAR            1211
-#define IDC_CTAB_MINIMAPBG              1218
 
 #define IDC_CTAB_HCAMMAP                1220
 #define IDC_CTAB_HCAMLIST               1221
 #define IDC_CTAB_HCAMDISPLAY            1222
 #define IDC_CTAB_HCAMCONTROLLAYER       1223
-#define IDC_CTAB_HCAMICON1              1224
-#define IDC_CTAB_HCAMICON2              1225
-#define IDC_CTAB_HCAMICON3              1226
+#define IDC_CTAB_HCAM_HBICON            1224
+#define IDC_CTAB_HCAM_HBTEXT            1225
+#define IDC_CTAB_HCAM_UNITNAME          1226
 #define IDC_CTAB_HCAMDISPLAYBG          1227
 #define IDC_CTAB_HCAMDISPLAYBUTTON      1228
 #define IDC_CTAB_HCAM_FULL              1230
@@ -46,10 +48,9 @@
 
 #define IDC_CTAB_UAVMAP                 1770
 #define IDC_CTAB_UAVLIST                1771
-#define IDC_CTAB_UAVDRIVERDISPLAY       1772
-#define IDC_CTAB_UAVGUNNERDISPLAY       1773
-#define IDC_CTAB_UAVGUNNERDISPLAYBG     1774
-#define IDC_CTAB_UAVGUNNERDISPLAYBUTTON 1775
+#define IDC_CTAB_UAVGUNNERDISPLAY       1772
+#define IDC_CTAB_UAVGUNNERDISPLAYBG     1773
+#define IDC_CTAB_UAVGUNNERDISPLAYBUTTON 1774
 #define IDC_CTAB_UAVGUNNER_FULL         1780
 
 #define IDC_USRMN_OP4BTN                2000
@@ -110,13 +111,9 @@
 #define IDC_CTAB_MARKER_MENU_MAIN       3300
 
 #define IDC_CTAB_GROUP_DESKTOP          4610
-#define IDC_CTAB_GROUP_BFT              4620
-#define IDC_CTAB_GROUP_UAV              4630
-#define IDC_CTAB_GROUP_UAV_LIST         4631
-#define IDC_CTAB_GROUP_UAV_VIDEO        4632
-#define IDC_CTAB_GROUP_HCAM             4640
-#define IDC_CTAB_GROUP_HCAM_LIST        4641
-#define IDC_CTAB_GROUP_HCAM_VIDEO       4642
+#define IDC_CTAB_GROUP_UAV_SOURCE_GRP   4631
+#define IDC_CTAB_GROUP_HCAM_SOURCE_GRP  4632
+#define IDC_CTAB_GROUP_VIDEO_FRAME      4633
 #define IDC_CTAB_GROUP_MESSAGE          4650
 #define IDC_CTAB_GROUP_COMPOSE          4655
 #define IDC_CTAB_GROUP_MENU             4660
@@ -127,3 +124,8 @@
 #define IDC_CTAB_MSG_COMPOSE            14000
 #define IDC_CTAB_MSG_BTNDELETE          16120
 #define IDC_CTAB_MSG_BTNSEND            16130
+
+#define IDC_CTAB_UAV_FRAME_0            20000
+#define IDC_CTAB_HCAM_FRAME_0         30000
+
+#endif

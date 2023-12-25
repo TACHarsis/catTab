@@ -1,22 +1,22 @@
 #include "script_component.hpp"
 /*
-     Name: Ctab_ui_fnc_uavLockFindAtLocation
+     Name: Ctab_ui_fnc_uavFindAtLocation
      
      Author(s):
         Gundy, Riouken, Cat Harsis
 
      Description:
-        Find camera lock target near provided position.
+        Find uav near provided position.
 
     Parameters:
         0: OBJECT - Map control we took the position from
-        1: ARRAY  - Position to look for uav target lock
+        1: ARRAY  - Position to look for uav
      
      Returns:
-        OBJECT    - UAV that belongs to target lock if found or objNull otherwise
+        OBJECT    - UAV if found or objNull otherwise
      
      Example:
-        _markerIndex = [_mapControl,[0,0]] call Ctab_ui_fnc_uavFindAtLocation;
+        _uav = [_mapControl, [0, 0]] call Ctab_ui_fnc_uavFindAtLocation;
 */
 params [
    "_mapControl",

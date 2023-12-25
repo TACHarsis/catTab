@@ -20,13 +20,13 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                     [DMC_CONDITION,             {true}],
                                     [DMC_DRAW_MARKERS,          {
                                         params ["_displayName", "_displaySettinggs"];
-                                        private _mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
+                                        private _mode = [_displayName, QSETTING_MODE] call FUNC(getSettings);
                                         private _options = [true,[
                                             DMC_BFT_VEHICLES,
                                             DMC_BFT_GROUPS,
                                             DMC_BFT_MEMBERS
                                         ]];
-                                        if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then { (_options#1) pushBack DMC_BFT_UAV};
+                                        if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then { (_options # 1) pushBack DMC_BFT_UAV};
 
                                         _options
                                     }],
@@ -47,7 +47,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                             case (QSETTING_MODE_CAM_UAV) : {
                                                 [[-1,0] select GVAR(trackCurrentUAV), GVAR(currentUAV), GVAR(mapScaleUAV)]
                                             };
-                                            case (QSETTING_MODE_CAM_HELMET) : {
+                                            case (QSETTING_MODE_CAM_HCAM) : {
                                                 [[-1,0] select GVAR(trackCurrentHCam), GVAR(helmetCamData) select 2, GVAR(mapScaleHCam)]
                                             };
                                             default {

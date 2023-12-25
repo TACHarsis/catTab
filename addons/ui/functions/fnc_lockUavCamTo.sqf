@@ -17,11 +17,12 @@
     Example:
         [getPos player] call Ctab_ui_fnc_lockUavCamTo;
 */
-params ["_camPos"];
+params ["_camPos", "_camIdx"];
 
 private _displayName = GVAR(ifOpen) select 1;
 private _uav = objNull;
-private _uavNetId = [_displayName,QSETTING_CAM_UAV] call FUNC(getSettings);
+private _uavCamSettings = [_displayName, QSETTING_CAM_UAV] call FUNC(getSettings);
+private _uavNetId = _uavCamSettings getOrDefault ["_camIdx", ""];
 private _uav = _uavNetId call BIS_fnc_objectFromNetId;
 
 // see if given UAV name is still in the list of valid UAVs

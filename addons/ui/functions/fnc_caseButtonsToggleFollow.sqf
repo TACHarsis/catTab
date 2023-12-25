@@ -24,7 +24,7 @@ switch(_mode) do {
       private _prevValue = [QGVARMAIN(Tablet_dlg), QSETTING_FOLLOW_UAV] call FUNC(getSettings);
       [QGVARMAIN(Tablet_dlg),[[QSETTING_FOLLOW_UAV,!_prevValue]],true,true] call FUNC(setSettings);
    };
-   case (QSETTING_MODE_CAM_HELMET) : {
+   case (QSETTING_MODE_CAM_HCAM) : {
       private _prevValue = [QGVARMAIN(Tablet_dlg), QSETTING_FOLLOW_HCAM] call FUNC(getSettings);
       [QGVARMAIN(Tablet_dlg),[[QSETTING_FOLLOW_HCAM,!_prevValue]],true,true] call FUNC(setSettings);
    };

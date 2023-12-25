@@ -1,5 +1,5 @@
-#define HEMTT_FIRST_LINE_COMMENT_FIX
-#include "..\shared\cTab_base_gui_classes.hpp"
+#ifndef TAD_CONTROLS
+#define TAD_CONTROLS
 // Background definition
 #define TAD_BackgroundImage_px_W 2048 // width in pixels
 #define TAD_BackgroundImage_px_H 2048 // hight in pixels
@@ -17,6 +17,11 @@
 #define TAD_mapContent_px_H (1345)
 
 // On-screen edge positions (left, right, top, bottom)
+#undef OSD_margin_px
+#undef OSD_edge_px_L
+#undef OSD_edge_px_R
+#undef OSD_edge_px_T
+#undef OSD_edge_px_B
 #define OSD_margin_px (24)
 #define OSD_edge_px_L (OSD_margin_px + TAD_mapContent_px_X)
 #define OSD_edge_px_R (-OSD_margin_px + TAD_mapContent_px_X + TAD_mapContent_px_W)
@@ -24,6 +29,12 @@
 #define OSD_edge_px_B (-OSD_margin_px + TAD_mapContent_px_Y + TAD_mapContent_px_H)
 
 // On-screen element base width and height
+#undef OSD_elementBase_size_px_W
+#undef OSD_elementBase_size_px_H
+#undef OSD_elementMode_size_px_W
+#undef OSD_elementMode_size_px_H
+#undef OSD_elementRoll_size_px_W
+#undef OSD_elementRoll_size_px_H
 #define OSD_elementBase_size_px_W (26)
 #define OSD_elementBase_size_px_H (53)
 #define OSD_elementMode_size_px_W (38)
@@ -223,7 +234,7 @@ class cTab_TAD_RscMapControl: cTab_RscMapControl {
     ptsPerSquareCost = QUOTE(8 / cTab_TAD_DLGtoDSP_fctr);        // cost
 
     // Rendering thresholds
-    ptsPerSquareFor = QUOTE( 3 / cTab_TAD_DLGtoDSP_fctr);        // forests
+    ptsPerSquareFor = QUOTE(3 / cTab_TAD_DLGtoDSP_fctr);        // forests
     ptsPerSquareForEdge = QUOTE(100 / cTab_TAD_DLGtoDSP_fctr);    // forest edges
     ptsPerSquareRoad = QUOTE(1.5 / cTab_TAD_DLGtoDSP_fctr);        // roads
     ptsPerSquareObj = QUOTE(4 / cTab_TAD_DLGtoDSP_fctr);        // other objects
@@ -289,15 +300,15 @@ class cTab_TAD_RscMapControl_BLACK: cTab_TAD_RscMapControl {
     sizeExLevel = 0.0;
     stickX[] = {0.0,{ "Gamma",0,0.0 }};
     stickY[] = {0.0,{ "Gamma",0,0.0 }};
-    ptsPerSquareSea = QUOTE( 10000);
-    ptsPerSquareTxt = QUOTE( 10000);
-    ptsPerSquareCLn = QUOTE( 10000);
-    ptsPerSquareExp = QUOTE( 10000);
-    ptsPerSquareCost = QUOTE( 10000);
-    ptsPerSquareFor = QUOTE( 10000);
-    ptsPerSquareForEdge = QUOTE( 10000);
-    ptsPerSquareRoad = QUOTE( 10000);
-    ptsPerSquareObj = QUOTE( 10000);
+    ptsPerSquareSea = QUOTE(10000);
+    ptsPerSquareTxt = QUOTE(10000);
+    ptsPerSquareCLn = QUOTE(10000);
+    ptsPerSquareExp = QUOTE(10000);
+    ptsPerSquareCost = QUOTE(10000);
+    ptsPerSquareFor = QUOTE(10000);
+    ptsPerSquareForEdge = QUOTE(10000);
+    ptsPerSquareRoad = QUOTE(10000);
+    ptsPerSquareObj = QUOTE(10000);
     class Task {
         icon = "";
         color[] = {0,0,0,0};
@@ -771,3 +782,5 @@ class cTab_TAD_notification: cTab_RscText_TAD {
     colorText[] = COLOR_NAVYBLUE;
     colorBackground[] = COLOR_WHITE;
 };
+
+#endif

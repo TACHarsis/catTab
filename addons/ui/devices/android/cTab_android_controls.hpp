@@ -1,4 +1,6 @@
-#define HEMTT_FIRST_LINE_COMMENT_FIX
+#ifndef ANDROID_CONTROLS
+#define ANDROID_CONTROLS
+
 // Background definition
 #define ANDROID_BackgroundImage_px_W 2048 // width in pixels
 #define ANDROID_BackgroundImage_px_H 2048 // hight in pixels
@@ -16,10 +18,17 @@
 #define ANDROID_mapRect_px_H (622)
 
 // Height of header and footer OSD elements
+#undef OSD_header_px_H
+#undef OSD_footer_px_H
 #define OSD_header_px_H (60)
 #define OSD_footer_px_H (0)
 
 // On-screen edge positions (left, right, top, bottom)
+#undef OSD_margin_px
+#undef OSD_edge_px_L
+#undef OSD_edge_px_R
+#undef OSD_edge_px_T
+#undef OSD_edge_px_B
 #define OSD_margin_px (20)
 #define OSD_edge_px_L (OSD_margin_px + ANDROID_mapRect_px_X)
 #define OSD_edge_px_R (-OSD_margin_px + ANDROID_mapRect_px_X + ANDROID_mapRect_px_W)
@@ -27,19 +36,21 @@
 #define OSD_edge_px_B (-OSD_footer_px_H + ANDROID_mapRect_px_Y + ANDROID_mapRect_px_H)
 
 // On-screen element base width and height
+#undef OSD_elementBase_size_px_W
+#undef OSD_elementBase_size_px_H
 #define OSD_elementBase_size_px_W ((ANDROID_mapRect_px_W - OSD_margin_px * 6) / 5)
 #define OSD_elementBase_size_px_H (OSD_header_px_H - OSD_margin_px)
 
 // On-screen element X-coord for left, center and right elements
+#undef OSD_element_px_X
 #define OSD_element_px_X(ITEM) (OSD_edge_px_L + (OSD_margin_px + OSD_elementBase_size_px_W) * (ITEM - 1))
 
 // On-screen text sizes, hight in pixels
 // Standard text elements
+#undef OSD_elementBase_textSize_px
+#undef OSD_elementBase_iconSize_px
 #define OSD_elementBase_textSize_px (38)
 #define OSD_elementBase_iconSize_px (42)
-
-// On-screen map centre cursor
-#define CURSOR_size_px (48)
 
 // On-screen menu frame
 #define OSD_menu_px_W (SCREEN_contentRect_px_W / 4)
@@ -60,6 +71,10 @@
 #define ANDROID_pixel2Menu_Y(PIXEL) (((PIXEL) - OSD_menu_px_Y) / ANDROID_BackgroundImage_px_H * CUSTOM_GRID_HAbs)
 
 // Screen content (the stuff that changes, so map area - header and footer)
+#undef SCREEN_contentRect_px_X
+#undef SCREEN_contentRect_px_Y
+#undef SCREEN_contentRect_px_W
+#undef SCREEN_contentRect_px_H
 #define SCREEN_contentRect_px_X (ANDROID_mapRect_px_X)
 #define SCREEN_contentRect_px_Y (ANDROID_mapRect_px_Y + OSD_header_px_H)
 #define SCREEN_contentRect_px_W (ANDROID_mapRect_px_W)
@@ -143,17 +158,17 @@ class cTab_android_RscMapControl: cTab_RscMapControl {
     alphaFadeEndScale = 10;
 
     // Rendering density coefficients
-    ptsPerSquareSea = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // seas
-    ptsPerSquareTxt = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // textures
-    ptsPerSquareCLn = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // count-lines
-    ptsPerSquareExp = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // exposure
-    ptsPerSquareCost = QUOTE( 8 / cTab_android_DLGtoDSP_fctr);        // cost
+    ptsPerSquareSea = QUOTE(8 / cTab_android_DLGtoDSP_fctr);        // seas
+    ptsPerSquareTxt = QUOTE(8 / cTab_android_DLGtoDSP_fctr);        // textures
+    ptsPerSquareCLn = QUOTE(8 / cTab_android_DLGtoDSP_fctr);        // count-lines
+    ptsPerSquareExp = QUOTE(8 / cTab_android_DLGtoDSP_fctr);        // exposure
+    ptsPerSquareCost = QUOTE(8 / cTab_android_DLGtoDSP_fctr);        // cost
 
     // Rendering thresholds
-    ptsPerSquareFor = QUOTE( 3 / cTab_android_DLGtoDSP_fctr);        // forests
-    ptsPerSquareForEdge = QUOTE( 100 / cTab_android_DLGtoDSP_fctr);    // forest edges
-    ptsPerSquareRoad = QUOTE( 1.5 / cTab_android_DLGtoDSP_fctr);        // roads
-    ptsPerSquareObj = QUOTE( 4 / cTab_android_DLGtoDSP_fctr);        // other objects
+    ptsPerSquareFor = QUOTE(3 / cTab_android_DLGtoDSP_fctr);        // forests
+    ptsPerSquareForEdge = QUOTE(100 / cTab_android_DLGtoDSP_fctr);    // forest edges
+    ptsPerSquareRoad = QUOTE(1.5 / cTab_android_DLGtoDSP_fctr);        // roads
+    ptsPerSquareObj = QUOTE(4 / cTab_android_DLGtoDSP_fctr);        // other objects
 
     /*
     // replace CustomMark with wedding cake icon
@@ -218,7 +233,7 @@ class cTab_android_on_screen_battery: cTab_RscPicture {
     h = QUOTE(ANDROID_pixel2Screen_H(OSD_elementBase_iconSize_px));
     colorText[] = COLOR_WHITE;
 };
-class cTab_android_on_screen_time: cTab_RscText_android {
+class cTab_android_on_screen_time: cTab_RscText_Android {
     idc = IDC_CTAB_OSD_TIME;
     style = ST_CENTER;
     x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(3)));
@@ -233,7 +248,7 @@ class cTab_android_on_screen_signalStrength: cTab_android_on_screen_battery {
 class cTab_android_on_screen_satellite: cTab_android_on_screen_battery {
     idc = 4;
     text = "\a3\ui_f\data\map\Diary\signal_ca.paa";
-    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(5) + OSD_elementBase_size_px_W )- OSD_elementBase_iconSize_px);
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(5) + OSD_elementBase_size_px_W)- OSD_elementBase_iconSize_px);
     colorText[] = COLOR_WHITE;
 };
 class cTab_android_on_screen_dirDegree: cTab_android_on_screen_time {
@@ -255,23 +270,23 @@ class cTab_android_on_screen_hookGrid: cTab_RscText_Android {
     idc = IDC_CTAB_OSD_HOOK_GRID;
     style = ST_CENTER;
     x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(1)));
-    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B )- OSD_margin_px - OSD_elementBase_size_px_H * 4);
-    colorText[] = {1,1,1,0.5};
-    colorBackground[] = {0,0,0,0.25};
+    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B)- OSD_margin_px - OSD_elementBase_size_px_H * 4);
+    colorText[] = {1, 1, 1, 0.5};
+    colorBackground[] = {0, 0, 0, 0.25};
 };
 class cTab_android_on_screen_hookElevation: cTab_android_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_ELEVATION;
-    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B )- OSD_margin_px - OSD_elementBase_size_px_H * 3);
+    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B)- OSD_margin_px - OSD_elementBase_size_px_H * 3);
 };
 class cTab_android_on_screen_hookDst: cTab_android_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_DST;
-    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B )- OSD_margin_px - OSD_elementBase_size_px_H * 2);
+    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B)- OSD_margin_px - OSD_elementBase_size_px_H * 2);
 };
 class cTab_android_on_screen_hookDir: cTab_android_on_screen_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_DIR;
-    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B )- OSD_margin_px - OSD_elementBase_size_px_H);
+    y = QUOTE(ANDROID_pixel2Screen_Y(OSD_edge_px_B)- OSD_margin_px - OSD_elementBase_size_px_H);
 };
-class cTab_android_loadingtxt: cTab_RscText_android {
+class cTab_android_loadingtxt: cTab_RscText_Android {
     idc = IDC_CTAB_LOADINGTXT;
     style = ST_CENTER;
     text = "Loading"; //--- ToDo: Localize;
@@ -291,7 +306,7 @@ class cTab_android_windowsBG: cTab_RscPicture {
 };
 
 // Define areas around the screen as interaction areas to allow screen movement
-class cTab_android_movingHandle_T: cTab_RscText_android {
+class cTab_android_movingHandle_T: cTab_RscText_Android {
     idc = 5;
     moving = 1;
     colorBackground[] = COLOR_TRANSPARENT;
@@ -303,7 +318,7 @@ class cTab_android_movingHandle_T: cTab_RscText_android {
 class cTab_android_movingHandle_B: cTab_android_movingHandle_T {
     idc = 6;
     y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + ANDROID_mapRect_px_H));
-    h = QUOTE(ANDROID_pixel2Screen_H(ANDROID_BackgroundImage_px_H )- (ANDROID_mapRect_px_Y + ANDROID_mapRect_px_H));
+    h = QUOTE(ANDROID_pixel2Screen_H(ANDROID_BackgroundImage_px_H) - (ANDROID_mapRect_px_Y + ANDROID_mapRect_px_H));
 };
 class cTab_android_movingHandle_L: cTab_android_movingHandle_T {
     idc = 7;
@@ -314,7 +329,7 @@ class cTab_android_movingHandle_L: cTab_android_movingHandle_T {
 class cTab_android_movingHandle_R: cTab_android_movingHandle_L {
     idc = 8;
     x = QUOTE(ANDROID_pixel2Screen_X(ANDROID_mapRect_px_X + ANDROID_mapRect_px_W));
-    w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_BackgroundImage_px_W )- (ANDROID_mapRect_px_X + ANDROID_mapRect_px_W));
+    w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_BackgroundImage_px_W)- (ANDROID_mapRect_px_X + ANDROID_mapRect_px_W));
 };
 
 // transparent control that gets placed on top of the GUI to adjust brightness
@@ -328,8 +343,10 @@ class cTab_android_brightness: cTab_RscText_Android {
 };
 class cTab_android_notification: cTab_RscText_Android {
     idc = IDC_CTAB_NOTIFICATION;
-    x = QUOTE(ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X + (SCREEN_contentRect_px_W * 0.2) )/ 2);
-    y = QUOTE(ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H )- 2 * OSD_elementBase_textSize_px);
+    x = QUOTE(ANDROID_pixel2Screen_X(SCREEN_contentRect_px_X + (SCREEN_contentRect_px_W * 0.2)) / 2);
+    y = QUOTE(ANDROID_pixel2Screen_Y(SCREEN_contentRect_px_Y + SCREEN_contentRect_px_H)- 2 * OSD_elementBase_textSize_px);
     w = QUOTE(ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W * 0.8));
     colorBackground[] = COLOR_BLACK;
 };
+
+#endif

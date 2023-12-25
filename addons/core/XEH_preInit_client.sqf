@@ -32,8 +32,8 @@ GVARMAIN(hCamList) = [];
 Ctab_player = objNull;
 
 GVAR(checkForPlayerChangePFH) = [{
-    if !(Ctab_player isEqualTo (missionNamespace getVariable ["BIS_fnc_moduleRemoteControl_unit",player])) then {
-        Ctab_player = missionNamespace getVariable ["BIS_fnc_moduleRemoteControl_unit",player];
+    if !(Ctab_player isEqualTo (missionNamespace getVariable ["BIS_fnc_moduleRemoteControl_unit", player])) then {
+        Ctab_player = missionNamespace getVariable ["BIS_fnc_moduleRemoteControl_unit", player];
         
         //prep the arrays that will hold ctab data
         GVARMAIN(BFTMembers) = [];
@@ -51,7 +51,7 @@ GVAR(checkForPlayerChangePFH) = [{
 // define vehicles that have FBCB2 monitor
 GVARMAIN(vehicleClassesFBCB2) = [
     GVARMAIN(vehicleClassesFBCB2_server),
-    ["MRAP_01_base_F","MRAP_02_base_F","MRAP_03_base_F","Wheeled_APC_F","Tank","Truck_01_base_F","Truck_03_base_F"]
+    ["MRAP_01_base_F", "MRAP_02_base_F", "MRAP_03_base_F", "Wheeled_APC_F", "Tank", "Truck_01_base_F", "Truck_03_base_F"]
     ] select isNil QGVARMAIN(vehicleClassesFBCB2_server);
 
 // strip list of invalid config names and duplicates to save time checking through them later
@@ -81,7 +81,7 @@ GVARMAIN(vehicleClassesTAD) = [] + _classNamesTADVehiclesValidated;
 // define items that enable head cam
 GVARMAIN(helmetClasses) = [
         GVARMAIN(helmetClasses_server),
-        ["H_HelmetB_light","H_Helmet_Kerry","H_HelmetSpecB","H_HelmetO_ocamo","BWA3_OpsCore_Fleck_Camera","BWA3_OpsCore_Schwarz_Camera","BWA3_OpsCore_Tropen_Camera"]
+        ["H_HelmetB_light", "H_Helmet_Kerry", "H_HelmetSpecB", "H_HelmetO_ocamo", "BWA3_OpsCore_Fleck_Camera", "BWA3_OpsCore_Schwarz_Camera", "BWA3_OpsCore_Tropen_Camera"]
 ] select isNil QGVARMAIN(helmetClasses_server);
 
 // strip list of invalid config names and duplicates to save time checking through them later
@@ -104,23 +104,7 @@ private _classNamesHelmetValidated = [];
 GVARMAIN(helmetClasses) = [] + _classNamesHelmetValidated;
 
 // add updatePulse event handler triggered periodically by the server
-[QGVARMAIN(updatePulse),FUNC(updateLists)] call CBA_fnc_addEventHandler;
-
-//CC: There must be a nicer way
-//Main loop to add the key handler to the unit.
-[] spawn {
-    waitUntil {sleep 0.1;!(IsNull (findDisplay 46))};
-    // if player is curator (ZEUS), setup key handlers
-    waitUntil {sleep 0.1;!(isNull player)};
-    sleep 2;
-    if (player in (call BIS_fnc_listCuratorPlayers)) then {
-        [] spawn {
-            while {true} do {
-                waitUntil {sleep 0.1;!(isNull (findDisplay 312))};
-                (findDisplay 312) displayAddEventHandler ["KeyDown",{[_this,'keydown'] call FUNC(processCuratorKey)}];
-                (findDisplay 312) displayAddEventHandler ["KeyUp",{[_this,'keyup'] call FUNC(processCuratorKey)}];
-                waitUntil {sleep 0.1;isNull (findDisplay 312)};
-            };
-        };
-    };
-};
+[
+    QGVARMAIN(updatePulse),
+    FUNC(updateLists)
+] call CBA_fnc_addEventHandler;

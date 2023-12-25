@@ -1,8 +1,11 @@
+#ifndef MICRODAGR_CONTROLS
+#define MICRODAGR_CONTROLS
+
 // Background definition
 #define MICRODAGR_BackgroundImage_px_W 2048 // width in pixels
 #define MICRODAGR_BackgroundImage_px_H 2048 // hight in pixels
 
-// Base bacros to convert pixel space to screen space
+// Base macros to convert pixel space to screen space
 #define MICRODAGR_pixel2Screen_X(PIXEL) (PIXEL) / MICRODAGR_BackgroundImage_px_W * CUSTOM_GRID_WAbs + CUSTOM_GRID_X
 #define MICRODAGR_pixel2Screen_Y(PIXEL) (PIXEL) / MICRODAGR_BackgroundImage_px_H * CUSTOM_GRID_HAbs + CUSTOM_GRID_Y
 #define MICRODAGR_pixel2Screen_W(PIXEL) (PIXEL) / MICRODAGR_BackgroundImage_px_W * CUSTOM_GRID_WAbs
@@ -58,7 +61,7 @@ class cTab_microDAGR_header: cTab_RscPicture {
 };
 class cTab_microDAGR_footer: cTab_microDAGR_header {
     idc = 2;
-    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H )- cTab_GUI_microDAGR_OSD_FOOTER_H);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H)- cTab_GUI_microDAGR_OSD_FOOTER_H);
     h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_FOOTER_H));
 };
 class cTab_RscButton_microDAGR_LeftUp: cTab_RscButtonInv {
@@ -112,17 +115,17 @@ class cTab_microDAGR_RscMapControl: cTab_RscMapControl {
     alphaFadeEndScale = 10;
 
     // Rendering density coefficients
-    ptsPerSquareSea = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // seas
-    ptsPerSquareTxt = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // textures
-    ptsPerSquareCLn = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // count-lines
-    ptsPerSquareExp = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // exposure
-    ptsPerSquareCost = QUOTE( 8 / cTab_microDAGR_DLGtoDSP_fctr);        // cost
+    ptsPerSquareSea = QUOTE(8 / cTab_microDAGR_DLGtoDSP_fctr);        // seas
+    ptsPerSquareTxt = QUOTE(8 / cTab_microDAGR_DLGtoDSP_fctr);        // textures
+    ptsPerSquareCLn = QUOTE(8 / cTab_microDAGR_DLGtoDSP_fctr);        // count-lines
+    ptsPerSquareExp = QUOTE(8 / cTab_microDAGR_DLGtoDSP_fctr);        // exposure
+    ptsPerSquareCost = QUOTE(8 / cTab_microDAGR_DLGtoDSP_fctr);        // cost
 
     // Rendering thresholds
-    ptsPerSquareFor = QUOTE( 3 / cTab_microDAGR_DLGtoDSP_fctr);        // forests
-    ptsPerSquareForEdge = QUOTE( 100 / cTab_microDAGR_DLGtoDSP_fctr);    // forest edges
-    ptsPerSquareRoad = QUOTE( 1.5 / cTab_microDAGR_DLGtoDSP_fctr);        // roads
-    ptsPerSquareObj = QUOTE( 4 / cTab_microDAGR_DLGtoDSP_fctr);        // other objects
+    ptsPerSquareFor = QUOTE(3 / cTab_microDAGR_DLGtoDSP_fctr);        // forests
+    ptsPerSquareForEdge = QUOTE(100 / cTab_microDAGR_DLGtoDSP_fctr);    // forest edges
+    ptsPerSquareRoad = QUOTE(1.5 / cTab_microDAGR_DLGtoDSP_fctr);        // roads
+    ptsPerSquareObj = QUOTE(4 / cTab_microDAGR_DLGtoDSP_fctr);        // other objects
 
     /*
     // replace CustomMark with wedding cake icon
@@ -281,7 +284,7 @@ class cTab_microDAGR_movingHandle_L: cTab_microDAGR_movingHandle_T {
 class cTab_microDAGR_movingHandle_R: cTab_microDAGR_movingHandle_L {
     idc = 14;
     x = QUOTE(MICRODAGR_pixel2Screen_X(cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W));
-    w = QUOTE(MICRODAGR_pixel2Screen_W(MICRODAGR_BackgroundImage_px_W )- (cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W));
+    w = QUOTE(MICRODAGR_pixel2Screen_W(MICRODAGR_BackgroundImage_px_W)- (cTab_GUI_microDAGR_MAP_X + cTab_GUI_microDAGR_MAP_W));
 };
 
 // transparent control that gets placed on top of the GUI to adjust brightness
@@ -293,3 +296,5 @@ class cTab_microDAGR_brightness: cTab_RscText_microDAGR {
     h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_MAP_H));
     colorBackground[] = COLOR_TRANSPARENT;
 };
+
+#endif

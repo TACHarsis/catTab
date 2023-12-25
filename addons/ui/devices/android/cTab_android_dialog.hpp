@@ -1,21 +1,24 @@
-#include "script_component.hpp"
-
 // cTab - Commander's Tablet with FBCB2 Blue Force Tracking
 // Battlefield tablet to access real time intel and blue force tracker.
 // By - Riouken
 // http://forums.bistudio.com/member.php?64032-Riouken
 // You may re-use any of this work as long as you provide credit back to me.
 
+#undef CUSTOM_GRID_WAbs
+#undef CUSTOM_GRID_HAbs
+#undef CUSTOM_GRID_X
+#undef CUSTOM_GRID_Y
 #define CUSTOM_GRID_WAbs    (safezoneW * 0.8)
 #define CUSTOM_GRID_HAbs    (CUSTOM_GRID_WAbs * 4/3)
-#define CUSTOM_GRID_X    (safezoneX + (safezoneW - CUSTOM_GRID_WAbs) / 2)
-#define CUSTOM_GRID_Y    (safezoneY + (safezoneH - CUSTOM_GRID_HAbs) / 2)
+#define CUSTOM_GRID_X       (safezoneX + (safezoneW - CUSTOM_GRID_WAbs) / 2)
+#define CUSTOM_GRID_Y       (safezoneY + (safezoneH - CUSTOM_GRID_HAbs) / 2)
 
+#undef cTab_android_DLGtoDSP_fctr
 #define cTab_android_DLGtoDSP_fctr (0.86 / CUSTOM_GRID_HAbs)
 
 #include "cTab_android_controls.hpp"
-#include "..\shared\cTab_defines.hpp"
 
+#undef MENU_sizeEx
 #define MENU_sizeEx ANDROID_pixel2Screen_H(27)
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
@@ -25,7 +28,7 @@ class GVARMAIN(Android_dlg) {
     onLoad = QUOTE(_this call FUNC(onIfOpen));
     onUnload = QUOTE([] call FUNC(onIfClose));
     onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
-    objects[] = {};
+    objects[] = {}; 
     class controlsBackground {
         class windowsBG: cTab_android_windowsBG {
             onLoad = QUOTE([ARR_2(_this,[ARR_4(GVAR(androidDesktopBackgroundMode),GVAR(androidDesktopBackgroundPreset),GVAR(androidDesktopColor),GVAR(androidDesktopCustomImageName))])] call FUNC(setDeviceBackground););
@@ -33,7 +36,7 @@ class GVARMAIN(Android_dlg) {
         class screen: cTab_android_RscMapControl {
             onDraw = QUOTE(nop = [ARR_2(QQGVARMAIN(Android_dlg),_this)] call FUNC(drawMapControl););
             onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
-            onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3;GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
+            onMouseMoving = QUOTE(GVAR(cursorOnMap) = _this select 3; GVAR(mapCursorPos) = _this select 0 ctrlMapScreenToWorld [ARR_2(_this select 1,_this select 2)];);
         };
         class screenTopo: screen {
             idc = IDC_CTAB_SCREEN_TOPO;
@@ -135,7 +138,7 @@ class GVARMAIN(Android_dlg) {
             class HScrollbar {};
             class Scrollbar {};
             class controls {
-                class msgListbox: cTab_RscListbox {
+                class msgListbox: cTab_RscListBox {
                     idc = IDC_CTAB_MSG_LIST;
                     style = LB_MULTI;
                     sizeEx = QUOTE(ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px * 0.8));
@@ -207,7 +210,7 @@ class GVARMAIN(Android_dlg) {
                     w = QUOTE(ANDROID_pixel2Screen_W(ANDROID_messages_compose_frame_W));
                     h = QUOTE(ANDROID_pixel2Screen_H(ANDROID_messages_compose_frame_H));
                 };
-                class playerlistbox: cTab_RscListbox {
+                class playerlistbox: cTab_RscListBox {
                     idc = IDC_CTAB_MSG_RECIPIENTS;
                     style = LB_MULTI;
                     sizeEx = QUOTE(ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px * 0.8));

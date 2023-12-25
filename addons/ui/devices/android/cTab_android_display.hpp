@@ -1,19 +1,24 @@
-#define HEMTT_FIRST_LINE_COMMENT_FIX
 // cTab - Commander's Tablet with FBCB2 Blue Force Tracking
 // Battlefield tablet to access real time intel and blue force tracker.
 // By - Riouken
 // http://forums.bistudio.com/member.php?64032-Riouken
 // You may re-use any of this work as long as you provide credit back to me.
 
+#undef CUSTOM_GRID_WAbs
+#undef CUSTOM_GRID_HAbs
+#undef CUSTOM_GRID_X
+#undef CUSTOM_GRID_Y
 #define CUSTOM_GRID_WAbs    (0.86)
 #define CUSTOM_GRID_HAbs    (CUSTOM_GRID_WAbs * 4/3)
-#define CUSTOM_GRID_X    (safezoneX - CUSTOM_GRID_WAbs * 0.17)
-#define CUSTOM_GRID_Y    (safezoneY + safezoneH * 0.88 - CUSTOM_GRID_HAbs * 0.72)
+#define CUSTOM_GRID_X       (safezoneX - CUSTOM_GRID_WAbs * 0.17)
+#define CUSTOM_GRID_Y       (safezoneY + safezoneH * 0.88 - CUSTOM_GRID_HAbs * 0.72)
 
+#undef cTab_android_DLGtoDSP_fctr
 #define cTab_android_DLGtoDSP_fctr (1)
 
 #include "cTab_android_controls.hpp"
 
+#undef MENU_sizeEx
 #define MENU_sizeEx ANDROID_pixel2Screen_H(OSD_elementBase_textSize_px)
 #include "..\shared\cTab_markerMenu_macros.hpp"
 

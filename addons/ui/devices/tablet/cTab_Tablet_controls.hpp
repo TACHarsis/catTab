@@ -1,4 +1,4 @@
-#include "..\shared\cTab_base_gui_classes.hpp"
+//#include "..\shared\cTab_base_gui_classes.hpp"
 
 // Background definition
 #define TABLET_BackgroundImage_px_W 2048 // width in pixels
@@ -17,10 +17,17 @@
 #define TABLET_mapRect_px_H (993)
 
 // Height of header and footer OSD elements
+#undef OSD_header_px_H
+#undef OSD_footer_px_H
 #define OSD_header_px_H (42)
 #define OSD_footer_px_H (0)
 
 // On-screen edge positions (left, right, top, bottom)
+#undef OSD_margin_px
+#undef OSD_edge_px_L
+#undef OSD_edge_px_R
+#undef OSD_edge_px_T
+#undef OSD_edge_px_B
 #define OSD_margin_px (10)
 #define OSD_edge_px_L (OSD_margin_px + SCREEN_contentRect_px_X)
 #define OSD_edge_px_R (-OSD_margin_px + SCREEN_contentRect_px_X + SCREEN_contentRect_px_W)
@@ -28,26 +35,35 @@
 #define OSD_edge_px_B (-OSD_footer_px_H + TABLET_mapRect_px_Y + TABLET_mapRect_px_H)
 
 // On-screen element base width and height
+#undef OSD_elementBase_size_px_W
+#undef OSD_elementBase_size_px_H
 #define OSD_elementBase_size_px_W ((SCREEN_contentRect_px_W - OSD_margin_px * 8) / 7)
 #define OSD_elementBase_size_px_H (OSD_header_px_H - OSD_margin_px)
 
 // On-screen element X-coord for left, center and right elements
+#undef OSD_element_left_px_X
+#undef OSD_element_center_px_X
+#undef OSD_element_right_px_X
 #define OSD_element_left_px_X (OSD_edge_px_L)
 #define OSD_element_center_px_X (OSD_edge_px_L + OSD_margin_px + OSD_elementBase_size_px_W)
 #define OSD_element_right_px_X (OSD_edge_px_R - OSD_elementBase_size_px_W)
 
 // On-screen element X-coord for left, center and right elements
+#undef OSD_element_px_X
 #define OSD_element_px_X(ITEM) (OSD_edge_px_L + (OSD_margin_px + OSD_elementBase_size_px_W) * (ITEM - 1))
 
 // On-screen text sizes, hight in pixels
 // Standard text elements
+#undef OSD_elementBase_textSize_px
+#undef OSD_elementBase_iconSize_px
 #define OSD_elementBase_textSize_px (27)
 #define OSD_elementBase_iconSize_px (35)
 
-// On-screen map centre cursor
-#define CURSOR_size_px (32)
-
 // Screen content (the stuff that changes, so map area minus header and footer)
+#undef SCREEN_contentRect_px_X
+#undef SCREEN_contentRect_px_Y
+#undef SCREEN_contentRect_px_W
+#undef SCREEN_contentRect_px_H
 #define SCREEN_contentRect_px_X (TABLET_mapRect_px_X)
 #define SCREEN_contentRect_px_Y (TABLET_mapRect_px_Y + OSD_header_px_H)
 #define SCREEN_contentRect_px_W (TABLET_mapRect_px_W)
@@ -110,44 +126,76 @@
 #define SCREEN_icon_px_H (100)
 
 // Message element positions in pixels
+#undef SCREEN_messages_margin_outer_px
+#undef SCREEN_messages_margin_inner_px
 #define SCREEN_messages_margin_outer_px (20)
 #define SCREEN_messages_margin_inner_px (10)
 
+#undef SCREEN_messages_button_px_W
+#undef SCREEN_messages_button_H
 #define SCREEN_messages_button_px_W (150)
 #define SCREEN_messages_button_H (50)
 
+#undef SCREEN_messages_read_frame_px_X
+#undef SCREEN_messages_read_frame_px_Y
+#undef SCREEN_messages_read_frame_px_W
+#undef SCREEN_messages_read_frame_px_H
 #define SCREEN_messages_read_frame_px_X (SCREEN_contentRect_px_X + SCREEN_messages_margin_outer_px)
 #define SCREEN_messages_read_frame_px_Y (SCREEN_contentRect_px_Y + SCREEN_messages_margin_inner_px)
 #define SCREEN_messages_read_frame_px_W (SCREEN_contentRect_px_W - SCREEN_messages_margin_outer_px * 2)
 #define SCREEN_messages_read_frame_px_H ((SCREEN_contentRect_px_H - TASKBAR_area_px_H - SCREEN_messages_margin_inner_px * 3) / 2)
 
+#undef SCREEN_messages_read_list_px_X
+#undef SCREEN_messages_read_list_px_Y
+#undef SCREEN_messages_read_list_px_W
+#undef SCREEN_messages_read_list_px_H
 #define SCREEN_messages_read_list_px_X (SCREEN_messages_read_frame_px_X + SCREEN_messages_margin_inner_px)
 #define SCREEN_messages_read_list_px_Y (SCREEN_messages_read_frame_px_Y + SCREEN_messages_margin_outer_px)
 #define SCREEN_messages_read_list_px_W ((SCREEN_messages_read_frame_px_W - SCREEN_messages_margin_inner_px * 3) / 3)
 #define SCREEN_messages_read_list_px_H (SCREEN_messages_read_frame_px_H - SCREEN_messages_margin_inner_px - SCREEN_messages_margin_outer_px)
 
+#undef SCREEN_messages_read_text_px_X
+#undef SCREEN_messages_read_text_px_Y
+#undef SCREEN_messages_read_text_px_W
+#undef SCREEN_messages_read_text_px_H
 #define SCREEN_messages_read_text_px_X (SCREEN_messages_read_list_px_X + SCREEN_messages_read_list_px_W + SCREEN_messages_margin_inner_px)
 #define SCREEN_messages_read_text_px_Y (SCREEN_messages_read_list_px_Y)
 #define SCREEN_messages_read_text_px_W (SCREEN_messages_read_list_px_W * 2)
 #define SCREEN_messages_read_text_px_H (SCREEN_messages_read_list_px_H - SCREEN_messages_margin_inner_px - SCREEN_messages_button_H)
 
+#undef SCREEN_messages_compose_frame_px_X
+#undef SCREEN_messages_compose_frame_px_Y
+#undef SCREEN_messages_compose_frame_px_W
+#undef SCREEN_messages_compose_frame_px_H
 #define SCREEN_messages_compose_frame_px_X (SCREEN_messages_read_frame_px_X)
 #define SCREEN_messages_compose_frame_px_Y (SCREEN_messages_read_frame_px_Y + SCREEN_messages_read_frame_px_H + SCREEN_messages_margin_inner_px)
 #define SCREEN_messages_compose_frame_px_W (SCREEN_messages_read_frame_px_W)
 #define SCREEN_messages_compose_frame_px_H (SCREEN_messages_read_frame_px_H)
 
+#undef SCREEN_messages_compose_list_px_X
+#undef SCREEN_messages_compose_list_px_Y
+#undef SCREEN_messages_compose_list_px_W
+#undef SCREEN_messages_compose_list_px_H
 #define SCREEN_messages_compose_list_px_X (SCREEN_messages_read_list_px_X)
 #define SCREEN_messages_compose_list_px_Y (SCREEN_messages_compose_frame_px_Y + SCREEN_messages_margin_outer_px)
 #define SCREEN_messages_compose_list_px_W (SCREEN_messages_read_list_px_W)
 #define SCREEN_messages_compose_list_px_H (SCREEN_messages_read_list_px_H)
 
+#undef SCREEN_messages_compose_text_px_X
+#undef SCREEN_messages_compose_text_px_Y
+#undef SCREEN_messages_compose_text_px_W
+#undef SCREEN_messages_compose_text_px_H
 #define SCREEN_messages_compose_text_px_X (SCREEN_messages_read_text_px_X)
 #define SCREEN_messages_compose_text_px_Y (SCREEN_messages_compose_list_px_Y)
 #define SCREEN_messages_compose_text_px_W (SCREEN_messages_read_text_px_W)
 #define SCREEN_messages_compose_text_px_H (SCREEN_messages_read_text_px_H)
 
+#undef SCREEN_messages_button_send_px_X
+#undef SCREEN_messages_button_send_px_Y
 #define SCREEN_messages_button_send_px_X (SCREEN_messages_compose_frame_px_X + SCREEN_messages_compose_frame_px_W - SCREEN_messages_margin_inner_px - SCREEN_messages_button_px_W)
 #define SCREEN_messages_button_send_px_Y (SCREEN_messages_compose_text_px_Y + SCREEN_messages_compose_text_px_H + SCREEN_messages_margin_inner_px)
+
+#undef SCREEN_messages_button_delete_px_X
 
 #define SCREEN_messages_button_delete_px_X (SCREEN_messages_button_send_px_X)
 #define SCREEN_messages_button_delete_px_Y (SCREEN_messages_read_text_px_Y + SCREEN_messages_read_text_px_H + SCREEN_messages_margin_inner_px)
@@ -162,7 +210,7 @@ class cTab_RscText_Tablet: cTab_RscText {
     colorBackground[] = COLOR_TRANSPARENT;
     shadow = 0;
 };
-class cTab_RscListbox_Tablet: cTab_RscListbox {
+class cTab_RscListBox_Tablet: cTab_RscListBox {
     sizeEx = QUOTE(TABLET_pixel2Screen_H(OSD_elementBase_textSize_px * 0.8));
 };
 class cTab_RscCombo_Tablet: cTab_RscCombo {
@@ -177,11 +225,11 @@ class cTab_RscButton_Tablet: cTab_RscButton {
 };
 
 class Ctab_RscButton_Tablet_VideoToggle : cTab_RscButton{
-    colorBackground[] = {0.118, 0.118, 0.118,0.3};
-    colorBackgroundActive[] = {0.118, 0.118, 0.118,0.3};
-    colorFocused[] = {0.118, 0.118, 0.118,0.3};
+    colorBackground[] = {0.118, 0.118, 0.118, 0.3};
+    colorBackgroundActive[] = {0.118, 0.118, 0.118, 0.3};
+    colorFocused[] = {0.118, 0.118, 0.118, 0.3};
     colorText[] = {1, 1, 1, 0.3};
-    colorShadow[] = {0,0,0,0.03};
+    colorShadow[] = {0, 0, 0, 0.03};
 };
 
 class cTab_Tablet_background: cTab_RscPicture {
@@ -320,8 +368,8 @@ class cTab_Tablet_OSD_hookGrid: cTab_RscText_Tablet {
     style = ST_CENTER;
     x = QUOTE(TABLET_pixel2Screen_X(OSD_element_right_px_X));
     y = QUOTE(TABLET_pixel2Screen_Y(OSD_edge_px_B - OSD_margin_px - OSD_elementBase_size_px_H * 4));
-    colorText[] = {1,1,1,0.5};
-    colorBackground[] = {0,0,0,0.25};
+    colorText[] = {1, 1, 1, 0.5};
+    colorBackground[] = {0, 0, 0, 0.25};
 };
 class cTab_Tablet_OSD_hookElevation: cTab_Tablet_OSD_hookGrid {
     idc = IDC_CTAB_OSD_HOOK_ELEVATION;
@@ -392,17 +440,17 @@ class cTab_Tablet_RscMapControl: cTab_RscMapControl {
     alphaFadeEndScale = 10;
 
     // Rendering density coefficients
-    ptsPerSquareSea = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // seas
-    ptsPerSquareTxt = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // textures
-    ptsPerSquareCLn = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // count-lines
-    ptsPerSquareExp = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // exposure
-    ptsPerSquareCost = QUOTE( 8 / (0.86 / CUSTOM_GRID_HAbs));        // cost
+    ptsPerSquareSea = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // seas
+    ptsPerSquareTxt = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // textures
+    ptsPerSquareCLn = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // count-lines
+    ptsPerSquareExp = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // exposure
+    ptsPerSquareCost = QUOTE(8 / (0.86 / CUSTOM_GRID_HAbs));        // cost
 
     // Rendering thresholds
-    ptsPerSquareFor = QUOTE( 3 / (0.86 / CUSTOM_GRID_HAbs));        // forests
-    ptsPerSquareForEdge = QUOTE( 100 / (0.86 / CUSTOM_GRID_HAbs));    // forest edges
-    ptsPerSquareRoad = QUOTE( 1.5 / (0.86 / CUSTOM_GRID_HAbs));        // roads
-    ptsPerSquareObj = QUOTE( 4 / (0.86 / CUSTOM_GRID_HAbs));        // other objects
+    ptsPerSquareFor = QUOTE(3 / (0.86 / CUSTOM_GRID_HAbs));        // forests
+    ptsPerSquareForEdge = QUOTE(100 / (0.86 / CUSTOM_GRID_HAbs));    // forest edges
+    ptsPerSquareRoad = QUOTE(1.5 / (0.86 / CUSTOM_GRID_HAbs));        // roads
+    ptsPerSquareObj = QUOTE(4 / (0.86 / CUSTOM_GRID_HAbs));        // other objects
 };
 class cTab_Tablet_notification: cTab_RscText_Tablet {
     idc = IDC_CTAB_NOTIFICATION;
@@ -410,4 +458,10 @@ class cTab_Tablet_notification: cTab_RscText_Tablet {
     y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y + (2 * OSD_elementBase_textSize_px)));
     w = QUOTE(TABLET_pixel2Screen_W(SCREEN_contentRect_px_W * 0.5));
     colorBackground[] = COLOR_BLACK;
+};
+
+class cTab_Tablet_FrameBox : cTab_RscControlsGroup {
+    class VScrollbar {scrollSpeed = 0;};
+    class HScrollbar {scrollSpeed = 0;};
+    class Scrollbar {scrollSpeed = 0;};
 };
