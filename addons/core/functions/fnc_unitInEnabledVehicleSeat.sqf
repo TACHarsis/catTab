@@ -23,7 +23,7 @@
         _playerHasCtabItem = [player,["ItemcTab","ItemAndroid","ItemMicroDAGR"]] call Ctab_ui_fnc_unitInEnabledVehicleSeat;
 */
 
-params ["_unit","_vehicle","_type"];
+params ["_unit", "_vehicle", "_type"];
 //TODO: This whole thing is unnecessarily complex and there are now commands to do it better.
 private _return = false;
 

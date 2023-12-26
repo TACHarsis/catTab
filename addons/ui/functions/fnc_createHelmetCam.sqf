@@ -99,7 +99,8 @@ private _fov = _unit getVariable [QGVAR(targetFovHash), 0.75];
 _unit setVariable [QGVAR(targetFovHash), _fov];
 
 _nameTextCtrl ctrlSetText (name _unit);
-_heartTextIconCtrl ctrlSetText "90bpm 80/60";
+private _healthData = [_unit] call EFUNC(core,getUnitHealthData);
+_heartTextIconCtrl ctrlSetText _healthData # 5; // string hint
 _heartIconCtrl setVariable [QGVAR(time), 0];
 
 //TODO: Tripple  check that the heartbeat animation is actually the right frequency and comment how and why, so I don't have to do this again
@@ -123,29 +124,36 @@ if(isNil QGVAR(helmetEventHandle)) then {
                     _cam camCommit 0.1;
 
                     private _healthData = [_unit] call EFUNC(core,getUnitHealthData);
-                    _healthData params ["_alive", "_conscious", "_health", "_bpm", "_stringHint", "_colorHint"];
+                    _healthData params ["_alive", "_conscious", "_health", "_bpm", "_colorHint", "_stringHint"];
                     _heartIconCtrl ctrlSetTextColor _colorHint;
                     _heartTextIconCtrl ctrlSetTextColor _colorHint;
                     _heartTextIconCtrl ctrlSetText _stringHint;
 
                     if(_bpm > 0) then {
-                        private _wavePeriod = (60/_bpm);
+                        // calc length of 1 heartbeat
+                        private _timePerHeartbeat = (60 / _bpm);
 
-                        private _iconTime = _heartIconCtrl getVariable [QGVAR(time), 0];
-
-                        _iconTime = (_iconTime + diag_deltaTime) % _wavePeriod;
-
-                        _heartIconCtrl setVariable [QGVAR(time), _iconTime];
+                        // heartbeat delta time is the time spent in the current heartbeat (so 0..timePerHeartbeat)
+                        // retrieve previous heartbeat delta time
+                        private _heartbeatDeltaTime = _heartIconCtrl getVariable [QGVAR(time), 0];
+                        // calc new heartbeat delta time
+                        _heartbeatDeltaTime = (_heartbeatDeltaTime + diag_deltaTime) % _timePerHeartbeat;
+                        _heartIconCtrl setVariable [QGVAR(time), _heartbeatDeltaTime];
 
                         private _images = [
                             "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
+                            "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
+                            "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa",
+                            "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
+                            "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
                             "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa",
                             "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u100_ca.paa",
+                            "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa",
                             "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa"
                         ];
-                        private _timePerImage = _wavePeriod / (count _images + 1);
-                        private _imageIdx = floor (_iconTime / _timePerImage);
-                        if(_imageIdx == 5) then { diag_log "LOOOOOOOOOOOOOOL"};
+                        private _timePerImage = _timePerHeartbeat / (count _images);
+                        private _imageIdx = floor (_heartbeatDeltaTime / _timePerImage);
+                        //diag_log format ["BPM: %1, TPHB: %2, HBD: %3, II: %4, %5", _bpm, _timePerHeartbeat, _heartbeatDeltaTime, _imageIdx, (_images # _imageIdx)];
                         _heartIconCtrl ctrlSetText (_images # _imageIdx);
                     } else {
                         _heartIconCtrl ctrlSetText "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\d100_ca.paa";
