@@ -1,14 +1,12 @@
 #include "script_component.hpp"
 #include "..\devices\shared\cTab_defines.hpp"
 #define ANIM_LENGTH 0.3
-#define DEFAULT_RATIO 1.3333333333333
 #define SA_MARGIN 0.004
 
 #define BUTTON_EXTENT_LR    (0.020)
 #define BUTTON_EXTENT_UD    (0.026)
 
-params ["_ctrlInfo", "_controls", "_screenArea", ["_foldDirection", 0, [0]]];
-_ctrlInfo params ["_frameCtrl", ["_config", configNull, [configNull]]];
+params ["_frameCtrl", "_controls", "_screenArea", ["_foldDirection", 0, [0]]];
 
 private _fnc_onButtonClick = {
     params ["_buttonCtrl"];
@@ -24,7 +22,7 @@ private _fnc_foldFrame = {
 
     private _foldingOffset = _frameCtrl getVariable QGVAR(foldingOffset);
     
-    _frameCtrl getVariable QGVAR(elements) params ["_buttonCtrl", "_backgroundCtrl", "_content"];
+    _frameCtrl getVariable QGVAR(elements) params ["_buttonCtrl", "_backgroundCtrl", "_contentCtrlsHash"];
     private _buttonTexts = _buttonCtrl getVariable QGVAR(buttonTexts);
     private _stateFactor = [1, -1] select _newState;
 
@@ -46,16 +44,17 @@ private _fnc_foldFrame = {
     _backgroundCtrl ctrlSetPosition _backgroundPos;
     _backgroundCtrl ctrlCommit ANIM_LENGTH;
 
+    //TODO: since the videoCtrl is now no longer just a content control it needs to be folded individually
     // content
     {
-        _x params ["_contentCtrl", "_ctrlRelSize"];
+        _y params ["_contentCtrl", "_ctrlRelSize"];
         
         private _contentCtrlPos = ctrlPosition _contentCtrl;
         _contentCtrlPos set [0, POS_X(_contentCtrlPos) + CONTENT_X(_foldingOffset) * _stateFactor];
         _contentCtrlPos set [1, POS_Y(_contentCtrlPos) + CONTENT_Y(_foldingOffset) * _stateFactor];
         _contentCtrl ctrlSetPosition _contentCtrlPos;
         _contentCtrl ctrlCommit ANIM_LENGTH;
-    } foreach _content;
+    } foreach _contentCtrlsHash;
 
     // button
     _buttonCtrl ctrlSetText (_buttonTexts select _newState);
@@ -71,44 +70,39 @@ private _fnc_foldFrame = {
 [
     {
         params ["_frameCtrl", "_controls", "_screenArea", "_foldDirection", "_fnc_onButtonClick", "_fnc_foldFrame"];
-        _screenArea params ["_SAX","_SAY", "_SAW", "_SAH"];
+        _screenArea params ["_SAX", "_SAY", "_SAW", "_SAH"];
 
-        _controls params ["_content", "_backgroundCtrl", "_buttonCtrl"];
-        private _screenAR = getResolution select 4;
+        _controls params ["_contentCtrlsHash", "_backgroundCtrl", "_buttonCtrl"];
 
-        // actually used area and video area, button area
-        private ["_constrainedHeight", "_constrainedWidth"];
-        _constrainedHeight = -2;
-        _constrainedWidth = -3;
+        private ["_maximumScreenArea"];
+        switch (GVAR(tabletFeedDealWithAspectRatio)) do {
+            case (R2T_METHOD_SHRINK) : {
+                // if we shrink the texture, we shrink the frame around it, too
+                _maximumScreenArea = [_screenArea, R2T_METHOD_SHRINK, ALIGN_UPLEFT] call FUNC(positionTextureR2T);
+            };
+            case (R2T_METHOD_ZOOMCROP) : {
+                // if we zoom and crop, we use the available area fully
+                _maximumScreenArea = [_SAX, _SAY, _SAW, _SAH];
+            };
+        };
+
+        //TODO: Figure out how to solve the problem of the vertically misaligned video when folding left/right
+        //TODO: Text and figure out how well up/down works and if it should be optional, also if the same alignment problem exists
+        // actually used content and video area, minus button area (and margins?)
+        private ["_contentWidth", "_contentHeight"];
+       //TODO: this needs adjustement for the x,y, too, right?
         switch (_foldDirection) do {
             case 0 /* fold left */;
             case 1 /* fold right */ : {
-                _constrainedWidth = _SAW - BUTTON_EXTENT_LR;
-                _constrainedHeight = _SAH;
+                _contentWidth = (_maximumScreenArea # 2) - BUTTON_EXTENT_LR;
+                _contentHeight = (_maximumScreenArea # 3);
             };
             case 2  /* fold down */;
             case 3  /* fold up */ : {
-                _constrainedWidth = _SAW;
-                _constrainedHeight = _SAH - BUTTON_EXTENT_UD;
+                _contentWidth = (_maximumScreenArea # 2);
+                _contentHeight = (_maximumScreenArea # 3) - BUTTON_EXTENT_UD;
             };
             default { throw format ["Not a valid folding direction: %1", _foldDirection] };
-        };
-
-        private _heightRelToSACW = _constrainedWidth / _screenAR * DEFAULT_RATIO;
-        private _overflowH = _heightRelToSACW > _SAH;
-        private _widthRelToSACH = _constrainedHeight * _screenAR / DEFAULT_RATIO;
-        private _overflowW = _widthRelToSACH > _SAW;
-        
-        private ["_contentWidth", "_contentHeight"];
-        switch (true) do {
-            case (_overflowH || !(_overflowW || _overflowH)) : { // calc width from height, default
-                _contentHeight = _constrainedHeight;
-                _contentWidth = _contentHeight * _screenAR / DEFAULT_RATIO;
-            };
-            case (_overflowW) : { // calc height from width
-                _contentWidth = _constrainedWidth;
-                _contentHeight = _contentWidth / _screenAR * DEFAULT_RATIO;
-            };
         };
 
         private ["_usedScreenAreaWidth", "_usedScreenAreaHeight"];
@@ -134,9 +128,10 @@ private _fnc_foldFrame = {
                 _backgroundHeight = _contentHeight;
             };
         };
-        private ["_backgroundPos", "_contentPos", "_buttonPos", "_groupPos"];
+        private ["_backgroundPos", "_contentRect", "_buttonPos", "_groupPos"];
         private ["_foldingOffset"];
         private ["_buttonTexts"];
+        private ["_alignment"];
         switch (_foldDirection) do {
             case 0 /* fold left */ : {
                 _foldingOffset = [
@@ -156,7 +151,7 @@ private _fnc_foldFrame = {
                     _usedScreenAreaWidth - _buttonWidth,
                     _usedScreenAreaHeight
                 ];
-                _contentPos = [
+                _contentRect = [
                     0,
                     0.002,
                     _contentWidth,
@@ -169,6 +164,7 @@ private _fnc_foldFrame = {
                     _buttonHeight
                 ];
                 _buttonTexts = [">>", "<<"];
+                _alignment = ALIGN_CENTERLEFT;
             };
             case 1  /* fold right */ : {
                 _foldingOffset = [
@@ -188,7 +184,7 @@ private _fnc_foldFrame = {
                     _usedScreenAreaWidth - _buttonWidth,
                     _usedScreenAreaHeight
                 ];
-                _contentPos = [
+                _contentRect = [
                     _buttonWidth,
                     0.002,
                     _contentWidth,
@@ -201,6 +197,7 @@ private _fnc_foldFrame = {
                     _buttonHeight
                 ];
                 _buttonTexts = ["<<", ">>"];
+                _alignment = ALIGN_CENTERRIGHT;
             };
             case 2  /* fold down */ : {
                 _foldingOffset = [
@@ -220,7 +217,7 @@ private _fnc_foldFrame = {
                     _usedScreenAreaWidth,
                     _usedScreenAreaHeight - _buttonHeight
                 ];
-                _contentPos = [
+                _contentRect = [
                     0.002,
                     _buttonHeight,
                     _contentWidth,
@@ -233,6 +230,7 @@ private _fnc_foldFrame = {
                     _buttonHeight
                 ];
                 _buttonTexts = ["/\/\", "\/\/"];
+                _alignment = ALIGN_LOCENTER;
             };
             case 3  /* fold up */ : {
                 _foldingOffset = [
@@ -252,7 +250,7 @@ private _fnc_foldFrame = {
                     _usedScreenAreaWidth,
                     _usedScreenAreaHeight - _buttonHeight
                 ];
-                _contentPos = [
+                _contentRect = [
                     0.002,
                     0,
                     _contentWidth,
@@ -265,6 +263,21 @@ private _fnc_foldFrame = {
                     _buttonHeight
                 ];
                 _buttonTexts = ["\/\/", "/\/\"];
+                _alignment = ALIGN_UPCENTER;
+            };
+        };
+
+        private ["_ratioFixedTextureArea"];
+        private _maximumTextureArea = [_SAX, _SAY, _contentWidth, _contentWidth];
+        switch (GVAR(tabletFeedDealWithAspectRatio)) do {
+            case (R2T_METHOD_SHRINK) : {
+                _ratioFixedTextureArea = [_contentRect, R2T_METHOD_SHRINK, _alignment] call FUNC(positionTextureR2T);
+                //TODO: logical error here with the position method assuming that we are in a group rect..
+                _ratioFixedTextureArea set [0, _contentRect # 0];
+                _ratioFixedTextureArea set [1, _contentRect # 1];
+            };
+            case (R2T_METHOD_ZOOMCROP) : {
+                _ratioFixedTextureArea = [_contentRect, R2T_METHOD_ZOOMCROP, ALIGN_UPCENTER] call FUNC(positionTextureR2T);
             };
         };
 
@@ -274,19 +287,12 @@ private _fnc_foldFrame = {
         // background
         _backgroundCtrl ctrlSetPosition _backgroundPos;
         _backgroundCtrl ctrlCommit 0;
+        private _videoCtrl = _frameCtrl getVariable QGVAR(feed_videoCtrl);
+        _videoCtrl ctrlSetPosition _ratioFixedTextureArea;
+        _videoCtrl ctrlCommit 0;
 
         // video + content
-        {
-            _x params ["_contentCtrl", "_ctrlRelSize"];
-            private _ctrlPos = [
-                (POS_X(_contentPos)) + (POS_W(_contentPos)) * (POS_X(_ctrlRelSize)),
-                (POS_Y(_contentPos)) + (POS_H(_contentPos)) * (POS_Y(_ctrlRelSize)),
-                (POS_W(_contentPos)) * (POS_W(_ctrlRelSize)),
-                (POS_H(_contentPos)) * (POS_H(_ctrlRelSize))
-            ];
-            _contentCtrl ctrlSetPosition _ctrlPos;
-            _contentCtrl ctrlCommit 0;
-        } foreach _content;
+        [_contentCtrlsHash, _contentRect, 0] call FUNC(fitContentControlsByRelativeSize);
 
         // button
         _buttonCtrl ctrlSetPosition _buttonPos;
@@ -298,7 +304,7 @@ private _fnc_foldFrame = {
         _buttonCtrl setVariable [QGVAR(buttonTexts), _buttonTexts];
         _buttonCtrl ctrlAddEventHandler ["ButtonClick", _fnc_onButtonClick];
 
-        _frameCtrl setVariable [QGVAR(elements), [_buttonCtrl, _backgroundCtrl, _content]];
+        _frameCtrl setVariable [QGVAR(elements), [_buttonCtrl, _backgroundCtrl, _contentCtrlsHash]];
         _frameCtrl setVariable [QGVAR(foldingOffset), _foldingOffset];
         _frameCtrl setVariable [QGVAR(state), true];
         _frameCtrl setVariable [QGVAR(_fnc_fold), _fnc_foldFrame];

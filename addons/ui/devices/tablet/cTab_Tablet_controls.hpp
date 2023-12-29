@@ -67,7 +67,7 @@
 #define SCREEN_contentRect_px_X (TABLET_mapRect_px_X)
 #define SCREEN_contentRect_px_Y (TABLET_mapRect_px_Y + OSD_header_px_H)
 #define SCREEN_contentRect_px_W (TABLET_mapRect_px_W)
-#define SCREEN_contentRect_px_H (TABLET_mapRect_px_H - OSD_header_px_H - OSD_footer_px_H)
+#define SCREEN_contentRect_px_H (TABLET_mapRect_px_H - OSD_header_px_H)
 
 // Base macros to convert pixel space to screen space, but for groups (same size as map)
 #define TABLET_pixel2GroupRect_X(PIXEL) (((PIXEL) - SCREEN_contentRect_px_X) / TABLET_BackgroundImage_px_W * CUSTOM_GRID_WAbs)

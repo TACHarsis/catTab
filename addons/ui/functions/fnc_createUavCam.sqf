@@ -39,7 +39,7 @@ if !(alive _uav) exitWith {false};
 if(!(_uav in GVARMAIN(UAVList))) exitWith {false};
 private _frameCtrls = _uavFrameCtrls # _camIdx;
 _frameCtrls params ["_frameGrp", "", "_videoCtrl"];
-private _videoControllerCtrl = _frameGrp getVariable [QGVAR(videoController), controlNull];
+private _videoControllerCtrl = _frameGrp getVariable [QGVAR(feed_controllerCtrl), controlNull];
 
 if(_videoControllerCtrl isEqualTo controlNull) exitWith {false};
 if(_videoCtrl isEqualTo controlNull) exitWith {false};
@@ -51,8 +51,8 @@ if(!isNull _existingTarget && _existingTarget == _uav) exitWith {true};
 // now that all checks have passed, remove existing UAV camera
 [_camID] call FUNC(deleteUAVcam);
 
-private _content = _frameGrp getVariable [QGVAR(content), []];
-private _nameTextCtrl = _content # 1 # 0;
+private _contentHash = _frameGrp getVariable [QGVAR(feed_contentCtrlsHash), createHashMap];
+private _nameTextCtrl = (_contentHash get FEED_NAME) # 0;
 
 // retrieve memory point name from vehicle config
 private _config = (configFile >> "CfgVehicles" >> typeOf _uav);

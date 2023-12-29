@@ -9,7 +9,7 @@ private _displaySettings = [_displayName] call FUNC(getSettings);
 private _mode = _displaySettings get QSETTING_MODE;
 if (isNil "_mode") exitWith {};
 
-if (_mode isEqualTo QSETTING_MODE_CAM_HCAM) then {
+if (_mode in [QSETTING_MODE_CAM_HCAM, QSETTING_MODE_CAM_HCAM_FULL]) then {
     private _helmetListCtrls = uiNamespace getVariable [QGVAR(HCAMListCtrls), []];
     {
         private _hcamListCtrl = _x;
@@ -19,12 +19,13 @@ if (_mode isEqualTo QSETTING_MODE_CAM_HCAM) then {
         private _deselectIndex = _hcamListCtrl lbAdd format ["*DESELECT"];
         _hcamListCtrl lbSetData [_deselectIndex, ""];
         {
-            private _index = _hcamListCtrl lbAdd format ["%1:%2 (%3)",groupId group _x,groupId _x,name _x];
+            private _index = _hcamListCtrl lbAdd format ["%1:%2 (%3)", groupId group _x, groupId _x, name _x];
             _hcamListCtrl lbSetData [_index, _x call BIS_fnc_netId];
         } foreach GVARMAIN(hCamList);
 
         lbSort [_hcamListCtrl, "ASC"];
-        private _settingName = GVAR(helmetCamSettingsNames) select _foreachIndex;
+        private _frameIdx = _hcamListCtrl getVariable [QGVAR(frameIdx), -1];
+        private _settingName = GVAR(helmetCamSettingsNames) select _frameIdx;
         private _data = [_displayName, _settingName] call FUNC(getSettings);
         private _unit = _data call BIS_fnc_objectFromNetId;
         if (!isNull _unit) then {

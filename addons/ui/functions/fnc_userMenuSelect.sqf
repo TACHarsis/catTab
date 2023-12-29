@@ -40,7 +40,8 @@ switch (_type) do {
     
     // Lock UAV cam to clicked position
     case (2) : {
-        [GVAR(cTabUserSelIcon) select 0] call FUNC(lockUavCamTo);
+        //TODO: get actual index of currently selected uav
+        [GVAR(cTabUserSelIcon) select 0, 0] call FUNC(lockUavCamTo);
     };
 
     default {

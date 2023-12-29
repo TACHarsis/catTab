@@ -26,3 +26,27 @@
 #define GROUP_H(pos) (pos select 3)
 #define CONTENT_X(pos) (pos select 4)
 #define CONTENT_Y(pos) (pos select 5)
+
+#define ARMA_UI_RATIO 1.3333333333333
+
+#define R2T_METHOD_SHRINK   0
+#define R2T_METHOD_ZOOMCROP 1
+#define NUM_R2T_METHODS     2
+
+#define DO_NOT_ALIGN        -1
+#define ALIGN_CENTERLEFT    0
+#define ALIGN_CENTER        1
+#define ALIGN_CENTERRIGHT   2
+#define ALIGN_UPLEFT        3
+#define ALIGN_UPCENTER      4
+#define ALIGN_UPRIGHT       5
+#define ALIGN_LOLEFT        6
+#define ALIGN_LOCENTER      7
+#define ALIGN_LORIGHT       8
+#define NUM_ALIGNMENTS      9
+
+#define FEED_CONTROLLER     QUOTE(FeedController)
+#define FEED_NAME           QUOTE(FeedName)
+#define HEARTBEAT_ICON      QUOTE(FeedHBIcon)
+#define HEARTBEAT_TEXT      QUOTE(FeedHBText)
+

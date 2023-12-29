@@ -249,20 +249,70 @@ class GVARMAIN(Tablet_dlg){
             };
         };
         // // ------ FULLSCREEN UAV Gunner ------
-        class cTabUAVGunnerFull: cTab_RscControlsGroup {
-            idc = IDC_CTAB_UAVGUNNER_FULL;
+        class cTabUAVFull: cTab_RscControlsGroup {
+            idc = IDC_CTAB_UAV_FULLSCREEN;
             x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X));
             y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y));
             w = QUOTE(TABLET_pixel2Screen_W(SCREEN_contentRect_px_W));
             h = QUOTE(TABLET_pixel2Screen_H(SCREEN_contentRect_px_H));
+
+            class controls {
+                class List: cTab_RscControlsGroup {
+                    idc = IDC_CTAB_UAV_FULLSCREEN_LIST;
+                    x = QUOTE(0);
+                    y = QUOTE(0);
+                    w = QUOTE(TABLET_pixel2Screen_W((SCREEN_contentRect_px_W)));
+                    h = QUOTE(TABLET_pixel2Screen_H(TASKBAR_area_px_H));
+
+                    class VScrollbar {scrollSpeed = 0;};
+                    class HScrollbar {scrollSpeed = 0;};
+                    class Scrollbar {scrollSpeed = 0;};
+                };
+                class Content: cTab_RscControlsGroup {
+                    idc = IDC_CTAB_UAV_FULLSCREEN_CNTNT;
+                    x = QUOTE(0);
+                    y = QUOTE(TABLET_pixel2Screen_H(TASKBAR_area_px_H));
+                    w = QUOTE(TABLET_pixel2Screen_W((SCREEN_contentRect_px_W)));
+                    h = QUOTE(TABLET_pixel2Screen_H(SCREEN_contentRect_px_H - TASKBAR_area_px_H));
+
+                    class VScrollbar {scrollSpeed = 0;};
+                    class HScrollbar {scrollSpeed = 0;};
+                    class Scrollbar {scrollSpeed = 0;};
+                };
+            };
         };
-        // // ---------- FULLSCREEN HCAM -----------
+        // ---------- FULLSCREEN HCAM -----------
         class cTabHcamFull: cTab_RscControlsGroup {
-            idc = IDC_CTAB_HCAM_FULL;
+            idc = IDC_CTAB_HCAM_FULLSCREEN;
             x = QUOTE(TABLET_pixel2Screen_X(SCREEN_contentRect_px_X));
             y = QUOTE(TABLET_pixel2Screen_Y(SCREEN_contentRect_px_Y));
             w = QUOTE(TABLET_pixel2Screen_W(SCREEN_contentRect_px_W));
             h = QUOTE(TABLET_pixel2Screen_H(SCREEN_contentRect_px_H));
+
+            class controls {
+                class List: cTab_RscControlsGroup {
+                    idc = IDC_CTAB_HCAM_FULLSCREEN_LIST;
+                    x = QUOTE(0);
+                    y = QUOTE(0);
+                    w = QUOTE(TABLET_pixel2Screen_W((SCREEN_contentRect_px_W)));
+                    h = QUOTE(TABLET_pixel2Screen_H(TASKBAR_area_px_H));
+
+                    class VScrollbar {scrollSpeed = 0;};
+                    class HScrollbar {scrollSpeed = 0;};
+                    class Scrollbar {scrollSpeed = 0;};
+                };
+                class Content: cTab_RscControlsGroup {
+                    idc = IDC_CTAB_HCAM_FULLSCREEN_CNTNT;
+                    x = QUOTE(0);
+                    y = QUOTE(TABLET_pixel2Screen_H(TASKBAR_area_px_H));
+                    w = QUOTE(TABLET_pixel2Screen_W((SCREEN_contentRect_px_W)));
+                    h = QUOTE(TABLET_pixel2Screen_H(SCREEN_contentRect_px_H - TASKBAR_area_px_H));
+
+                    class VScrollbar {scrollSpeed = 0;};
+                    class HScrollbar {scrollSpeed = 0;};
+                    class Scrollbar {scrollSpeed = 0;};
+                };
+            };
         };
         /*
             ### Overlays ###

@@ -18,7 +18,7 @@
      
      Returns:
          BOOLEAN - If settings could be stored
-     
+
      Example:
         [QGVARMAIN(Tablet_dlg),[[QSETTING_CURRENT_MAP_TYPE,QMAP_TYPE_SAT],[QSETTING_MAP_SCALE_DISPLAY,"4"]]] call Ctab_ui_fnc_setSettings;
         

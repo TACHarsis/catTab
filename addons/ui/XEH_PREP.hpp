@@ -1,4 +1,5 @@
 PREP(addNotification);
+PREP(alignRectInRect);
 PREP(caseButtonsAdjustBrightness);
 PREP(caseButtonsAdjustTextSize);
 PREP(applyTextSize);
@@ -50,6 +51,8 @@ PREP(onLoadVideoDisplayFrame);
 PREP(onTabletClose);
 PREP(onTabletOpen);
 PREP(open);
+PREP(positionTextureR2T);
+PREP(fitContentControlsByRelativeSize);
 PREP(processNotifications);
 PREP(remoteControlUav);
 PREP(setDeviceBackground);

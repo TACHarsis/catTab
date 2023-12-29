@@ -30,7 +30,7 @@ private _fnc_deleteCam = {
         _cam cameraEffect ["TERMINATE","BACK", _renderTargetName];
         camDestroy _cam;
         private _frameGrp = _camData # 4;
-        private _videoControllerCtrl = _frameGrp getVariable [QGVAR(videoController), controlNull];
+        private _videoControllerCtrl = _frameGrp getVariable [QGVAR(feed_controllerCtrl), controlNull];
 
         _videoControllerCtrl setVariable [QGVAR(cameraTarget), objNull];
         _videoControllerCtrl setVariable [QGVAR(cameraTargetType), nil];

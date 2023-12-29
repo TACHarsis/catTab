@@ -9,9 +9,8 @@ private _displaySettings = [_displayName] call FUNC(getSettings);
 private _mode = _displaySettings get QSETTING_MODE;
 if (isNil "_mode") exitWith {};
 
-if (_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
+if (_mode in [QSETTING_MODE_CAM_UAV, QSETTING_MODE_CAM_UAV_FULL]) then {
     private _uavListCtrls = uiNamespace getVariable [QGVAR(UAVListCtrls), []];
-
     {
         private _UAVListCtrl = _x;
         lbClear _UAVListCtrl;
@@ -27,7 +26,8 @@ if (_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
         } foreach GVARMAIN(UAVList);
 
         lbSort [_UAVListCtrl, "ASC"];
-        private _settingName = GVAR(uavCamSettingsNames) select _foreachIndex;
+        private _frameIdx = _UAVListCtrl getVariable [QGVAR(frameIdx), -1];
+        private _settingName = GVAR(uavCamSettingsNames) select _frameIdx;
         private _data = [_displayName, _settingName] call FUNC(getSettings);
         private _uav = _data call BIS_fnc_objectFromNetId;
         if !(isNull _uav) then {

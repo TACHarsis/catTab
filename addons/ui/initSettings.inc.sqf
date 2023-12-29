@@ -95,7 +95,7 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
 
 //--------------- Tablet ---------------
 
-[
+[ //TODO: this sets the number as floating point
     QGVAR(numTabletFeeds),
     "SLIDER",
     [LLSTRING(Setting_Tablet_Number_Feeds), LLSTRING(Setting_Tablet_Number_Feeds_Hint)],
@@ -120,7 +120,7 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
 [
     QGVAR(tabletFeedTextureResolutionFullscreen),
     "LIST",
-    [LLSTRING(Setting_Tablet_Texture_Resolution), LLSTRING(Setting_Tablet_Texture_Resolution_Hint)],
+    [LLSTRING(Setting_Tablet_Texture_Resolution), LLSTRING(Setting_Tablet_Texture_Resolution_Hint)], //TODO: Share this between small and fullscreen?
     [_modCategory, _tabletCategory],
     [
         [1024, 2048],
@@ -131,11 +131,37 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
 ] call CBA_fnc_addSetting;
 
 [
+    QGVAR(tabletFeedDealWithAspectRatio),
+    "LIST",
+    [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_Hint)],
+    [_modCategory, _tabletCategory],
+    [
+        [R2T_METHOD_SHRINK, R2T_METHOD_ZOOMCROP],
+        ["Shrink-To-Fit", "Zoom-And-Crop"], //TODO: Localize these
+        0
+    ],
+    0
+] call CBA_fnc_addSetting;
+
+[
+    QGVAR(tabletFeedDealWithAspectRatioFullscreen),
+    "LIST",
+    [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_Hint)], //TODO: Share this between small and fullscreen?
+    [_modCategory, _tabletCategory],
+    [
+        [R2T_METHOD_SHRINK, R2T_METHOD_ZOOMCROP],
+        ["Shrink-To-Fit", "Zoom-And-Crop"], //TODO: Localize these
+        0
+    ],
+    0
+] call CBA_fnc_addSetting;
+
+[
     QGVAR(tabletDesktopBackgroundMode),
     "LIST",
     [LLSTRING(Setting_Tablet_Desktop_Background_Mode), LLSTRING(Setting_Tablet_Desktop_Background_Mode_Hint)],
     [_modCategory, _tabletCategory],
-    [[0,1,2],["Preset", "Custom", "Color"], 0],
+    [[0, 1, 2], ["Preset", "Custom", "Color"], 0], //TODO: Localize these
     2
 ] call CBA_fnc_addSetting;
 
@@ -160,7 +186,7 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
     "COLOR",
     [LLSTRING(Setting_Tablet_Desktop_Color), LLSTRING(Setting_Tablet_Desktop_Color_Hint)],
     [_modCategory, _tabletCategory],
-    [0,0.443,0.348],
+    [0, 0.443, 0.348],
     2
 ] call CBA_fnc_addSetting;
 

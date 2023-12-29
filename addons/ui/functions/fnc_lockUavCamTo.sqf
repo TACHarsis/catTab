@@ -19,6 +19,8 @@
 */
 params ["_camPos", "_camIdx"];
 
+//TODO: Fix this function
+
 private _displayName = GVAR(ifOpen) select 1;
 private _uav = objNull;
 private _uavCamSettings = [_displayName, QSETTING_CAM_UAV] call FUNC(getSettings);

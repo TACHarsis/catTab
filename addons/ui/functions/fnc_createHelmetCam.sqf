@@ -32,7 +32,7 @@ if !(alive _unit) exitWith {false};
 if(!(_unit in GVARMAIN(hCamList))) exitWith {false};
 private _frameCtrls = _hCamFrameCtrls # _camIdx;
 _frameCtrls params ["_frameGrp", "", "_videoCtrl"];
-private _videoControllerCtrl = _frameGrp getVariable [QGVAR(videoController), controlNull];
+private _videoControllerCtrl = _frameGrp getVariable [QGVAR(feed_controllerCtrl), controlNull];
 
 if(_videoControllerCtrl isEqualTo controlNull) exitWith {false};
 if(_videoCtrl isEqualTo controlNull) exitWith {false};
@@ -43,10 +43,10 @@ if(!isNull _existingTarget && _existingTarget == _unit) exitWith {true};
 // now that all checks have passed, remove existing UAV camera
 [_camID] call FUNC(deleteHelmetCam);
 
-private _content = _frameGrp getVariable [QGVAR(content), []];
-private _heartIconCtrl = _content # 1 # 0;
-private _heartTextIconCtrl = _content # 2 # 0;
-private _nameTextCtrl = _content # 3 # 0;
+private _contentHash = _frameGrp getVariable [QGVAR(feed_contentCtrlsHash), createHashMap];
+private _nameTextCtrl = (_contentHash get FEED_NAME) # 0;
+private _heartIconCtrl = (_contentHash get HEARTBEAT_ICON) # 0;
+private _heartTextIconCtrl = (_contentHash get HEARTBEAT_TEXT) # 0;
 
 private _camOffSet = [];
 private _targetOffSet = [];

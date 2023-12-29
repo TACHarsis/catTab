@@ -18,6 +18,8 @@
         [] call Ctab_ui_fnc_remoteControlUav;
 */
 
+//TODO: move to core?
+
 // see if there is a selected UAV and if it is alive before continuing
 if (isNil QGVAR(currentUAV) || {!alive GVAR(currentUAV)}) exitWith {false};
 

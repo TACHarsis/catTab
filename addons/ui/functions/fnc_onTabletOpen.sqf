@@ -8,6 +8,27 @@ disableSerialization;
 
 params ["_display", ["_config", configNull]];
 
+private _fnc_createListCtrl = {
+    params ["_display", "_rect", "_ctrlGrp", "_selChangedCallback"];
+    private _listCtrl = _display ctrlCreate ["cTab_RscCombo_Tablet", -1, _ctrlGrp];
+
+
+    _listCtrl ctrlSetPosition _rect;
+    _listCtrl ctrlCommit 0;
+
+    _listCtrl setVariable [QGVAR(LBSelChangedCallback), _selChangedCallback];
+
+    _listCtrl ctrlAddEventHandler ["LBSelChanged", {
+        params ["_ctrl"];
+        private _callback = _ctrl getVariable [QGVAR(LBSelChangedCallback), {}];
+        _this call _callback;
+    }];
+
+    _listCtrl setVariable [QGVAR(camIdx), _i];
+
+    _listCtrl
+};
+
 private _fnc_createVideoSourceLists = {
     params ["_display", "_ctrlGrp", "_selChangedCallback"];
 
@@ -15,33 +36,15 @@ private _fnc_createVideoSourceLists = {
     private _rect = ctrlPosition _ctrlGrp;
     private _listWidth = (_rect # 2) / GVAR(numTabletFeeds);
     private _listHeight = _rect # 3;
-
     for "_i" from 0 to (GVAR(numTabletFeeds)-1) do {
-        private _listCtrl = _display ctrlCreate ["cTab_RscCombo_Tablet", -1, _ctrlGrp];
-        
         private _listRect = [
-            _listWidth * _i,
-            0,
-            _listWidth,
-            _listHeight
-        ];
-        _listCtrl ctrlSetPosition _listRect;
-        _listCtrl ctrlCommit 0;
-
-        _listCtrl setVariable [QGVAR(LBSelChangedCallback), _selChangedCallback];
+                _listWidth * _i,
+                0,
+                _listWidth,
+                _listHeight
+            ];
+        private _listCtrl = [_display, _listRect, _ctrlGrp, _selChangedCallback] call _fnc_createListCtrl;
         _listCtrl setVariable [QGVAR(frameIdx), _i];
-
-        _listCtrl ctrlAddEventHandler ["LBSelChanged", {
-            params ["_ctrl"];
-
-            private _params = +_this;
-            private _callback = _ctrl getVariable [QGVAR(LBSelChangedCallback), {}];
-            private _frameIdx = _ctrl getVariable [QGVAR(frameIdx), -1];
-            _params pushBack _frameIdx;
-            _params call _callback;
-        }];
-
-        _listCtrl setVariable [QGVAR(camIdx), _i];
 
         _listCtrlsList pushBack _listCtrl;
     };
@@ -50,9 +53,10 @@ private _fnc_createVideoSourceLists = {
 };
 
 private _fnc_uavListSelChangedCallback = {
-    params ["_control", "_lbCurSel", "_frameIdx"];
+    params ["_control", "_lbCurSel"];
 
     if (!GVAR(openStart) && (_lbCurSel != -1)) then {
+        private _frameIdx = _ctrl getVariable [QGVAR(frameIdx), -1];
         [
             QGVARMAIN(Tablet_dlg),
             [
@@ -71,9 +75,10 @@ uiNamespace setVariable [QGVAR(UAVListCtrls), _uavListCtrls];
 [QEGVAR(core,uavListUpdate), GVARMAIN(UAVList)] call CBA_fnc_localEvent;
 
 private _fnc_hCamListSelChangedCallback = {
-    params ["_control", "_lbCurSel", "_frameIdx"];
+    params ["_control", "_lbCurSel"];
 
     if (!GVAR(openStart) && (_lbCurSel != -1)) then {
+        private _frameIdx = _ctrl getVariable [QGVAR(frameIdx), -1];
         [
             QGVARMAIN(Tablet_dlg),
             [
@@ -87,9 +92,8 @@ private _fnc_hCamListSelChangedCallback = {
 };
 
 private _hcamListCtrlGrp = _display displayCtrl IDC_CTAB_GROUP_HCAM_SOURCE_GRP;
-private _hcamListCtrls = [_display, _hcamListCtrlGrp, _fnc_hCamListSelChangedCallback] call _fnc_createVideoSourceLists;
-uiNamespace setVariable [QGVAR(HCAMListCtrls), _hcamListCtrls];
-
+private _hCamListCtrls = [_display, _hcamListCtrlGrp, _fnc_hCamListSelChangedCallback] call _fnc_createVideoSourceLists;
+uiNamespace setVariable [QGVAR(HCAMListCtrls), _hCamListCtrls];
 
 private _fnc_createVideoFrames = {
     params ["_display", "_feedType", "_fnc_controlsCreationFunction", "_startIDC"];
@@ -97,51 +101,51 @@ private _fnc_createVideoFrames = {
     private _ctrlGrp = _display displayCtrl IDC_CTAB_GROUP_VIDEO_FRAME;
     private _grpRect = ctrlPosition _ctrlGrp;
 
-    private _frameCtrlsList = [];
-    private _maxFrameHeight = ((_grpRect # 3) / (1 max ceil (GVAR(numTabletFeeds) / 2)));
+    private _frameDataList = [];
+    //TODO: find good values for 1 and 2 screens
+    private _maxFrameHeight = ((_grpRect # 3) / (2 max ceil (GVAR(numTabletFeeds) / 2)));
     private _maxFrameWidth = ((_grpRect # 2) * 0.475) min (_grpRect # 2) / 2;
 
     for "_i" from 0 to (GVAR(numTabletFeeds)-1) do {
         private _frameAreaX = (_grpRect # 0) + ((_grpRect # 2) - _maxFrameWidth) * (_i % 2);
         private _frameAreaY = (_grpRect # 1) + (_maxFrameHeight * floor (_i / 2));
-        
+
+        //TODO: might be easiest to just put all of the content into a content group ctrl of their own, nesting ftw
         private _frameArea = [_frameAreaX, _frameAreaY, _maxFrameWidth, _maxFrameHeight];
         private _foldingDirection = (_i % 2); //0, 1, 2, 3 -> left, right, down, up
-        private _frameGrp = _display ctrlCreate ["cTab_Tablet_FrameBox", (_startIDC + _i)];
-        _frameGrp ctrlSetScrollvalues [0, 0];
-        _frameGrp ctrlSetPosition _frameArea;
-        _frameGrp ctrlCommit 0;
-
+        private _frameGrpCtrl = _display ctrlCreate ["cTab_Tablet_FrameBox", (_startIDC + _i)];
+        _frameGrpCtrl ctrlSetScrollvalues [0, 0];
+        _frameGrpCtrl ctrlSetPosition _frameArea;
+        _frameGrpCtrl ctrlCommit 0;
         private _backgroundRect = [0, 0, _frameArea # 2, _frameArea # 3];
-        private _backgroundCtrl = _display ctrlCreate ["cTab_IGUIBack", -1, _frameGrp];
+        private _backgroundCtrl = _display ctrlCreate ["cTab_IGUIBack", -1, _frameGrpCtrl];
         _backgroundCtrl ctrlSetPosition _backgroundRect;
         _backgroundCtrl ctrlCommit 0;
 
-        private _videoCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrp];
+        private _videoCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrpCtrl];
         private _renderTargetName = format ["%1RenderTarget%2", _feedType, _i];
-        _videoCtrl ctrlSetText format ["#(argb,%2,%2,1)r2t(%1,1)", _renderTargetName, GVAR(tabletFeedTextureResolutionFullscreen)];
+        _videoCtrl ctrlSetText format ["#(argb,%2,%2,1)r2t(%1,1)", _renderTargetName, GVAR(tabletFeedTextureResolution)];
         _videoCtrl setVariable [QGVAR(renderTargetName), _renderTargetName];
 
-        private _toggleButtonCtrl = _display ctrlCreate ["Ctab_RscButton_Tablet_VideoToggle", -1, _frameGrp];
+        private _toggleButtonCtrl = _display ctrlCreate ["Ctab_RscButton_Tablet_VideoToggle", -1, _frameGrpCtrl];
         _toggleButtonCtrl ctrlSetText "<<";
 
-        private _frameCtrls = [_frameGrp, _backgroundCtrl, _videoCtrl, _toggleButtonCtrl];
-
+        private _frameData = [_frameGrpCtrl, _backgroundCtrl, _videoCtrl, _toggleButtonCtrl];
         // array of content in the form of [videoController, [[contentControl, [relPos]], ..]
-        private _controllerAndContent = [_display, _frameArea, _frameCtrls] call _fnc_controlsCreationFunction;
-        _frameCtrls append _controllerAndContent;
+        private _contentCtrls = [_display, _frameArea, _frameData] call _fnc_controlsCreationFunction;
+        _frameData append _contentCtrls;
 
-        _controllerAndContent params ["_videoControllerCtrl", "_contentCtrlsAndPos"];
-        _frameGrp setVariable [QGVAR(videoController), _videoControllerCtrl];
-        _frameGrp setVariable [QGVAR(content), _contentCtrlsAndPos];
-        [_videoControllerCtrl, _feedType] call FUNC(onLoadVideoDisplayController);
+        _contentCtrls params ["_controllerCtrl", "_contentCtrlsHash"];
+        _frameGrpCtrl setVariable [QGVAR(feed_controllerCtrl), _controllerCtrl];
+        _frameGrpCtrl setVariable [QGVAR(feed_contentCtrlsHash), _contentCtrlsHash];
+        [_controllerCtrl, _feedType] call FUNC(onLoadVideoDisplayController);
 
-        _frameGrp setVariable [QGVAR(videoCtrl), _videoCtrl];
+        _frameGrpCtrl setVariable [QGVAR(feed_videoCtrl), _videoCtrl];
 
         [
-            [_frameGrp], // [ctrlsGroup]
+            _frameGrpCtrl, // [ctrlsGroup]
             [ // ctrls
-                _contentCtrlsAndPos, // array with controls + relative positioning
+                _contentCtrlsHash, // array with controls + relative positioning
                 _backgroundCtrl, // background control
                 _toggleButtonCtrl // the button to toggle folding
             ],
@@ -149,59 +153,74 @@ private _fnc_createVideoFrames = {
             _foldingDirection
         ] call FUNC(onLoadVideoDisplayFrame);
 
-        _frameGrp ctrlShow false;
+        _frameGrpCtrl ctrlShow false;
 
-        _frameCtrlsList pushBack _frameCtrls;
+        _frameDataList pushBack _frameData;
     };
 
-    _frameCtrlsList
+    _frameDataList
 };
 
 private _fnc_createUAVControls = {
-    params ["_display", "_frameArea", "_frameCtrls"];
-    _frameCtrls params ["_frameGrp", "_backgroundCtrl", "_videoCtrl", "_toggleButtonCtrl"];
+    params ["_display", "_frameArea", "_frameData"];
+    _frameData params ["_frameGrpCtrl", "_backgroundCtrl", "_videoCtrl", "_toggleButtonCtrl"];
 
-    private _nameCtrl = _display ctrlCreate ["cTab_RscText", -1, _frameGrp];
+    private _nameCtrl = _display ctrlCreate ["cTab_RscText", -1, _frameGrpCtrl];
     _nameCtrl ctrlSetText "Drone Dronedottir";
 
-    private _videoControllerCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrp];
-    _videoControllerCtrl ctrlSetActiveColor [1, 0, 0, 1];
+    private _controllerCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrpCtrl];
+    _controllerCtrl ctrlSetActiveColor [1, 0, 0, 1];
     [
-        _videoControllerCtrl,
-        [
-            [_videoCtrl,                [0, 0, 1, 1]],
-            [_nameCtrl,                 [0, 0, 1, 0.1]],
-            [_videoControllerCtrl,      [0, 0, 1, 1]]
+        _controllerCtrl,
+        createHashMapFromArray [
+            [
+                FEED_NAME,
+                [_nameCtrl,                 [0, 0, 1, 0.1]]
+            ],
+            [
+                FEED_CONTROLLER,
+                [_controllerCtrl,      [0, 0, 1, 1]]
+            ]
         ]
     ]
 };
 
 private _uavFrameCtrls = [_display, QSETTING_FEED_TYPE_UAV, _fnc_createUAVControls, IDC_CTAB_UAV_FRAME_0] call _fnc_createVideoFrames;
-
 uiNamespace setVariable [QGVAR(UAVFrameCtrls), _uavFrameCtrls];
 
 private _fnc_createHCamControls = {
-    params ["_display", "_frameArea", "_frameCtrls"];
-    _frameCtrls params ["_frameGrp", "_backgroundCtrl", "_videoCtrl", "_toggleButtonCtrl"];
+    params ["_display", "_frameArea", "_frameData"];
+    _frameData params ["_frameGrpCtrl", "_backgroundCtrl", "_videoCtrl", "_toggleButtonCtrl"];
 
-    private _heartBeatIconCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrp];
+    private _heartBeatIconCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrpCtrl];
     _heartBeatIconCtrl ctrlSetText "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa";
-    private _heartBeatTextCtrl = _display ctrlCreate ["cTab_RscText", -1, _frameGrp];
+    private _heartBeatTextCtrl = _display ctrlCreate ["cTab_RscText", -1, _frameGrpCtrl];
     _heartBeatTextCtrl ctrlSetText "132456789";
-    private _nameCtrl = _display ctrlCreate ["cTab_RscText", -1, _frameGrp];
+    private _nameCtrl = _display ctrlCreate ["cTab_RscText", -1, _frameGrpCtrl];
     _nameCtrl ctrlSetText "Name Nameson";
 
     // needs to be created last so it overlays all others
-    private _videoControllerCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrp];
-    _videoControllerCtrl ctrlSetActiveColor [1, 0, 0, 1];
+    private _controllerCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrpCtrl];
+    _controllerCtrl ctrlSetActiveColor [1, 0, 0, 1];
     [
-        _videoControllerCtrl,
-        [
-            [_videoCtrl,                [0, 0, 1, 1]],
-            [_heartBeatIconCtrl,        [0, 0, (0.1 / 1.33333), 0.1]],
-            [_heartBeatTextCtrl,        [(0.1 / 1.33333), 0, (0.9/ 1.33333), 0.1]],
-            [_nameCtrl,                 [0, 0.1, 1, 0.1]],
-            [_videoControllerCtrl,      [0, 0, 1, 1]]
+        _controllerCtrl,
+        createHashMapFromArray [
+            [
+                FEED_NAME,
+                [_nameCtrl,                 [0, 0.1, 1, 0.1]]
+            ],
+            [
+                FEED_CONTROLLER,
+                [_controllerCtrl,      [0, 0, 1, 1]]
+            ],
+            [
+                HEARTBEAT_ICON,
+                [_heartBeatIconCtrl,        [0, 0, (0.1 / ARMA_UI_RATIO), 0.1]]
+            ],
+            [
+                HEARTBEAT_TEXT,
+                [_heartBeatTextCtrl,        [(0.1 / ARMA_UI_RATIO), 0, (0.9 / ARMA_UI_RATIO), 0.1]]
+            ]
         ]
     ]
 };
@@ -209,73 +228,54 @@ private _fnc_createHCamControls = {
 private _hCamFrameCtrls = [_display, QSETTING_FEED_TYPE_HCAM, _fnc_createHCamControls, IDC_CTAB_HCAM_FRAME_0] call _fnc_createVideoFrames;
 uiNamespace setVariable [QGVAR(HCAMFrameCtrls), _hCamFrameCtrls];
 
-#define DEFAULT_RATIO 1.3333333333333
+
 private _fnc_createFullScreenVideoFrame = {
-    params ["_display", "_feedType", "_fnc_controlsCreationFunction", "_frameGrpIDC"];
-    private _frameGrp = _display displayCtrl _frameGrpIDC;
-    private _frameGrpPos = ctrlPosition _frameGrp;
-    _frameGrpPos params ["_SAX","_SAY", "_SAW", "_SAH"];
+    params ["_display", "_feedType", "_fnc_controlsCreationFunction", "_frameGrpCtrl"];
+    private _frameGrpRect = ctrlPosition _frameGrpCtrl;
+    _frameGrpRect params ["_SAX","_SAY", "_SAW", "_SAH"];
 
-    private _screenAR = getResolution select 4;
-    private _heightRelToSACW = _SAW / _screenAR * DEFAULT_RATIO;
-    private _overflowH = _heightRelToSACW > _SAH;
-    private _widthRelToSACH = _SAH * _screenAR / DEFAULT_RATIO;
-    private _overflowW = _widthRelToSACH > _SAW;
-    
-    private ["_contentWidth", "_contentHeight"];
-    switch (true) do {
-        case (_overflowH || !(_overflowW || _overflowH)) : { // calc width from height, default
-            _contentHeight = _SAH;
-            _contentWidth = _contentHeight * _screenAR / DEFAULT_RATIO;
-        };
-        case (_overflowW) : { // calc height from width
-            _contentWidth = _SAW;
-            _contentHeight = _contentWidth / _screenAR * DEFAULT_RATIO;
-        };
-    };
+//TODO: There is a small gap below the fullscreen + cropped image, probably misaligned or shortened background? Could background just be hardcoded anyway?
+    private _ratioFixedTextureArea = [_frameGrpRect, GVAR(tabletFeedDealWithAspectRatioFullscreen), ALIGN_CENTER] call FUNC(positionTextureR2T);
+    _frameGrpRect params ["", "", "_contentWidth", "_contentHeight"];
 
-    private _backgroundRect = [0, 0, _frameGrpPos # 2, _frameGrpPos # 3];
-    private _backgroundCtrl = _display ctrlCreate ["cTab_IGUIBack", -1, _frameGrp];
+    private _backgroundRect = [0, 0, _frameGrpRect # 2, _frameGrpRect # 3];
+    private _backgroundCtrl = _display ctrlCreate ["cTab_IGUIBack", -1, _frameGrpCtrl];
+    _backgroundCtrl ctrlSetBackgroundColor [0.2, 0.2, 0.2, 1];
     _backgroundCtrl ctrlSetPosition _backgroundRect;
     _backgroundCtrl ctrlCommit 0;
 
+    //TODO: fix content rect to texture rect? Otherwise heartbeat icon may float in bar atop of shrunk fullscreen video
+    //      could be combined with positioning content differently for fullscreen anyway?
     private _contentRect = [((_SAW - _contentWidth) / 2), ((_SAH - _contentHeight) / 2), _contentWidth, _contentHeight];
-    private _fullscreenVideoCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrp];
-    _fullscreenVideoCtrl ctrlSetPosition _contentRect;
+    private _fullscreenVideoCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrpCtrl];
+    _fullscreenVideoCtrl ctrlSetPosition _ratioFixedTextureArea;
     _fullscreenVideoCtrl ctrlCommit 0;
 
     private _renderTargetName = format ["%1RenderTargetFull", _feedType];
     _fullscreenVideoCtrl setVariable [QGVAR(renderTargetName), _renderTargetName];
-    _fullscreenVideoCtrl ctrlSetText format ["#(argb,%2,%2,1)r2t(%1,1)", _renderTargetName, GVAR(tabletFeedTextureResolution)];;
+    _fullscreenVideoCtrl ctrlSetText format ["#(argb,%2,%2,1)r2t(%1,1)", _renderTargetName, GVAR(tabletFeedTextureResolutionFullscreen)];;
 
-    private _frameCtrls = [_frameGrp, controlNull, _fullscreenVideoCtrl, controlNull];
+    private _frameData = [_frameGrpCtrl, controlNull, _fullscreenVideoCtrl, controlNull];
 
-    private _controllerAndContent = [_display, ctrlPosition _frameGrp, [_frameGrp, controlNull, _fullscreenVideoCtrl, controlNull]] call _fnc_controlsCreationFunction;
-    _controllerAndContent params ["_videoControllerCtrl", "_contentCtrlsAndPos"];
-    _frameCtrls append _controllerAndContent;
+    private _contentCtrls = [_display, ctrlPosition _frameGrpCtrl, [_frameGrpCtrl, controlNull, _fullscreenVideoCtrl, controlNull]] call _fnc_controlsCreationFunction;
+    _contentCtrls params ["_controllerCtrl", "_contentCtrlsHash"];
+    _frameData append _contentCtrls;
 
-    // video + content
-    {
-        _x params ["_contentCtrl", "_ctrlRelSize"];
-        private _ctrlPos = [
-            (POS_X(_contentRect)) + (POS_W(_contentRect)) * (POS_X(_ctrlRelSize)),
-            (POS_Y(_contentRect)) + (POS_H(_contentRect)) * (POS_Y(_ctrlRelSize)),
-            (POS_W(_contentRect)) * (POS_W(_ctrlRelSize)),
-            (POS_H(_contentRect)) * (POS_H(_ctrlRelSize))
-        ];
-        _contentCtrl ctrlSetPosition _ctrlPos;
-        _contentCtrl ctrlCommit 0;
-    } foreach _contentCtrlsAndPos;
+    [_contentCtrlsHash, _contentRect, 0] call FUNC(fitContentControlsByRelativeSize);
 
-    _frameGrp setVariable [QGVAR(videoController), _videoControllerCtrl];
-    _frameGrp setVariable [QGVAR(content), _contentCtrlsAndPos];
-    [_videoControllerCtrl, _feedType] call FUNC(onLoadVideoDisplayController);
+    _frameGrpCtrl setVariable [QGVAR(feed_controllerCtrl), _controllerCtrl];
+    _frameGrpCtrl setVariable [QGVAR(feed_contentCtrlsHash), _contentCtrlsHash];
+    [_controllerCtrl, _feedType] call FUNC(onLoadVideoDisplayController);
 
-    _frameGrp setVariable [QGVAR(videoCtrl), _fullscreenVideoCtrl];
-    _frameGrp ctrlShow false;
+    _frameGrpCtrl setVariable [QGVAR(feed_videoCtrl), _fullscreenVideoCtrl];
+    _frameGrpCtrl ctrlShow false;
 
-    _frameCtrls
+    _frameData
 };
 
-_uavFrameCtrls pushBack ([_display, QSETTING_FEED_TYPE_UAV, _fnc_createUAVControls, IDC_CTAB_UAVGUNNER_FULL] call _fnc_createFullScreenVideoFrame);
-_hCamFrameCtrls pushBack ([_display, QSETTING_FEED_TYPE_HCAM, _fnc_createHCamControls, IDC_CTAB_HCAM_FULL] call _fnc_createFullScreenVideoFrame);
+private _fullscreenUAVListGrp = _display displayCtrl IDC_CTAB_UAV_FULLSCREEN_LIST;
+_uavListCtrls pushBack ([_display, ctrlPosition _fullscreenUAVListGrp, _fullscreenUAVListGrp, _fnc_uavListSelChangedCallback] call _fnc_createListCtrl);
+_uavFrameCtrls pushBack ([_display, QSETTING_FEED_TYPE_UAV, _fnc_createUAVControls, _display displayCtrl IDC_CTAB_UAV_FULLSCREEN_CNTNT] call _fnc_createFullScreenVideoFrame);
+private _fullscreenHCamListGrp = _display displayCtrl IDC_CTAB_HCAM_FULLSCREEN_LIST;
+_hCamListCtrls pushBack ([_display, ctrlPosition _fullscreenHCamListGrp, _fullscreenHCamListGrp, _fnc_hCamListSelChangedCallback] call _fnc_createListCtrl);
+_hCamFrameCtrls pushBack ([_display, QSETTING_FEED_TYPE_HCAM, _fnc_createHCamControls, _display displayCtrl IDC_CTAB_HCAM_FULLSCREEN_CNTNT] call _fnc_createFullScreenVideoFrame);
