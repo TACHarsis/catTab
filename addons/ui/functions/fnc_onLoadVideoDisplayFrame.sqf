@@ -18,10 +18,15 @@ private _fnc_onButtonClick = {
 
 private _fnc_foldFrame = {
     params ["_frameCtrl", "_newState"];
+    //TODO: Handle this more gracefully with a buffer instead of just denying it.
+    if(!ctrlCommitted _frameCtrl) exitWith {};
+    if(isNil "_newState") then {
+        _newState = !(_frameCtrl getVariable [QGVAR(state), false]);
+    };
     _frameCtrl setVariable [QGVAR(state), _newState];
 
     private _foldingOffset = _frameCtrl getVariable QGVAR(foldingOffset);
-    
+
     _frameCtrl getVariable QGVAR(elements) params ["_buttonCtrl", "_backgroundCtrl", "_contentCtrlsHash"];
     private _buttonTexts = _buttonCtrl getVariable QGVAR(buttonTexts);
     private _stateFactor = [1, -1] select _newState;

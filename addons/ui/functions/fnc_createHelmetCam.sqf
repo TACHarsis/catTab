@@ -158,6 +158,12 @@ if(isNil QGVAR(helmetEventHandle)) then {
                     } else {
                         _heartIconCtrl ctrlSetText "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\d100_ca.paa";
                     };
+
+                    // TODO: implement this properly
+                    private _isSelected = _unit isEqualTo GVAR(selectedHCam);
+                    private _videoCtrl = _frameGrp getVariable QGVAR(feed_videoCtrl);
+                    _videoCtrl ctrlSetTextColor ([[1, 1, 1, 1], [1, 0.95, 0.95, 1]] select _isSelected);
+
                 };
 
             } foreach GVAR(HelmetCamsData);

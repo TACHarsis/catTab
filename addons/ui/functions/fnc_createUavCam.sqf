@@ -27,10 +27,9 @@ if(_camID isEqualTo "") exitWith {false};
 
 private _camSetting = GVAR(uavCamSettings) getOrDefault [_camID, []];
 if(_camSetting isEqualTo []) exitWith {false};
-_camSetting params ["_camIdx", "_settingsName", "_uavNetID", "_idc"];
-
+_camSetting params ["_camIdx", "_settingsName", "_idc"];
 private _uavFrameCtrls = uiNamespace getVariable [QGVAR(UAVFrameCtrls), []];
-// if(count _uavFrameCtrls <= _camIdx) exitWith {false};
+if(count _uavFrameCtrls <= _camIdx) exitWith {false};
 
 // also does null-check
 if !(alive _uav) exitWith {false};
@@ -71,8 +70,8 @@ if (_camPosMemPt isNotEqualTo "" && {_camDirMemPt isNotEqualTo ""}) then {
     _renderTargetName setPiPEffect [_visionMode # 0, _visionMode # 1];
     _cam camSetFov 0.1; // set zoom
     _cam camCommit 0;
-    private _newCam = [_camID, _uav, _renderTargetName, _cam, _frameGrp];
-    GVAR(UAVCamsData) set [_camID, _newCam];
+    private _newCamData = [_camID, _uav, _renderTargetName, _cam, _frameGrp];
+    GVAR(UAVCamsData) set [_camID, _newCamData];
 
     _videoControllerCtrl ctrlEnable true;
     _videoControllerCtrl setVariable [QGVAR(cameraTarget), _uav];
@@ -97,7 +96,7 @@ if (count GVAR(UAVCamsData) > 0) exitWith {
                 {
                     if(count _y == 0) then { continue; };
 
-                    _y params ["_camID", "_uav","_renderTargetName","_cam","_frameGrp"];
+                    _y params ["_camID", "_uav", "_renderTargetName", "_cam", "_frameGrp"];
 
                     if(ctrlShown _frameGrp) then {
                         if (alive _uav) then {
@@ -111,6 +110,11 @@ if (count GVAR(UAVCamsData) > 0) exitWith {
                             //TODO: Set the mode on the actual drone with setTurretOpticsMode? Will need a dirty flag so it doesn't just get overridden all the time
 
                             _cam camCommit 0.1;
+
+                            // TODO: implement this properly
+                            private _isSelected = _uav isEqualTo GVAR(selectedUAV);
+                            private _videoCtrl = _frameGrp getVariable QGVAR(feed_videoCtrl);
+                            _videoCtrl ctrlSetTextColor ([[1, 1, 1, 1], [1, 0.95, 0.95, 1]] select _isSelected);
                         } else {
                             _removedUAVs pushBack _camID;
                         };

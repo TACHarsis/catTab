@@ -4,7 +4,7 @@
 
 disableSerialization;
 
-// ["Number of screens: %1", GVAR(numTabletFeeds)] call EFUNC(core,debugLog);
+// ["Number of screens: %1", GVAR(numTabletFeeds)] call FUNCMAIN(debugLog);
 
 params ["_display", ["_config", configNull]];
 
@@ -127,6 +127,11 @@ private _fnc_createVideoFrames = {
         _videoCtrl ctrlSetText format ["#(argb,%2,%2,1)r2t(%1,1)", _renderTargetName, GVAR(tabletFeedTextureResolution)];
         _videoCtrl setVariable [QGVAR(renderTargetName), _renderTargetName];
 
+        // TODO: Implement proper display of currently selected feed
+        // private _selectedIconCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrpCtrl];
+        // _selectedIconCtrl ctrlSetText format ["#(argb,%2,%2,1)r2t(%1,1)", _renderTargetName, GVAR(tabletFeedTextureResolution)];
+        // _selectedIconCtrl setVariable [QGVAR(renderTargetName), _renderTargetName];
+
         private _toggleButtonCtrl = _display ctrlCreate ["Ctab_RscButton_Tablet_VideoToggle", -1, _frameGrpCtrl];
         _toggleButtonCtrl ctrlSetText "<<";
 
@@ -138,6 +143,7 @@ private _fnc_createVideoFrames = {
         _contentCtrls params ["_controllerCtrl", "_contentCtrlsHash"];
         _frameGrpCtrl setVariable [QGVAR(feed_controllerCtrl), _controllerCtrl];
         _frameGrpCtrl setVariable [QGVAR(feed_contentCtrlsHash), _contentCtrlsHash];
+        //_frameGrpCtrl setVariable [QGVAR(feed_selectedIconCtrl), _selectedIconCtrl];
         [_controllerCtrl, _feedType] call FUNC(onLoadVideoDisplayController);
 
         _frameGrpCtrl setVariable [QGVAR(feed_videoCtrl), _videoCtrl];

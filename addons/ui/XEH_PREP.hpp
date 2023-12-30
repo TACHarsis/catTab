@@ -52,6 +52,7 @@ PREP(onTabletClose);
 PREP(onTabletOpen);
 PREP(open);
 PREP(positionTextureR2T);
+PREP(feedSelectionMapShortcuts);
 PREP(fitContentControlsByRelativeSize);
 PREP(processNotifications);
 PREP(remoteControlUav);

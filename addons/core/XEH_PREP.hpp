@@ -1,6 +1,6 @@
 PREP(checkGear);
 PREP(currentTime);
-PREP(debugLog);
+PREPMAIN(debugLog);
 PREP(degreeToOctant);
 PREP(dirTo);
 PREP(distance2D);

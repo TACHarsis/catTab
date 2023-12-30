@@ -33,9 +33,9 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                     }],
                                     //TODO: this still needs to be made compatible with helmet cam and uav mode.
                                     // [QGVAR(TABLET_UAVS),        createHashMapFromArray [
-                                    //                                 [DMC_CONDITION,             {/* !(isNull GVAR(currentUAV)) &&  */(GVAR(currentUAV) isNotEqualTo Ctab_player)}],
-                                    //                                 [DMC_SAVE_SCALE_POSITION,   {isNull GVAR(currentUAV)}],
-                                    //                                 [DMC_HUMAN_AVATAR,          {[[objNull], [GVAR(currentUAV), objNull]] select GVAR(trackCurrentUAV)}]
+                                    //                                 [DMC_CONDITION,             {/* !(isNull GVAR(selectedUAV)) &&  */(GVAR(selectedUAV) isNotEqualTo Ctab_player)}],
+                                    //                                 [DMC_SAVE_SCALE_POSITION,   {isNull GVAR(selectedUAV)}],
+                                    //                                 [DMC_HUMAN_AVATAR,          {[[objNull], [GVAR(selectedUAV), objNull]] select GVAR(trackCurrentUAV)}]
                                     // [QGVAR(TABLET_HCAM),          createHashMapFromArray [
                                     //                                 [DMC_CONDITION,             {!(isNil QGVAR(helmetCamData))}],
                                     //                                 [DMC_SAVE_SCALE_POSITION,   {isNil QGVAR(helmetCamData)}],
@@ -46,7 +46,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         private _mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
                                         switch (_mode) do {
                                             case (QSETTING_MODE_CAM_UAV) : {
-                                                [[-1,0] select GVAR(trackCurrentUAV), GVAR(currentUAV), GVAR(mapScaleUAV)]
+                                                [[-1,0] select GVAR(trackCurrentUAV), GVAR(selectedUAV), GVAR(mapScaleUAV)]
                                             };
                                             case (QSETTING_MODE_CAM_HCAM) : {
                                                 [[-1,0] select GVAR(trackCurrentHCam), GVAR(helmetCamData) select 2, GVAR(mapScaleHCam)]

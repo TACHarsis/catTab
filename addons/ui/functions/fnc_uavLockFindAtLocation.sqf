@@ -22,8 +22,8 @@ params [
    "_mapControl",
    [
       "_searchPos", 
-      [0,0],
-      [[]],[2,3]
+      [0, 0],
+      [[]], [2, 3]
    ]
 ];
 
@@ -46,6 +46,5 @@ private _maxDistance = _searchPos distanceSqr [(_searchPos select 0) + _targetRa
          };
    };
 } foreach GVARMAIN(UAVList);
-        
 
 _foundUAV

@@ -39,7 +39,7 @@ if(DMC_BFT_UAV in _bftOptions) then {
     private _nearbyUAV = [_mapCtrl, ctrlMousePosition _mapCtrl] call FUNC(uavfindAtLocation);
     {
         private _uav = _x;
-        private _isSelectedUAV = _uav isEqualTo GVAR(currentUAV);
+        private _isSelectedUAV = _uav isEqualTo GVAR(selectedUAV);
         private _isNearbyUAV = _uav isEqualTo _nearbyUAV;
         private _uavPosition = getPosASL _uav;
         
@@ -118,11 +118,11 @@ if(DMC_BFT_UAV in _bftOptions) then {
 
     } foreach GVARMAIN(UAVList);
 
-    if !(isNull GVAR(currentUAV)) then {
-        private _uavViewData = [GVAR(currentUAV)] call FUNC(getUAVViewData);
+    if !(isNull GVAR(selectedUAV)) then {
+        private _uavViewData = [GVAR(selectedUAV)] call FUNC(getUAVViewData);
         _uavViewData params ["_uavLookOrigin","_uavLookDir","_hitOccured","_aimPoint","_intersectRayTarget"];
         
-        private _uavViewConeVertices = [GVAR(currentUAV), _uavViewData] call FUNC(getUAVViewCone);
+        private _uavViewConeVertices = [GVAR(selectedUAV), _uavViewData] call FUNC(getUAVViewCone);
         
         private _coneColor = [
             [0.1, 0.5, 0.1 ,1],
@@ -315,7 +315,7 @@ if(DMC_BFT_HCAM in _bftOptions) then {
     private _nearbyHCam = [_mapCtrl, ctrlMousePosition _mapCtrl] call FUNC(hCamFindAtLocation);
     {
         private _hCamUnit = _x;
-        private _isSelectedHCam = _hCamUnit isEqualTo GVAR(currentHCam);
+        private _isSelectedHCam = _hCamUnit isEqualTo GVAR(selectedHCam);
         private _isNearbyHCam = _hCamUnit isEqualTo _nearbyHCam;
         private _hCamPosition = getPosASL _hCamUnit;
 

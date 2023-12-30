@@ -36,10 +36,10 @@ private _fnc_onMouseClick = {
         private _feedType = _videoController getVariable QGVAR(feedType);
         switch (_feedType) do {
             case (QSETTING_FEED_TYPE_UAV): {
-                [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_CURRENT, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
+                [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
             };
             case (QSETTING_FEED_TYPE_HCAM): {
-                [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_CURRENT, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
+                [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
             };
         };
     };
@@ -53,10 +53,10 @@ private _fnc_onMouseDoubleClick = {
     private _feedType = _videoController getVariable QGVAR(feedType);
     switch (_feedType) do {
         case (QSETTING_FEED_TYPE_UAV): {
-            [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_CURRENT, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
+            [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
         };
         case (QSETTING_FEED_TYPE_HCAM): {
-            [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_CURRENT, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
+            [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
         };
     };
     if(_button == 0) exitWith {

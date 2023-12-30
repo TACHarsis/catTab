@@ -22,24 +22,12 @@ params ["_camPos", "_camIdx"];
 //TODO: Fix this function
 
 private _displayName = GVAR(ifOpen) select 1;
-private _uav = objNull;
-private _uavCamSettings = [_displayName, QSETTING_CAM_UAV] call FUNC(getSettings);
-private _uavNetId = _uavCamSettings getOrDefault ["_camIdx", ""];
-private _uav = _uavNetId call BIS_fnc_objectFromNetId;
 
-// see if given UAV name is still in the list of valid UAVs
-if! (_uav in GVARMAIN(UAVList)) exitWith {};
-
-if(isNull _uav) then {
-    _uav = GVAR(currentUAV);
-};
-
-if !(isNull _uav) exitWith {
-    
+if !(isNull GVAR(selectedUAV)) exitWith {
     if (count _camPos == 2) then {
         _camPos = _camPos + [getTerrainHeightASL _camPos];
     };
-    _uav lockCameraTo [_camPos,[0]];
+    GVAR(selectedUAV) lockCameraTo [_camPos, [0]];
     
     true
 };

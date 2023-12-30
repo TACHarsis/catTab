@@ -35,7 +35,7 @@ switch (_type) do {
     // send GVAR(cTabUserSelIcon) to server
     case (1) : {
         GVAR(cTabUserSelIcon) pushBack Ctab_player;
-        [call EFUNC(core,getPlayerEncryptionKey),GVAR(cTabUserSelIcon)] remoteExec [QFUNC(UserMarkerAddServer), 2];
+        [call EFUNC(core,getPlayerEncryptionKey), GVAR(cTabUserSelIcon)] remoteExec [QFUNC(UserMarkerAddServer), 2];
     };
     
     // Lock UAV cam to clicked position

@@ -52,7 +52,7 @@ class MainSubmenu: cTab_RscControlsGroup {
             class lockUavCam: cTab_MenuItem {
                 idc = -1;
                 text = "Lock UAV Cam"; //--- ToDo: Localize;
-                toolTip = "Lock UAV Cam to this position, a UAV has to be previously selected";
+                toolTip = "Lock UAV Cam to this position, a UAV has to be previously selected, del on lock to release";
                 x = QUOTE(0);
                 y = QUOTE(MENU_elementY(4));
                 w = QUOTE(MENU_W);

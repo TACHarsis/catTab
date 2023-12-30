@@ -127,30 +127,30 @@ GVAR(msgReceiveEHID) = [
 ] call CBA_fnc_addEventHandler;
 
 GVAR(uavCamSettings) = createHashMapFromArray [
-    [QSETTING_CAM_UAV_0, [0, QSETTING_CAM_UAV_0, "", IDC_CTAB_UAV_FRAME_0 + 0]],
-    [QSETTING_CAM_UAV_1, [1, QSETTING_CAM_UAV_1, "", IDC_CTAB_UAV_FRAME_0 + 1]],
-    [QSETTING_CAM_UAV_2, [2, QSETTING_CAM_UAV_2, "", IDC_CTAB_UAV_FRAME_0 + 2]],
-    [QSETTING_CAM_UAV_3, [3, QSETTING_CAM_UAV_3, "", IDC_CTAB_UAV_FRAME_0 + 3]],
-    [QSETTING_CAM_UAV_4, [4, QSETTING_CAM_UAV_4, "", IDC_CTAB_UAV_FRAME_0 + 4]],
-    [QSETTING_CAM_UAV_5, [5, QSETTING_CAM_UAV_5, "", IDC_CTAB_UAV_FRAME_0 + 5]],
-    [QSETTING_CAM_UAV_FULL, [-1, QSETTING_CAM_UAV_FULL, "", nil]]
+    [QSETTING_CAM_UAV_0, [0, QSETTING_CAM_UAV_0, IDC_CTAB_UAV_FRAME_0 + 0]],
+    [QSETTING_CAM_UAV_1, [1, QSETTING_CAM_UAV_1, IDC_CTAB_UAV_FRAME_0 + 1]],
+    [QSETTING_CAM_UAV_2, [2, QSETTING_CAM_UAV_2, IDC_CTAB_UAV_FRAME_0 + 2]],
+    [QSETTING_CAM_UAV_3, [3, QSETTING_CAM_UAV_3, IDC_CTAB_UAV_FRAME_0 + 3]],
+    [QSETTING_CAM_UAV_4, [4, QSETTING_CAM_UAV_4, IDC_CTAB_UAV_FRAME_0 + 4]],
+    [QSETTING_CAM_UAV_5, [5, QSETTING_CAM_UAV_5, IDC_CTAB_UAV_FRAME_0 + 5]],
+    [QSETTING_CAM_UAV_FULL, [-1, QSETTING_CAM_UAV_FULL, -9999]]
 ];
 
 GVAR(helmetCamSettings) = createHashMapFromArray [
-    [QSETTING_CAM_HCAM_0, [0, QSETTING_CAM_HCAM_0, "", IDC_CTAB_HCAM_FRAME_0 + 0]],
-    [QSETTING_CAM_HCAM_1, [1, QSETTING_CAM_HCAM_1, "", IDC_CTAB_HCAM_FRAME_0 + 1]],
-    [QSETTING_CAM_HCAM_2, [2, QSETTING_CAM_HCAM_2, "", IDC_CTAB_HCAM_FRAME_0 + 2]],
-    [QSETTING_CAM_HCAM_3, [3, QSETTING_CAM_HCAM_3, "", IDC_CTAB_HCAM_FRAME_0 + 3]],
-    [QSETTING_CAM_HCAM_4, [4, QSETTING_CAM_HCAM_4, "", IDC_CTAB_HCAM_FRAME_0 + 4]],
-    [QSETTING_CAM_HCAM_5, [5, QSETTING_CAM_HCAM_5, "", IDC_CTAB_HCAM_FRAME_0 + 5]],
-    [QSETTING_CAM_HCAM_FULL, [-1, QSETTING_CAM_HCAM_FULL, "", nil]]
+    [QSETTING_CAM_HCAM_0, [0, QSETTING_CAM_HCAM_0, IDC_CTAB_HCAM_FRAME_0 + 0]],
+    [QSETTING_CAM_HCAM_1, [1, QSETTING_CAM_HCAM_1, IDC_CTAB_HCAM_FRAME_0 + 1]],
+    [QSETTING_CAM_HCAM_2, [2, QSETTING_CAM_HCAM_2, IDC_CTAB_HCAM_FRAME_0 + 2]],
+    [QSETTING_CAM_HCAM_3, [3, QSETTING_CAM_HCAM_3, IDC_CTAB_HCAM_FRAME_0 + 3]],
+    [QSETTING_CAM_HCAM_4, [4, QSETTING_CAM_HCAM_4, IDC_CTAB_HCAM_FRAME_0 + 4]],
+    [QSETTING_CAM_HCAM_5, [5, QSETTING_CAM_HCAM_5, IDC_CTAB_HCAM_FRAME_0 + 5]],
+    [QSETTING_CAM_HCAM_FULL, [-1, QSETTING_CAM_HCAM_FULL, -9999]]
 ];
 
 GVAR(uavCamSettingsNames) = [QSETTING_CAM_UAV_0, QSETTING_CAM_UAV_1, QSETTING_CAM_UAV_2, QSETTING_CAM_UAV_3, QSETTING_CAM_UAV_4, QSETTING_CAM_UAV_5, QSETTING_CAM_UAV_FULL];
 GVAR(helmetCamSettingsNames) = [QSETTING_CAM_HCAM_0, QSETTING_CAM_HCAM_1, QSETTING_CAM_HCAM_2, QSETTING_CAM_HCAM_3, QSETTING_CAM_HCAM_4, QSETTING_CAM_HCAM_5, QSETTING_CAM_HCAM_FULL];
 
-GVAR(currentUAV) = objNull;
-GVAR(currentHCam) = objNull;
+GVAR(selectedUAV) = objNull;
+GVAR(selectedHCam) = objNull;
 GVAR(trackCurrentUAV)= false;
 GVAR(trackCurrentHCam) = false;
 
@@ -231,16 +231,16 @@ GVAR(uavSelectedEHID) = [
     QGVAR(UAVSelected),
     {
         params ["_uav"];
-        if(isNull GVAR(currentUAV) && !isNil QGVAR(uavDebugPFH)) then {
+        if(isNull GVAR(selectedUAV) && !isNil QGVAR(uavDebugPFH)) then {
             GVAR(uavDebugPFH) call CBA_fnc_removePerFrameHandler;
             GVAR(uavDebugPFH) = nil;
         };
         
-        if(!isNull GVAR(currentUAV) && isNil QGVAR(uavDebugPFH)) then {
+        if(!isNull GVAR(selectedUAV) && isNil QGVAR(uavDebugPFH)) then {
             GVAR(uavDebugPFH) = [{
                 if(isNull Ctab_ui_currentUAV) exitWith {};
                 params ["","_pfhID"];
-                private _uav = GVAR(currentUAV);
+                private _uav = GVAR(selectedUAV);
 
                 private _uavViewData = [_uav] call FUNC(getUAVViewData);
                 _uavViewData params ["_uavLookOrigin","_uavLookDir","_hitOccured","_aimPoint","_intersectRayTarget"];

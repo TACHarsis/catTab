@@ -25,7 +25,7 @@
 
 #include "\a3\ui_f\hpp\defineDIKCodes.inc"
 
-params ["_display","_dikCode","_shiftKey","_ctrlKey","_altKey"];
+params ["_display", "_dikCode", "_shiftKey", "_ctrlKey", "_altKey"];
 
 private _displayName = GVAR(ifOpen) select 1;
 private _mode = [_displayName, QSETTING_MODE] call FUNC(getSettings);
@@ -104,10 +104,10 @@ private _return = switch (_dikCode) do {
             } else {
                 if!(_displayName in [QGVARMAIN(Tablet_dlg)]) exitWith {};
 
-                private _closestUAV = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(uavLockFindAtLocation);
-                if !(isNil "_closestUAV") then {
+                private _closestLockedUAV = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(uavLockFindAtLocation);
+                if (!isNull _closestLockedUAV) then {
                     // unlock
-                    _closestUAV lockCameraTo [objNull, [0]];
+                    _closestLockedUAV lockCameraTo [objNull, [0]];
                 };
             };
 
@@ -126,31 +126,24 @@ private _return = switch (_dikCode) do {
             ] call BIS_fnc_getFromPairs);
 
             if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
-                //TODO: Current/selected UAV is different now and doesn't just set/unset the only uav cam
                 private _closestUAV = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(uavFindAtLocation);
                 if !(isNull _closestUAV) then {
-                    //setting new active UAV
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_0, _closestUAV call BIS_fnc_netId]], true, true] call FUNC(setSettings);
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_CURRENT, _closestUAV call BIS_fnc_netId]], true, true] call FUNC(setSettings);
+                    //selecting UAV
+                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, _closestUAV call BIS_fnc_netId]], true, true] call FUNC(setSettings);
                 } else {
                     // deselect current uav
-                    //[QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_0, ""]], true, true] call FUNC(setSettings);
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_CURRENT, ""]], true, true] call FUNC(setSettings);
+                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, ""]], true, true] call FUNC(setSettings);
                 };
             } else {
-                //TODO: Current/selected UAV is different now and doesn't just set/unset the only uav cam
-                private _closestUnit = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(unitFindAtLocation);
+                private _closestHCam = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(hCamFindAtLocation);
                 if !(isNull _closestHCam) then {
-                    //setting new active UAV
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_0, _closestHCam call BIS_fnc_netId]], true, true] call FUNC(setSettings);
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_CURRENT, _closestHCam call BIS_fnc_netId]], true, true] call FUNC(setSettings);
+                    //selecting helmet cam
+                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, _closestHCam call BIS_fnc_netId]], true, true] call FUNC(setSettings);
                 } else {
-                    // deselect current uav
-                    //[QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_0, ""]], true, true] call FUNC(setSettings);
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_CURRENT, ""]], true, true] call FUNC(setSettings);
+                    // deselect current helmet cam
+                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, ""]], true, true] call FUNC(setSettings);
                 };
             };
-
             true
         };
         false
@@ -167,20 +160,18 @@ private _return = switch (_dikCode) do {
                 [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings),
                 [_displayName, QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
             ] call BIS_fnc_getFromPairs);
-   
-            //TODO: Current/selected UAV is different now and doesn't just set/unset the only uav cam
-            private _closestUAV = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(uavFindAtLocation);
 
-            ["%1 pressed on UAV: %2", _dikCode-1, _closestUAV] call EFUNC(core,debugLog);
-            // if !(isNull _closestUAV) then {
-            //     //setting new active UAV
-            //     [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_0, _closestUAV call BIS_fnc_netId]], true, true] call FUNC(setSettings);
-            //     [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_CURRENT, _closestUAV call BIS_fnc_netId]], true, true] call FUNC(setSettings);
-            // } else {
-            //     // deselect current uav
-            //     //[QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_0, ""]], true, true] call FUNC(setSettings);
-            //     [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_CURRENT, ""]], true, true] call FUNC(setSettings);
-            // };
+            private _closestUAV = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(uavFindAtLocation);
+            private _closestHCam = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(hcamFindAtLocation);
+
+            // ["%4%1 pressed with nearby UAV[%2] HCAM[%3]", _dikCode-1, _closestUAV, _closestHCam, ["", "Ctrl+"] select _ctrlKey] call FUNCMAIN(debugLog);
+            private _slotIdx = (_dikCode - 2);
+            private _modifierKeys = [_shiftKey, _ctrlKey, _altKey];
+            if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
+                [_ctrlScreen, GVAR(mapCursorPos), _dikCode, _modifierKeys, _slotIdx, GVAR(UAVCamSettingsNames), GVAR(UAVCamSettings), GVAR(UAVCamsData), QSETTING_CAM_UAV_SELECTED, QSETTING_FOLLOW_UAV, FUNC(uavFindAtLocation)] call FUNC(feedSelectionMapShortcuts);
+            } else {
+                [_ctrlScreen, GVAR(mapCursorPos), _dikCode, _modifierKeys, _slotIdx, GVAR(helmetCamSettingsNames), GVAR(helmetCamSettings), GVAR(HelmetCamsData), QSETTING_CAM_HCAM_SELECTED, QSETTING_FOLLOW_HCAM, FUNC(hCamFindAtLocation)] call FUNC(feedSelectionMapShortcuts);
+            };
             true
         };
         false
