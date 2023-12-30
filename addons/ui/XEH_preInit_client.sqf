@@ -150,7 +150,7 @@ GVAR(uavCamSettingsNames) = [QSETTING_CAM_UAV_0, QSETTING_CAM_UAV_1, QSETTING_CA
 GVAR(helmetCamSettingsNames) = [QSETTING_CAM_HCAM_0, QSETTING_CAM_HCAM_1, QSETTING_CAM_HCAM_2, QSETTING_CAM_HCAM_3, QSETTING_CAM_HCAM_4, QSETTING_CAM_HCAM_5, QSETTING_CAM_HCAM_FULL];
 
 GVAR(currentUAV) = objNull;
-GVAR(currentHelmet) = objNull;
+GVAR(currentHCam) = objNull;
 GVAR(trackCurrentUAV)= false;
 GVAR(trackCurrentHCam) = false;
 

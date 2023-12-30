@@ -2,11 +2,11 @@
 
 params ["_uav","_uavViewdata"];
 //TODO: Cache?
-_uavViewData params ["_uavLookOrigin","_uavLookDir","_hitOccured","_aimPoint","_intersectRayTarget"];
+_uavViewData params ["_uavLookOrigin", "_uavLookDir", "_hitOccured", "_aimPoint", "_intersectRayTarget"];
 
 private _los = _aimPoint vectorDiff _uavLookOrigin; 
-_los set [2,0];
-private _losOrigin = [_uavLookOrigin#0,_uavLookOrigin#1,0];
+_los set [2, 0];
+private _losOrigin = [_uavLookOrigin # 0,_uavLookOrigin # 1, 0];
 
 private _uavFOV = [0.1, 0.5, getObjectFOV _uav] call BIS_fnc_clamp;
 private _halfAngleOfView = atan(_uavFOV);

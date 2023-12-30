@@ -114,6 +114,7 @@
 #define DMC_CONDITION               "DRAWINGCONDITION"
 
 #define DMC_BFT_UAV QUOTE(UAVControls)
+#define DMC_BFT_HCAM QUOTE(HCamControls)
 #define DMC_BFT_VEHICLES QUOTE(Vehicles)
 #define DMC_BFT_GROUPS QUOTE(Groups)
 #define DMC_BFT_MEMBERS QUOTE(Members)

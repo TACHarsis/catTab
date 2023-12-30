@@ -22,19 +22,19 @@ params [
    "_mapControl",
    [
       "_searchPos", 
-      [0,0],
-      [[]],[2,3]
+      [0, 0],
+      [[]], [2, 3]
    ]
 ];
 
 private _foundUAV = objNull;
 private _targetRadius = GVAR(iconSize) * 2 * (ctrlMapScale (_mapControl)) * GVAR(mapScaleFactor);
 
-private _maxDistance = _searchPos distanceSqr [(_searchPos select 0) + _targetRadius,(_searchPos select 1) + _targetRadius];
+private _maxDistance = _searchPos distanceSqr [(_searchPos select 0) + _targetRadius, (_searchPos select 1) + _targetRadius];
 {
    private _uav = _x;
    private _uavPos = getPosASL _uav;
-   _uavPos = [_uavPos#0,_uavPos#1,0];
+   _uavPos = [_uavPos # 0, _uavPos # 1, 0];
 
    // find uav within _maxDistance
    private _distance = GVAR(mapCursorPos) distanceSqr (_uavPos);

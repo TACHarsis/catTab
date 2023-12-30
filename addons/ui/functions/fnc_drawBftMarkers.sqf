@@ -17,9 +17,10 @@
         Nothing
      
      Example:
-        [_ctrlScreen,GVARMAIN(Tablet), ["Vehicles"]] call Ctab_ui_fnc_drawBftMarkers;
+        [_mapCtrl, GVARMAIN(Tablet), ["Vehicles"]] call Ctab_ui_fnc_drawBftMarkers;
 */
-params ["_ctrlScreen","_displayName", "_bftOptions"];
+params ["_mapCtrl", "_displayName", "_bftOptions"];
+
 
 // record of vehicles we have drawn this frame
 private _processedVehicles = [];
@@ -34,10 +35,12 @@ private _drawText = _displayOptions getOrDefault [QSETTING_SHOW_ICON_TEXT,false]
 private _displayEnvironmentType = _displayOptions getOrDefault [QSETTING_DEVICE_ENVIRONMENT,QDEVICE_GROUND];
 
 if(DMC_BFT_UAV in _bftOptions) then {
-    // ------------------ UAV Sight/Lock Lines ------------------
+    // ------------------ UAV Sight/Lock Lines & more ------------------
+    private _nearbyUAV = [_mapCtrl, ctrlMousePosition _mapCtrl] call FUNC(uavfindAtLocation);
     {
         private _uav = _x;
         private _isSelectedUAV = _uav isEqualTo GVAR(currentUAV);
+        private _isNearbyUAV = _uav isEqualTo _nearbyUAV;
         private _uavPosition = getPosASL _uav;
         
         private _uavLineColor = [
@@ -57,16 +60,41 @@ if(DMC_BFT_UAV in _bftOptions) then {
             };
         };
 
-        _ctrlScreen drawIcon [
+        _mapCtrl drawIcon [
             "\A3\ui_f\data\map\markers\nato\b_uav.paa",
-            [GVAR(colorBLUFOR),GVAR(selectedUAVColor)] select _isSelectedUAV,
+            [GVAR(colorBLUFOR), GVAR(selectedUAVColor)] select _isSelectedUAV,
             _uavPosition,
-            GVAR(iconSize),GVAR(iconSize),
-            0,"",0,GVAR(textSize),"TahomaB","right"
+            GVAR(iconSize), GVAR(iconSize),
+            0, [
+                getText (configfile >> "cfgVehicles" >> typeOf _uav >> "displayname"),
+                ""
+            ] select (_isSelectedUAV || _isNearbyUAV), 0, 0.5 * GVAR(textSize), "TahomaB", "right"
         ];
 
+        if(_isNearbyUAV || _isSelectedUAV) then {
+            _mapCtrl drawIcon [
+                [
+                    "\A3\ui_f\data\Map\GroupIcons\selector_selectable_ca.paa",
+                    "\A3\ui_f\data\Map\GroupIcons\selector_selected_ca.paa"
+                ] select _isSelectedUAV,
+                GVAR(selectedUAVColor),
+                _uavPosition,
+                GVAR(iconSize) * 1.1, GVAR(iconSize) * 1.1,
+                0, getText (configfile >> "cfgVehicles" >> typeOf _uav >> "displayname"), 0, GVAR(textSize), "TahomaB", "right"
+            ];
+            if(_isSelectedUAV && _isNearbyUAV) then {
+                    _mapCtrl drawIcon [
+                        "\A3\ui_f\data\Map\GroupIcons\selector_selectedMission_ca.paa",
+                    GVAR(selectedUAVColor),
+                    _uavPosition,
+                    GVAR(iconSize), GVAR(iconSize),
+                    0, "", 0, GVAR(textSize), "TahomaB", "right"
+                ];
+            };
+        };
+
         if (_isSelectedUAV || _camIsLocked) then {
-            _ctrlScreen drawLine [
+            _mapCtrl drawLine [
                 _uavPosition,
                 _lineTargetPos,
                 _uavLineColor
@@ -74,12 +102,15 @@ if(DMC_BFT_UAV in _bftOptions) then {
         };
         
         if (_camIsLocked) then {
-            _ctrlScreen drawIcon [
+            _mapCtrl drawIcon [
+                // "\A3\ui_f\data\IGUI\Cfg\Targeting\MarkedTarget_ca.paa",
+                //"\A3\ui_f\data\Map\GroupIcons\selector_selected_ca.png",
+                // "\A3\ui_f\data\Map\GroupIcons\selector_selectable_ca.png",
                 "\A3\ui_f\data\GUI\Cfg\KeyFrameAnimation\IconControlPoint_ca.paa",
                 _uavLineColor,
                 _lineTargetPos,
-                GVAR(iconSize)/2,GVAR(iconSize)/2,
-                0,"",0,GVAR(textSize),"TahomaB","right"
+                GVAR(iconSize) / 2, GVAR(iconSize) / 2,
+                0, "", 0, GVAR(textSize), "TahomaB", "right"
             ];
         };
 
@@ -94,24 +125,24 @@ if(DMC_BFT_UAV in _bftOptions) then {
         private _uavViewConeVertices = [GVAR(currentUAV), _uavViewData] call FUNC(getUAVViewCone);
         
         private _coneColor = [
-            [0.1,0.5,0.1,1],
-            [0,1,0,1]
+            [0.1, 0.5, 0.1 ,1],
+            [0, 1, 0, 1]
         ] select _hitOccured;
 
-        _ctrlScreen drawPolygon [_uavViewConeVertices, _coneColor];
+        _mapCtrl drawPolygon [_uavViewConeVertices, _coneColor];
         
-        _ctrlScreen drawLine [
+        _mapCtrl drawLine [
             _uavLookOrigin,
             _aimPoint,
             _coneColor
         ];
         
-        _ctrlScreen drawIcon [
+        _mapCtrl drawIcon [
             "\A3\ui_f\data\GUI\Cfg\KeyFrameAnimation\IconCamera_ca.paa",
             _coneColor,
             _aimPoint,
-            GVAR(iconSize)/2,GVAR(iconSize)/2,
-            0,"",0,GVAR(textSize),"TahomaB","right"
+            GVAR(iconSize) / 2, GVAR(iconSize) / 2,
+            0, "", 0, GVAR(textSize), "TahomaB", "right"
         ];
     };
 };
@@ -120,7 +151,7 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
     // ------------------ VEHICLES* ------------------
     //                          * that the player is not sitting in
     {
-        _x params ["_vehicle","_type","_name","_unitIcon"];
+        _x params ["_vehicle", "_type", "_name", "_unitIcon"];
 
         //skip UAV that would get drawn on their own
         if(_vehicle in _processedVehicles) then { continue };
@@ -141,12 +172,12 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
 
 
         if(_isPlayerVehicle) then { // draw the player vehicle
-            _ctrlScreen drawIcon [
+            _mapCtrl drawIcon [
                 "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
                 GVAR(colorBLUFOR),
                 _pos,
-                GVAR(iconSize),GVAR(iconSize),
-                0,_text,0,GVAR(textSize),"TahomaB","right"
+                GVAR(iconSize), GVAR(iconSize),
+                0, _text, 0, GVAR(textSize), "TahomaB", "right"
             ];
 
             continue
@@ -173,12 +204,12 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
             ] select _isInPlayerGroup
         } else { GVAR(colorBLUFOR) };
 
-        _ctrlScreen drawIcon [
+        _mapCtrl drawIcon [
             _icon,
             _iconColor,
             _pos,
-            _iconSize,_iconSize,
-            _angle,"",0,GVAR(textSize),"TahomaB","right"
+            _iconSize, _iconSize,
+            _angle, "", 0, GVAR(textSize), "TahomaB", "right"
         ];
 
         if !(_drawAsWings) then { continue };
@@ -186,20 +217,20 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
 
         if (_isInPlayerGroup) then {
             // air contact is in our group
-            _ctrlScreen drawIcon [
+            _mapCtrl drawIcon [
                 "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
                 GVAR(airContactColor),
                 _pos,
-                0,0,
-                0,_groudIdx,0,GVAR(airContactGroupTxtSize) * 0.8,"TahomaB","center"];
+                0, 0,
+                0, _groudIdx, 0, GVAR(airContactGroupTxtSize) * 0.8, "TahomaB", "center"];
         } else {
             // air contact is _not_ in our group
-            _ctrlScreen drawIcon [
+            _mapCtrl drawIcon [
                 "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
                 GVAR(TADOwnSideColor),
                 _pos,
-                GVAR(airContactDummySize),GVAR(airContactDummySize),
-                0,_text,0,GVAR(textSize),"TahomaB","right"
+                GVAR(airContactDummySize), (airContactDummySize),
+                0, _text, 0, GVAR(textSize), "TahomaB", "right"
             ];
         };
     } foreach GVAR(bftVehicleIcons);
@@ -220,9 +251,9 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
                 // vehicle has already been drawn or in player vehicle that doesn't get drawn
                 private _mountedLabel = _mountedLabelHash getOrDefault [_unitVehicle, ""];
                 _mountedLabelHash set [
-                            _unitVehicle, 
-                            [_groupId,format ["%1/%2",_mountedLabel, _groupId]] select (_mountedLabel isEqualTo "")
-                        ];
+                    _unitVehicle, 
+                    [_groupId,format ["%1/%2", _mountedLabel, _groupId]] select (_mountedLabel isEqualTo "")
+                ];
                 
                 continue
             };
@@ -256,29 +287,74 @@ if(DMC_BFT_GROUPS in _bftOptions) then {
                 private _mountedLabel = _mountedLabelHash getOrDefault [_ctabLeaderVehicle, ""];
                 _mountedLabelHash set [
                     _ctabLeaderVehicle,
-                    [_groupId,format ["%1/%2",_mountedLabel, _groupId]] select (_mountedLabel isEqualTo "")
+                    [_groupId,format ["%1/%2", _mountedLabel, _groupId]] select (_mountedLabel isEqualTo "")
                 ];
             };
         } else {
             private _text = ["", _groupId] select _drawText;
             private _pos = getPosASL _ctabLeaderVehicle;
-            _ctrlScreen drawIcon [
+            _mapCtrl drawIcon [
                 _icon,
                 GVAR(colorBLUFOR),
-                _pos,GVAR(iconSize),GVAR(iconSize),
-                0,_text,0,GVAR(textSize),"TahomaB","right"
+                _pos,GVAR(iconSize), GVAR(iconSize),
+                0, _text, 0, GVAR(textSize), "TahomaB", "right"
             ];
-            _ctrlScreen drawIcon [
+            _mapCtrl drawIcon [
                 _sizeIcon,
                 GVAR(colorBLUFOR),
                 _pos,
-                GVAR(groupOverlayIconSize),GVAR(groupOverlayIconSize),
-                0,"",0,GVAR(textSize),"TahomaB","right"
+                GVAR(groupOverlayIconSize), GVAR(groupOverlayIconSize),
+                0, "", 0, GVAR(textSize), "TahomaB", "right"
             ];
         };
     } foreach GVAR(bftGroupIcons);
 };
 
+if(DMC_BFT_HCAM in _bftOptions) then {
+    // ------------------ UAV Sight/Lock Lines & more ------------------
+    private _nearbyHCam = [_mapCtrl, ctrlMousePosition _mapCtrl] call FUNC(hCamFindAtLocation);
+    {
+        private _hCamUnit = _x;
+        private _isSelectedHCam = _hCamUnit isEqualTo GVAR(currentHCam);
+        private _isNearbyHCam = _hCamUnit isEqualTo _nearbyHCam;
+        private _hCamPosition = getPosASL _hCamUnit;
+
+        //diag_log format ["_isSelectedHCam (%1) _isNearbyHCam (%2)[%3] _hCamPosition (%4)", _isSelectedHCam, _isNearbyHCam, _nearbyHCam, _hCamPosition];
+        _mapCtrl drawIcon [
+            "\A3\ui_f\data\GUI\Rsc\RscDisplayEGSpectator\ReviveIcon_ca.paa",
+            //"\A3\ui_f\data\map\markers\nato\b_uav.paa",
+            [GVAR(colorBLUFOR), GVAR(selectedUAVColor)] select _isSelectedHCam,
+            _hCamPosition,
+            GVAR(iconSize), GVAR(iconSize),
+            0, [name _hCamUnit, ""] select (_isSelectedHCam || _isNearbyHCam), 0, 0.5 * GVAR(textSize), "TahomaB", "right"
+        ];
+
+        if(_isNearbyHCam || _isSelectedHCam) then {
+            _mapCtrl drawIcon [
+                [
+                    "\A3\ui_f\data\Map\GroupIcons\selector_selectable_ca.paa",
+                    "\A3\ui_f\data\Map\GroupIcons\selector_selected_ca.paa"
+                ] select _isSelectedHCam,
+                GVAR(selectedUAVColor),
+                _hCamPosition,
+                GVAR(iconSize) * 1.1, GVAR(iconSize) * 1.1,
+                0, name _hCamUnit, 0, GVAR(textSize), "TahomaB", "right"
+            ];
+            if(_isSelectedHCam && _isNearbyHCam) then {
+                    _mapCtrl drawIcon [
+                        "\A3\ui_f\data\Map\GroupIcons\selector_selectedMission_ca.paa",
+                    GVAR(selectedUAVColor),
+                    _hCamPosition,
+                    GVAR(iconSize), GVAR(iconSize),
+                    0, "", 0, GVAR(textSize), "TahomaB", "right"
+                ];
+            };
+        };
+
+        // _processedVehicles pushBack _hCamUnit;
+
+    } foreach GVARMAIN(hCamList);
+};
 
 if(DMC_BFT_MEMBERS in _bftOptions) then {
     // ------------------ MEMBERS* ------------------
@@ -290,7 +366,7 @@ if(DMC_BFT_MEMBERS in _bftOptions) then {
         private _isPlayerVehicle = _unitVehicle == _playerVehicle;
         
         // get the fire-team color
-        private _teamColor = GVAR(teamColors) select (["MAIN","RED","GREEN","BLUE","YELLOW"] find (assignedTeam (_unit)));
+        private _teamColor = GVAR(teamColors) select (["MAIN", "RED", "GREEN", "BLUE", "YELLOW"] find (assignedTeam (_unit)));
 
         if (_unit isNotEqualTo _unitVehicle) then {
             // the unit _does_ sit in a vehicle
@@ -298,39 +374,39 @@ if(DMC_BFT_MEMBERS in _bftOptions) then {
             private _hasMountedLabel = _mountedLabel isNotEqualTo "";
 
             if(_drawText) then { // if text enabled we set/add to mounted Label
-                _mountedLabelHash set [_unitVehicle, [format["%1/%2", _mountedLabel,_groupId], _groupId] select _hasMountedLabel];
+                _mountedLabelHash set [_unitVehicle, [format["%1/%2", _mountedLabel, _groupId], _groupId] select _hasMountedLabel];
             } else {
                 if(_hasMountedLabel) then { // no text, but still register vehicle?
                     _mountedLabelHash set [_unitVehicle, ""];
                 } else { // no drawing text, nor mounting label exists, implying it's already drawn
 
                     if (!_isPlayerVehicle) then {
-                        _ctrlScreen drawIcon [
+                        _mapCtrl drawIcon [
                             "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
                             GVAR(colorBLUFOR),
                             getPosASL _unitVehicle,
-                            GVAR(iconSize),GVAR(iconSize),
-                            direction _unitVehicle,"",0,GVAR(textSize),"TahomaB","right"
+                            GVAR(iconSize), GVAR(iconSize),
+                            direction _unitVehicle, "", 0, GVAR(textSize), "TahomaB", "right"
                         ];
                     };
                 };
             };
         } else { // does not sit in a vehicle 
             private _pos = getPos _unitVehicle;
-            _ctrlScreen drawIcon [
+            _mapCtrl drawIcon [
                 _icon,
                 _teamColor,
                 _pos,
-                GVAR(manSize),GVAR(manSize),
-                direction _unitVehicle,"",0,GVAR(textSize),"TahomaB","right"
+                GVAR(manSize), GVAR(manSize),
+                direction _unitVehicle, "", 0, GVAR(textSize), "TahomaB", "right"
             ];
             if (_drawText) then {
-                _ctrlScreen drawIcon [
+                _mapCtrl drawIcon [
                     "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
                     _teamColor,
                     _pos,
-                    GVAR(manSize),GVAR(manSize),
-                    0,_groupId,0,GVAR(textSize),"TahomaB","right"
+                    GVAR(manSize), GVAR(manSize),
+                    0, _groupId, 0, GVAR(textSize), "TahomaB", "right"
                 ];
             };
         };
@@ -343,12 +419,12 @@ if (_drawText && (_mountedLabelHash isNotEqualTo createHashMap)) then {
     for "_i" from 0 to (count _mountedLabelHash - 2) step 2 do {
         private _vehicle = _mountedLabelHash select _i;
         if (_vehicle != _playerVehicle) then {
-            _ctrlScreen drawIcon [
+            _mapCtrl drawIcon [
                 "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
                 GVAR(colorBLUFOR),
                 getPos _vehicle,
-                GVAR(iconSize),GVAR(iconSize),
-                0,_mountedLabelHash select (_i + 1),0,GVAR(textSize),"TahomaB","left"
+                GVAR(iconSize), GVAR(iconSize),
+                0, _mountedLabelHash select (_i + 1), 0, GVAR(textSize), "TahomaB", "left"
             ];
         };
     };

@@ -803,7 +803,7 @@ if (isNil "_mode") then {
         case (QSETTING_CAM_HCAM_CURRENT) : {
             if !(_mode in [QSETTING_MODE_CAM_HCAM, QSETTING_MODE_CAM_HCAM_FULL]) exitWith {};
             private _unit = _value call BIS_fnc_objectFromNetId;
-            GVAR(currentHelmet) = _unit;
+            GVAR(currentHCam) = _unit;
         };
         // ------------ MAP TOOLS ------------
         case (QSETTING_MAP_TOOLS) : {

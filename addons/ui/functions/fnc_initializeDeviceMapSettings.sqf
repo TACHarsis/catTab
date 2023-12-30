@@ -27,6 +27,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                             DMC_BFT_MEMBERS
                                         ]];
                                         if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then { (_options # 1) pushBack DMC_BFT_UAV};
+                                        if(_mode isEqualTo QSETTING_MODE_CAM_HCAM) then { (_options # 1) pushBack DMC_BFT_HCAM};
 
                                         _options
                                     }],
