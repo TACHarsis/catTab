@@ -50,3 +50,8 @@
 #define HEARTBEAT_ICON      QUOTE(FeedHBIcon)
 #define HEARTBEAT_TEXT      QUOTE(FeedHBText)
 
+#define DEVICE_KEY_ORDER_MAIN       0
+#define DEVICE_KEY_ORDER_SECONDARY  1
+#define DEVICE_KEY_ORDER_TERTIARY   2
+#define DEVICE_KEY_ORDER_ACE        3
+#define DEVICE_KEY_ORDER_COUNT      4

@@ -19,7 +19,7 @@
         _playerHasCtabItem = [player,["ItemcTab","ItemAndroid","ItemMicroDAGR"]] call Ctab_ui_fnc_checkGear;
 */
 
-params ["_unit","_items"];
+params ["_unit", "_items"];
 
 private _chk_all_items = items _unit;
 _chk_all_items append (assignedItems _unit);

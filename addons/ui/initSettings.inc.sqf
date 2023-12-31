@@ -35,17 +35,17 @@ Types:
 
 */
 
-private _modCategory = "CatTab";//LLSTRING(Setting_Cagetory_Mod);
-private _androidCategory = "Android";//LLSTRING(Setting_Cagetory_Android);
-private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
+private _modCategory = LLSTRING(General_Category_Mod);
+private _androidCategory = LLSTRING(General_Category_Android);
+private _tabletCategory = LLSTRING(General_Category_Tablet);
 
-[
-    QGVAR(enableAddon),
-    "CHECKBOX",
-    [LLSTRING(Setting_Enable_Addon), LLSTRING(Setting_Enable_Addon_Hint)],
-    [_modCategory],
-    true
-] call CBA_fnc_addSetting;
+// [
+//     QGVAR(enableAddon),
+//     "CHECKBOX",
+//     [LLSTRING(Setting_Enable_Addon), LLSTRING(Setting_Enable_Addon_Hint)],
+//     [_modCategory],
+//     true
+// ] call CBA_fnc_addSetting;
 
 //--------------- Android ---------------
 
@@ -53,8 +53,12 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
     QGVAR(androidDesktopBackgroundMode),
     "LIST",
     [LLSTRING(Setting_Android_Desktop_Background_Mode), LLSTRING(Setting_Android_Desktop_Background_Mode_Hint)],
-    [_modCategory,_androidCategory],
-    [[0,1,2],["Preset", "Custom", "Color"], 0],
+    [_modCategory, _androidCategory],
+    [
+        [0, 1, 2],
+        [LLSTRING(Setting_Android_Desktop_Background_Mode_Preset), LLSTRING(Setting_Android_Desktop_Background_Mode_Custom), LLSTRING(Setting_Android_Desktop_Background_Mode_Color)],
+        0
+    ],
     2
 ] call CBA_fnc_addSetting;
 
@@ -62,13 +66,13 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
     QGVAR(androidDesktopBackgroundPreset),
     "LIST",
     [LLSTRING(Setting_Android_Desktop_Background_Preset), LLSTRING(Setting_Android_Desktop_Background_Preset_Hint)],
-    [_modCategory,_androidCategory],
+    [_modCategory, _androidCategory],
     [
         [
             QPATHTOEF(data,img\ui\desktop\classic\example_custom_android_desktop_background_0_co.paa)
         ],
         [
-            "Bisxual Lighting"
+            LLSTRING(Setting_Android_Desktop_Background_Preset_BisexualLighting)
         ],
         0
     ],
@@ -80,7 +84,7 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
     "COLOR",
     [LLSTRING(Setting_Android_Desktop_Color), LLSTRING(Setting_Android_Desktop_Color_Hint)],
     [_modCategory,_androidCategory],
-    [0.239,0.863,0.517],
+    [0.239, 0.863, 0.517],
     2
 ] call CBA_fnc_addSetting;
 
@@ -88,7 +92,7 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
     QGVAR(androidDesktopCustomImageName),
     "EDITBOX",
     [LLSTRING(Setting_Android_Desktop_Custom_Image), LLSTRING(Setting_Android_Desktop_Custom_Image_Hint)],
-    [_modCategory,_androidCategory],
+    [_modCategory, _androidCategory],
     "example_custom_android_desktop_background_co.jpg",
     2
 ] call CBA_fnc_addSetting;
@@ -97,10 +101,14 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
 
 [ //TODO: this sets the number as floating point
     QGVAR(numTabletFeeds),
-    "SLIDER",
+    "LIST",
     [LLSTRING(Setting_Tablet_Number_Feeds), LLSTRING(Setting_Tablet_Number_Feeds_Hint)],
     [_modCategory, _tabletCategory],
-    [1, 6, 2, 0, false],
+    [
+        [1, 2, 3, 4, 5, 6],
+        ["1", "2", "3", "4", "5", "6"],
+        1
+    ],
     1
 ] call CBA_fnc_addSetting;
 
@@ -114,20 +122,20 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
         ["512x512", "1024x1024"],
         1
     ],
-    0
+    2
 ] call CBA_fnc_addSetting;
 
 [
     QGVAR(tabletFeedTextureResolutionFullscreen),
     "LIST",
-    [LLSTRING(Setting_Tablet_Texture_Resolution), LLSTRING(Setting_Tablet_Texture_Resolution_Hint)], //TODO: Share this between small and fullscreen?
+    [LLSTRING(Setting_Tablet_Texture_Resolution_Fullscreen), LLSTRING(Setting_Tablet_Texture_Resolution_Fullscreen_Hint)], //TODO: Share this between small and fullscreen?
     [_modCategory, _tabletCategory],
     [
         [1024, 2048],
         ["1024x1024", "2048x2048"],
         1
     ],
-    0
+    2
 ] call CBA_fnc_addSetting;
 
 [
@@ -137,23 +145,23 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
     [_modCategory, _tabletCategory],
     [
         [R2T_METHOD_SHRINK, R2T_METHOD_ZOOMCROP],
-        ["Shrink-To-Fit", "Zoom-And-Crop"], //TODO: Localize these
+        [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ShrinkToFit), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ZoomAndCrop)], //TODO: Localize these
         0
     ],
-    0
+    2
 ] call CBA_fnc_addSetting;
 
 [
     QGVAR(tabletFeedDealWithAspectRatioFullscreen),
     "LIST",
-    [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_Hint)], //TODO: Share this between small and fullscreen?
+    [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_Fullscreen), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_Fullscreen_Hint)], //TODO: Share this between small and fullscreen?
     [_modCategory, _tabletCategory],
     [
         [R2T_METHOD_SHRINK, R2T_METHOD_ZOOMCROP],
-        ["Shrink-To-Fit", "Zoom-And-Crop"], //TODO: Localize these
+        [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ShrinkToFit), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ZoomAndCrop)], //TODO: Localize these
         0
     ],
-    0
+    2
 ] call CBA_fnc_addSetting;
 
 [
@@ -161,7 +169,11 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
     "LIST",
     [LLSTRING(Setting_Tablet_Desktop_Background_Mode), LLSTRING(Setting_Tablet_Desktop_Background_Mode_Hint)],
     [_modCategory, _tabletCategory],
-    [[0, 1, 2], ["Preset", "Custom", "Color"], 0], //TODO: Localize these
+    [
+        [0, 1, 2],
+        [LLSTRING(Setting_Android_Desktop_Background_Mode_Preset), LLSTRING(Setting_Android_Desktop_Background_Mode_Custom), LLSTRING(Setting_Android_Desktop_Background_Mode_Color)],
+        0
+    ], //TODO: Localize these
     2
 ] call CBA_fnc_addSetting;
 
@@ -170,14 +182,17 @@ private _tabletCategory = "Tablet";//LLSTRING(Setting_Cagetory_Tablet);
     "LIST",
     [LLSTRING(Setting_Tablet_Desktop_Background_Preset), LLSTRING(Setting_Tablet_Desktop_Background_Preset_Hint)],
     [_modCategory, _tabletCategory],
-    [[
-        QPATHTOEF(data,img\ui\desktop\classic\tablet_desktop_background_0_co.paa),
-        QPATHTOEF(data,img\ui\desktop\classic\tablet_desktop_background_1_co.paa)
-    ],
     [
-        "Swoosh",
-        "Blue-ish"
-    ], 0],
+        [
+            QPATHTOEF(data,img\ui\desktop\classic\tablet_desktop_background_0_co.paa),
+            QPATHTOEF(data,img\ui\desktop\classic\tablet_desktop_background_1_co.paa)
+        ],
+        [
+            LLSTRING(Setting_Tablet_Desktop_Background_Preset_Swoosh),
+            LLSTRING(Setting_Tablet_Desktop_Background_Preset_Blueish)
+        ],
+        0
+    ],
     2
 ] call CBA_fnc_addSetting;
 

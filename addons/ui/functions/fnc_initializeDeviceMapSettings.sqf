@@ -21,11 +21,13 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                     [DMC_DRAW_MARKERS,          {
                                         params ["_displayName", "_displaySettinggs"];
                                         private _mode = [_displayName, QSETTING_MODE] call FUNC(getSettings);
-                                        private _options = [true,[
-                                            DMC_BFT_VEHICLES,
-                                            DMC_BFT_GROUPS,
-                                            DMC_BFT_MEMBERS
-                                        ]];
+                                        private _options = [true,
+                                                                [
+                                                                    DMC_BFT_VEHICLES,
+                                                                    DMC_BFT_GROUPS,
+                                                                    DMC_BFT_MEMBERS
+                                                                ]
+                                        ];
                                         if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then { (_options # 1) pushBack DMC_BFT_UAV};
                                         if(_mode isEqualTo QSETTING_MODE_CAM_HCAM) then { (_options # 1) pushBack DMC_BFT_HCAM};
 
@@ -43,13 +45,13 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                     [DMC_SAVE_SCALE_POSITION,   {true}],
                                     [DMC_RECENTER,              {
                                         params ["_displayName", "_displaySettinggs"];
-                                        private _mode = [_displayName,QSETTING_MODE] call FUNC(getSettings);
+                                        private _mode = [_displayName, QSETTING_MODE] call FUNC(getSettings);
                                         switch (_mode) do {
                                             case (QSETTING_MODE_CAM_UAV) : {
-                                                [[-1,0] select GVAR(trackCurrentUAV), GVAR(selectedUAV), GVAR(mapScaleUAV)]
+                                                [[-1, 0] select GVAR(trackCurrentUAV), GVAR(selectedUAV), GVAR(mapScaleUAV)]
                                             };
                                             case (QSETTING_MODE_CAM_HCAM) : {
-                                                [[-1,0] select GVAR(trackCurrentHCam), GVAR(helmetCamData) select 2, GVAR(mapScaleHCam)]
+                                                [[-1, 0] select GVAR(trackCurrentHCam), GVAR(helmetCamData) select 2, GVAR(mapScaleHCam)]
                                             };
                                             default {
                                                 [-1, "", ""]
@@ -79,17 +81,20 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         DMC_BFT_GROUPS,
                                         DMC_BFT_MEMBERS
                                     ]]],
-                                    [DMC_RECENTER,              [player]],
+                                    [DMC_RECENTER,              [0]],
                                     [DMC_HUMAN_AVATAR,          [objNull]]
                                 ]
     ],
     [QGVARMAIN(FBCB2_dlg),      createHashMapFromArray [
                                     [DMC_CONDITION,             {true}],
-                                    [DMC_DRAW_MARKERS,          [true,[
-                                        DMC_BFT_VEHICLES,
-                                        DMC_BFT_GROUPS,
-                                        DMC_BFT_MEMBERS
-                                    ]]],
+                                    [DMC_DRAW_MARKERS,          [true,
+                                                                    [
+                                                                        DMC_BFT_VEHICLES,
+                                                                        DMC_BFT_GROUPS,
+                                                                        DMC_BFT_MEMBERS
+                                                                    ]
+                                                                ]
+                                    ],
                                     [DMC_SAVE_SCALE_POSITION,   true],
                                     [DMC_HUMAN_AVATAR,          [objNull]],
                                     [DMC_DRAW_HOOK,             nil]
@@ -97,42 +102,54 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
     ],
     [QGVARMAIN(TAD_dsp),        createHashMapFromArray[
                                     [DMC_CONDITION,             {true}],
-                                    [DMC_DRAW_MARKERS,          [false,[
-                                        DMC_BFT_VEHICLES,
-                                        DMC_BFT_GROUPS,
-                                        DMC_BFT_MEMBERS
-                                    ]]],
-                                    [DMC_RECENTER,              [player]],
-                                    [DMC_VEHICLE_AVATAR,        {GVAR(playerVehicleIcon)}],
+                                    [DMC_DRAW_MARKERS,          [false,
+                                                                    [
+                                                                        DMC_BFT_VEHICLES,
+                                                                        DMC_BFT_GROUPS,
+                                                                        DMC_BFT_MEMBERS
+                                                                    ]
+                                                                ]
+                                    ],
+                                    [DMC_RECENTER,              [0]],
+                                    [DMC_VEHICLE_AVATAR,        {getText (configFile/"CfgVehicles"/(typeOf (vehicle player))/"Icon")}], //TODO: This gets evaluated each frame, so we should cache it somewhere
                                     [DMC_TAD_OVERLAY,           nil]
                                 ]
     ],
     [QGVARMAIN(TAD_dlg),        createHashMapFromArray [
                                     [DMC_CONDITION,             {true}],
-                                    [DMC_DRAW_MARKERS,          [true,[
-                                        DMC_BFT_VEHICLES,
-                                        DMC_BFT_GROUPS,
-                                        DMC_BFT_MEMBERS
-                                    ]]],
+                                    [DMC_DRAW_MARKERS,          [true,
+                                                                    [
+                                                                        DMC_BFT_VEHICLES,
+                                                                        DMC_BFT_GROUPS,
+                                                                        DMC_BFT_MEMBERS
+                                                                    ]
+                                                                ]
+                                    ],
                                     [DMC_SAVE_SCALE_POSITION,   true],
-                                    [DMC_VEHICLE_AVATAR,        {GVAR(playerVehicleIcon)}],
+                                    [DMC_VEHICLE_AVATAR,        {getText (configFile/"CfgVehicles"/(typeOf (vehicle player))/"Icon")}], //TODO: This gets evaluated each frame, so we should cache it somewhere
                                     [DMC_DRAW_HOOK,             nil]
                                 ]
     ],
     [QGVARMAIN(microDAGR_dsp),  createHashMapFromArray [
                                     [DMC_CONDITION,             {true}],
-                                    [DMC_DRAW_MARKERS,          [false,[
-                                        DMC_BFT_MEMBERS
-                                    ]]],
-                                    [DMC_RECENTER,              [player]],
+                                    [DMC_DRAW_MARKERS,          [false,
+                                                                    [
+                                                                        DMC_BFT_MEMBERS
+                                                                    ]
+                                                                ]
+                                    ],
+                                    [DMC_RECENTER,              [0]],
                                     [DMC_HUMAN_AVATAR,          [objNull]]
                                 ]
     ],
     [QGVARMAIN(microDAGR_dlg),  createHashMapFromArray [
                                     [DMC_CONDITION,             {true}],
-                                    [DMC_DRAW_MARKERS,          [true,[
-                                        DMC_BFT_MEMBERS
-                                    ]]],
+                                    [DMC_DRAW_MARKERS,          [true,
+                                                                    [
+                                                                        DMC_BFT_MEMBERS
+                                                                    ]
+                                                                ]
+                                    ],
                                     [DMC_SAVE_SCALE_POSITION,   true],
                                     [DMC_HUMAN_AVATAR,          [objNull]],
                                     [DMC_DRAW_HOOK,             nil]

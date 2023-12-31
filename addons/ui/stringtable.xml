@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Ctab">
+    <Package name="UI">
+        <!-- Category strings -->
+        <Key ID="STR_Ctab_UI_General_Category_Mod">
+            <English>CatTab</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_General_Category_Android">
+            <English>Android</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_General_Category_Tablet">
+            <English>Tablet</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_General_Category_MicroDAGR">
+            <English>MicroDAGR</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_General_Category_TAD">
+            <English>TAD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_General_Category_FBCB2">
+            <English>FBCB2</English>
+        </Key>
+        <!--                        Settings: General-->
+        <Key ID="STR_Ctab_UI_Setting_Enable_Addon">
+            <English>Enable this Addon</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Enable_Addon_Hint">
+            <English>Enable/disable this Addon</English>
+        </Key>
+        <!--                        Settings: Android-->
+        <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Background_Mode">
+            <English>Desktop Background Mode</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Background_Mode_Hint">
+            <English>What mode to use for the background of your Android</English>
+        </Key>
+            <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Background_Mode_Preset">
+                <English>Preset</English>
+            </Key>
+            <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Background_Mode_Custom">
+                <English>Custom</English>
+            </Key>
+            <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Background_Mode_Color">
+                <English>Color</English>
+            </Key>
+        <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Background_Preset">
+            <English>Background Preset</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Background_Preset_Hint">
+            <English>Choose a background preset to use when in preset mode</English>
+        </Key>
+            <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Background_Preset_BisexualLighting">
+                <English>Bisexual Lighting</English>
+            </Key>
+        <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Color">
+            <English>Background color</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Color_Hint">
+            <English>Set color to use for background when in color mode</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Custom_Image">
+            <English>Custom Image</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Custom_Image_Hint">
+            <English>Set path and filename of custom image to use in custom mode</English>
+        </Key>
+        <!--                        Settings: Tablet-->
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Number_Feeds">
+            <English>Number of Video Feeds</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Number_Feeds_Hint">
+            <English>Set the maximum number of simulatenous video feeds</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_Resolution">
+            <English>Video Feed Resolution</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_Resolution_Hint">
+            <English>Choose resolution of small video feeds</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_Resolution_Fullscreen">
+            <English>Fullscreen Video Feed Resolution</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_Resolution_Fullscreen_Hint">
+            <English>Choose resolution of fullscreen video feed</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_AspectRatio_Method">
+            <English>Aspect Ratio Mode</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_AspectRatio_Method_Hint">
+            <English>What aspect ratio to use for small video feeds</English>
+        </Key>
+            <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_AspectRatio_Method_ShrinkToFit">
+                <English>Shrink-To-Fit</English>
+            </Key>
+            <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_AspectRatio_Method_ZoomAndCrop">
+                <English>Zoom-And-Crop</English>
+            </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_AspectRatio_Method_Fullscreen">
+            <English>Fullscreen aspect Ratio Mode</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Texture_AspectRatio_Method_Fullscreen_Hint">
+            <English>What aspect ratio to use for fullscreen video feed</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Mode">
+            <English>Desktop Background Mode</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Mode_Hint">
+            <English>What mode to use for the background of the Tablet</English>
+        </Key>
+            <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Mode_Preset">
+                <English>Preset</English>
+            </Key>
+            <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Mode_Custom">
+                <English>Custom</English>
+            </Key>
+            <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Mode_Color">
+                <English>Color</English>
+            </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Preset">
+            <English>Background Preset</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Preset_Hint">
+            <English>Choose a background preset to use when in preset mode</English>
+        </Key>
+            <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Preset_Swoosh">
+                <English>Swoosh</English>
+            </Key>
+            <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Background_Preset_Blueish">
+                <English>Blueish</English>
+            </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Color">
+            <English>Background Color</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Color_Hint">
+            <English>Choose a background color to use when in color mode</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Custom_Image">
+            <English>Costum Image</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Setting_Tablet_Desktop_Custom_Image_Hint">
+            <English>Set path and filename of custom image to use in custom mode</English>
+        </Key>
+
+        <!-- Keybind strings -->
+        <Key ID="STR_Ctab_UI_Keybind_Iface_Main">
+            <English>Toggle Main Interface</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Iface_Main_Hint">
+            <English>Open cTab device in small overlay mode if available</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Iface_Secondary">
+            <English>Toggle Secondary Interface</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Iface_Secondary_Hint">
+            <English>Open cTab device in interactable mode</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Iface_Tertiary">
+            <English>Toggle Tertiary Interface</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Iface_Tertiary_Hint">
+            <English>Open private cTab device when in a vehicle with its own cTab device, or to open Tablet while also carrying a MicroDAGR</English>
+        </Key>
+
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_Android_Dlg">
+            <English>Toggle Android Dialog</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_Android_Dlg_Hint">
+            <English>Open/Close Android Dialog</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_Android_Dsp">
+            <English>Toggle Android OSD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_Android_Dsp_Hint">
+            <English>Open/Close Android OSD</English>
+        </Key>
+
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_microDAGR_Dlg">
+            <English>Toggle Android Dialog</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_microDAGR_Dlg_Hint">
+            <English>Open/Close Android Dialog</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_microDAGR_Dsp">
+            <English>Toggle MicroDAGR OSD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_microDAGR_Dsp_Hint">
+            <English>Open/Close MicroDAGR OSD</English>
+        </Key>
+
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_TAD_Dlg">
+            <English>Toggle TAD Dialog</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_TAD_Dlg_Hint">
+            <English>Open/Close TAD Dialog</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_TAD_Dsp">
+            <English>Toggle TAD OSD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_TAD_Dsp_Hint">
+            <English>Open/Close TAD OSD</English>
+        </Key>
+
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_FBCB2_Dlg">
+            <English>Toggle FBCB2 Dialog</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_FBCB2_Dlg_Hint">
+            <English>Open/Close FBCB2 Dialog</English>
+        </Key>
+
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_Tablet_Dlg">
+            <English>Toggle Tablet Dialog</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_Tablet_Dlg_Hint">
+            <English>Open/Close Tablet Dialog</English>
+        </Key>
+
+
+        <Key ID="STR_Ctab_UI_Keybind_ZoomIn">
+            <English>Zoom In</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_ZoomIn_Hint">
+            <English>Zoom In on map while cTab is in small overlay mode</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_ZoomOut">
+            <English>Zoom Out</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_ZoomOut_Hint">
+            <English>Zoom Out on map while cTab is in small overlay mode</English>
+        </Key>
+
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_Iface_Position">
+            <English>Toggle Interface Position</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Keybind_Toggle_Iface_Position_Hint">
+            <English>Toggle overlay mode interface position from left to right or reset interactive mode interface position to default</English>
+        </Key>
+
+        <!-- Ace interaction strings -->
+        
+        <Key ID="STR_Ctab_UI_ACE_CatTab">
+            <English>CatTab</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Open_Android_Dlg">
+            <English>Android</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Open_Android_Dsp">
+            <English>Open Android OSD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Close_Android_Dsp">
+            <English>Close Android OSD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Open_FBCB2_Dlg">
+            <English>FBCB2</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Open_MicroDAGR_Dlg">
+            <English>MicroDAGR</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Open_MicroDAGR_Dsp">
+            <English>Open MicroDAGR OSD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Close_MicroDAGR_Dsp">
+            <English>Close  MicroDAGR OSD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Open_Tablet_Dlg">
+            <English>Tablet</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Open_TAD_Dlg">
+            <English>TAD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Open_TAD_Dsp">
+            <English>Open TAD OSD</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_ACE_Close_TAD_Dsp">
+            <English>Close TAD OSD</English>
+        </Key>
+    </Package>
+</Project>

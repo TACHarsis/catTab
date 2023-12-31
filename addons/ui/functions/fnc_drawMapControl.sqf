@@ -39,7 +39,7 @@ _fnc_getValue = {
         };
         case (DMC_RECENTER) : {
             // change scale of map and centre to given unit's position or player's as default
-            _params params [["_animSpeed", 0], ["_unit",_playerVehicle], ["_mapScale",GVAR(mapScale)]];
+            _params params [["_animSpeed", 0], ["_unit", _playerVehicle], ["_mapScale", GVAR(mapScale)]];
             if(_animSpeed < 0) exitWith {};
             
             private _unit = _unit call _fnc_getValue;
@@ -58,7 +58,7 @@ _fnc_getValue = {
             [_ctrlScreen,_displayName,_bftOptions] call FUNC(drawBftMarkers);
         };
         case (DMC_DRAW_HOOK): {
-            [_display,_displayName,_ctrlScreen,_playerPos,GVAR(mapCursorPos),_instrumentMode,_referenceMode,_drawMapTools] call FUNC(drawHook);
+            [_display, _displayName, _ctrlScreen, _playerPos, GVAR(mapCursorPos), _instrumentMode, _referenceMode, _drawMapTools] call FUNC(drawHook);
         };
         case (DMC_VEHICLE_AVATAR) : {
             private _customIconPath = _params call _fnc_getValue;
@@ -66,8 +66,8 @@ _fnc_getValue = {
                 [_customIconPath, "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa"] select (_customIconPath isEqualTo ""),
                 GVAR(mapToolsPlayerVehicleIconColor),
                 _playerPos,
-                GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-                _playerHeading,"", 1,GVAR(textSize),"TahomaB","right"
+                GVAR(ownVehicleIconBaseSize), GVAR(ownVehicleIconBaseSize),
+                _playerHeading, "", 1, GVAR(textSize), "TahomaB", "right"
             ];
         };
         case (DMC_HUMAN_AVATAR) : {
@@ -84,8 +84,8 @@ _fnc_getValue = {
                     "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
                     GVAR(mapToolsPlayerVehicleIconColor),
                     _pos,
-                    GVAR(ownVehicleIconBaseSize),GVAR(ownVehicleIconBaseSize),
-                    _heading,"", 1,GVAR(textSize),"TahomaB","right"
+                    GVAR(ownVehicleIconBaseSize), GVAR(ownVehicleIconBaseSize),
+                    _heading, "", 1, GVAR(textSize), "TahomaB", "right"
                 ];
             } foreach _params;
         };
@@ -95,8 +95,8 @@ _fnc_getValue = {
                 QPATHTOEF(data,img\map\overlay\TAD_overlay_ca.paa),
                 GVAR(TADOwnSideColor),
                 _playerPos,
-                250,250,
-                _playerHeading,"",1,GVAR(textSize),"TahomaB","right"
+                250, 250,
+                _playerHeading, "", 1, GVAR(textSize), "TahomaB", "right"
             ];
         };
     };
