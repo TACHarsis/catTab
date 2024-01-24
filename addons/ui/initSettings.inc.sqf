@@ -99,7 +99,7 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
 
 //--------------- Tablet ---------------
 
-[ //TODO: this sets the number as floating point
+[
     QGVAR(numTabletFeeds),
     "LIST",
     [LLSTRING(Setting_Tablet_Number_Feeds), LLSTRING(Setting_Tablet_Number_Feeds_Hint)],
@@ -145,7 +145,7 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     [_modCategory, _tabletCategory],
     [
         [R2T_METHOD_SHRINK, R2T_METHOD_ZOOMCROP],
-        [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ShrinkToFit), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ZoomAndCrop)], //TODO: Localize these
+        [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ShrinkToFit), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ZoomAndCrop)],
         0
     ],
     2
@@ -158,7 +158,7 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     [_modCategory, _tabletCategory],
     [
         [R2T_METHOD_SHRINK, R2T_METHOD_ZOOMCROP],
-        [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ShrinkToFit), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ZoomAndCrop)], //TODO: Localize these
+        [LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ShrinkToFit), LLSTRING(Setting_Tablet_Texture_AspectRatio_Method_ZoomAndCrop)],
         0
     ],
     2
@@ -173,7 +173,7 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
         [0, 1, 2],
         [LLSTRING(Setting_Android_Desktop_Background_Mode_Preset), LLSTRING(Setting_Android_Desktop_Background_Mode_Custom), LLSTRING(Setting_Android_Desktop_Background_Mode_Color)],
         0
-    ], //TODO: Localize these
+    ],
     2
 ] call CBA_fnc_addSetting;
 

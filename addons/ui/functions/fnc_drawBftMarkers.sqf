@@ -35,14 +35,28 @@ private _drawText = _displayOptions getOrDefault [QSETTING_SHOW_ICON_TEXT,false]
 private _displayEnvironmentType = _displayOptions getOrDefault [QSETTING_DEVICE_ENVIRONMENT,QDEVICE_GROUND];
 
 if(DMC_BFT_UAV in _bftOptions) then {
-    // ------------------ UAV Sight/Lock Lines & more ------------------
-    private _nearbyUAV = [_mapCtrl, ctrlMousePosition _mapCtrl] call FUNC(uavfindAtLocation);
+    private _context = GVAR(videoSourcesContext) get VIDEO_FEED_TYPE_UAV;
+    private _sources = _context get QGVAR(sourcesHash);
+    // ------------------ UAV Sight/Lock Lines, selections & more ------------------
+    private _nearbyVideoSourceData = [VIDEO_FEED_TYPE_UAV, _mapCtrl, GVAR(mapCursorPos), [] call EFUNC(core,getPlayerSides)] call FUNC(videoSourceNearLocation);
+    private _nearbyVideoSourceUnit = objNull;
+    if(_nearbyVideoSourceData isNotEqualTo []) then {
+        //TAG: video source data
+        _nearbyVideoSourceData params ["_unitNetID", "_unit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
+        // diag_log format ["FOUND NEARBY UAV! : %1", _nearbyVideoSourceData];
+        _nearbyVideoSourceUnit = _unit;
+    };
     {
-        private _uav = _x;
+        //TAG: video source data
+        _y params ["_unitNetID", "_uav", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
+        // diag_log format ["Updating UAV markers for data: %1", _y];
+        if(isNull _uav) then {continue};
+
         private _isSelectedUAV = _uav isEqualTo GVAR(selectedUAV);
-        private _isNearbyUAV = _uav isEqualTo _nearbyUAV;
-        private _uavPosition = getPosASL _uav;
-        
+        private _isNearbyUAV = _uav isEqualTo _nearbyVideoSourceUnit;
+        // diag_log format ["(%1) Selected: %2 [%4], Nearby: %3 [%5]", _uav, _isSelectedUAV, _isNearbyUAV, GVAR(selectedUAV), _nearbyVideoSourceUnit];
+        private _uavPosition = getPosASL _uav; //TODO: do some last known location stuff?
+
         private _uavLineColor = [
             GVAR(UAVLineColor),
             GVAR(UAVLineColorSelected)
@@ -116,7 +130,7 @@ if(DMC_BFT_UAV in _bftOptions) then {
 
         _processedVehicles pushBack _uav;
 
-    } foreach GVARMAIN(UAVList);
+    } foreach _sources;
 
     if !(isNull GVAR(selectedUAV)) then {
         private _uavViewData = [GVAR(selectedUAV)] call FUNC(getUAVViewData);
@@ -311,22 +325,39 @@ if(DMC_BFT_GROUPS in _bftOptions) then {
 };
 
 if(DMC_BFT_HCAM in _bftOptions) then {
-    // ------------------ UAV Sight/Lock Lines & more ------------------
-    private _nearbyHCam = [_mapCtrl, ctrlMousePosition _mapCtrl] call FUNC(hCamFindAtLocation);
+    private _context = GVAR(videoSourcesContext) get VIDEO_FEED_TYPE_HCAM;
+    private _sources = _context get QGVAR(sourcesHash);
+    // ------------------ HCAM seection icons ------------------
+    private _nearbyVideoSourceData = [VIDEO_FEED_TYPE_HCAM, _mapCtrl, GVAR(mapCursorPos), [] call EFUNC(core,getPlayerSides)] call FUNC(videoSourceNearLocation);
+    private _nearbyVideoSourceUnit = objNull;
+    if(_nearbyVideoSourceData isNotEqualTo []) then {
+        //TAG: video source data
+        _nearbyVideoSourceData params ["_unitNetID", "_unit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
+        // diag_log format ["FOUND NEARBY HCAM! : %1", _nearbyVideoSourceData];
+        _nearbyVideoSourceUnit = _unit;
+    };
+    // diag_log format ["%1", DMC_BFT_HCAM];
+    // diag_log format ["GVARMAIN(hCamVideoSources) %1", GVARMAIN(hCamVideoSources)];
+    // diag_log format ["_sources %1", _sources];
+    
     {
-        private _hCamUnit = _x;
-        private _isSelectedHCam = _hCamUnit isEqualTo GVAR(selectedHCam);
-        private _isNearbyHCam = _hCamUnit isEqualTo _nearbyHCam;
-        private _hCamPosition = getPosASL _hCamUnit;
+        //TAG: video source data
+        _y params ["_unitNetID", "_hCamUnit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
+        // diag_log format ["Updating hcam markers for data: %1", _y];
+        if(isNull _hCamUnit || !_enabled) then {continue};
 
-        //diag_log format ["_isSelectedHCam (%1) _isNearbyHCam (%2)[%3] _hCamPosition (%4)", _isSelectedHCam, _isNearbyHCam, _nearbyHCam, _hCamPosition];
+        private _isSelectedHCam = _hCamUnit isEqualTo GVAR(selectedHCam);
+        private _isNearbyHCam = _hCamUnit isEqualTo _nearbyVideoSourceUnit;
+        private _hCamPosition = getPosASL _hCamUnit; //TODO: do some last known position stuff?
+
+        //diag_log format ["_isSelectedHCam (%1) _isNearbyHCam (%2)[%3] _hCamPosition (%4)", _isSelectedHCam, _isNearbyHCam, _nearbyVideoSourceUnit, _hCamPosition];
         _mapCtrl drawIcon [
             "\A3\ui_f\data\GUI\Rsc\RscDisplayEGSpectator\ReviveIcon_ca.paa",
             //"\A3\ui_f\data\map\markers\nato\b_uav.paa",
             [GVAR(colorBLUFOR), GVAR(selectedUAVColor)] select _isSelectedHCam,
             _hCamPosition,
             GVAR(iconSize), GVAR(iconSize),
-            0, [name _hCamUnit, ""] select (_isSelectedHCam || _isNearbyHCam), 0, 0.5 * GVAR(textSize), "TahomaB", "right"
+            0, [_name, ""] select (_isSelectedHCam || _isNearbyHCam), 0, 0.5 * GVAR(textSize), "TahomaB", "right"
         ];
 
         if(_isNearbyHCam || _isSelectedHCam) then {
@@ -338,7 +369,7 @@ if(DMC_BFT_HCAM in _bftOptions) then {
                 GVAR(selectedUAVColor),
                 _hCamPosition,
                 GVAR(iconSize) * 1.1, GVAR(iconSize) * 1.1,
-                0, name _hCamUnit, 0, GVAR(textSize), "TahomaB", "right"
+                0, _name, 0, GVAR(textSize), "TahomaB", "right"
             ];
             if(_isSelectedHCam && _isNearbyHCam) then {
                     _mapCtrl drawIcon [
@@ -353,7 +384,7 @@ if(DMC_BFT_HCAM in _bftOptions) then {
 
         // _processedVehicles pushBack _hCamUnit;
 
-    } foreach GVARMAIN(hCamList);
+    } foreach _sources;
 };
 
 if(DMC_BFT_MEMBERS in _bftOptions) then {

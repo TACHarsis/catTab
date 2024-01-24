@@ -18,7 +18,7 @@
 #define MENU_GRID_H    (0.04)
 
 class GVARMAIN(microDAGR_dlg) {
-    idd = 1776134;
+    idd = IDD_CTAB_MICRODAGR_DLG;
     movingEnable = "true";
     onLoad = QUOTE(_this call FUNC(onIfOpen));
     onUnload = QUOTE([] call FUNC(onIfClose));

@@ -24,7 +24,7 @@
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(Tablet_dlg){
-    idd = 1775154;
+    idd = IDD_CTAB_TABLET_DLG;
     movingEnable = "true";
     onLoad = QUOTE(_this call FUNC(onTabletOpen); _this call FUNC(onIfOpen););
     onUnload = QUOTE(_this call FUNC(onTabletClose); [] call FUNC(onIfClose););
@@ -54,6 +54,7 @@ class GVARMAIN(Tablet_dlg){
             idc = IDC_CTAB_SCREEN;
             onDraw = QUOTE(_this call FUNC(drawMapControlTablet););
             onMouseButtonDblClick = QUOTE(_this call FUNC(loadMarkerMenu););
+            onMouseButtonClick = QUOTE(_this call FUNC(onTabletMapClicked););
             onMouseButtonUp = QUOTE(_this call FUNC(onIfMapClicked););
             onMouseMoving = QUOTE(
                 GVAR(cursorOnMap) = _this select 3;

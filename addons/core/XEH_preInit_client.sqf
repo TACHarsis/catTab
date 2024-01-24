@@ -25,8 +25,8 @@ GVARMAIN(encryptionKey_civ) = "c";
 GVARMAIN(BFTMembers) = [];
 GVARMAIN(BFTgroups) = [];
 GVARMAIN(BFTvehicles) = [];
-GVARMAIN(UAVList) = [];
-GVARMAIN(hCamList) = [];
+GVARMAIN(UAVVideoSources) = createHashMap;
+GVARMAIN(hCamVideoSources) = createHashMap;
 
 // set current player object in Ctab_player and run a check on every frame to see if there is a change
 Ctab_player = objNull;
@@ -34,13 +34,13 @@ Ctab_player = objNull;
 GVAR(checkForPlayerChangePFH) = [{
     if !(Ctab_player isEqualTo (missionNamespace getVariable ["BIS_fnc_moduleRemoteControl_unit", player])) then {
         Ctab_player = missionNamespace getVariable ["BIS_fnc_moduleRemoteControl_unit", player];
-        
+
         //prep the arrays that will hold ctab data
         GVARMAIN(BFTMembers) = [];
         GVARMAIN(BFTGroups) = [];
         GVARMAIN(BFTvehicles) = [];
-        GVARMAIN(UAVList) = [];
-        GVARMAIN(hCamList) = [];
+        GVARMAIN(UAVVideoSources) = createHashMap;
+        GVARMAIN(hCamVideoSources) = createHashMap;
         call FUNC(updateLists);
 
         [QGVAR(playerChanged), Ctab_player] call CBA_fnc_localEvent;
@@ -78,7 +78,7 @@ private _classNamesTADVehiclesValidated = [];
 } foreach GVARMAIN(vehicleClassesTAD);
 GVARMAIN(vehicleClassesTAD) = [] + _classNamesTADVehiclesValidated;
 
-// define items that enable head cam
+// define items thatE enable head cam
 GVARMAIN(helmetClasses) = [
         GVARMAIN(helmetClasses_server),
         ["H_HelmetB_light", "H_Helmet_Kerry", "H_HelmetSpecB", "H_HelmetO_ocamo", "BWA3_OpsCore_Fleck_Camera", "BWA3_OpsCore_Schwarz_Camera", "BWA3_OpsCore_Tropen_Camera"]
@@ -108,3 +108,110 @@ GVARMAIN(helmetClasses) = [] + _classNamesHelmetValidated;
     QGVARMAIN(updatePulse),
     FUNC(updateLists)
 ] call CBA_fnc_addEventHandler;
+
+#include "setupVideoSourceContext.inc.sqf"
+
+addMissionEventHandler ["EntityKilled", {
+    params ["_unit", "_killer", "_instigator", "_useEffects"];
+    private _unitNetID = _unit call BIS_fnc_netId;
+    {
+        private _type = _x;
+        private _sourcesHash = _y get QGVAR(sourcesHash);
+        if(_unitNetID in _sourcesHash) exitWith
+        {
+            [_type, _unitNetID] call FUNC(updateVideoSource);
+        };
+    } foreach GVAR(videoSourcesContext);
+}];
+
+//TODO: Test to see if we catch the initialized inventory this time or if it still reports a false negative on units that should start with camera items
+private _fnc_onSourceInit = {
+    params ["_unit"];
+
+    private _type = switch (true) do {
+        case (_unit isKindOf "CAManBase"): { VIDEO_FEED_TYPE_HCAM };
+        case (_unit isKindOf "UAV"): { VIDEO_FEED_TYPE_UAV };
+        default { "" };
+    };
+    if(_type isNotEqualTo "") then {
+        private _unitNetID = _unit call BIS_fnc_netId;
+        [
+            {
+                params ["_type", "_unitNetID"];
+                private _context = GVAR(videoSourcesContext) get _type;
+                private _sourcesHash = _context get QGVAR(sourcesHash);
+
+                [_type, _unitNetID, true] call FUNC(updateVideoSource);
+            },
+            [_type, _unitNetID]
+        ] call CBA_fnc_execNextFrame;
+    };
+};
+
+["CAManBase", "init", _fnc_onSourceInit, true, [], true] call CBA_fnc_addClassEventHandler;
+["UAV", "init", _fnc_onSourceInit, true, [], true] call CBA_fnc_addClassEventHandler;
+
+private _fnc_onSourceDeleted = {
+    params ["_unit"];
+
+    // diag_log format ["[DELETED] Unit deleted: %1", _unit];
+    private _unitNetID = _unit call BIS_fnc_netId;
+    {
+        private _type = _x;
+        private _context = _y;
+        private _sourcesHash = _context get QGVAR(sourcesHash);
+        // diag_log format ["[DELETED] Unit was video source? %1", _unitNetID in _sourcesHash];
+        if(_unitNetID in _sourcesHash) then {
+            // wait till next frame so the unit can go null
+            [
+                {
+                    params ["_type", "_unitNetID", "_unit"];
+
+                    isNull _unit
+                },
+                {
+                    // diag_log format ["[DELETED] Unit is now null: %1. Updating source.", _unit];
+                    params ["_type", "_unitNetID", "_unit"];
+                    [_type, _unitNetID] call FUNC(updateVideoSource);
+                },
+                [_type, _unitNetID, _unit]
+            ] call CBA_fnc_waitUntilAndExecute;
+        };
+    } foreach GVAR(videoSourcesContext);
+};
+
+["CAManBase", "Deleted", _fnc_onSourceDeleted, true, [], true] call CBA_fnc_addClassEventHandler;
+["UAV", "Deleted", _fnc_onSourceDeleted, true, [], true] call CBA_fnc_addClassEventHandler;
+
+GVAR(videoSourceUpdatePFHID) = [
+    {
+        {
+            private _type = _x;
+            private _context = _y;
+            private _sourcesHash = _context get QGVAR(sourcesHash);
+            private _units = [] call (_context get QGVAR(fnc_getUnits));
+            {
+                private _unit = _x;
+                private _unitNetID = _unit call BIS_fnc_netId;
+                private _sourceData = _sourcesHash getOrDefault [_unitNetID, []];
+                private _known = _sourceData isNotEqualTo [];
+                private _fnc_prepareUnit = _context get QGVAR(fnc_prepareUnit);
+                private _isEnabled = [_unit] call _fnc_prepareUnit;
+
+                if(!_known && _isEnabled) then {
+                    // this is basically picking up stragglers that didn't have their inventory loaded at init time.
+                    [_type, _unitNetID, true] call FUNC(updateVideoSource);
+                };
+                if(_known) then {
+                    //TAG: video source data
+                    _sourceData params ["_unitNetID", "_unit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
+                    // diag_log format ["waaa %1 %2", _sourceData, _isEnabled];
+                    if(_enabled isNotEqualTo _isEnabled) then {
+                        [_type, _unitNetID] call FUNC(updateVideoSource);
+                    };
+                };
+            } foreach _units;
+        } foreach GVAR(videoSourcesContext);
+    },
+    1
+] call CBA_fnc_addPerFrameHandler;

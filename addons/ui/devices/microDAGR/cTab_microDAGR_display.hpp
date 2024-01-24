@@ -22,7 +22,7 @@
 #include "cTab_microDAGR_controls.hpp"
 
 class GVARMAIN(microDAGR_dsp) {
-    idd = 1776135;
+    idd = IDD_CTAB_MICRODAGR_DSP;
     movingEnable = "true";
     duration = 10e10;
     fadeIn = 0;

@@ -19,7 +19,7 @@
 */
 params ["_camPos", "_camIdx"];
 
-//TODO: Fix this function
+//TODO: Fix this function, it ignores camidx and only works on selected uav
 
 private _displayName = GVAR(ifOpen) select 1;
 

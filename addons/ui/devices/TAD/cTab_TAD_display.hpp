@@ -22,7 +22,7 @@
 #include "cTab_TAD_controls.hpp"
 
 class GVARMAIN(TAD_dsp) {
-    idd = 1775134;
+    idd = IDD_CTAB_TAD_DSP;
     movingEnable = "true";
     duration = 10e10;
     fadeIn = 0;

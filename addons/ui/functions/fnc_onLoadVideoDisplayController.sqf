@@ -12,7 +12,6 @@ private _fnc_onMouseWheel = {
     params ["_videoController", "_value"];
 
     private _cameraTarget = _videoController getVariable [QGVAR(cameraTarget), objNull];
-    private _cameraTargetType = _videoController getVariable [QGVAR(cameraTargetType), ""];
     if(isNull _cameraTarget) exitWith {};
 
     private _fov = _cameraTarget getVariable [QGVAR(targetFovHash), FOV_MAX];
@@ -35,10 +34,10 @@ private _fnc_onMouseClick = {
     if(_button == 0) exitWith {
         private _feedType = _videoController getVariable QGVAR(feedType);
         switch (_feedType) do {
-            case (QSETTING_FEED_TYPE_UAV): {
+            case (VIDEO_FEED_TYPE_UAV): {
                 [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
             };
-            case (QSETTING_FEED_TYPE_HCAM): {
+            case (VIDEO_FEED_TYPE_HCAM): {
                 [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
             };
         };
@@ -47,18 +46,20 @@ private _fnc_onMouseClick = {
 
 private _fnc_onMouseDoubleClick = {
     params ["_videoController", "_button", "_xPos", "_yPos", "_shift", "_ctrl", "_alt"];
+    // diag_log format ["[VIDEOCONTROLLER] (DoubleClick): CtrlEnabled: %1", ctrlEnabled _videoController];
     private _cameraTarget = _videoController getVariable [QGVAR(cameraTarget), objNull];
-    if(isNull _cameraTarget) exitWith {};
-
-    private _feedType = _videoController getVariable QGVAR(feedType);
-    switch (_feedType) do {
-        case (QSETTING_FEED_TYPE_UAV): {
-            [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
-        };
-        case (QSETTING_FEED_TYPE_HCAM): {
-            [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
+    if(!isNull _cameraTarget) then {
+        private _feedType = _videoController getVariable QGVAR(feedType);
+        switch (_feedType) do {
+            case (VIDEO_FEED_TYPE_UAV): {
+                [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
+            };
+            case (VIDEO_FEED_TYPE_HCAM): {
+                [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, _cameraTarget call BIS_fnc_netId]]] call FUNC(setSettings);
+            };
         };
     };
+
     if(_button == 0) exitWith {
         [] call FUNC(caseButtonsOnACTButton);
     };
@@ -68,7 +69,7 @@ private _fnc_onMouseDoubleClick = {
     {
         params ["_videoController", "_feedType", "_fnc_onMouseWheel", "_fnc_onMouseClick", "_fnc_onMouseDoubleClick"];
         
-        _videoController ctrlEnable true;
+        _videoController ctrlEnable false;
         _videoController setVariable [QGVAR(feedType), _feedType];
         _videoController setVariable [QGVAR(targetFovHash), createHashMap];
         //_videoController ctrlAddEventHandler ["SetFocus", { params ["_control"]; (ctrlParent (ctrlParent _control )) displayCtrl ; }];

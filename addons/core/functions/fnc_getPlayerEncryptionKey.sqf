@@ -18,4 +18,4 @@
         _playerEncryptionKey = call Ctab_ui_fnc_getPlayerEncryptionKey;
 */
 
-missionNamespace getVariable [format [QGVARMAIN(encryptionKey_%1),side Ctab_player],""];
+missionNamespace getVariable [format [QGVARMAIN(encryptionKey_%1), side Ctab_player],""];

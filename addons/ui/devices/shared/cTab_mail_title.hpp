@@ -14,7 +14,7 @@
 #define CUSTOM_GRID_Y       (safezoneY + safezoneH * 0.25)
 
 class GVAR(mail_ico_disp) {
-    idd = 13672;
+    idd = IDD_CTAB_MAILICO;
     name="cTabMailico";
     onLoad = QUOTE(uiNamespace setVariable [ARR_2(QQGVAR(mail_ico_disp),_this select 0)]);
     fadein = 0;

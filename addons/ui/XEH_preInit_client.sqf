@@ -20,14 +20,14 @@ GVAR(userMarkerListTranslated) = [];
 [player] remoteExec [QFUNC(userMarkerListGetServer), 2];
 
 GVAR(displayPropertyGroups) = createHashMapFromArray [
-    [QGVARMAIN(Tablet_dlg),QSETTINGS_TABLET],
-    [QGVARMAIN(Android_dlg),QSETTINGS_ANDROID],
-    [QGVARMAIN(Android_dsp),QSETTINGS_ANDROID],
-    [QGVARMAIN(FBCB2_dlg),QSETTINGS_FBCB2],
-    [QGVARMAIN(TAD_dsp),QSETTINGS_TAD],
-    [QGVARMAIN(TAD_dlg),QSETTINGS_TAD],
-    [QGVARMAIN(microDAGR_dsp),QSETTINGS_MICRODAGR],
-    [QGVARMAIN(microDAGR_dlg),QSETTINGS_MICRODAGR]
+    [QGVARMAIN(Tablet_dlg),     QSETTINGS_TABLET],
+    [QGVARMAIN(Android_dlg),    QSETTINGS_ANDROID],
+    [QGVARMAIN(Android_dsp),    QSETTINGS_ANDROID],
+    [QGVARMAIN(FBCB2_dlg),      QSETTINGS_FBCB2],
+    [QGVARMAIN(TAD_dsp),        QSETTINGS_TAD],
+    [QGVARMAIN(TAD_dlg),        QSETTINGS_TAD],
+    [QGVARMAIN(microDAGR_dsp),  QSETTINGS_MICRODAGR],
+    [QGVARMAIN(microDAGR_dlg),  QSETTINGS_MICRODAGR]
 ];
 
 [] call FUNC(initializeDeviceMapSettings);
@@ -109,14 +109,14 @@ GVAR(mapWorldPos) = [];
 GVAR(mapScale) = 0.5;
 
 // Initialize all uiNamespace variables
-uiNamespace setVariable [QGVARMAIN(Tablet_dlg), displayNull];
-uiNamespace setVariable [QGVARMAIN(Android_dlg), displayNull];
-uiNamespace setVariable [QGVARMAIN(Android_dsp), displayNull];
-uiNamespace setVariable [QGVARMAIN(FBCB2_dlg), displayNull];
-uiNamespace setVariable [QGVARMAIN(TAD_dsp), displayNull];
-uiNamespace setVariable [QGVARMAIN(TAD_dlg), displayNull];
-uiNamespace setVariable [QGVARMAIN(microDAGR_dsp), displayNull];
-uiNamespace setVariable [QGVARMAIN(microDAGR_dlg), displayNull];
+uiNamespace setVariable [QGVARMAIN(Tablet_dlg),     displayNull];
+uiNamespace setVariable [QGVARMAIN(Android_dlg),    displayNull];
+uiNamespace setVariable [QGVARMAIN(Android_dsp),    displayNull];
+uiNamespace setVariable [QGVARMAIN(FBCB2_dlg),      displayNull];
+uiNamespace setVariable [QGVARMAIN(TAD_dsp),        displayNull];
+uiNamespace setVariable [QGVARMAIN(TAD_dlg),        displayNull];
+uiNamespace setVariable [QGVARMAIN(microDAGR_dsp),  displayNull];
+uiNamespace setVariable [QGVARMAIN(microDAGR_dlg),  displayNull];
 
 // Ctab_ui_openStart will be set to true while interface is starting and prevent further open attempts
 GVAR(openStart) = false;
@@ -147,8 +147,9 @@ GVAR(helmetCamSettings) = createHashMapFromArray [
 ];
 
 GVAR(uavCamSettingsNames) = [QSETTING_CAM_UAV_0, QSETTING_CAM_UAV_1, QSETTING_CAM_UAV_2, QSETTING_CAM_UAV_3, QSETTING_CAM_UAV_4, QSETTING_CAM_UAV_5, QSETTING_CAM_UAV_FULL];
-GVAR(helmetCamSettingsNames) = [QSETTING_CAM_HCAM_0, QSETTING_CAM_HCAM_1, QSETTING_CAM_HCAM_2, QSETTING_CAM_HCAM_3, QSETTING_CAM_HCAM_4, QSETTING_CAM_HCAM_5, QSETTING_CAM_HCAM_FULL];
+GVAR(hCamSettingsNames) = [QSETTING_CAM_HCAM_0, QSETTING_CAM_HCAM_1, QSETTING_CAM_HCAM_2, QSETTING_CAM_HCAM_3, QSETTING_CAM_HCAM_4, QSETTING_CAM_HCAM_5, QSETTING_CAM_HCAM_FULL];
 
+//TODO: change selected UAV/HCAM to netID instead? Or distinguish between the selected UAV/Unit and the selected UI element/source?
 GVAR(selectedUAV) = objNull;
 GVAR(selectedHCam) = objNull;
 GVAR(trackCurrentUAV)= false;
@@ -174,27 +175,77 @@ GVAR(bftVehicleListUpdateEHID) = [
     FUNC(updateBFTVehicleIconList)
 ] call CBA_fnc_addEventHandler;
 
-GVAR(uavListUpdateEHID) = [
-    QEGVAR(core,uavListUpdate),
-    FUNC(updateListControlUAV)
+GVAR(sourceRemovedSlotBuffer) = [];
+
+[
+    QEGVAR(core,videoSourceRemoved),
+    {
+        params ["_type", "_sourceData"];
+        //TAG: video source data
+        _sourceData params ["_unitNetID", "_unit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
+
+        private _context = GVAR(videoSourcesContext) get _type;
+        private _settingsNames = _context get QGVAR(slotSettingsNames);
+        private _displayName = GVAR(ifOpen) select 1;
+        private _selectedSettingsNames = _settingsNames select {
+            private _settingName = _x;
+            private _data = [_displayName, _settingName] call FUNC(getSettings);
+            (_data isEqualTo _unitNetID)
+        };
+        if(_selectedSettingsNames isNotEqualTo []) then {
+            GVAR(sourceRemovedSlotBuffer) pushBackUnique [_unitNetID, _selectedSettingsNames, _displayName];
+        };
+
+        [_type, true] call FUNC(updateListControls);
+    }
 ] call CBA_fnc_addEventHandler;
 
-GVAR(currentUAVChangedEHID) = [
+[
+    QEGVAR(core,videoSourceAdded),
+    {
+        params ["_type", "_sourceData"];
+        [_type, true] call FUNC(updateListControls);
+    }
+] call CBA_fnc_addEventHandler;
+
+[
+    QEGVAR(core,videoSourceReplaced),
+    {
+        params ["_oldUnitNetID", "_newUnitNetID"];
+        private _idx = GVAR(sourceRemovedSlotBuffer) findIf {(_x # 0) isEqualTo _oldUnitNetID};
+        if(_idx == -1) exitWith {};
+
+        private _buffer = GVAR(sourceRemovedSlotBuffer) deleteAt _idx;
+        _buffer params ["", "_selectedSettingsNames", "_displayName"];
+        {
+            private _settingName = _x;
+            private _data = [_displayName, _settingName] call FUNC(getSettings);
+            if(_data isEqualTo _newUnitNetID || {_data isNotEqualTo ""}) then {continue}; // don't replace a new selection and don't bother if we're already set
+            [_displayName, [[_settingName, _newUnitNetID]]] call FUNC(setSettings);
+            // diag_log format ["Replacing %1 with %2 in slot %3", _corpseNetID, _unitNetID, _settingName];
+        } foreach _selectedSettingsNames;
+    }
+] call CBA_fnc_addEventHandler;
+
+
+#include "setupVideoSourceContext.inc.sqf"
+
+[
     QGVAR(UAVSelected),
-    FUNC(updateListControlUAV)
+    {
+        params ["_newSources", "_removedSources", "_lostSources"];
+        [VIDEO_FEED_TYPE_UAV] call FUNC(updateListControls);
+    }
 ] call CBA_fnc_addEventHandler;
 
-GVAR(helmetCamListUpdateEHID) = [
-    QEGVAR(core,helmetCamListUpdate),
-    FUNC(updateListControlHelmetCams)
-] call CBA_fnc_addEventHandler;
-
-GVAR(currentHelmetChangedEHID) = [
+[
     QGVAR(HelmetSelected),
-    FUNC(updateListControlHelmetCams)
+    {
+        [VIDEO_FEED_TYPE_HCAM] call FUNC(updateListControls);
+    }
 ] call CBA_fnc_addEventHandler;
 
-GVAR(playerChangeEHID) = [
+[
     QEGVAR(core,playerChanged),
     {
         params ["_ctabPlayer"];
@@ -208,7 +259,7 @@ GVAR(playerChangeEHID) = [
     }
 ] call CBA_fnc_addEventHandler;
 
-GVAR(deviceLostEHID) = [
+[
     QEGVAR(core,deviceLost),
     {
         params ["_displayName"];
@@ -217,7 +268,7 @@ GVAR(deviceLostEHID) = [
     }
 ] call CBA_fnc_addEventHandler;
 
-GVAR(remoteControlFailedEHID) = [
+[
     QGVAR(remoteControlFailed),
     {
         params ["_errorMessage"];
@@ -225,6 +276,28 @@ GVAR(remoteControlFailedEHID) = [
         [QSETTING_MODE_CAM_UAV,_errorMessage,5] call FUNC(addNotification);
     }
 ] call CBA_fnc_addEventHandler;
+
+GVAR(animatedCtrls) = [];
+
+GVAR(heartbeatAnimationArray) = [
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u100_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa",
+    "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u75_ca.paa"
+];
+GVAR(heartbeatDeathIcon) = "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\d100_ca.paa";
+
+GVAR(statusStrings) = [
+    LLSTRING(Video_Source_Status_Long_Offline),     //OFFLINE         0
+    LLSTRING(Video_Source_Status_Long_Online),      //ONLINE          1
+    LLSTRING(Video_Source_Status_Long_Destroyed),   //DESTROYED       2
+    LLSTRING(Video_Source_Status_Long_Lost)         //LOST            3
+];
 
 #ifdef DEBUG_MODE_FULL
 GVAR(uavSelectedEHID) = [
@@ -235,7 +308,7 @@ GVAR(uavSelectedEHID) = [
             GVAR(uavDebugPFH) call CBA_fnc_removePerFrameHandler;
             GVAR(uavDebugPFH) = nil;
         };
-        
+
         if(!isNull GVAR(selectedUAV) && isNil QGVAR(uavDebugPFH)) then {
             GVAR(uavDebugPFH) = [{
                 if(isNull Ctab_ui_currentUAV) exitWith {};

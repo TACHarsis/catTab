@@ -50,7 +50,7 @@ class MainSubmenu: cTab_RscControlsGroup {
         };
         #ifdef cTab_IS_TABLET
             class lockUavCam: cTab_MenuItem {
-                idc = -1;
+                idc = ICD_USRMN_LOCKBTN;
                 text = "Lock UAV Cam"; //--- ToDo: Localize;
                 toolTip = "Lock UAV Cam to this position, a UAV has to be previously selected, del on lock to release";
                 x = QUOTE(0);
@@ -77,14 +77,14 @@ class MainSubmenu: cTab_RscControlsGroup {
 class EnemySub1: cTab_RscControlsGroup {
     #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 9
-    idc = 3301;
+    idc = IDC_CTAB_MARKER_MENU_ENYSUB1;
     x = QUOTE(MENU_X);
     y = QUOTE(MENU_Y);
     w = QUOTE(MENU_W);
     h = QUOTE(MENU_H(cTab_MENU_MAX_ELEMENTS));
     class controls {
         class IGUIBack_2201: cTab_IGUIBack {
-            idc = IDC_USRMN_IGUIBACK_2202;
+            idc = IDC_USRMN_ENY_IGUIBACK;
             x = QUOTE(0);
             y = QUOTE(0);
             w = QUOTE(MENU_W);
@@ -189,14 +189,14 @@ class EnemySub1: cTab_RscControlsGroup {
 class EnemySub2: cTab_RscControlsGroup {
     #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 8
-    idc = 3303;
+    idc = IDC_CTAB_MARKER_MENU_ENYSUB2;
     x = QUOTE(MENU_X);
     y = QUOTE(MENU_Y);
     w = QUOTE(MENU_W);
     h = QUOTE(MENU_H(cTab_MENU_MAX_ELEMENTS));
     class controls {
         class IGUIBack_2202: cTab_IGUIBack {
-            idc = IDC_USRMN_IGUIBACK_2202;
+            idc = IDC_USRMN_ENY_IGUIBACK;
             x = QUOTE(0);
             y = QUOTE(0);
             w = QUOTE(MENU_W);
@@ -263,7 +263,7 @@ class EnemySub2: cTab_RscControlsGroup {
             action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(2,5)];[13] call FUNC(userMenuSelect));
         };
         class btlnbtn: cTab_MenuItem {
-            idc = IDC_USRMN_CPNYBTN;
+            idc = IDC_USRMN_BTNYBTN;
             text = "Battalion"; //--- ToDo: Localize;
             x = QUOTE(0);
             y = QUOTE(MENU_elementY(7));
@@ -288,14 +288,14 @@ class EnemySub2: cTab_RscControlsGroup {
 class EnemySub3: cTab_RscControlsGroup {
     #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 10
-    idc = 3304;
+    idc = IDC_CTAB_MARKER_MENU_ENYSUB3;
     x = QUOTE(MENU_X);
     y = QUOTE(MENU_Y);
     w = QUOTE(MENU_W);
     h = QUOTE(MENU_H(cTab_MENU_MAX_ELEMENTS));
     class controls {
         class IGUIBack_2203: cTab_IGUIBack {
-            idc = IDC_USRMN_IGUIBACK_2203;
+            idc = IDC_USRMN_ENY_IGUIBACK;
             x = QUOTE(0);
             y = QUOTE(0);
             w = QUOTE(MENU_W);
@@ -381,7 +381,7 @@ class EnemySub3: cTab_RscControlsGroup {
             action = QUOTE(GVAR(cTabUserSelIcon) set [ARR_2(3,7)];[1] call FUNC(userMenuSelect));
         };
         class RscText_1022: cTab_MenuItem {
-            idc = IDC_USRMN_RSCTEXT_1022;
+            idc = IDC_USRMN_NWBTN;
             text = "NW"; //--- ToDo: Localize;
             x = QUOTE(0);
             y = QUOTE(MENU_elementY(9));
@@ -406,14 +406,14 @@ class EnemySub3: cTab_RscControlsGroup {
 class EnemySub4: cTab_RscControlsGroup {
     #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 8
-    idc = 3307;
+    idc = IDC_CTAB_MARKER_MENU_ENYSUB4;
     x = QUOTE(MENU_X);
     y = QUOTE(MENU_Y);
     w = QUOTE(MENU_W);
     h = QUOTE(MENU_H(cTab_MENU_MAX_ELEMENTS));
     class controls {
         class IGUIBack_2202: cTab_IGUIBack {
-            idc = IDC_USRMN_IGUIBACK_2202;
+            idc = IDC_USRMN_ENY_IGUIBACK;
             x = QUOTE(0);
             y = QUOTE(0);
             w = QUOTE(MENU_W);
@@ -505,14 +505,14 @@ class EnemySub4: cTab_RscControlsGroup {
 class CasulSub1: cTab_RscControlsGroup {
     #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 5
-    idc = 3305;
+    idc = IDC_CTAB_MARKER_MENU_CASUSUB1;
     x = QUOTE(MENU_X);
     y = QUOTE(MENU_Y);
     w = QUOTE(MENU_W);
     h = QUOTE(MENU_H(cTab_MENU_MAX_ELEMENTS));
     class controls {
         class IGUIBack_2204: cTab_IGUIBack {
-            idc = IDC_USRMN_IGUIBACK_2204;
+            idc = IDC_USRMN_CASU_IGUIBACK;
             x = QUOTE(0);
             y = QUOTE(0);
             w = QUOTE(MENU_W);
@@ -578,14 +578,14 @@ class CasulSub1: cTab_RscControlsGroup {
 class GenSub1: cTab_RscControlsGroup {
     #undef cTab_MENU_MAX_ELEMENTS
     #define cTab_MENU_MAX_ELEMENTS 3
-    idc = 3306;
+    idc = IDC_CTAB_MARKER_MENU_GENSUB1;
     x = QUOTE(MENU_X);
     y = QUOTE(MENU_Y);
     w = QUOTE(MENU_W);
     h = QUOTE(MENU_H(cTab_MENU_MAX_ELEMENTS));
     class controls {
         class IGUIBack_2205: cTab_IGUIBack {
-            idc = IDC_USRMN_IGUIBACK_2205;
+            idc = IDC_USRMN_GEN_IGUIBACK;
             x = QUOTE(0);
             y = QUOTE(0);
             w = QUOTE(MENU_W);

@@ -1,5 +1,5 @@
-#ifndef ANDROID_CONTROLS
-#define ANDROID_CONTROLS
+// #ifndef ANDROID_CONTROLS
+// #define ANDROID_CONTROLS
 
 // Background definition
 #define ANDROID_BackgroundImage_px_W 2048 // width in pixels
@@ -129,6 +129,8 @@
 
 #define ANDROID_messages_button_delete_px_X (ANDROID_messages_button_send_px_X)
 #define ANDROID_messages_button_delete_px_Y (ANDROID_messages_button_send_px_Y)
+
+// #endif
 
 class cTab_RscText_Android: cTab_RscText {
     style = ST_CENTER;
@@ -349,4 +351,4 @@ class cTab_android_notification: cTab_RscText_Android {
     colorBackground[] = COLOR_BLACK;
 };
 
-#endif
+

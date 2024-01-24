@@ -28,6 +28,7 @@
 #define CONTENT_Y(pos) (pos select 5)
 
 #define ARMA_UI_RATIO 1.3333333333333
+#define ARMA_UI_RATIO_W(width) width/ARMA_UI_RATIO
 
 #define R2T_METHOD_SHRINK   0
 #define R2T_METHOD_ZOOMCROP 1
@@ -46,7 +47,10 @@
 #define NUM_ALIGNMENTS      9
 
 #define FEED_CONTROLLER     QUOTE(FeedController)
+#define FEED_VIDEO          QUOTE(FeedVideo)
 #define FEED_NAME           QUOTE(FeedName)
+#define FEED_STATIC         QUOTE(FeedStatic)
+#define FEED_STATUS_BIG     QUOTE(FeedStatusBig)
 #define HEARTBEAT_ICON      QUOTE(FeedHBIcon)
 #define HEARTBEAT_TEXT      QUOTE(FeedHBText)
 

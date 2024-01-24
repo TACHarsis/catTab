@@ -18,6 +18,7 @@
     Example:
         [ACE_player,[player] call ace_common_fnc_getAllGear] call Ctab_ui_fnc_onPlayerInventoryChanged;
 */
+//TODO: Make sure this still works - well no it does not, because the event it is supposed to handle does not exist anymore
 params ["_unit", "_newPlayerInventory"];
 
 // is cTab oben? if not exit

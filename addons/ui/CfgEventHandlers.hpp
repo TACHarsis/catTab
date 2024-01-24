@@ -18,3 +18,11 @@ class Extended_PostInit_EventHandlers {
         clientInit = QUOTE(call COMPILE_FILE(XEH_postInit_client));
     };
 };
+
+class Extended_Respawn_EventHandlers {
+    class CAManBase {
+        class ADDON {
+            clientRespawn = QUOTE(call FUNC(onPlayerRespawned));
+        };
+    };
+};

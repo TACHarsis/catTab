@@ -33,7 +33,7 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
 
                                         _options
                                     }],
-                                    //TODO: this still needs to be made compatible with helmet cam and uav mode.
+                                    //TODO: this still needs to be made compatible with helmet cam and uav mode. - does it?
                                     // [QGVAR(TABLET_UAVS),        createHashMapFromArray [
                                     //                                 [DMC_CONDITION,             {/* !(isNull GVAR(selectedUAV)) &&  */(GVAR(selectedUAV) isNotEqualTo Ctab_player)}],
                                     //                                 [DMC_SAVE_SCALE_POSITION,   {isNull GVAR(selectedUAV)}],

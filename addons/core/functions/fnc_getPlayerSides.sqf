@@ -19,7 +19,7 @@
 */
 
 private _return = [];
-private _playerEncryptionKey = call FUNC(getPlayerEncryptionKey);
+private _playerEncryptionKey = [] call FUNC(getPlayerEncryptionKey);
 
 switch (_playerEncryptionKey) do {
     case GVARMAIN(encryptionKey_west) : {_return pushBack west};

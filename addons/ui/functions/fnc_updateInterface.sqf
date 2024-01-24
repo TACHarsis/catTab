@@ -173,10 +173,9 @@ if (isNil "_mode") then {
                 case (_displayName isEqualTo QGVARMAIN(Tablet_dlg)) : {
                     private _dynamicFrameCtrls = 
                         (GVAR(uavCamSettingsNames) apply { (GVAR(uavCamSettings) get _x) # 2})
-                        + (GVAR(helmetCamSettingsNames) apply { (GVAR(helmetCamSettings) get _x) # 2});
+                        + (GVAR(hCamSettingsNames) apply { (GVAR(helmetCamSettings) get _x) # 2});
                     [
-                        3301, 3303, 3304, 3305, 3306, 3307,
-                        IDC_CTAB_MARKER_MENU_MAIN,
+                        IDCS_CTAB_MARKER_MENUS,
                         IDC_CTAB_GROUP_DESKTOP,
                         IDC_CTAB_GROUP_HCAM_SOURCE_GRP,
                         IDC_CTAB_GROUP_UAV_SOURCE_GRP,
@@ -195,8 +194,7 @@ if (isNil "_mode") then {
                 };
                 case (_displayName isEqualTo QGVARMAIN(Android_dlg)) : {
                     [
-                        3301, 3302, 3303, 3304, 3305, 3306, 3307,
-                        IDC_CTAB_MARKER_MENU_MAIN,
+                        IDCS_CTAB_MARKER_MENUS,
                         IDC_CTAB_GROUP_MENU,
                         IDC_CTAB_GROUP_MESSAGE,
                         IDC_CTAB_GROUP_COMPOSE,
@@ -211,8 +209,7 @@ if (isNil "_mode") then {
                 };
                 case (_displayName in [QGVARMAIN(FBCB2_dlg)]) : {
                     [
-                        3301, 3303, 3304, 3305, 3306, 3307,
-                        IDC_CTAB_MARKER_MENU_MAIN,
+                        IDCS_CTAB_MARKER_MENUS,
                         IDC_CTAB_NOTIFICATION,
                         IDC_CTAB_GROUP_MESSAGE,
                         IDC_CTAB_SCREEN,
@@ -225,8 +222,7 @@ if (isNil "_mode") then {
                 };
                 case (_displayName in [QGVARMAIN(TAD_dlg)]) : {
                     [
-                        3301, 3302, 3303, 3304, 3305, 3306, 3307,
-                        IDC_CTAB_MARKER_MENU_MAIN,
+                        IDCS_CTAB_MARKER_MENUS,
                         IDC_CTAB_NOTIFICATION
                     ]
                 };
@@ -308,10 +304,10 @@ if (isNil "_mode") then {
                     };
                     // ---------- UAV -----------
                     case (QSETTING_MODE_CAM_UAV) : {
-                        [QSETTING_CAM_UAV_FULL] call FUNC(deleteUAVCam);
-                        [] call FUNC(deleteHelmetCam);
+                        [VIDEO_FEED_TYPE_UAV, QSETTING_CAM_UAV_FULL] call FUNC(deleteVideoSourceCam);
+                        [VIDEO_FEED_TYPE_UAV] call FUNC(deleteVideoSourceCam);
 
-                        [] call FUNC(updateListControlUAV);
+                        [VIDEO_FEED_TYPE_UAV, true] call FUNC(updateListControls);
                         private _currentMapIDC = [
                             [
                                 _displayName,
@@ -382,10 +378,10 @@ if (isNil "_mode") then {
                     };
                     // ---------- HCAM CAM -----------
                     case (QSETTING_MODE_CAM_HCAM) : {
-                        [] call FUNC(deleteUAVCam);
-                        [QSETTING_CAM_HCAM_FULL] call FUNC(deleteHelmetCam);
+                        [VIDEO_FEED_TYPE_UAV] call FUNC(deleteVideoSourceCam);
+                        [VIDEO_FEED_TYPE_HCAM, QSETTING_CAM_HCAM_FULL] call FUNC(deleteVideoSourceCam);
 
-                        [] call FUNC(updateListControlHelmetCams);
+                        [VIDEO_FEED_TYPE_HCAM, true] call FUNC(updateListControls);
                         private _currentMapIDC = [
                             [
                                 _displayName,
@@ -455,57 +451,95 @@ if (isNil "_mode") then {
                     };
                     // ---------- FULLSCREEN UAV GUNNER -----------
                     case (QSETTING_MODE_CAM_UAV_FULL) : {
-                        [] call FUNC(deleteUAVCam);
-                        [] call FUNC(deleteHelmetCam);
+                        private _uavNetID = [_displayName, QSETTING_CAM_UAV_SELECTED] call FUNC(getSettings);
+                        private _uav = _uavNetID call BIS_fnc_objectFromNetId;
+                        if(isNull _uav) exitWith {
+                            [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_UAV]]] call FUNC(setSettings);
+                        };
+
+                        private _deleteEHID = _uav getVariable [QGVAR(fullscreenDeletedEHID), -1];
+                        if(_deletedEHID == -1) then {
+                            _deleteEHID = _uav addEventHandler ["Deleted", {
+                                params ["_uav"];
+                                _uav removeEventHandler _thisEventHandler;
+                                _uav setVariable [QGVAR(fullscreenDeletedEHID), nil];
+
+                                private _mode = [QGVARMAIN(Tablet_dlg), QSETTING_MODE] call FUNC(getSettings);
+                                if(_mode isEqualTo QSETTING_MODE_CAM_UAV_FULL) then {
+                                    [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_UAV]]] call FUNC(setSettings);
+                                };
+                            }];
+                            _uav setVariable [QGVAR(fullscreenDeletedEHID), _deleteEHID];
+                        };
+
+                        [VIDEO_FEED_TYPE_UAV] call FUNC(deleteVideoSourceCam);
+                        [VIDEO_FEED_TYPE_HCAM] call FUNC(deleteVideoSourceCam);
 
                         _displayItemsToShow pushBack IDC_CTAB_UAV_FULLSCREEN;
-                        private _data = [
-                                _displayName,
-                                QSETTING_CAM_UAV_SELECTED
-                            ] call FUNC(getSettings);
+                        
                         [
                             _displayName,
                             [
-                                [QSETTING_CAM_UAV_FULL, _data]
+                                [QSETTING_CAM_UAV_FULL, _uavNetID]
                             ],
                             true,
                             true
                         ] call FUNC(setSettings);
-                        [] call FUNC(updateListControlUAV);
-                        private _uav = _data call BIS_fnc_objectFromNetId;
+                        [VIDEO_FEED_TYPE_UAV] call FUNC(updateListControls);
 
                         _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
+
                         [
-                            _uav,
+                            VIDEO_FEED_TYPE_UAV,
+                            _uavNetID,
                             QSETTING_CAM_UAV_FULL
-                        ] spawn FUNC(createUavCam);
+                        ] spawn FUNC(createVideoSourceCam);
                     };
                     // ---------- FULLSCREEN HCAM CAM -----------
                     case (QSETTING_MODE_CAM_HCAM_FULL) : {
-                        [] call FUNC(deleteUAVCam);
-                        [] call FUNC(deleteHelmetCam);
+                        private _unitNetID = [_displayName, QSETTING_CAM_HCAM_SELECTED] call FUNC(getSettings);
+                        private _unit = _unitNetID call BIS_fnc_objectFromNetId;
+                        if(isNull _unit) exitWith {
+                            [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_HCAM]]] call FUNC(setSettings);
+                        };
+
+                        private _deleteEHID = _unit getVariable [QGVAR(fullscreenDeletedEHID), -1];
+                        if(_deletedEHID == -1) then {
+                            _deleteEHID = _unit addEventHandler ["Deleted", {
+                                params ["_unit"];
+                                _unit removeEventHandler _thisEventHandler;
+                                _unit setVariable [QGVAR(fullscreenDeletedEHID), nil];
+
+                                private _mode = [QGVARMAIN(Tablet_dlg), QSETTING_MODE] call FUNC(getSettings);
+                                if(_mode isEqualTo QSETTING_MODE_CAM_HCAM_FULL) then {
+                                    [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_HCAM]]] call FUNC(setSettings);
+                                };
+                            }];
+                            _unit setVariable [QGVAR(fullscreenDeletedEHID), _deleteEHID];
+                        };
+
+                        [VIDEO_FEED_TYPE_UAV] call FUNC(deleteVideoSourceCam);
+                        [VIDEO_FEED_TYPE_HCAM] call FUNC(deleteVideoSourceCam);
 
                         _displayItemsToShow pushBack IDC_CTAB_HCAM_FULLSCREEN;
-                        private _data = [
-                                _displayName,
-                                QSETTING_CAM_HCAM_SELECTED
-                            ] call FUNC(getSettings);
+                        
                         [
                             _displayName,
                             [
-                                [QSETTING_CAM_HCAM_FULL, _data]
+                                [QSETTING_CAM_HCAM_FULL, _unitNetID]
                             ],
                             true,
                             true
                         ] call FUNC(setSettings);
-                        [] call FUNC(updateListControlHelmetCams);
-                        private _unit = _data call BIS_fnc_objectFromNetId;
+                        [VIDEO_FEED_TYPE_HCAM] call FUNC(updateListControls);
 
                         _btnActCtrl ctrlSetTooltip "Toggle Fullscreen";
+
                         [
-                            _unit,
+                            VIDEO_FEED_TYPE_HCAM,
+                            _unitNetID,
                             QSETTING_CAM_HCAM_FULL
-                        ] spawn FUNC(createHelmetCam);
+                        ] spawn FUNC(createVideoSourceCam);
                     };
                     // ---------- MESSAGING -----------
                     case (QSETTING_MODE_MESSAGES) : {
@@ -707,40 +741,36 @@ if (isNil "_mode") then {
         case (QSETTING_CAM_UAV_2);
         case (QSETTING_CAM_UAV_3);
         case (QSETTING_CAM_UAV_4);
-        case (QSETTING_CAM_UAV_5) : {
-            if (_mode isNotEqualTo QSETTING_MODE_CAM_UAV) exitWith {};
+        case (QSETTING_CAM_UAV_5);
+        case (QSETTING_CAM_UAV_FULL) : {
+            if !(_mode in [QSETTING_MODE_CAM_UAV, QSETTING_MODE_CAM_UAV_FULL]) exitWith {};
             private _camSetting = GVAR(uavCamSettings) getOrDefault [_key, []];
             _camSetting params ["_camIdx", "_settingsName", "_idc"];
-
-            private _uav = _value call BIS_fnc_objectFromNetId;
+            // diag_log format ["Setting CAM UAV: %1 @ %2", _key, _settingsName];
+            private _uavNetID = _value;
             private _frameGrp = _display displayCtrl _idc;
-            if !(isNull _uav) then {
+            if !(_uavNetID isEqualTo "") then {
                 [
-                    _uav,
+                    VIDEO_FEED_TYPE_UAV,
+                    _uavNetID,
                     _settingsName
-                ] spawn FUNC(createUavCam);
-                _frameGrp ctrlShow true;
-                [QGVAR(UAVSelected), [_uav]] call CBA_fnc_localEvent;
+                ] spawn FUNC(createVideoSourceCam);
+                if(!isNull _frameGrp) then {
+                    _frameGrp ctrlShow true;
+                };
+                private _uav = _uavNetID call BIS_fnc_objectFromNetId;
+                if(!isNull _uav) then {
+                    [QGVAR(UAVSelected), [_uav]] call CBA_fnc_localEvent;
+                };
             } else {
-                [_settingsName] call FUNC(deleteUAVcam);
-                _frameGrp ctrlShow false;
-                [] call FUNC(updateListControlUAV);
-            };
-        };
-        case (QSETTING_CAM_UAV_FULL) : {
-            if (_mode isNotEqualTo QSETTING_MODE_CAM_UAV_FULL) exitWith {};
-            private _camSetting = GVAR(uavCamSettings) getOrDefault [_key, []];
-            _camSetting params ["_camIdx", "_settingsName", "_uavNetID", "_idc"];
-
-            private _uav = _value call BIS_fnc_objectFromNetId;
-            if !(isNull _uav) then {
-                [
-                    _uav,
-                    _settingsName
-                ] spawn FUNC(createUavCam);
-            } else {
-                [_settingsName] call FUNC(deleteUAVcam);
-                [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_UAV]]] call FUNC(setSettings);
+                [VIDEO_FEED_TYPE_UAV, _settingsName] call FUNC(deleteVideoSourceCam);
+                if(!isNull _frameGrp) then {
+                    _frameGrp ctrlShow false;
+                };
+                if(_key isEqualTo QSETTING_CAM_UAV_FULL) then {
+                    [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_UAV]]] call FUNC(setSettings);
+                };
+                [VIDEO_FEED_TYPE_UAV] call FUNC(updateListControls);
             };
         };
         case (QSETTING_CAM_UAV_SELECTED) : {
@@ -754,40 +784,36 @@ if (isNil "_mode") then {
         case (QSETTING_CAM_HCAM_2);
         case (QSETTING_CAM_HCAM_3);
         case (QSETTING_CAM_HCAM_4);
-        case (QSETTING_CAM_HCAM_5) : {
-            if (_mode isNotEqualTo QSETTING_MODE_CAM_HCAM) exitWith {};
+        case (QSETTING_CAM_HCAM_5);
+        case (QSETTING_CAM_HCAM_FULL) : {
+            if !(_mode in [QSETTING_MODE_CAM_HCAM, QSETTING_MODE_CAM_HCAM_FULL]) exitWith {};
             private _camSetting = GVAR(helmetCamSettings) getOrDefault [_key, []];
             _camSetting params ["_camIdx", "_settingsName", "_idc"];
-
-            private _unit = _value call BIS_fnc_objectFromNetId;
+            // diag_log format ["Setting CAM HCAM: %1 @ %2", _value, _settingsName];
+            private _unitNetID = _value;
             private _frameGrp = _display displayCtrl _idc;
-            if !(isNull _unit) then {
+            if (_unitNetID isNotEqualTo "") then {
                 [
-                    _unit,
+                    VIDEO_FEED_TYPE_HCAM,
+                    _unitNetID,
                     _settingsName
-                ] spawn FUNC(createHelmetCam);
-                _frameGrp ctrlShow true;
-                [QGVAR(HelmetSelected), [_unit]] call CBA_fnc_localEvent;
+                ] spawn FUNC(createVideoSourceCam);
+                if(!isNull _frameGrp) then {
+                    _frameGrp ctrlShow true;
+                };
+                private _unit = _unitNetID call BIS_fnc_objectFromNetId;
+                if(!isNull _unit) then {
+                    [QGVAR(HelmetSelected), [_unit]] call CBA_fnc_localEvent;
+                };
             } else {
-                [_settingsName] call FUNC(deleteHelmetCam);
-                _frameGrp ctrlShow false;
-                [] call FUNC(updateListControlHelmetCams);
-            };
-        };
-        case (QSETTING_CAM_HCAM_FULL) : {
-            if (_mode isNotEqualTo QSETTING_MODE_CAM_HCAM_FULL) exitWith {};
-            private _camSetting = GVAR(helmetCamSettings) getOrDefault [_key, []];
-            _camSetting params ["_camIdx", "_settingsName", "_unitNetID", "_idc"];
-
-            private _unit = _value call BIS_fnc_objectFromNetId;
-            if !(isNull _unit) then {
-                [
-                    _unit,
-                    _settingsName
-                ] spawn FUNC(createHelmetCam);
-            } else {
-                [_settingsName] call FUNC(deleteHelmetCam);
-                [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_HCAM]]] call FUNC(setSettings);
+                [VIDEO_FEED_TYPE_HCAM, _settingsName] call FUNC(deleteVideoSourceCam);
+                if(!isNull _frameGrp) then {
+                    _frameGrp ctrlShow false;
+                };
+                if(_key isEqualTo QSETTING_CAM_HCAM_FULL) then {
+                    [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_HCAM]]] call FUNC(setSettings);
+                };
+                [VIDEO_FEED_TYPE_HCAM] call FUNC(updateListControls);
             };
         };
         case (QSETTING_CAM_HCAM_SELECTED) : {

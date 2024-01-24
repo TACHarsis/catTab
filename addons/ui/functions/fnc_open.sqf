@@ -67,16 +67,16 @@ if (_displayName in [QGVARMAIN(TAD_dsp), QGVARMAIN(TAD_dlg)]) then {
             private _display = uiNamespace getVariable (GVAR(ifOpen) select 1);
             private _veh = vehicle Ctab_player;
             private _playerPos = getPosASL _veh;
-        
+
             // update time
             (_display displayCtrl IDC_CTAB_OSD_TIME) ctrlSetText call EFUNC(core,currentTime);
-            
+
             // update grid position
             (_display displayCtrl IDC_CTAB_OSD_GRID) ctrlSetText format ["%1", mapGridPosition _playerPos];
-            
+
             // update current heading
             (_display displayCtrl IDC_CTAB_OSD_DIR_DEGREE) ctrlSetText format ["%1°", [direction _veh, 3] call CBA_fnc_formatNumber];
-            
+
             // update current elevation (ASL) on TAD
             (_display displayCtrl IDC_CTAB_OSD_ELEVATION) ctrlSetText format ["%1m", [round (_playerPos select 2), 4] call CBA_fnc_formatNumber];
         }]
@@ -89,10 +89,10 @@ if (_displayName in [QGVARMAIN(TAD_dsp), QGVARMAIN(TAD_dlg)]) then {
             private _heading = direction _veh;
             // update time
             (_display displayCtrl IDC_CTAB_OSD_TIME) ctrlSetText call EFUNC(core,currentTime);
-            
+
             // update grid position
             (_display displayCtrl IDC_CTAB_OSD_GRID) ctrlSetText format ["%1", mapGridPosition getPosASL _veh];
-            
+
             // update current heading
             (_display displayCtrl IDC_CTAB_OSD_DIR_DEGREE) ctrlSetText format ["%1°", [_heading, 3] call CBA_fnc_formatNumber];
             (_display displayCtrl IDC_CTAB_OSD_DIR_OCTANT) ctrlSetText format ["%1", [_heading] call EFUNC(core,degreeToOctant)];
@@ -100,6 +100,9 @@ if (_displayName in [QGVARMAIN(TAD_dsp), QGVARMAIN(TAD_dlg)]) then {
     ];
 };
 
+
+//TODO: this code is ancient and doesn't do anything. Ace doesn't have an eventhandler function at all. That's all CBA
+//  So the uncon event needs to be wired again, and the inventory changed switched to CBA's "loadout" event
 
 // If ace_medical is used, register with medical_onUnconscious event
 if (IS_MOD_LOADED(ace_medical)) then {

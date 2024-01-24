@@ -23,7 +23,7 @@
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(Android_dlg) {
-    idd = 177382;
+    idd = IDD_CTAB_ANDROID_DLG;
     movingEnable = "true";
     onLoad = QUOTE(_this call FUNC(onIfOpen));
     onUnload = QUOTE([] call FUNC(onIfClose));

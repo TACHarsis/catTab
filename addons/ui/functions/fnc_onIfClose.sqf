@@ -19,8 +19,8 @@
 */
 
 // remove helmet and UAV cameras
-[] call FUNC(deleteHelmetCam);
-[] call FUNC(deleteUAVcam);
+[VIDEO_FEED_TYPE_HCAM] call FUNC(deleteVideoSourceCam);
+[VIDEO_FEED_TYPE_UAV] call FUNC(deleteVideoSourceCam);
 
 
 if !(isNil QGVAR(ifOpen)) then {

@@ -1,6 +1,5 @@
 PREP(checkGear);
 PREP(currentTime);
-PREPMAIN(debugLog);
 PREP(degreeToOctant);
 PREP(dirTo);
 PREP(distance2D);
@@ -9,5 +8,8 @@ PREP(getPlayerEncryptionKey);
 PREP(getPlayerSides);
 PREP(getUnitHealthData);
 PREP(onPlayerInventoryChanged);
+PREP(onPlayerRespawned);
+PREP(removeVideoSource);
 PREP(unitInEnabledVehicleSeat);
 PREP(updateLists);
+PREP(updateVideoSource);

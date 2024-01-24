@@ -236,7 +236,7 @@
         </Key>
 
         <!-- Ace interaction strings -->
-        
+
         <Key ID="STR_Ctab_UI_ACE_CatTab">
             <English>CatTab</English>
         </Key>
@@ -272,6 +272,36 @@
         </Key>
         <Key ID="STR_Ctab_UI_ACE_Close_TAD_Dsp">
             <English>Close TAD OSD</English>
+        </Key>
+
+        <!-- Video source status strings -->
+
+        <Key ID="STR_Ctab_UI_Video_Source_Status">
+            <English>Status</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Video_Source_Status_Online">
+            <English>Online</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Video_Source_Status_Long_Online">
+            <English>Source Online</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Video_Source_Status_Offline">
+            <English>Offline</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Video_Source_Status_Offline">
+            <English>Source Offline</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Video_Source_Status_Destroyed">
+            <English>Destroyed</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Video_Source_Status_Destroyed">
+            <English>Source Destroyed</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Video_Source_Status_Lost">
+            <English>Lost</English>
+        </Key>
+        <Key ID="STR_Ctab_UI_Video_Source_Status_Long_Lost">
+            <English>Connection Lost</English>
         </Key>
     </Package>
 </Project>

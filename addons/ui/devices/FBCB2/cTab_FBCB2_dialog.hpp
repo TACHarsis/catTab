@@ -15,7 +15,7 @@
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(FBCB2_dlg){
-    idd = 1775144;
+    idd = IDD_CTAB_FBCB2_DLG;
     movingEnable = "true";
     onLoad = QUOTE(_this call FUNC(onIfOpen));
     onUnload = QUOTE([] call FUNC(onIfClose));
@@ -208,7 +208,7 @@ class GVARMAIN(FBCB2_dlg){
             action = QUOTE([QQGVARMAIN(FBCB2_dlg)]  call FUNC(caseButtonsMapTypeToggle););
         };
         class btnF7: cTab_FBCB2_btnF7 {
-            idc = 5;
+            idc = IDC_CTAB_BTNF7;
             action = QUOTE([QQGVARMAIN(FBCB2_dlg)] call FUNC(caseButtonsCenterMapOnPlayerPosition));
             tooltip = "Center Map On Current Position (F7)";
         };

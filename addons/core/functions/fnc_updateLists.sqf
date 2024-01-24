@@ -11,8 +11,8 @@
             GVARMAIN(BFTMembers)
             GVARMAIN(BFTGroups)
             GVARMAIN(BFTvehicles)
-            GVARMAIN(UAVList)
-            GVARMAIN(hCamList)
+            GVARMAIN(UAVVideoSources)
+            GVARMAIN(hCamVideoSources)
         
         Format
             Index 0: Unit object/group
@@ -33,13 +33,13 @@ private _validSides = call FUNC(getPlayerSides);
 /*
 GVARMAIN(BFTMembers) --- GROUP MEMBERS
 */
-private _bftMembers = (units Ctab_player) select { 
-    (_x != Ctab_player) && 
+private _bftMembers = (units Ctab_player) select {
+    (_x != Ctab_player) &&
     { [_x, ["ItemcTab", "ItemAndroid", "ItemMicroDAGR"]] call FUNC(checkGear) }
 };
 
 if !(GVARMAIN(BFTMembers) isEqualTo _bftMembers) then {
-    GVARMAIN(BFTMembers) = [] + _bftMembers;
+    GVARMAIN(BFTMembers) = +_bftMembers;
     [QGVAR(bftMemberListUpdate), [GVARMAIN(BFTMembers)]] call CBA_fnc_localEvent;
 };
 
@@ -73,7 +73,7 @@ private _bftGroups = []; // other groups
 } foreach _validSides;
 
 if !(GVARMAIN(BFTGroups) isEqualTo _bftGroups) then {
-    GVARMAIN(BFTGroups) = [] + _bftGroups;
+    GVARMAIN(BFTGroups) = +_bftGroups;
     [QGVAR(bftGroupListUpdate), [GVARMAIN(BFTGroups)]] call CBA_fnc_localEvent;
 };
 
@@ -89,36 +89,6 @@ private _bftVehicles = vehicles select {
 };
 
 if !(GVARMAIN(BFTvehicles) isEqualTo _bftVehicles) then {
-    GVARMAIN(BFTvehicles) = [] + _bftVehicles;
+    GVARMAIN(BFTvehicles) = +_bftVehicles;
     [QGVAR(bftVehicleListUpdate), [GVARMAIN(BFTvehicles)]] call CBA_fnc_localEvent;
-};
-
-/*
-GVARMAIN(UAVList) --- UAVs
-*/
-private _uavList = allUnitsUAV select { side _x in _validSides };
-
-if !(GVARMAIN(UAVList) isEqualTo _uavList) then {
-    GVARMAIN(UAVList) = [] + _uavList;
-    [QGVAR(uavListUpdate), GVARMAIN(UAVList)] call CBA_fnc_localEvent;
-};
-
-/*
-GVARMAIN(hCamList) --- HCAM CAMS
-Units on our side, that have either helmets that have been specified to include a helmet cam, or ItemCTabHCAM in their inventory.
-*/
-private _hCamList = (allUnits + (allDeadMen)) select {
-    if (side _x in _validSides) then {
-        private _headgear = headgear _x;
-        private _camera = getNumber (configfile >> "CfgWeapons" >> _headgear >> "CTAB_Camera");
-        
-        (_camera isNotEqualTo 0 ||
-            {_headgear in GVARMAIN(helmetClasses)} ||
-            {[_x, ["ItemcTabHCam"]] call FUNC(checkGear)})
-    };
-};
-
-if !(GVARMAIN(hCamList) isEqualTo _hCamList) then {
-    GVARMAIN(hCamList) = [] + _hCamList;
-    [QGVAR(helmetCamListUpdate), GVARMAIN(hCamList)] call CBA_fnc_localEvent;
 };

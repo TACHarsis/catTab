@@ -18,7 +18,7 @@
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(TAD_dlg) {
-    idd = 1755424;
+    idd = IDD_CTAB_TAD_DLG;
     movingEnable = "true";
     onLoad = QUOTE(_this call FUNC(onIfOpen));
     onUnload = QUOTE([] call FUNC(onIfClose));

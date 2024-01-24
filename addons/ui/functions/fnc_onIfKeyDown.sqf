@@ -30,6 +30,13 @@ params ["_display", "_dikCode", "_shiftKey", "_ctrlKey", "_altKey"];
 private _displayName = GVAR(ifOpen) select 1;
 private _mode = [_displayName, QSETTING_MODE] call FUNC(getSettings);
 
+private _videoSourceType = switch (_mode) do {
+    case (QSETTING_MODE_CAM_UAV) : {VIDEO_FEED_TYPE_UAV};
+    case (QSETTING_MODE_CAM_HCAM) : {VIDEO_FEED_TYPE_HCAM};
+    default {""};
+};
+
+
 private _return = switch (_dikCode) do {
     case(DIK_F1): {
         if (_displayName in [QGVARMAIN(Tablet_dlg), QGVARMAIN(Android_dlg),QGVARMAIN(FBCB2_dlg)]) exitWith {
@@ -104,13 +111,15 @@ private _return = switch (_dikCode) do {
             } else {
                 if!(_displayName in [QGVARMAIN(Tablet_dlg)]) exitWith {};
 
-                private _closestLockedUAV = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(uavLockFindAtLocation);
-                if (!isNull _closestLockedUAV) then {
+                private _turretPath = [0];
+                private _closestVideoSourceLocked = [VIDEO_FEED_TYPE_UAV, _ctrlScreen, GVAR(mapCursorPos), _turretPath] call FUNC(videoSourceTurretLockNearLocation);
+                if (_closestVideoSourceLocked isNotEqualTo []) then {
+                    //TAG: video source data
+                    _closestVideoSourceLocked params ["_unitNetID", "_unit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
                     // unlock
-                    _closestLockedUAV lockCameraTo [objNull, [0]];
+                    _unit lockCameraTo [objNull, _turretPath];
                 };
             };
-
             true
         };
         false
@@ -118,31 +127,24 @@ private _return = switch (_dikCode) do {
 
     case(DIK_SPACE): {
         if (_displayName in [QGVARMAIN(Tablet_dlg)] && {GVAR(cursorOnMap)}) exitWith {
-            if !(_mode in [QSETTING_MODE_CAM_HCAM, QSETTING_MODE_CAM_UAV]) exitWith {false};
+            if !(_mode in [QSETTING_MODE_CAM_UAV, QSETTING_MODE_CAM_HCAM]) exitWith {false};
+            if(_videoSourceType isEqualTo "") exitWith {false};
 
             private _ctrlScreen = _display displayCtrl ([
                 [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings),
                 [_displayName, QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
             ] call BIS_fnc_getFromPairs);
 
-            if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
-                private _closestUAV = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(uavFindAtLocation);
-                if !(isNull _closestUAV) then {
-                    //selecting UAV
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, _closestUAV call BIS_fnc_netId]], true, true] call FUNC(setSettings);
-                } else {
-                    // deselect current uav
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_UAV_SELECTED, ""]], true, true] call FUNC(setSettings);
-                };
-            } else {
-                private _closestHCam = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(hCamFindAtLocation);
-                if !(isNull _closestHCam) then {
-                    //selecting helmet cam
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, _closestHCam call BIS_fnc_netId]], true, true] call FUNC(setSettings);
-                } else {
-                    // deselect current helmet cam
-                    [QGVARMAIN(Tablet_dlg), [[QSETTING_CAM_HCAM_SELECTED, ""]], true, true] call FUNC(setSettings);
-                };
+            private _context = GVAR(videoSourcesContext) get _videoSourceType;
+            private _selectSetting = _context get QGVAR(selectedSettingName);
+            private _followSetting = _context get QGVAR(followSettingName);
+
+            private _closestVideoSourceData = [_videoSourceType, _ctrlScreen, GVAR(mapCursorPos), [] call EFUNC(core,getPlayerSides)] call FUNC(videoSourceNearLocation);
+            if (_closestVideoSourceData isEqualTo []) then {
+                // deselect current source
+                [QGVARMAIN(Tablet_dlg), [[_selectSetting, ""]], true, true] call FUNC(setSettings);
+                // unset follow
+                [QGVARMAIN(Tablet_dlg), [[_followSetting, false]], true, true] call FUNC(setSettings);
             };
             true
         };
@@ -156,22 +158,24 @@ private _return = switch (_dikCode) do {
     case(DIK_5);
     case(DIK_6): {
         if (_displayName in [QGVARMAIN(Tablet_dlg)] && {GVAR(cursorOnMap)}) exitWith {
+            if(_videoSourceType isEqualTo "") exitWith {false};
+
             private _ctrlScreen = _display displayCtrl ([
                 [_displayName, QSETTING_MAP_TYPES] call FUNC(getSettings),
                 [_displayName, QSETTING_CURRENT_MAP_TYPE] call FUNC(getSettings)
             ] call BIS_fnc_getFromPairs);
 
-            private _closestUAV = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(uavFindAtLocation);
-            private _closestHCam = [_ctrlScreen, GVAR(mapCursorPos)] call FUNC(hcamFindAtLocation);
+            private _context = GVAR(videoSourcesContext) get _videoSourceType;
+            private _slotSettings = _context get QGVAR(slotSettings);;
+            private _slotSettingsNames = _context get QGVAR(slotSettingsNames);
+            private _renderCameraDatas = _context get QGVAR(renderCamerasData);
+            private _selectSetting = _context get QGVAR(selectedSettingName);
+            private _followSetting = _context get QGVAR(followSettingName);
 
-            // ["%4%1 pressed with nearby UAV[%2] HCAM[%3]", _dikCode-1, _closestUAV, _closestHCam, ["", "Ctrl+"] select _ctrlKey] call FUNCMAIN(debugLog);
             private _slotIdx = (_dikCode - 2);
             private _modifierKeys = [_shiftKey, _ctrlKey, _altKey];
-            if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then {
-                [_ctrlScreen, GVAR(mapCursorPos), _dikCode, _modifierKeys, _slotIdx, GVAR(UAVCamSettingsNames), GVAR(UAVCamSettings), GVAR(UAVCamsData), QSETTING_CAM_UAV_SELECTED, QSETTING_FOLLOW_UAV, FUNC(uavFindAtLocation)] call FUNC(feedSelectionMapShortcuts);
-            } else {
-                [_ctrlScreen, GVAR(mapCursorPos), _dikCode, _modifierKeys, _slotIdx, GVAR(helmetCamSettingsNames), GVAR(helmetCamSettings), GVAR(HelmetCamsData), QSETTING_CAM_HCAM_SELECTED, QSETTING_FOLLOW_HCAM, FUNC(hCamFindAtLocation)] call FUNC(feedSelectionMapShortcuts);
-            };
+            [_videoSourceType, _ctrlScreen, GVAR(mapCursorPos), _dikCode, _modifierKeys,
+                _slotIdx, _slotSettingsNames, _slotSettings, _selectSetting, _followSetting, _renderCameraDatas] call FUNC(feedSelectionMapShortcuts);
             true
         };
         false

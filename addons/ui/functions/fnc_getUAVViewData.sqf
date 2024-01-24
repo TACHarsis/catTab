@@ -19,4 +19,4 @@ private _hitOccured = count _intersections > 0;
 private _aimPointASL = if(_hitOccured) then { (_intersections select 0 select 0) } else { _intersectRayTarget };
 private _aimPoint = ASLToAGL _aimPointASL;
 
-[_uavLookOrigin,_uavLookDir,_hitOccured,_aimPoint,_intersectRayTarget]
+[_uavLookOrigin, _uavLookDir, _hitOccured, _aimPoint, _intersectRayTarget]

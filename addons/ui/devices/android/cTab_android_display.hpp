@@ -23,7 +23,7 @@
 #include "..\shared\cTab_markerMenu_macros.hpp"
 
 class GVARMAIN(Android_dsp) {
-    idd = 177383;
+    idd = IDD_CTAB_ANDROID_DSP;
     duration = 10e10;
     fadeIn = 0;
     fadeOut = 0;

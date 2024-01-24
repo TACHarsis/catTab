@@ -38,7 +38,6 @@ private _backgroundCtrl = _display displayCtrl IDC_CTAB_BACKGROUND;
 private _backgroundClassName = ctrlClassName _backgroundCtrl;
 private _backgroundPosition = ctrlPosition _backgroundCtrl;
 
-// CC: TODO: read this from gui grids instead
 // get the original position of the background control
 private _backgroundConfigPosition = [];
 {
@@ -54,4 +53,4 @@ private _backgroundConfigPosition = [];
     };
 } forEach _displayConfigContainers;
 
-[_backgroundPosition,_backgroundConfigPosition]
+[_backgroundPosition, _backgroundConfigPosition]

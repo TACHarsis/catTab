@@ -6,7 +6,7 @@ Requires the scale of the map control to be at 0.001
 */
 
 private _displayName = QGVAR(mapSize_dsp);
-GVAR(RscLayer) cutRsc [_displayName,"PLAIN",0, false];
+GVAR(RscLayer) cutRsc [_displayName, "PLAIN", 0, false];
 [
     {
         !isNull (uiNamespace getVariable _this)

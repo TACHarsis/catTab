@@ -18,6 +18,7 @@
     Example:
         [1] call Ctab_ui_fnc_userMenuSelect;
 */
+//TODO: This function is another one of those nightmares. Fix it.
 
 #include "..\devices\shared\cTab_defines.hpp"
 
@@ -40,24 +41,24 @@ switch (_type) do {
     
     // Lock UAV cam to clicked position
     case (2) : {
-        //TODO: get actual index of currently selected uav
+        //TODO: get actual index of currently selected uav or whatever depending on how the function itself will work eventually
         [GVAR(cTabUserSelIcon) select 0, 0] call FUNC(lockUavCamTo);
     };
 
     default {
         _idcToShow = switch(_type) do {
-            case (11) : {3301};
-            case (12) : {3303};
-            case (13) : {3304};
+            case (11) : {IDC_CTAB_MARKER_MENU_ENYSUB1};
+            case (12) : {IDC_CTAB_MARKER_MENU_ENYSUB2};
+            case (13) : {IDC_CTAB_MARKER_MENU_ENYSUB3};
             case (14) : {
                 if (GVAR(cTabUserSelIcon) select 1 != 0) then {
                     GVAR(cTabUserSelIcon) set [2,0];
                     
-                    3304
-                } else {3307};
+                    IDC_CTAB_MARKER_MENU_ENYSUB3
+                } else {IDC_CTAB_MARKER_MENU_ENYSUB4};
             };
-            case (21) : {3305};
-            case (31) : {3306};
+            case (21) : {IDC_CTAB_MARKER_MENU_CASUSUB1};
+            case (31) : {IDC_CTAB_MARKER_MENU_GENSUB1};
             default {_type};
         };
     };
@@ -66,7 +67,7 @@ switch (_type) do {
 // Hide all menu controls
 {
     ctrlShow [_x,false];
-} foreach [IDC_CTAB_MARKER_MENU_MAIN, 3301, 3303, 3304, 3305, 3306, 3307];
+} foreach [IDCS_CTAB_MARKER_MENUS];
 
 // Bring the menu control we want to show into position and show it
 if (_idcToShow != 0) then {

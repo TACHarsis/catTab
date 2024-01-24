@@ -7,7 +7,7 @@
 
 //CC: This whole thing only exists to get the specifications of the current cartography
 class GVAR(mapSize_dsp){
-    idd = 13673;
+    idd = IDD_CTAB_MAPSIZE;
     onLoad = QUOTE(uiNamespace setVariable [ARR_2(QQGVAR(mapSize_dsp),_this select 0]));
     fadein = 0;
     fadeout = 0;
