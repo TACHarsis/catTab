@@ -476,7 +476,6 @@ if (isNil "_mode") then {
                         [VIDEO_FEED_TYPE_HCAM] call FUNC(deleteVideoSourceCam);
 
                         _displayItemsToShow pushBack IDC_CTAB_UAV_FULLSCREEN;
-                        
                         [
                             _displayName,
                             [
@@ -522,7 +521,6 @@ if (isNil "_mode") then {
                         [VIDEO_FEED_TYPE_HCAM] call FUNC(deleteVideoSourceCam);
 
                         _displayItemsToShow pushBack IDC_CTAB_HCAM_FULLSCREEN;
-                        
                         [
                             _displayName,
                             [
@@ -570,7 +568,6 @@ if (isNil "_mode") then {
                         if(! (_control in _shownControls) && ! (_control in _hiddenControls)) then {
                             ([_hiddenControls, _shownControls] select _shown) pushBack _control;
                         };
-                        
                     };
                     _control ctrlShow _shown;
                 } foreach _displayItems;

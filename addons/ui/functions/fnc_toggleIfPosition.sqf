@@ -1,20 +1,14 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_toggleIfPosition
-    
     Author(s):
         Gundy
-    
     Description:
         Toggle position of interface (display only) from left to right or reset dialog to default position
-        
-    
     Parameters:
         NONE
-    
     Returns:
         BOOLEAN - TRUE
-    
     Example:
         [] call Ctab_ui_fnc_toggleIfPosition;
 */

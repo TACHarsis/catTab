@@ -3,8 +3,6 @@
 // This is drawn every frame on the android dialog. fnc
 params ["_displayName", "_ctrlScreenArray"];
 private _ctrlScreen = _ctrlScreenArray # 0;
-
-
 // is disableSerialization really required? If so, not sure this is the right place to call it
 disableSerialization;
 private _displaySettings = [_displayName] call FUNC(getSettings);
@@ -14,8 +12,6 @@ private _display = ctrlParent _ctrlScreen;
 private _playerVehicle = vehicle Ctab_player;
 private _playerPos = getPosASL _playerVehicle;
 private _playerHeading = direction _playerVehicle;
-
-
 private _drawOptions = GVAR(displayDrawOptions) getOrDefault [_displayName, nil];
 
 if(isNil "_drawOptions") exitWith { diag_log format["[Ctab] draMapControl(): ""%1"" has no draw options", _displayName]; };
@@ -41,7 +37,6 @@ _fnc_getValue = {
             // change scale of map and centre to given unit's position or player's as default
             _params params [["_animSpeed", 0], ["_unit", _playerVehicle], ["_mapScale", GVAR(mapScale)]];
             if(_animSpeed < 0) exitWith {};
-            
             private _unit = _unit call _fnc_getValue;
             if(isNull _unit) exitWith {};
 
@@ -79,7 +74,6 @@ _fnc_getValue = {
                     _pos = getPosASL _unit;
                     _heading = direction _unit;
                 };
-                
                 _ctrlScreen drawIcon [
                     "\A3\ui_f\data\map\VehicleIcons\iconmanvirtual_ca.paa",
                     GVAR(mapToolsPlayerVehicleIconColor),

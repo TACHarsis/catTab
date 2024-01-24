@@ -1,8 +1,6 @@
 #include "script_component.hpp"
-
 // fnc to set various text and icon sizes
 params [["_textFctr", GVAR(txtFctr), [0]]];
-
 GVAR(txtFctr) = _textFctr;
 GVAR(iconSize) = GVAR(txtFctr) * 2;
 GVAR(manSize) = GVAR(iconSize) * 0.75;

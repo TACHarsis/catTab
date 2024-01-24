@@ -44,7 +44,6 @@ private _fnc_foldFrame = {
         POS_W(_groupRect) + GROUP_W(_foldingOffset) * _stateFactor,
         POS_H(_groupRect) + GROUP_H(_foldingOffset) * _stateFactor
     ];
-    
     _frameGrpCtrl ctrlSetPosition _groupRect;
     _frameGrpCtrl ctrlCommit ANIM_LENGTH;
     // frame
@@ -69,15 +68,12 @@ private _fnc_foldFrame = {
     _toggleButtonCtrl ctrlSetPosition _buttonRect;
     _toggleButtonCtrl ctrlCommit ANIM_LENGTH;
 };
-
-
 //NOTE: We are assuming an AR with W>H for the video image. H>W might blow in your face, but who plays arma like that?
 [
     {
         params ["_frameGrpCtrl", "_foldingDirection", "_fnc_onButtonClick", "_fnc_foldFrame"];
         private _frameRect = ctrlPosition _frameGrpCtrl;
         _frameRect params ["_frameRect_X", "_frameRect_Y", "_frameRect_W", "_frameRect_H"];
-        
         private _backgroundCtrl = _frameGrpCtrl getVariable QGVAR(backgroundCtrl);
         private _toggleButtonCtrl = _frameGrpCtrl getVariable QGVAR(toggleButtonCtrl);
         private _contentGrpCtrl = _frameGrpCtrl getVariable QGVAR(contentGrpCtrl);

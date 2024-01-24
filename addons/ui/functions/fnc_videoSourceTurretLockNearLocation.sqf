@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_videoSourceTurretLockNearLocation
-     
      Author(s):
         Gundy, Riouken, Cat Harsis
 
@@ -11,10 +10,8 @@
     Parameters:
         0: OBJECT - Map control we took the position from
         1: ARRAY  - Position to look for uav
-     
      Returns:
         OBJECT    - vehicle of turret if found or objNull otherwise
-     
      Example:
         _markerIndex = [_mapControl,[0,0]] call Ctab_ui_fnc_videoSourceTurretLockNearLocation;
 */

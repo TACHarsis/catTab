@@ -229,14 +229,10 @@ private _fnc_createHCamControls = { //TODO: This has to be kept in sync with the
 
 private _hCamVideoSlotUIs = [_display, VIDEO_FEED_TYPE_HCAM, _fnc_createVideoFeedGroupCtrl, _fnc_createHCamControls, IDC_CTAB_HCAM_FRAME_0] call _fnc_createFramedVideoSlotUIs;
 uiNamespace setVariable [QGVAR(HCAMVideoSlotUIs), _hCamVideoSlotUIs];
-
-
 private _fnc_createFullscreenVideoSlotUI = {
     params ["_display", "_feedType", "_fnc_controlsCreationFunction", "_fullscreenGrpCtrl"];
     private _fullscreenGrpRect = ctrlPosition _fullscreenGrpCtrl;
     _fullscreenGrpRect params ["_SAX", "_SAY", "_SAW", "_SAH"];
-
-
     private ["_maxContentRect"];
     switch (GVAR(tabletFeedDealWithAspectRatioFullscreen)) do {
         case (R2T_METHOD_SHRINK) : {
@@ -248,8 +244,6 @@ private _fnc_createFullscreenVideoSlotUI = {
             _maxContentRect = [0, 0, _fullscreenGrpRect # 2, _fullscreenGrpRect # 3];
         };
     };
-
-
     private _backgroundRect = [0, 0, _fullscreenGrpRect # 2, _fullscreenGrpRect # 3];
     private _backgroundCtrl = _display ctrlCreate ["cTab_IGUIBack", -1, _fullscreenGrpCtrl];
     _backgroundCtrl ctrlSetBackgroundColor [0.2, 0.2, 0.2, 1];

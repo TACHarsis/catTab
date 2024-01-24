@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_getPlayerSides
-    
     Author(s):
         Gundy
 
@@ -10,10 +9,8 @@
 
     Parameters:
         NONE
-    
     Returns:
         ARRAY - List of sides that share cTab data with the player unit
-        
     Example:
         _validSides = call Ctab_ui_fnc_getPlayerSides;
 */

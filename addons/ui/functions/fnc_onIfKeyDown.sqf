@@ -1,24 +1,19 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_onIfKeyDown
-     
      Author(s):
         Gundy, Riouken
 
      Description:
         Process onKeyDown events from cTab dialogs
-        
-    
     Parameters:
         0: OBJECT  - Display that called the onKeyDown event
         1: INTEGER - DIK code of onKeyDown event
         2: BOOLEAN - Shift key pressed
         3: BOOLEAN - Ctrl key pressed
         4: BOOLEAN - Alt key pressed
-     
      Returns:
         BOOLEAN - If onKeyDown event was acted upon
-     
      Example:
         [_display,_dikCode,_shiftKey,_ctrlKey,_altKey] call Ctab_ui_fnc_onIfKeyDown;
 */
@@ -35,8 +30,6 @@ private _videoSourceType = switch (_mode) do {
     case (QSETTING_MODE_CAM_HCAM) : {VIDEO_FEED_TYPE_HCAM};
     default {""};
 };
-
-
 private _return = switch (_dikCode) do {
     case(DIK_F1): {
         if (_displayName in [QGVARMAIN(Tablet_dlg), QGVARMAIN(Android_dlg),QGVARMAIN(FBCB2_dlg)]) exitWith {

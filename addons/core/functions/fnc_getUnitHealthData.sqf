@@ -1,12 +1,8 @@
 #include "script_component.hpp"
 #include "\a3\ui_f\hpp\defineCommonColors.inc"
-
 params ["_unit"];
-
 private _fnc_getHealthDataVanilla = {
     params ["_unit", "_currentDamage"];
-
-    
     // no alpha value on color hints cause we interpolate with a vector function later
     private _damageToBPMArray = [
     //  [damage,    heartbeat,  color hint,     string hint]
@@ -18,7 +14,6 @@ private _fnc_getHealthDataVanilla = {
         [0,         90,         [0,1,0,1],      "Healthy"]
     ];
     private _maxBPMIdx = count _damageToBPMArray -1;
-
     private ["_currentBPM", "_colorHint", "_stringHint"];
     switch (_currentDamage) do {
         case (0) : {
@@ -43,29 +38,23 @@ private _fnc_getHealthDataVanilla = {
             private _diffBoundaries = (_upperDamageBoundary # 0) - (_lowerDamageBoundary # 0);
             private _diffUpperToCurrent = (_upperDamageBoundary # 0) - _currentDamage;
             private _damageDelta = if(_diffToUpperCurrent != 0) then { damageDiff / _diffUpperToCurrent } else { 0 };
-
             _currentBPM = [_upperDamageBoundary # 1, _lowerDamageBoundary # 1, _damageDelta, 1] call BIS_fnc_interpolateConstant;
             _colorHint = [_upperDamageBoundary # 3, _lowerDamageBoundary # 3, _damageDelta, 1] call BIS_fnc_interpolateVectorConstant;
         };
     };
-
     [_currentBPM, _colorHint, _stringHint]
 };
-
 #define DEFAULT_BLOOD_VOLUME 6.0 // in liters
 #define BLOOD_VOLUME_CLASS_1_HEMORRHAGE 6.000 // lost less than 15% blood, Class I Hemorrhage
 #define BLOOD_VOLUME_CLASS_2_HEMORRHAGE 5.100 // lost more than 15% blood, Class II Hemorrhage
 #define BLOOD_VOLUME_CLASS_3_HEMORRHAGE 4.200 // lost more than 30% blood, Class III Hemorrhage
 #define BLOOD_VOLUME_CLASS_4_HEMORRHAGE 3.600 // lost more than 40% blood, Class IV Hemorrhage
 #define BLOOD_VOLUME_FATAL 3.0 // Lost more than 50% blood, Unrecoverable
-
 private _fnc_getHealthDataACE = {
     params ["_unit", "_currentDamage"];
-
     private _bloodPressure = _unit getVariable ["ace_medical_bloodPressure", [80, 120]];
     private _heartRate = _unit getVariable ["ace_medical_heartRate", 80];
     private _bloodVolume = _unit getVariable ["ace_medical_bloodVolume", DEFAULT_BLOOD_VOLUME];
-
     // no alpha value on color hints cause we interpolate with a vector function later
     private _bloodVolumeToBPMArray = [
         //[blood level,                     color hint]
@@ -77,7 +66,6 @@ private _fnc_getHealthDataACE = {
         [DEFAULT_BLOOD_VOLUME,              [0, 1, 0]]
     ];
     private _maxBloodVolumeIdx = count _bloodVolumeToBPMArray - 1;
-
     private _colorHint = [1, 1, 1, 1];
     if(!alive _unit) then {
         _colorHint = [0, 0, 0, 1];
@@ -110,7 +98,6 @@ private _fnc_getHealthDataACE = {
     //private _stringHint = format["HR %1 | BP %2/%3 [%4](%5){%6}", _heartRate, _bloodPressure # 0, _bloodPressure # 1, _bloodVolume, _colorHint, _currentDamage];
     [_heartRate, _colorHint, _stringHint]
 };
-
 private _currentDamage = damage _unit;
 //"HEALTHY" (0), "DEAD" (1), "DEAD-RESPAWN"(?), "DEAD-SWITCHING"(?), "INCAPACITATED"(?), "INJURED" (>0.1)
 private _lifeState = lifeState _unit;
@@ -118,11 +105,9 @@ private _lifeState = lifeState _unit;
 private _incapState = incapacitatedState _unit;
 private _conscious = !(_lifeState in ["DEAD", "DEAD-RESPAWN", "DEAD-SWITCHING", "INCAPACITATED"]);
 private _healthData = [alive _unit, _conscious, 1 - _currentDamage];
-
 if(IS_MOD_LOADED(ace_medical)) then { // yay! Cool ace stuff!
     _healthData append ([_unit, _currentDamage] call _fnc_getHealthDataACE);
 } else { // boring vanilla stuff
     _healthData append ([_unit, _currentDamage] call _fnc_getHealthDataVanilla);
 };
-
 _healthData

@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_setSettings
-     
      Author(s):
         Gundy
 
@@ -11,20 +10,16 @@
     Parameters:
         0: STRING - Name of uiNamespace display / dialog variable
         1: ARRAY  - Property pair(s) to write in the form of [["propertyName",propertyValue],[...]]
-        
         (Optional)
         2: BOOLEAN - If set to false, do not update interface (default true)
         3: BOOLEAN - If set to true, update interface even if the values haven't changed (default false)
-     
      Returns:
          BOOLEAN - If settings could be stored
 
      Example:
         [QGVARMAIN(Tablet_dlg),[[QSETTING_CURRENT_MAP_TYPE,QMAP_TYPE_SAT],[QSETTING_MAP_SCALE_DISPLAY,"4"]]] call Ctab_ui_fnc_setSettings;
-        
         // Update mapWorldPos and update the interface even if the value has not changed
         [QGVARMAIN(Tablet_dlg),[[QSETTING_MAP_WORLD_POS,getPosASL vehicle player]],true,true] call Ctab_ui_fnc_setSettings;
-        
         // Update mapWorldPos and mapScale, but do not update the interface
         [QGVARMAIN(Tablet_dlg),[[QSETTING_MAP_WORLD_POS,getPosASL vehicle player],[QSETTING_MAP_SCALE_DISPLAY,"2"]],false] call Ctab_ui_fnc_setSettings;
 */

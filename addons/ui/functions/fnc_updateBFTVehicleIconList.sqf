@@ -1,10 +1,8 @@
 #include "script_component.hpp"
-
 params ["_bftVehicleList"];
 GVAR(bftVehicleIcons) = [];
 {
     private _vehicle = _x;
-
     private _groudIdx = "";
     private _name = "";
     private _customName = _x getVariable [QGVARMAIN(groupId),""];
@@ -46,6 +44,5 @@ GVAR(bftVehicleIcons) = [];
         case (_x isKindOf "StaticMortar")           : {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_mortar.paa";};
         default                                       {_unitIcon = "\A3\ui_f\data\map\markers\nato\b_unknown.paa"; };
     };
-
     GVAR(bftVehicleIcons) pushBack [_x,_name,_type,_unitIcon];
 } foreach _bftVehicleList;

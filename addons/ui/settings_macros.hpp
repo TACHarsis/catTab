@@ -96,8 +96,6 @@
 #define QCAM_UAV QUOTE(CAM_UAV)
 #define CAM_HCAM cam_helmet
 #define QCAM_HCAM QUOTE(CAM_HCAM)
-
-
 /**** Draw Map Control Options ****/
 
 #define DMC_SAVE_SCALE_POSITION     "SAVESCALEPOSITION"

@@ -1,5 +1,4 @@
 #define CATTAB "CatTAB"
-
 class CfgNotifications {
     class GVAR(UavNotAval) {
         title = CATTAB;
@@ -11,7 +10,6 @@ class CfgNotifications {
         priority = 7;
         difficulty[] = {};
     };
-    
     class GVAR(newMsg) {
         title = CATTAB;
         iconPicture = QPATHTOEF(data,img\ui\messaging\icoUnopenedmail.paa);
@@ -22,7 +20,6 @@ class CfgNotifications {
         priority = 7;
         difficulty[] = {};
     };
-
     class GVAR(MsgSent) {
         title = CATTAB;
         iconPicture = QPATHTOEF(data,img\ui\messaging\icoUnopenedmail.paa);

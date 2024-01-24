@@ -49,7 +49,6 @@ private _fnc_setOriginalSide = {
         },
         [_unit]
     ] call CBA_fnc_execNextFrame;
-    
 };
 
 ["CAManBase", "init", _fnc_setOriginalSide, true, [], true] call CBA_fnc_addClassEventHandler;
@@ -111,8 +110,6 @@ addMissionEventHandler ["EntityKilled", {
     params ["_unit", "_killer", "_instigator", "_useEffects"];
     private _unitNetID = _unit call BIS_fnc_netId;
 }];
-
-
 [
     {
         private _changedSides = (allUnits + allDeadMen) select {

@@ -1,19 +1,14 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_getCopilot
-    
     Author(s):
         Gundy
-    
     Description:
         Returns the unit in the passed vehicle's co-pilot seat
-    
     Parameters: 
         Object - Vehicle
-    
     Returns:
         OBJECT - Unit occupying the vehicle's co-pilot seat, objNull if there is no co-pilot
-    
     Example:
         _copilot = (vehicle player) call Ctab_ui_fnc_getCopilot;
 */
@@ -27,7 +22,6 @@ if (_this isKindOf "Helicopter") then {
     _copilotTurret = -1;
     // get a list of all turrets
     private _turrets = configFile >> "CfgVehicles" >> (typeOf _this) >> "Turrets";
-    
     // iterate through the list of turrets
     for "_i" from 0 to (count _turrets -1) do {
         private _turretConfigPath = _turrets select _i;

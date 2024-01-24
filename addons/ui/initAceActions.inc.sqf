@@ -47,7 +47,6 @@ private _fnc_getDeviceActions = {
         private _modifierFunction = {
             params ["_target", "_player", "_params", "_actionData"];
             _params params ["_ifaceName", "", "", "_texts"];
-
             if !(isNil QGVAR(ifOpen)) then { // something is open
                 private _currentIfaceName = GVAR(ifOpen) select 1;
                 _actionData set [1, _texts select (_currentIfaceName isEqualTo _ifaceName)]; // action display name
@@ -60,13 +59,11 @@ private _fnc_getDeviceActions = {
                 params ["_target", "_player", "_params"];
                 _params params ["_ifaceName", "_item", "", ""];
                 [_ifaceName] call FUNC(toggleInterface);
-
                 true
             },
             {
                 params ["_target", "_player", "_params"];
                 _params params ["_ifaceName", "_item", "_condition", ""];
-                
                 private _hasItem = (_item isEqualTO "") || { [player, [_item]] call EFUNC(core,checkGear) };
                 private _enabled = _hasItem && ([] call _condition);
                 _enabled
@@ -81,7 +78,6 @@ private _fnc_getDeviceActions = {
         [_parent, _deviceAction]
     }
 };
-
 private _cattabCategoryAction = [
         QGVAR(cattab), LLSTRING(ACE_CatTab),
         "",
@@ -101,7 +97,6 @@ private _cattabCategoryAction = [
         {}
     ] call ace_interact_menu_fnc_createAction;
 private _return = [player, 1, ["ACE_SelfActions"], _cattabCategoryAction] call ace_interact_menu_fnc_addActionToObject;
-
 private _deviceActions = [] call _fnc_getDeviceActions;
 {
     _x params ["_parent", "_action"];

@@ -1,20 +1,16 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_distance2D
-    
     Author(s):
         Gundy
 
     Description:
         Calculate the 2D distance between two positions
-    
     Parameters:
         0: ARRAY - 2D or 3D position
         1: ARRAY - 2D or 3D position
-    
     Returns:
         FLOAT - Distance
-    
     Example:
         [getPosATL player, [0,0,0]] call Ctab_ui_fnc_distance2D;
 */

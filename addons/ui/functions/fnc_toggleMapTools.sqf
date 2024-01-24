@@ -1,20 +1,15 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_toggleMapTools
-     
      Author(s):
         Gundy
 
      Description:
         Toggle drawing of map tools
-        
-    
     Parameters:
         0: STRING - Name of uiNamespace variable for interface
-     
      Returns:
         BOOLEAN - Draw map tools
-     
      Example:
         GVAR(drawMapTools) = call Ctab_ui_fnc_toggleMapTools;
 */

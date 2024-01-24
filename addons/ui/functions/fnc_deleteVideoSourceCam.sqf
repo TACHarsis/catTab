@@ -18,7 +18,6 @@
     Example:
         // delete all video source cameras
         [_type] call Ctab_ui_fnc_deleteVideoSourceCam;
-        
         // delete a specific video source camera
         [_type, _camID] call Ctab_ui_fnc_deleteVideoSourceCam;
 */

@@ -68,7 +68,6 @@ private _fnc_onMouseDoubleClick = {
 [
     {
         params ["_videoController", "_feedType", "_fnc_onMouseWheel", "_fnc_onMouseClick", "_fnc_onMouseDoubleClick"];
-        
         _videoController ctrlEnable false;
         _videoController setVariable [QGVAR(feedType), _feedType];
         _videoController setVariable [QGVAR(targetFovHash), createHashMap];

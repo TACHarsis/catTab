@@ -19,7 +19,6 @@ if (isNil QGVAR(videoFeedsPFHID)) then {
                 {
                     private _renderCamData = _y;
                     if(count _renderCamData == 0) then {continue;}; 
-                    
                     _renderCamData params ["_type", "_unitNetID", "_videoSourceData", "_camID", "_cam", "_renderTargetName", "_contentGrpCtrl"];
 
                     if(ctrlShown _contentGrpCtrl) then {

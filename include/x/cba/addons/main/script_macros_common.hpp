@@ -482,8 +482,6 @@ Author:
 
 #define PFORMAT_9(MESSAGE,A,B,C,D,E,F,G,H,I) \
     format ['%1: A=%2, B=%3, C=%4, D=%5, E=%6, F=%7, G=%8, H=%9, I=%10', MESSAGE, RETNIL(A), RETNIL(B), RETNIL(C), RETNIL(D), RETNIL(E), RETNIL(F), RETNIL(G), RETNIL(H), RETNIL(I)]
-
-
 #ifdef DEBUG_MODE_FULL
 #define TRACE_1(MESSAGE,A) LOG_SYS_FILELINENUMBERS('TRACE',PFORMAT_1(str diag_frameNo + ' ' + (MESSAGE),A))
 #define TRACE_2(MESSAGE,A,B) LOG_SYS_FILELINENUMBERS('TRACE',PFORMAT_2(str diag_frameNo + ' ' + (MESSAGE),A,B))
@@ -855,8 +853,6 @@ Author:
 #define COMPILE_FILE2_CFG(var1) COMPILE_FILE2_CFG_SYS('var1')
 
 #define COMPILE_SCRIPT(var1) compileScript ['PATHTO_SYS(PREFIX,COMPONENT_F,var1)']
-
-
 #define VERSIONING_SYS(var1) class CfgSettings \
 { \
     class CBA \
@@ -1279,8 +1275,6 @@ Author:
     #define LLSTRING(var1) localize QUOTE(TRIPLES(STR,ADDON,var1))
     #define LELSTRING(var1,var2) localize QUOTE(TRIPLES(STR,DOUBLES(PREFIX,var1),var2))
 #endif
-
-
 /* -------------------------------------------
 Group: Managing Function Parameters
 ------------------------------------------- */
@@ -1380,8 +1374,6 @@ Parameters:
     DEF_VALUE - Default value to use in case key not found [ANY]
 
 Example:
-
-
 Author:
     Muzzleflash
 ------------------------------------------- */
@@ -1607,8 +1599,6 @@ Author:
             } else { \
                 TEST_FAIL('(A OPERATOR B) ' + (MESSAGE)) \
     }; }; };
-
-
 /* -------------------------------------------
 Macro: TEST_DEFINED()
     Tests that a VARIABLE is defined.

@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_userMarkerListGet
-    
     Author(s):
         Gundy, Cat Harsis
 
@@ -11,10 +10,8 @@
     Parameters:
             0: ARRAY   - Current user marker list
             1: INTEGER - Current transaction ID
-    
     Returns:
         Nothing
-    
     Example:
         // Client receiving the list from the server
         [[userMarkerList],157] remoteExec ["Ctab_ui_fnc_userMarkerListGet"];

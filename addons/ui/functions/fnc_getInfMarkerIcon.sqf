@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_getInfMarkerIcon
-     
      Author(s):
         Gundy
 
@@ -11,10 +10,8 @@
     Parameters:
     (Optional)
         0: OBJECT - Unit to return infantry marker for
-     
      Returns:
         STRING - Path to infantry marker
-     
      Example:
         player call Ctab_ui_fnc_getInfMarkerIcon;
 */

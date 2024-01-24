@@ -1,21 +1,16 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_UserMarkerAdd
-    
     Author(s):
         Gundy, Cat Harsis
-    
     Description:
         Add a new user marker to the list on the client. This function is remoteExec'd on the client.
-    
     Parameters:
         0: STRING  - Encryption Key for this marker
         1: ARRAY   - markerData
         2: INTEGER - Transaction ID
-    
     Returns:
         Nothing
-    
     Example:
         // Client receiving marker addition from server
         ["bluefor",[21,[[1714.35,5716.82],0,0,0,"12:00",player]],157] remotExec ["Ctab_ui_fnc_UserMarkerAdd"];
@@ -41,7 +36,6 @@ _userMarkerList pushBack _markerData;
 // only update the user marker list if the marker was added to the player's side
 if (_encryptionKey == call EFUNC(core,getPlayerEncryptionKey)) then {
     [] call FUNC(userMarkerListUpdate);
-    
     // add notification if marker was issued by someone else
     if ((_markerData select 1 select 5) != Ctab_player) then {
         [QSETTING_MODE_BFT,format ["New marker at #%1",mapGridPosition (_markerData select 1 select 0)],20] call FUNC(addNotification);

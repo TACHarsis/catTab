@@ -92,7 +92,6 @@ _hCamContext set [QGVAR(fnc_updateFrameGrp), {
         private _healthData = [_unit] call EFUNC(core,getUnitHealthData);
         _healthData params ["_alive", "_conscious", "_health", "_bpm", "_colorHint", "_stringHint"];
         _bpmAnim = _bpm;
-        
         _heartIconCtrl ctrlSetTextColor _colorHint;
         _heartTextIconCtrl ctrlSetTextColor _colorHint;
         _heartTextIconCtrl ctrlSetText _stringHint;

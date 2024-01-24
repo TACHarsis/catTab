@@ -1,10 +1,8 @@
 #include "script_component.hpp"
-
 params ["_bftGroupList"];
 GVAR(bftGroupIcons) = [];
 {
     _x params ["_group", "_leader"];
-    
     _groupSize = count units _group;
     _sizeIcon = switch (true) do {
         case (_groupSize <= 3) : {"\A3\ui_f\data\map\markers\nato\group_0.paa"};

@@ -1,13 +1,10 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_open
-    
     Author(s):
         Gundy
-    
     Description:
         Handles dialog / display startup and registering of event handlers
-        
         This function will define GVAR(ifOpen), using the following format:
             Parameter 0: Interface type, 0 = Main, 1 = Secondary, 2 = Tertiary, 3 = ACE action
             Parameter 1: Name of uiNameSpace variable for display / dialog (i.e. QGVARMAIN(Tablet_dlg))
@@ -18,16 +15,13 @@
             Parameter 6: ID of registered eventhandler for Draw3D event (nil if no EH is registered)
             Parameter 7: ID of registered eventhandler A.C.E medical_onUnconscious event (nil if no EH is registered)
             Parameter 8: ID of registered eventhandler A.C.E playerInventoryChanged event (nil if no EH is registered)
-    
     Parameters:
         0: INTEGER - Interface type, 0 = Main, 1 = Secondary, 2 = Tertiary
         1: STRING  - Name of uiNameSpace variable for display / dialog (i.e. QGVARMAIN(Tablet_dlg))
         2: OBJECT  - Unit to register killed eventhandler for
         3: OBJECT  - Vehicle to register GetOut eventhandler for
-    
     Returns:
         BOOLEAN - TRUE
-    
     Example:
         // open TAD display as main interface type
         [0,QGVARMAIN(TAD_dsp),player,vehicle player] call Ctab_ui_fnc_open;
@@ -99,8 +93,6 @@ if (_displayName in [QGVARMAIN(TAD_dsp), QGVARMAIN(TAD_dlg)]) then {
         }]
     ];
 };
-
-
 //TODO: this code is ancient and doesn't do anything. Ace doesn't have an eventhandler function at all. That's all CBA
 //  So the uncon event needs to be wired again, and the inventory changed switched to CBA's "loadout" event
 

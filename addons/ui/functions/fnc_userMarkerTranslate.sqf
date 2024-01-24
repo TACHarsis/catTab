@@ -1,13 +1,11 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_translateUserMarker
-    
     Author(s):
         Gundy
 
     Description:
         Take the condensed user marker data and translate it so that it can be drawn much quicker
-        
         Received marker data format:
             Index 0: ARRAY   - 2D marker position
             Index 1: INTEGER - number of icon
@@ -15,7 +13,6 @@
             Index 3: INTEGER - octant of reported movement
             Index 4: STRING  - marker time
             Index 5: OBJECT  - marker creator
-            
         Translated marker data format:
             Index 0: ARRAY  - marker position
             Index 1: STRING - path to marker icon
@@ -24,13 +21,10 @@
             Index 4: ARRAY  - marker color
             Index 5: STRING - marker time
             Index 6: STRING - text alignment
-    
     Parameters:
         0: ARRAY - Marker data
-    
     Returns:
         ARRAY - Translated marker data
-    
     Example:
         [[1714.35,5716.82],0,0,0,"12:00"] call Ctab_ui_fnc_translateUserMarker;
 */

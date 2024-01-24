@@ -1,19 +1,15 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_degreeToOctant
-     
      Author(s):
         Gundy
 
      Description:
         Calculate octant from direction
-    
     Parameters:
         0: INTEGER - Degree value to convert 0 to 360.
-     
      Returns:
         STRING - Matching octant as either N, NE, E, SE, S, SW, W, NW
-     
      Example:
         _octant = [direction player] call Ctab_ui_fnc_degreeToOctant;
 */

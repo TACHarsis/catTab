@@ -31,8 +31,6 @@ GVAR(displayPropertyGroups) = createHashMapFromArray [
 ];
 
 [] call FUNC(initializeDeviceMapSettings);
-
-
 GVAR(mapScaleInitialized) = false;
 [] call FUNC(initializeMapScale);
 
@@ -97,8 +95,6 @@ GVAR(ownVehicleIconScaledSize) = GVAR(ownVehicleIconBaseSize) / (0.86 / (safezon
 // Draw Map Tolls (Hook)
 GVAR(drawMapTools) = false;
 GVAR(mapToolsRangeFormatThreshold) = 750;
-
-
 // Base defines.
 GVAR(uavViewActive) = false;
 GVAR(UAVCamsData) = createHashMap;
@@ -226,8 +222,6 @@ GVAR(sourceRemovedSlotBuffer) = [];
         } foreach _selectedSettingsNames;
     }
 ] call CBA_fnc_addEventHandler;
-
-
 #include "setupVideoSourceContext.inc.sqf"
 
 [

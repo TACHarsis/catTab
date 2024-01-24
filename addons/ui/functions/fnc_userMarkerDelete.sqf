@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_userMarkerDelete
-    
     Author(s):
         Gundy, Cat Harsis
 
@@ -13,10 +12,8 @@
         1: INTEGER - Index position of marker to delete
     Optional:
         2: INTEGER - Transaction ID
-    
     Returns:
         Nothing
-    
     Example:
         // Client receiving request for marker deletion (from server)
         ["bluefor",5,158] remoteExec ["Ctab_ui_fnc_userMarkerDelete"];

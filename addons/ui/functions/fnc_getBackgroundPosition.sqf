@@ -1,21 +1,16 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_getBackgroundPosition
-    
     Author(s):
         Gundy
-    
     Description:
         Get the current and config position of the interface background element
-    
     Parameters:
         0: STRING - uiNamespace variable name of interface
-    
     Returns:
         ARRAY - interface position and config position
             0: ARRAY - interface position in the form of [x,y,w,h]
             1: ARRAY - interface config position in the form of [x,y,w,h], empty array if background could not be found
-    
     Example:
         [QGVARMAIN(Tablet_dlg)] call Ctab_ui_fnc_getBackgroundPosition;
 */

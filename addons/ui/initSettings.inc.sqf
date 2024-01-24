@@ -1,5 +1,4 @@
 /* CBA Settings
-
 Parameters:
     * setting     - Unique setting name. Matches resulting variable name <STRING>
     * settingType - Type of setting. Can be "CHECKBOX", "EDITBOX", "LIST", "SLIDER" or "COLOR" <STRING>
@@ -9,9 +8,7 @@ Parameters:
     * isGlobal    - 1: all clients share the same setting, 2: setting can't be overwritten (optional, default: 0) <NUMBER>
     * script      - Script to execute when setting is changed. (optional) <CODE>
     * needRestart - Setting will be marked as needing mission restart after being changed. (optional, default false) <BOOL>
-
 Types:
-
     * CHECKBOX: A checkbox. The resulting settings value is a boolean.
         * Default value <BOOLEAN>
     * EDITBOX: A string type setting that players can type.
@@ -32,13 +29,10 @@ Types:
             The array size can be 3 or 4, depending on the passed default value. The fourth element will represent the opacity ("alpha value").
         * Default color. Array size can be 3 or 4, depending on whether the setting uses the alpha value. <ARRAY>
             Example: [1, 0, 0] (red), [1, 1, 0, 0.5] (semi transparent yellow)
-
 */
-
 private _modCategory = LLSTRING(General_Category_Mod);
 private _androidCategory = LLSTRING(General_Category_Android);
 private _tabletCategory = LLSTRING(General_Category_Tablet);
-
 // [
 //     QGVAR(enableAddon),
 //     "CHECKBOX",
@@ -46,9 +40,7 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
 //     [_modCategory],
 //     true
 // ] call CBA_fnc_addSetting;
-
 //--------------- Android ---------------
-
 [
     QGVAR(androidDesktopBackgroundMode),
     "LIST",
@@ -61,7 +53,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     2
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(androidDesktopBackgroundPreset),
     "LIST",
@@ -78,7 +69,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     2
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(androidDesktopColor),
     "COLOR",
@@ -87,7 +77,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     [0.239, 0.863, 0.517],
     2
 ] call CBA_fnc_addSetting;
-
 [   //These images get cached the first time they are used from their path
     QGVAR(androidDesktopCustomImageName),
     "EDITBOX",
@@ -96,9 +85,7 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     "example_custom_android_desktop_background_co.jpg",
     2
 ] call CBA_fnc_addSetting;
-
 //--------------- Tablet ---------------
-
 [
     QGVAR(numTabletFeeds),
     "LIST",
@@ -111,7 +98,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     1
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(tabletFeedTextureResolution),
     "LIST",
@@ -124,7 +110,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     2
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(tabletFeedTextureResolutionFullscreen),
     "LIST",
@@ -137,7 +122,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     2
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(tabletFeedDealWithAspectRatio),
     "LIST",
@@ -150,7 +134,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     2
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(tabletFeedDealWithAspectRatioFullscreen),
     "LIST",
@@ -163,7 +146,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     2
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(tabletDesktopBackgroundMode),
     "LIST",
@@ -176,7 +158,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     2
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(tabletDesktopBackgroundPreset),
     "LIST",
@@ -195,7 +176,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     ],
     2
 ] call CBA_fnc_addSetting;
-
 [
     QGVAR(tabletDesktopColor),
     "COLOR",
@@ -204,7 +184,6 @@ private _tabletCategory = LLSTRING(General_Category_Tablet);
     [0, 0.443, 0.348],
     2
 ] call CBA_fnc_addSetting;
-
 [   //These images get cached the first time they are used from their path
     QGVAR(tabletDesktopCustomImageName),
     "EDITBOX",

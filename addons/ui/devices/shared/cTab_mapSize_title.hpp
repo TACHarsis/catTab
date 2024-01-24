@@ -3,8 +3,6 @@
 // By - Gundy
 // http://forums.bistudio.com/member.php?64032-Riouken
 // You may re-use any of this work as long as you provide credit back to me.
-
-
 //CC: This whole thing only exists to get the specifications of the current cartography
 class GVAR(mapSize_dsp){
     idd = IDD_CTAB_MAPSIZE;

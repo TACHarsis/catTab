@@ -1,27 +1,21 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_drawBftMarkers
-     
      Author(s):
         Gundy, Riouken, Cat Harsis
 
      Description:
         Draw BFT markers
-        
     Parameters:
         0: CONTROL  - Map control to draw BFT icons on
         0: STRING   - Display Name
         1: ARRAY    - Array of strings denoting drawin options
-     
      Returns:
         Nothing
-     
      Example:
         [_mapCtrl, GVARMAIN(Tablet), ["Vehicles"]] call Ctab_ui_fnc_drawBftMarkers;
 */
 params ["_mapCtrl", "_displayName", "_bftOptions"];
-
-
 // record of vehicles we have drawn this frame
 private _processedVehicles = [];
 
@@ -61,11 +55,9 @@ if(DMC_BFT_UAV in _bftOptions) then {
             GVAR(UAVLineColor),
             GVAR(UAVLineColorSelected)
         ] select (_isSelectedUAV);
-        
         private _lineTargetPos = GVAR(mapCursorPos);
         private _camLockedTo = _uav lockedCameraTo [];
         private _camIsLocked = !(isNil "_camLockedTo");
-        
         if (_camIsLocked) then {
             _lineTargetPos = if((typeName _camLockedTo) isEqualTo "ARRAY") then {
                 _camLockedTo
@@ -114,7 +106,6 @@ if(DMC_BFT_UAV in _bftOptions) then {
                 _uavLineColor
             ];
         };
-        
         if (_camIsLocked) then {
             _mapCtrl drawIcon [
                 // "\A3\ui_f\data\IGUI\Cfg\Targeting\MarkedTarget_ca.paa",
@@ -135,22 +126,18 @@ if(DMC_BFT_UAV in _bftOptions) then {
     if !(isNull GVAR(selectedUAV)) then {
         private _uavViewData = [GVAR(selectedUAV)] call FUNC(getUAVViewData);
         _uavViewData params ["_uavLookOrigin","_uavLookDir","_hitOccured","_aimPoint","_intersectRayTarget"];
-        
         private _uavViewConeVertices = [GVAR(selectedUAV), _uavViewData] call FUNC(getUAVViewCone);
-        
         private _coneColor = [
             [0.1, 0.5, 0.1 ,1],
             [0, 1, 0, 1]
         ] select _hitOccured;
 
         _mapCtrl drawPolygon [_uavViewConeVertices, _coneColor];
-        
         _mapCtrl drawLine [
             _uavLookOrigin,
             _aimPoint,
             _coneColor
         ];
-        
         _mapCtrl drawIcon [
             "\A3\ui_f\data\GUI\Cfg\KeyFrameAnimation\IconCamera_ca.paa",
             _coneColor,
@@ -183,8 +170,6 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
 
         if(_isPlayerVehicle && _isInPlayerGroup) then {continue};
         if(!_drawAsWings && _isPlayerVehicle) then {continue}; 
-
-
         if(_isPlayerVehicle) then { // draw the player vehicle
             _mapCtrl drawIcon [
                 "\A3\ui_f\data\map\Markers\System\dummy_ca.paa",
@@ -258,7 +243,6 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
             private _unitGroup = group (_unit);
             private _playerGroup = group Ctab_player;
             private _isPlayerVehicle = _unitVehicle == _playerVehicle;
-            
             if !(_drawText) then { continue };
 
             if (_isPlayerVehicle || {_unitVehicle in _processedVehicles}) then {
@@ -268,7 +252,6 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
                     _unitVehicle, 
                     [_groupId,format ["%1/%2", _mountedLabel, _groupId]] select (_mountedLabel isEqualTo "")
                 ];
-                
                 continue
             };
         } foreach GVAR(bftMemberIcons);
@@ -339,7 +322,6 @@ if(DMC_BFT_HCAM in _bftOptions) then {
     // diag_log format ["%1", DMC_BFT_HCAM];
     // diag_log format ["GVARMAIN(hCamVideoSources) %1", GVARMAIN(hCamVideoSources)];
     // diag_log format ["_sources %1", _sources];
-    
     {
         //TAG: video source data
         _y params ["_unitNetID", "_hCamUnit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
@@ -395,7 +377,6 @@ if(DMC_BFT_MEMBERS in _bftOptions) then {
         //CC: name is never used
         private _unitVehicle = vehicle (_unit);
         private _isPlayerVehicle = _unitVehicle == _playerVehicle;
-        
         // get the fire-team color
         private _teamColor = GVAR(teamColors) select (["MAIN", "RED", "GREEN", "BLUE", "YELLOW"] find (assignedTeam (_unit)));
 
@@ -443,8 +424,6 @@ if(DMC_BFT_MEMBERS in _bftOptions) then {
         };
     } foreach GVAR(bftMemberIcons);
 };
-
-
 // ------------------ DRAW LABELs ON VEHICLES WITH MOUNTED GROUPS / MEMBERS ------------------
 if (_drawText && (_mountedLabelHash isNotEqualTo createHashMap)) then {
     for "_i" from 0 to (count _mountedLabelHash - 2) step 2 do {

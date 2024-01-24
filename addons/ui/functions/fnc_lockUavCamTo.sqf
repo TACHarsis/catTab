@@ -1,19 +1,15 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_lockUavCamTo
-    
     Author(s):
         Gundy
 
     Description:
         Lock the currently selected UAV's gunner camera to the provided coordinates
-    
     Parameters:
         0: ARRAY - 2D or 3D position
-    
     Returns:
         BOOLEAN - If UAV was found
-    
     Example:
         [getPos player] call Ctab_ui_fnc_lockUavCamTo;
 */
@@ -28,7 +24,6 @@ if !(isNull GVAR(selectedUAV)) exitWith {
         _camPos = _camPos + [getTerrainHeightASL _camPos];
     };
     GVAR(selectedUAV) lockCameraTo [_camPos, [0]];
-    
     true
 };
 

@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_userMarkerFindAtLocation
-     
      Author(s):
         Gundy, Riouken
 
@@ -12,10 +11,8 @@
     Parameters:
         0: OBJECT - Map control we took the position from
         1: ARRAY  - Position to look for marker
-     
      Returns:
         INTEGER - Index of user marker, if not found -1
-     
      Example:
         _markerIndex = [_mapControl,[0,0]] call Ctab_ui_fnc_userMarkerFindAtLocation;
 */

@@ -72,8 +72,6 @@
 // Base macros to convert pixel space to screen space, but for groups (same size as map)
 #define FBCB2_pixel2GroupRect_X(PIXEL) (((PIXEL) - SCREEN_contentRect_px_X) / FBCB2_BackgroundImage_px_W * CUSTOM_GRID_WAbs)
 #define FBCB2_pixel2GroupRect_Y(PIXEL) (((PIXEL) - SCREEN_contentRect_px_Y) / FBCB2_BackgroundImage_px_H * CUSTOM_GRID_HAbs)
-
-
 // Message element positions in pixels
 #undef SCREEN_messages_margin_outer_px
 #undef SCREEN_messages_margin_inner_px

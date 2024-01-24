@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_videoSourceNearLocation
-     
      Author(s):
         Gundy, Riouken, Cat Harsis
 
@@ -12,10 +11,8 @@
         0: STRING - Type
         2: OBJECT - Map control we took the position from
         3: ARRAY  - Position to look for video source (Optional)
-     
      Returns:
         ARRAY     - video source data array, empty if not found
-     
      Example:
         _uav = [_mapControl, [0, 0]] call Ctab_ui_fnc_videoSourceNearLocation;
 */

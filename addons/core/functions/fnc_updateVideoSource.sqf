@@ -1,15 +1,12 @@
 #include "script_component.hpp"
-
 params ["_type", "_unitNetID", ["_addIfNotFound", false, [true]]];
 private _sourceData = [];
 if(_unitNetID in GVAR(deadExclusionList) ) exitWith {_sourceData};
-
 private _context = GVAR(videoSourcesContext) get _type;
 private _sourcesHash = _context get QGVAR(sourcesHash);
 _sourceData = _sourcesHash getOrDefault [_unitNetID, []];
 private _dataWasFound = _sourceData isEqualTo [];
 if(_dataWasFound && !_addIfNotFound) exitWith {_sourceData};
-
 private _fnc_prepareUnit = _context get QGVAR(fnc_prepareUnit);
 private _unit = _unitNetID call BIS_fnc_objectFromNetId;
 private _isEnabled = false;
@@ -20,9 +17,7 @@ if(isNull _unit) then {
 } else {
     _isEnabled = [_unit] call _fnc_prepareUnit;
 };
-
 if(!_isEnabled && _dataWasFound) exitWith {_sourceData};
-
 if(_dataWasFound) then {
     private _fnc_getName = _context get QGVAR(fnc_getName);
     private _name = [_unit] call _fnc_getName;
@@ -30,11 +25,8 @@ if(_dataWasFound) then {
     _sourceData = [_unitNetID, _unit, _name, nil, nil, nil, nil, nil];
     _sourcesHash set [_unitNetID, _sourceData];
 };
-
 private _fnc_getStatus = _context get QGVAR(fnc_getStatus);
-
 private _isAlive = [false, alive _unit] select (isNull _unit);
-
 private _prevSourceData = +_sourceData;
 //TAG: video source data
 _sourceData set [4, _isEnabled];
@@ -47,7 +39,6 @@ if(!isNull _unit) then {
     _sourceData set [3, false];
     _sourceData set [7, LOST];
 };
-
 if(_dataWasFound) then {
     [QGVAR(videoSourceAdded), [_type, _sourceData]] call CBA_fnc_localEvent;
 } else {
@@ -70,5 +61,4 @@ if(_dataWasFound) then {
         //TODO: maybe unit id in group also should be saved? Or strung somewhere?
     ];
 };
-
 _sourceData

@@ -1,19 +1,15 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_remoteControlUav
-    
     Author(s):
         Gundy
 
     Description:
         Take control of the currently selected UAV's gunner turret
-    
     Parameters:
         NONE
-     
     Returns:
         BOOLEAN - TRUE
-    
     Example:
         [] call Ctab_ui_fnc_remoteControlUav;
 */
@@ -42,7 +38,6 @@ if (UAVControl GVAR(selectedUAV) select 1 != "GUNNER") then {
         ] call CBA_fnc_waitUntilAndExecute;
 
         [QGVAR(remoteControlStarted)] call CBA_fnc_localEvent;
-        
     } else {
         // maybe send error code instead of message?
         [QGVAR(remoteControlFailed), "No gunner optics available"] call CBA_fnc_localEvent;

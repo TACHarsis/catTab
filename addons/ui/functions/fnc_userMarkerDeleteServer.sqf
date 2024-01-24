@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_userMarkerDeleteServer
-    
     Author(s):
         Gundy
 
@@ -12,10 +11,8 @@
         0: STRING  - Encryption Key for this marker
         1: INTEGER - Index position of marker to delete
         2: INTEGER - Transaction ID
-    
     Returns:
         BOOLEAN - TRUE
-    
     Example:
         // Client requesting marker deletion and server receiving request
         ["bluefor",5] remoteExec ["Ctab_ui_fnc_userMarkerDeleteServer", 2];
@@ -37,7 +34,6 @@ private _removeIndex = -1;
 if (_removeIndex != -1) then {
     _userMarkerList deleteAt _removeIndex;
     GVAR(userMarkerListsServer) set [_encryptionKey,_userMarkerList];
-    
     // Send userMarkerDelete command to all clients
     GVAR(userMarkerTransactionIdServer) = GVAR(userMarkerTransactionIdServer) + 1;
     [_encryptionKey,_markerIndex,GVAR(userMarkerTransactionIdServer)] remoteExec [QFUNC(userMarkerDelete)];

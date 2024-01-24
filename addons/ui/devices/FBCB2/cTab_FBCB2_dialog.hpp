@@ -35,7 +35,6 @@ class GVARMAIN(FBCB2_dlg){
             w = QUOTE(FBCB2_pixel2Screen_W(FBCB2_mapRect_px_W));
             h = QUOTE(FBCB2_pixel2Screen_H(FBCB2_mapRect_px_H));
         };
-        
         class screen: cTab_RscMapControl {
             idc = IDC_CTAB_SCREEN;
             text = "#(argb,8,8,3)color(1,1,1,1)";

@@ -2,22 +2,18 @@
 #include "..\devices\shared\cTab_defines.hpp"
 /*
     Name: Ctab_ui_fnc_createVideoSourceCam
-    
     Author(s):
         Gundy, Cat Harsis
 
     Description:
         Set up video source camera and display on supplied render target
         Modified to include lessons learned from KK's excellent tutorial: http://killzonekid.com/arma-scripting-tutorials-uav-r2t-and-pip/
-    
     Parameters:
         0: STRING - Video source type
         1: OBJECT - Unit to attach cam to
         2: STRING - Camera ID equals setting name
-    
     Returns:
         BOOLEAN - If cam could be set up or not
-    
     Example:
         [_type, _unit, ""] call Ctab_ui_fnc_createVideoSourceCam;
 */
@@ -56,8 +52,6 @@ if(_videoControllerCtrl isEqualTo controlNull) exitWith {false};
 if(_videoCtrl isEqualTo controlNull) exitWith {false};
 // diag_log format ["CreateVideo Source 7"];
 private _renderTargetName = _videoCtrl getVariable [QGVAR(renderTargetName), ""];
-
-
 // now that all checks have passed, remove existing video source camera
 [_type, _camID] call FUNC(deleteVideoSourceCam);
 

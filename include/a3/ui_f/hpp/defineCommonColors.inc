@@ -61,8 +61,6 @@
 #define GUI_TOOLTIP_TEXT_COLOR                      {1, 1, 1, 1}
 #define GUI_TOOLTIP_BOX_COLOR                       {1, 1, 1, 1}
 #define GUI_TOOLTIP_SHADE_COLOR                     {0, 0, 0, 0.65}
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// iGUI
 ///////////////////////////////////////////////////////////////////////////
@@ -108,9 +106,6 @@
 
 //--- HUD Text color (obsolete defines; ToDo: Replace with IGUI_TEXT_COLOR and IGUI_BCG_COLOR)
 #define CA_UI_HUD                                   IGUI_TEXT_COLOR
-
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// Sides
 ///////////////////////////////////////////////////////////////////////////
@@ -154,9 +149,6 @@
 #define Map_Unknown_A                               "(profilenamespace getvariable ['Map_Unknown_A',0.8])"
 #define Map_Unknown_RGB                             Map_Unknown_R,    Map_Unknown_G,    Map_Unknown_B
 #define Map_Unknown_RGBA                            {Map_Unknown_RGB,Map_Unknown_A}
-
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// Misc
 ///////////////////////////////////////////////////////////////////////////
@@ -206,8 +198,6 @@
 #define ProcTextTransparent                         "#(argb,8,8,3)color(0,0,0,0)"
 #define ProcTextHUD                                 "#(argb,8,8,3)color(0.600,0.8392,0.4706,1.0)"
 #define ProcTextPurple                              "#(argb,8,8,3)color(0.75,0,0.75,1)"
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// Task colors: 3D task marker
 ///////////////////////////////////////////////////////////////////////////
@@ -230,8 +220,6 @@
 #define COLOR_TASK_BACKGROUND_CUSTOM_RGB            0.3,0.72,1
 #define COLOR_TASK_BACKGROUND_CUSTOM_A              1
 #define COLOR_TASK_BACKGROUND_CUSTOM_RGBA           COLOR_TASK_BACKGROUND_CUSTOM_RGB,COLOR_TASK_BACKGROUND_CUSTOM_A
-
-
 #define COLOR_TASK_TEXT_UNASSIGNED_RGB              0.91,0.91,0.91
 #define COLOR_TASK_TEXT_UNASSIGNED_A                0.55
 #define COLOR_TASK_TEXT_UNASSIGNED_RGBA             COLOR_TASK_TEXT_UNASSIGNED_RGB,COLOR_TASK_TEXT_UNASSIGNED_A
@@ -241,8 +229,6 @@
 #define COLOR_TASK_TEXT_CUSTOM_RGB                  0.27,0.65,0.91
 #define COLOR_TASK_TEXT_CUSTOM_A                    0.55
 #define COLOR_TASK_TEXT_CUSTOM_RGBA                 COLOR_TASK_TEXT_CUSTOM_RGB,COLOR_TASK_TEXT_CUSTOM_A
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// Task colors: generic
 ///////////////////////////////////////////////////////////////////////////
@@ -289,8 +275,6 @@
 #define COLOR_SENSORS_MAN_RGB                       1.0, 0.5, 1.0
 #define COLOR_SENSORS_MAN_A                         1.0
 #define COLOR_SENSORS_MAN_RGBA                      {COLOR_SENSORS_MAN_RGB,COLOR_SENSORS_MAN_A}
-
-
 #define COLOR_SENSORS_ENEMY_RGB                     1.0, 0.0, 0.0
 #define COLOR_SENSORS_ENEMY_A                       1.0
 #define COLOR_SENSORS_ENEMY_RGBA                    {COLOR_SENSORS_ENEMY_RGB,COLOR_SENSORS_ENEMY_A}

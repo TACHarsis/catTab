@@ -780,10 +780,6 @@ class cTab_RscButtonInv {
     offsetPressedY = 0.002;
     borderSize = 0;
 };
-
-
-
-
 class cTab_RscShortcutButton {
     type = CT_SHORTCUTBUTTON;
     x = QUOTE(0.1);
@@ -1415,7 +1411,6 @@ class cTab_RscMapControl {
     text = "#(argb,8,8,3)color(1,1,1,1)";
     SizeEx = "(            (            (            ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
     //size = "(            (            (            ((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-    
     widthRailWay=1;
     class LineMarker
     {
@@ -1425,7 +1420,6 @@ class cTab_RscMapControl {
         lineDistanceMin="2.9999999e-005";
         textureComboBoxColor="#(argb,8,8,3)color(1,1,1,1)";
     };
-    
     class Legend {
         x = "SafeZoneX +                     (            ((safezoneW / safezoneH) min 1.2) / 40)";
         y = "SafeZoneY + safezoneH - 4.5 *                     (            (            ((safezoneW / safezoneH) min 1.2) / 1.2) / 25)";

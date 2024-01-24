@@ -350,5 +350,3 @@ class cTab_android_notification: cTab_RscText_Android {
     w = QUOTE(ANDROID_pixel2Screen_W(SCREEN_contentRect_px_W * 0.8));
     colorBackground[] = COLOR_BLACK;
 };
-
-

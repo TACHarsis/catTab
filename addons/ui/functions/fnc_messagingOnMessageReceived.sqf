@@ -13,10 +13,8 @@ if (_msgRecipient == Ctab_player &&
     {_playerEncryptionKey == _msgEncryptionKey} && 
     {[Ctab_player,["ItemcTab","ItemAndroid"]] call EFUNC(core,checkGear)}) then {
     playSound QGVARMAIN(phoneVibrate);
-    
     if (!isNil QGVAR(ifOpen) && {[GVAR(ifOpen) select 1,QSETTING_MODE] call FUNC(getSettings) == QSETTING_MODE_MESSAGES}) then {
         [] call FUNC(messagingLoadGUI);
-        
         // add a notification
         private _notificationText = format ["New message from %1",name _sender];
         ["MSG",_notificationText,6] call FUNC(addNotification);

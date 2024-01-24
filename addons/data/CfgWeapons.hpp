@@ -13,7 +13,6 @@ class CfgWeapons {
         };
         author = LEGACY_AUTHOR;
     };
-    
     class ItemAndroid: ItemcTab {
         descriptionshort = "GD300 Rugged Wearable Computer";
         descriptionuse = "<t color='#9cf953'>Use: </t>Show Android Based BFT";
@@ -37,7 +36,6 @@ class CfgWeapons {
         };
         author = LEGACY_AUTHOR;
     };
-    
     class ItemcTabHCam: CBA_MiscItem {
         descriptionshort = "HD Helmet Mounted Camera";
         descriptionuse = "<t color='#9cf953'>Use: </t>Used to record and stream video";

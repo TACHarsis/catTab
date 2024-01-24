@@ -1,19 +1,15 @@
 #include "script_component.hpp"
 /*
      Name: Ctab_ui_fnc_caseButtonsToggleFollow
-     
      Author(s):
         Cat Harsis
 
      Description:
         Toggle auto-follow current UAV or Helmet Cam
-    
     Parameters:
         None
-     
      Returns:
         BOOLEAN - TRUE
-     
      Example:
         [] call Ctab_ui_fnc_caseButtonsToggleFollow;
 */

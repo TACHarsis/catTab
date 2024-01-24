@@ -213,8 +213,6 @@
         <Key ID="STR_Ctab_UI_Keybind_Toggle_Tablet_Dlg_Hint">
             <English>Open/Close Tablet Dialog</English>
         </Key>
-
-
         <Key ID="STR_Ctab_UI_Keybind_ZoomIn">
             <English>Zoom In</English>
         </Key>

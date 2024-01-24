@@ -269,8 +269,6 @@ enum
 };
 
 #endif
-
-
 /*******************/
 /*  Controls       */
 /*******************/
@@ -504,8 +502,6 @@ enum
 //Engine searches for the parameters in any display where RscMapControl is used, that's why they got more uncommon IDCs.
 #define IDC_DIARY_MARKER_COLOR                    1090
 #define IDC_DIARY_MARKER_ICON                     1091
-
-
 // Instances of display
 #define IDD_MAIN                                  0
 #define IDD_GAME                                  1
@@ -823,8 +819,6 @@ enum
 #define IDD_CUSTOMINFO_FEEDCOMMANDER              318
 #define IDD_CUSTOMINFO_FEEDMISSILE                319
 #define IDD_CUSTOMINFO_MINEDETECT                 320
-                                            
-
 // Futura ui
 #define IDD_FUTURAGEAR                            602
 // FUTURA GEAR controls
@@ -1390,8 +1384,6 @@ enum
 
 #define IDC_OPTIONS_VIDEO_FPS_TEXT                1400
 #define IDC_OPTIONS_VIDEO_PERF_WARNING            1401
-
-
 #define IDC_OPTIONS_LANGUAGE                      135
 
 #define IDC_OPTIONS_IGUISIZE                      136
@@ -1419,8 +1411,6 @@ enum
 
 #define IDC_OPTIONS_SLIDER_FILLRATE               1234
 #define IDC_OPTIONS_VALUE_FILLRATE                1236
-
-
 #define IDC_OPTIONS_MUSIC_VALUE                   101
 #define IDC_OPTIONS_MUSIC_SLIDER                  102
 #define IDC_OPTIONS_EFFECTS_VALUE                 103
@@ -1791,8 +1781,6 @@ enum
 #define IDC_SERVER_MISSION_TITLE                  144
 #define IDC_SERVER_DIFF_INDICATOR                 145
 #define IDC_SERVER_PURCHASE_BUTTON                146
-
-
 #define IDC_REQUIRED_BATTLEYE                     201
 
 // _VBS3
@@ -2264,8 +2252,6 @@ enum
 #define IDC_FILE_SELECT_DIR_TREE                  102
 #define IDC_FILE_SELECT_FILE_LIST                 103
 #define IDC_FILE_SELECT_PREVIEW                   104
-
-
 //Login display
 #define IDC_LOGIN_USER_LIST                       101
 #define IDC_LOGIN_EDIT                            102
@@ -2611,8 +2597,6 @@ enum
 #define IDC_IGUI_DRIVER_GROUP                     391
 #define IDC_IGUI_DRIVER_OPTICS_GROUP              392
 #define IDC_IGUI_VEHICLE_PITCH                    393
-
-
 //AV_Terminal
 #define IDC_IGUI_AVT_NAME                         100
 #define IDC_IGUI_AVT_TAKE_CONTROL                 101
@@ -2827,11 +2811,6 @@ enum
 #define IDC_IGUI_THROTTLE                         205
 #define IDC_IGUI_VEHICLE_DIRECTION                206
 #define IDC_IGUI_VEHICLE_DIRECTION2               207
-
-
-
-
-
 // helicopter unit info
 #define  IDC_IGUI_GMETER                          501
 #define  IDC_IGUI_RADARALTIMETER                  505
@@ -3049,8 +3028,6 @@ enum
 #define IDC_MINIMAP_GRID                          197
 #define IDC_MINIMAP_HEADING                       198
 #define IDC_MINIMAP_TIME                          199
-
-
 // - scripting help display
 #define IDC_SCRITING_HELP                         101
 #define IDC_SCRITING_HELP_BACK                    102
@@ -3077,8 +3054,6 @@ enum
 #define IDC_CAPTURE_AVERAGES                      110
 #define IDC_CAPTURE_SAVE_ARCHIVE                  111
 #define IDC_CAPTURE_SEARCH                        112
-
-
 // - joysticks configuration display
 #define IDC_CONTROLLER_CUSTOMIZE                  101
 #define IDC_CONTROLLER_ENABLE                     102
@@ -3126,12 +3101,8 @@ enum
 // - create new mod
 #define IDC_MOD_NAME                              101
 #define IDC_MOD_DIR                               102
-
-
 //A3 credits
 #define ONBUTTONCLICK_START_CREDITS "0 = _this spawn (uinamespace getvariable 'bis_fnc_credits');"
-
-
 // Hitzone types
 #define HZ_AIRPLANE_HULL                          0
 #define HZ_AIRPLANE_ENG                           22
@@ -3180,6 +3151,4 @@ enum
 #define HZ_VEH_CMDTRRT_TOTAL                      31
 
 #define HZ_TANK_BOTH_TRACKS                       32
-
-
 #endif

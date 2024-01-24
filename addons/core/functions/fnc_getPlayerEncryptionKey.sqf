@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_getPlayerEncryptionKey
-    
     Author(s):
         Gundy
 
@@ -10,10 +9,8 @@
 
     Parameters:
         NONE
-    
     Returns:
         STRING - Encryption key
-        
     Example:
         _playerEncryptionKey = call Ctab_ui_fnc_getPlayerEncryptionKey;
 */

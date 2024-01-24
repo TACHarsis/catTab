@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-
 params ["_unitNetID"];
 {
     private _type = _x;

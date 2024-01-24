@@ -26,7 +26,6 @@ if (isNil QGVAR(processNotificationsPFH) && !(isNil QGVAR(ifOpen)) && count GVAR
     private _displayName = GVAR(ifOpen) select 1;
     private _display = uiNamespace getVariable _displayName;
     private _ctrl = _display displayCtrl IDC_CTAB_NOTIFICATION;
-    
     // only proceed if there is a notification control
     if !(isNull _ctrl) then {
         // run every 4 seconds
@@ -47,7 +46,6 @@ if (isNil QGVAR(processNotificationsPFH) && !(isNil QGVAR(ifOpen)) && count GVAR
                     if ((_notification select 4) > 1) then {
                         _text = format ["%1 (x%2)",_text,_notification select 4];
                     };
-                    
                     // show the notification
                     private _ctrl = _this select 0;
                     _ctrl ctrlSetText _text;
@@ -55,12 +53,10 @@ if (isNil QGVAR(processNotificationsPFH) && !(isNil QGVAR(ifOpen)) && count GVAR
                     _ctrl ctrlSetFade 0;
                     _ctrl ctrlCommit 0;
                     _ctrl ctrlShow true;
-                    
                     // bring the control to the front. Enable is required before focus can be set
                     _ctrl ctrlEnable true;
                     ctrlSetFocus _ctrl;
                     _ctrl ctrlEnable false;
-                    
                     // make the control fade out
                     _ctrl ctrlSetFade 1;
                     _ctrl ctrlCommit _decayTime;

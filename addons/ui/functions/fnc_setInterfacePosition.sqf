@@ -1,20 +1,15 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_setInterfacePosition
-    
     Author(s):
         Gundy
-    
     Description:
         Move the whole interface by a provided offset
-    
     Parameters:
         0: STRING - uiNamespace variable name of interface
         1: ARRAY  - offset in the form of [x,y]
-    
     Returns:
         BOOLEAN - TRUE
-    
     Example:
         [QGVARMAIN(Tablet_dlg),[0.2,0.1]] call Ctab_ui_fnc_setInterfacePosition;
 */

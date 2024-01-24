@@ -13,8 +13,6 @@
 // Draw "hook" from reference center to mouse cursor (or other way round) and draw instruments that display related data
 // DMC_RECENTER             (ARRAY,CODE), [OBJECT/CODE(,SCALAR/CODE)]
 // Recenter on object (player if nil) with scale (GVAR(mapScale) if nil)
-
-
 GVAR(displayDrawOptions) = createHashMapFromArray [
     [QGVARMAIN(Tablet_dlg),     createHashMapFromArray [
                                     [DMC_CONDITION,             {true}],
@@ -30,7 +28,6 @@ GVAR(displayDrawOptions) = createHashMapFromArray [
                                         ];
                                         if(_mode isEqualTo QSETTING_MODE_CAM_UAV) then { (_options # 1) pushBack DMC_BFT_UAV};
                                         if(_mode isEqualTo QSETTING_MODE_CAM_HCAM) then { (_options # 1) pushBack DMC_BFT_HCAM};
-
                                         _options
                                     }],
                                     //TODO: this still needs to be made compatible with helmet cam and uav mode. - does it?

@@ -1,20 +1,16 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_userMarkerListUpdate
-    
     Author(s):
         Gundy
 
     Description:
         Update lists of user markers by finding extracting all the user markers with the right encryption key and then translate the marker data in to a format so that it can be drawn quicker.
         CC: Only called on client
-        
     Parameters:
         NONE
-    
     Returns:
         Nothing
-    
     Example:
         call Ctab_ui_fnc_userMarkerListUpdate;
 */

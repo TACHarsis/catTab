@@ -36,7 +36,6 @@ GVAR(RscLayer) cutRsc [_displayName, "PLAIN", 0, false];
 
         // calculate the difference between top and middle world coordinates, devide by the screen height and return
         GVAR(mapScaleFactor) = (abs(_mapWorldY_middle - _mapWorldY_top)) / _mapScreenH;
-        
         _display closeDisplay 0;
         uiNamespace setVariable [_displayName, displayNull];
 

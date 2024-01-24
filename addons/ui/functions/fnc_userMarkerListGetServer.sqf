@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_userMarkerListGet
-    
     Author(s):
         Gundy, Cat Harsis
 
@@ -10,10 +9,8 @@
 
     Parameters:
             NONE
-    
     Returns:
         Nothing
-    
     Example:
         // Client requesting the list from the server
         [player] remoteExec ["Ctab_ui_fnc_userMarkerListGet"];

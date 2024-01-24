@@ -1,19 +1,14 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_onIfClose
-    
     Author(s):
         Gundy
-    
     Description:
         Closes the currently open interface and remove any previously registered eventhandlers.
-    
     Parameters:
         No Parameters
-    
     Returns:
         BOOLEAN - TRUE
-    
     Example:
         [] call Ctab_ui_fnc_onIfClose;
 */
@@ -21,8 +16,6 @@
 // remove helmet and UAV cameras
 [VIDEO_FEED_TYPE_HCAM] call FUNC(deleteVideoSourceCam);
 [VIDEO_FEED_TYPE_UAV] call FUNC(deleteVideoSourceCam);
-
-
 if !(isNil QGVAR(ifOpen)) then {
     GVAR(ifOpen) params ["_ifType", "_displayName", "_player", "_playerKilledEhId", "_vehicle", "_vehicleGetOutEhId", "_draw3dEhId", "_aceUnconciousEhId", "_acePlayerInventoryChangedEhId"];
 
@@ -59,7 +52,6 @@ if !(isNil QGVAR(ifOpen)) then {
 
             // figure out if the interface position has changed
             private _backgroundOffset = [[], [_xOffset,_yOffset]] select (_xOffset != 0 || _yOffset != 0);
-            
             // Save mapWorldPos and mapScaleDlg of current dialog so it can be restored later
             [_displayName,[[QSETTING_MAP_WORLD_POS,GVAR(mapWorldPos)],[QSETTING_MAP_SCALE_DIALOG,_mapScale],[SETTING_POSITION_DIALOG,_backgroundOffset]],false] call FUNC(setSettings);
         };

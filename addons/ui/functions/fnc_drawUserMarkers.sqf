@@ -1,13 +1,11 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_drawUserMarkers
-    
     Author(s):
         Gundy, Riouken, Cat Harsis
 
     Description:
         Draw userMarkers held in GVAR(userMarkerListTranslated) to map control
-        
         List format:
             Index 0: ARRAY  - marker position
             Index 1: STRING - path to marker icon
@@ -18,14 +16,11 @@
             Index 6: ARRAY  - marker color
             Index 7: STRING - marker time
             Index 8: STRING - text alignment
-    
     Parameters:
         0: OBJECT  - Map control to draw BFT icons on
         1: BOOLEAN - Highlight marker under cursor
-    
     Returns:
         BOOLEAN - Always TRUE
-    
     Example:
         [_ctrlScreen] call Ctab_ui_fnc_drawUserMarkers;
 */
@@ -46,7 +41,6 @@ private _cursorMarkerIndex = [
         private _secondPos = [_pos,_arrowLength,_dir] call BIS_fnc_relPos;
         _ctrlScreen drawArrow [_pos, _secondPos, _color];
     };
-    
     _ctrlScreen drawIcon [
         _texture1,
         _color,

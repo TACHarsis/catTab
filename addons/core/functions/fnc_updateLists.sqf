@@ -1,7 +1,6 @@
 #include "script_component.hpp"
 /*
     Name: Ctab_ui_fnc_updateLists
-    
     Author(s):
         Gundy, Riouken, Cat Harsis
 
@@ -13,17 +12,13 @@
             GVARMAIN(BFTvehicles)
             GVARMAIN(UAVVideoSources)
             GVARMAIN(hCamVideoSources)
-        
         Format
             Index 0: Unit object/group
             Index 1: group leader (only for groups list)
-    
     Parameters:
         NONE
-    
     Returns:
         nothing
-    
     Example:
         call Ctab_ui_fnc_updateLists;
 */

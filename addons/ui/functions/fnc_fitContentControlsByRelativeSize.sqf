@@ -1,7 +1,5 @@
 #include "script_component.hpp"
-
 params ["_contentCtrlsHash", "_contentArea", ["_commitTime", 0, [1]]];
-
 {
     _y params ["_contentCtrl", "_ctrlRelSize"];
     private _ctrlPos = [

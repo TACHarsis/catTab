@@ -50,8 +50,6 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     "",
     [DIK_H, [false, false, true]]
 ] call cba_fnc_addKeybind;
-
-
 //TODO: These direct shortcuts do not check for presence of the necessary items or vehicles
 //      This is fine for now, but needs to be fixed eventually
 [
@@ -71,8 +69,6 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
-
-
 [
     [_categoryMod, _categoryMicroDAGR],
     QGVAR(microDAGR_dlg),
@@ -90,8 +86,6 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
-
-
 [
     [_categoryMod, _categoryTAD],
     QGVAR(TAD_dlg),
@@ -109,8 +103,6 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
-
-
 [
     [_categoryMod, _categoryFBCB2],
     QGVAR(FBCB2_dlg),
@@ -119,8 +111,6 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
-
-
 [
     [_categoryMod, _categoryTablet],
     QGVAR(Tablet_dlg),
@@ -129,8 +119,6 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
-
-
 [
     _categoryMod,
     QGVAR(zoomIn),

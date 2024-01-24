@@ -76,8 +76,6 @@
 #define GUI_GRID_TOPLEFT_H                  GUI_GRID_H
 #define GUI_GRID_TOPLEFT_X                  (safezoneX)
 #define GUI_GRID_TOPLEFT_Y                  (safezoneY)
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// iGUI
 ///////////////////////////////////////////////////////////////////////////
@@ -248,8 +246,6 @@
 #define IGUI_GRID_CUSTOMINFO_HAbs           (profilenamespace getvariable ["IGUI_GRID_CUSTOMINFORIGHT_H",IGUI_GRID_CUSTOMINFO_HDef])
 #define IGUI_GRID_CUSTOMINFO_INNER_WAbs     IGUI_GRID_CUSTOMINFO_WAbs - 0.25 * GUI_GRID_W
 #define IGUI_GRID_CUSTOMINFO_INNER_HAbs     IGUI_GRID_CUSTOMINFO_HAbs - 1.25 * GUI_GRID_H
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// Old
 ///////////////////////////////////////////////////////////////////////////
@@ -438,8 +434,6 @@
 #define IGUI_GRID_OLD_PIP_Y                 IGUI_GRID_OLD_PIP_YDef
 #define IGUI_GRID_OLD_PIP_WAbs              IGUI_GRID_OLD_PIP_WDef
 #define IGUI_GRID_OLD_PIP_HAbs              (IGUI_GRID_OLD_PIP_WAbs)
-
-
 //--- MUF - experimental optics grid
 // #define GUI_GRID_OLD_OPTICS_X            (SafezoneX + ((SafezoneW - SafezoneH) / 2))
 // #define GUI_GRID_OLD_OPTICS_Y            (SafezoneY)

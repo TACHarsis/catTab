@@ -46,8 +46,6 @@ GVAR(checkForPlayerChangePFH) = [{
         [QGVAR(playerChanged), Ctab_player] call CBA_fnc_localEvent;
     };
 }] call CBA_fnc_addPerFrameHandler;
-
-
 // define vehicles that have FBCB2 monitor
 GVARMAIN(vehicleClassesFBCB2) = [
     GVARMAIN(vehicleClassesFBCB2_server),
