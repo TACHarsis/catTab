@@ -9,7 +9,7 @@ class CfgWeapons {
         model = QPATHTOF(models\itemDK10.p3d);
         scope = 2;
         class ItemInfo : CBA_MiscItem_ItemInfo {
-            mass = 56;
+            mass = 20;
         };
         author = LEGACY_AUTHOR;
     };

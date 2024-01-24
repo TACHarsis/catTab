@@ -11,7 +11,7 @@ class CfgPatches {
         units[] = {};
         weapons[] = {};
         requiredVersion = REQUIRED_VERSION;
-        requiredAddons[] = {"Ctab_main", "cba_settings"};
+        requiredAddons[] = {"Ctab_core", "Ctab_data"};
         author = AUTHORS;
         authorUrl = "https://github.com/TACHarsis/catTab";
         VERSION_CONFIG;

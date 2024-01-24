@@ -16,7 +16,7 @@ class CfgPatches {
             "ItemcTabHCam"
         };
         requiredVersion = REQUIRED_VERSION;
-        requiredAddons[] = {"ctab_main"};
+        requiredAddons[] = {"ctab_core"};
         author = AUTHORS;
         authorUrl = "https://github.com/TACHarsis/catTab";
         VERSION_CONFIG;
