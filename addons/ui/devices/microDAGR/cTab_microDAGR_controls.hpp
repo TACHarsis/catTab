@@ -61,7 +61,7 @@ class cTab_microDAGR_header: cTab_RscPicture {
 };
 class cTab_microDAGR_footer: cTab_microDAGR_header {
     idc = 2;
-    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H)- cTab_GUI_microDAGR_OSD_FOOTER_H);
+    y = QUOTE(MICRODAGR_pixel2Screen_Y(cTab_GUI_microDAGR_MAP_Y + cTab_GUI_microDAGR_MAP_H - cTab_GUI_microDAGR_OSD_FOOTER_H));
     h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_OSD_FOOTER_H));
 };
 class cTab_RscButton_microDAGR_LeftUp: cTab_RscButtonInv {
