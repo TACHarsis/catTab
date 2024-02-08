@@ -230,7 +230,7 @@ class cTab_android_on_screen_battery: cTab_RscPicture {
     idc = 2;
     text = QPATHTOEF(data,img\ui\icon_battery_ca.paa);
     x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(1)));
-    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + (OSD_header_px_H )- OSD_elementBase_iconSize_px) / 2);
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + (OSD_header_px_H - OSD_elementBase_iconSize_px) / 2));
     w = QUOTE(ANDROID_pixel2Screen_W(OSD_elementBase_iconSize_px));
     h = QUOTE(ANDROID_pixel2Screen_H(OSD_elementBase_iconSize_px));
     colorText[] = COLOR_WHITE;
@@ -239,7 +239,7 @@ class cTab_android_on_screen_time: cTab_RscText_Android {
     idc = IDC_CTAB_OSD_TIME;
     style = ST_CENTER;
     x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(3)));
-    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + (OSD_header_px_H )- OSD_elementBase_textSize_px) / 2);
+    y = QUOTE(ANDROID_pixel2Screen_Y(ANDROID_mapRect_px_Y + (OSD_header_px_H - OSD_elementBase_textSize_px) / 2));
 };
 class cTab_android_on_screen_signalStrength: cTab_android_on_screen_battery {
     idc = 3;
@@ -250,7 +250,7 @@ class cTab_android_on_screen_signalStrength: cTab_android_on_screen_battery {
 class cTab_android_on_screen_satellite: cTab_android_on_screen_battery {
     idc = 4;
     text = "\a3\ui_f\data\map\Diary\signal_ca.paa";
-    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(5) + OSD_elementBase_size_px_W)- OSD_elementBase_iconSize_px);
+    x = QUOTE(ANDROID_pixel2Screen_X(OSD_element_px_X(5) + OSD_elementBase_size_px_W) - OSD_elementBase_iconSize_px);
     colorText[] = COLOR_WHITE;
 };
 class cTab_android_on_screen_dirDegree: cTab_android_on_screen_time {
