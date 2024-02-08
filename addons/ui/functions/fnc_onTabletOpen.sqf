@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-#include "..\settings_macros.hpp"
 #include "..\devices\shared\cTab_defines.hpp"
 
 disableSerialization;

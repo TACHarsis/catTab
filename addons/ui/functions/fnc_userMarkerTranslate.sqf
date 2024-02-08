@@ -82,6 +82,6 @@ private _dir = switch(_markerDir) do {
     default {-1};
 };
 
-private _align = if ((_dir > 0) && (_dir < 180)) then {"left"} else {"right"};
+private _align = ["right", "left"] select (_dir > 0) && (_dir < 180);
 
-[_pos,_texture1,GVAR(iconSize)+(_markerSize*0.75),_texture2,GVAR(groupOverlayIconSize)+(_markerSize*0.75*1.65),_dir,_color,_text,_align]
+[_pos,_texture1, GVAR(iconSize) + (_markerSize * 0.75), _texture2, GVAR(groupOverlayIconSize) + (_markerSize * 0.75 * 1.65), _dir, _color, _text, _align]

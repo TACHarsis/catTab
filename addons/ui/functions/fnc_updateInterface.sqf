@@ -604,7 +604,7 @@ if (isNil "_mode") then {
         case (QSETTING_SHOW_ICON_TEXT) : {
             private _osdCtrl = _display displayCtrl IDC_CTAB_OSD_TXT_TGGL;
             if !(isNull _osdCtrl) then {
-                private _text = if (_value) then {"ON"} else {"OFF"};
+                private _text = ["OFF", "ON"] select _value;
                 _osdCtrl ctrlSetText _text;
             };
         };
@@ -833,12 +833,12 @@ if (isNil "_mode") then {
                 };
                 _osdCtrl = _display displayCtrl IDC_CTAB_OSD_HOOK_TGGL1;
                 if !(isNull _osdCtrl) then {
-                    private _text = if (_value) then {"OWN"} else {"CURS"};
+                    private _text = ["CURS", "OWN"] select _value;
                     _osdCtrl ctrlSetText _text;
                 };
                 _osdCtrl = _display displayCtrl IDC_CTAB_OSD_HOOK_TGGL2;
                 if !(isNull _osdCtrl) then {
-                    private _text = if (_value) then {"CURS"} else {"OWN"};
+                    private _text = ["CURS", "OWN"] select _value;
                     _osdCtrl ctrlSetText _text;
                 };
             };

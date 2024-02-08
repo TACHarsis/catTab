@@ -157,7 +157,7 @@ if(DMC_BFT_VEHICLES in _bftOptions) then {
         //skip UAV that would get drawn on their own
         if(_vehicle in _processedVehicles) then { continue };
 
-        private _text = if (_drawText) then {_name} else {""};
+        private _text = ["", _name] select _drawText;
         private _pos = getPos _vehicle;
         private _vehicleGroup = group _vehicle;
 
