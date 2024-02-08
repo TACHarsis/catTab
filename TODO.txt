@@ -6,10 +6,6 @@ Check:
 * Visual indicator for selected video screen
 * Preview of selected source feed if not assigned?
 
-* Fix Android osd bar being way off
-* Fix microDAGR missing lower osd bar
-* Fix Android mislocated upper osd bar
-
 * Figure out the whole settings thing for the helmet and vehicle classes
 
 * move setup code in the pre/post/init functions into include files to declutter it
@@ -17,7 +13,7 @@ Check:
 
 * reduce redundant/duplicate code
 * hook up notifications?
-* names instead of group id (option)?
+* names instead of group id optional (currently name)?
 * movable markers
 
 * Icons per device for ACE interact?

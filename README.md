@@ -1,8 +1,8 @@
 cTab
 ====
 **Commander's Tablet - FBCB2, Blue Force Tracker, UAV, Helmet Cam and Messaging Interface**
-*Initially created by Riouken, currently maintained by Gundy*
-
+*Initially created by Riouken, currently maintained by Gundy, enhanced by Cat Harsis*
+**OBVIOUSLY OUT OF DATE**
 Thanks to
 ---------
 + SpectreRSG - Graphic Design
