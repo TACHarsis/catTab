@@ -10,10 +10,10 @@ class CfgPatches {
         name = COMPONENT_NAME;
         units[] = {  };
         weapons[] = {
-            "ItemcTab",
-            "ItemAndroid",
-            "ItemMicroDAGR",
-            "ItemcTabHCam"
+            QITEM_TABLET,
+            QITEM_ANDROID,
+            QITEM_MICRODAGR,
+            QITEM_HCAM
         };
         requiredVersion = REQUIRED_VERSION;
         requiredAddons[] = {"ctab_core"};

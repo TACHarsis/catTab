@@ -24,11 +24,12 @@ private _categoryMicroDAGR = LLSTRING(General_Category_MicroDAGR);
 private _categoryTAD = LLSTRING(General_Category_TAD);
 private _categoryFBCB2 = LLSTRING(General_Category_FBCB2);
 private _categoryTablet = LLSTRING(General_Category_Tablet);
+
 [
     _categoryMod,
     QGVAR(ifMain),
     [LLSTRING(Keybind_Iface_Main), LLSTRING(Keybind_Iface_Main_Hint)],
-    { [DEVICE_KEY_ORDER_MAIN] call FUNC(onIfButtonPressed) },
+    {[DEVICE_KEY_ORDER_MAIN] call FUNC(onIfButtonPressed)},
     "",
     [DIK_H, [false, false, false]]
 ] call cba_fnc_addKeybind;
@@ -37,7 +38,7 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     _categoryMod,
     QGVAR(ifSecondary),
     [LLSTRING(Keybind_Iface_Secondary), LLSTRING(Keybind_Iface_Secondary_Hint)],
-    { [DEVICE_KEY_ORDER_SECONDARY] call FUNC(onIfButtonPressed) },
+    {[DEVICE_KEY_ORDER_SECONDARY] call FUNC(onIfButtonPressed)},
     "",
     [DIK_H, [false, true, false]]
 ] call cba_fnc_addKeybind;
@@ -46,84 +47,86 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     _categoryMod,
     QGVAR(ifTertiary),
     [LLSTRING(Keybind_Iface_Tertiary), LLSTRING(Keybind_Iface_Tertiary_Hint)],
-    { [DEVICE_KEY_ORDER_TERTIARY] call FUNC(onIfButtonPressed) },
+    {[DEVICE_KEY_ORDER_TERTIARY] call FUNC(onIfButtonPressed)},
     "",
     [DIK_H, [false, false, true]]
 ] call cba_fnc_addKeybind;
-//TODO: These direct shortcuts do not check for presence of the necessary items or vehicles
-//      This is fine for now, but needs to be fixed eventually
+
 [
     [_categoryMod, _categoryAndroid],
     QGVAR(android_dlg),
     [LLSTRING(Keybind_Toggle_Android_Dlg), LLSTRING(Keybind_Toggle_Android_Dlg_Hint)],
-    { [QGVARMAIN(Android_dlg)] call FUNC(toggleInterface) },
+    {[QGVARMAIN(Android_dlg), QITEM_ANDROID] call FUNC(toggleInterface)},
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
-
 [
     [_categoryMod, _categoryAndroid],
     QGVAR(android_dsp),
     [LLSTRING(Keybind_Toggle_Android_Dsp), LLSTRING(Keybind_Toggle_Android_Dsp_Hint)],
-    { [QGVARMAIN(Android_dsp)] call FUNC(toggleInterface) },
+    {[QGVARMAIN(Android_dsp), QITEM_ANDROID] call FUNC(toggleInterface)},
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
+
 [
     [_categoryMod, _categoryMicroDAGR],
     QGVAR(microDAGR_dlg),
     [LLSTRING(Keybind_Toggle_microDAGR_Dlg), LLSTRING(Keybind_Toggle_microDAGR_Dlg_Hint)],
-    { [QGVARMAIN(microDAGR_dlg)] call FUNC(toggleInterface) },
+    {[QGVARMAIN(microDAGR_dlg), QITEM_MICRODAGR] call FUNC(toggleInterface)},
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
-
 [
     [_categoryMod, _categoryMicroDAGR],
     QGVAR(microDAGR_dsp),
     [LLSTRING(Keybind_Toggle_microDAGR_Dsp), LLSTRING(Keybind_Toggle_microDAGR_Dsp_Hint)],
-    { [QGVARMAIN(microDAGR_dsp)] call FUNC(toggleInterface) },
-    "",
-    KEYBIND_NULL
-] call cba_fnc_addKeybind;
-[
-    [_categoryMod, _categoryTAD],
-    QGVAR(TAD_dlg),
-    [LLSTRING(Keybind_Toggle_TAD_Dlg), LLSTRING(Keybind_Toggle_TAD_Dlg_Hint)],
-    { [QGVARMAIN(TAD_dlg)] call FUNC(toggleInterface) },
+    {[QGVARMAIN(microDAGR_dsp), QITEM_MICRODAGR] call FUNC(toggleInterface)},
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
 
 [
     [_categoryMod, _categoryTAD],
-    QGVAR(TAD_dsp),
-    [LLSTRING(Keybind_Toggle_microDAGR_Dsp), LLSTRING(Keybind_Toggle_TAD_Dsp_Hint)],
-    { [QGVARMAIN(TAD_dsp)] call FUNC(toggleInterface) },
+    QGVAR(TAD_dlg),
+    [LLSTRING(Keybind_Toggle_TAD_Dlg), LLSTRING(Keybind_Toggle_TAD_Dlg_Hint)],
+    {[QGVARMAIN(TAD_dlg), "", QSETTINGS_TAD] call FUNC(toggleInterface)},
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
+[
+    [_categoryMod, _categoryTAD],
+    QGVAR(TAD_dsp),
+    [LLSTRING(Keybind_Toggle_TAD_Dsp), LLSTRING(Keybind_Toggle_TAD_Dsp_Hint)],
+    {
+        [QGVARMAIN(TAD_dsp), "", QSETTINGS_TAD] call FUNC(toggleInterface)},
+    "",
+    KEYBIND_NULL
+] call cba_fnc_addKeybind;
+
 [
     [_categoryMod, _categoryFBCB2],
     QGVAR(FBCB2_dlg),
     [LLSTRING(Keybind_Toggle_FBCB2_Dlg), LLSTRING(Keybind_Toggle_FBCB2_Dlg_Hint)],
-    { [QGVARMAIN(FBCB2_dlg)] call FUNC(toggleInterface) },
+    {[QGVARMAIN(FBCB2_dlg), "", QSETTINGS_FBCB2] call FUNC(toggleInterface)},
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
+
 [
     [_categoryMod, _categoryTablet],
     QGVAR(Tablet_dlg),
     [LLSTRING(Keybind_Toggle_Tablet_Dlg), LLSTRING(Keybind_Toggle_Tablet_Dlg_Hint)],
-    { [QGVARMAIN(Tablet_dlg)] call FUNC(toggleInterface) },
+    {[QGVARMAIN(Tablet_dlg), QITEM_TABLET] call FUNC(toggleInterface)},
     "",
     KEYBIND_NULL
 ] call cba_fnc_addKeybind;
+
 [
     _categoryMod,
     QGVAR(zoomIn),
     [LLSTRING(Keybind_ZoomIn), LLSTRING(Keybind_ZoomIn_Hint)],
-    { [true /*zoom in*/] call FUNC(caseButtonsOnZoomPressed) },
+    {[true /*zoom in*/] call FUNC(caseButtonsOnZoomPressed)},
     "",
     [DIK_PGUP, [true, true, false]],
     false
@@ -133,7 +136,7 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     _categoryMod,
     QGVAR(zoomOut),
     [LLSTRING(Keybind_ZoomOut), LLSTRING(Keybind_ZoomOut_Hint)],
-    { [false /*zoom out*/] call FUNC(caseButtonsOnZoomPressed) },
+    {[false /*zoom out*/] call FUNC(caseButtonsOnZoomPressed)},
     "",
     [DIK_PGDN, [true, true, false]],
     false
@@ -143,7 +146,7 @@ private _categoryTablet = LLSTRING(General_Category_Tablet);
     _categoryMod,
     QGVAR(toggleIfPosition),
     [LLSTRING(Keybind_Toggle_Iface_Position), LLSTRING(Keybind_Toggle_Iface_Position_Hint)],
-    { [] call FUNC(toggleIfPosition) },
+    {[] call FUNC(toggleIfPosition)},
     "",
     [DIK_HOME, [true, true, false]]
 ] call cba_fnc_addKeybind;

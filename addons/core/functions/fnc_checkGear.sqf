@@ -12,7 +12,7 @@
      Returns:
         BOOLEAN - If at least one of the items passed in parameter 1 was found or not
      Example:
-        _playerHasCtabItem = [player,["ItemcTab","ItemAndroid","ItemMicroDAGR"]] call Ctab_ui_fnc_checkGear;
+        _playerHasCtabItem = [player,[QITEM_TABLET,QITEM_ANDROID,QITEM_MICRODAGR]] call Ctab_ui_fnc_checkGear;
 */
 
 params ["_unit", "_items"];

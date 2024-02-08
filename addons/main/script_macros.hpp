@@ -45,3 +45,12 @@
 #define ONLINE          1
 #define DESTROYED       2
 #define LOST            3
+
+#define ITEM_TABLET     ItemCtab
+#define QITEM_TABLET    QUOTE(ITEM_TABLET)
+#define ITEM_ANDROID    ItemAndroid
+#define QITEM_ANDROID   QUOTE(ITEM_ANDROID)
+#define ITEM_MICRODAGR  ItemMicroDAGR
+#define QITEM_MICRODAGR QUOTE(ITEM_MICRODAGR)
+#define ITEM_HCAM       ItemcTabHCam
+#define QITEM_HCAM      QUOTE(ITEM_HCAM)

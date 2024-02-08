@@ -1,5 +1,3 @@
-#ifndef TAD_CONTROLS
-#define TAD_CONTROLS
 // Background definition
 #define TAD_BackgroundImage_px_W 2048 // width in pixels
 #define TAD_BackgroundImage_px_H 2048 // hight in pixels
@@ -782,5 +780,3 @@ class cTab_TAD_notification: cTab_RscText_TAD {
     colorText[] = COLOR_NAVYBLUE;
     colorBackground[] = COLOR_WHITE;
 };
-
-#endif

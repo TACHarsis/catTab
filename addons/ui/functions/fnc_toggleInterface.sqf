@@ -1,7 +1,10 @@
 #include "script_component.hpp"
+
 // _interfaceName can be nil, then it just falls through and closes the current interface on the way
-params ["_interfaceName"];
+params ["_interfaceName", ["_requiredItem", "", [""]], ["_requiredSeatEnabled", "", [""]]];
+
 if (GVAR(openStart)) exitWith {};
+
 private _vehicle = vehicle player;
 private _previousInterface = "";
 if !(isNil QGVAR(ifOpen)) then {
@@ -9,6 +12,10 @@ if !(isNil QGVAR(ifOpen)) then {
     // close other
     [] call FUNC(close);
 };
+
+if(_requiredItem isNotEqualTo "" && {!([player, [_requiredItem]] call EFUNC(core,checkGear))}) exitWith {};
+if(_requiredSeatEnabled isNotEqualTo "" && {!([Ctab_player, vehicle Ctab_player, _requiredSeatEnabled] call EFUNC(core,unitInEnabledVehicleSeat))}) exitWith {};
+
 if (_interfaceName != "" && _interfaceName != _previousInterface) exitWith {
     // queue the start up of the interface as we might still have one closing down
     [{

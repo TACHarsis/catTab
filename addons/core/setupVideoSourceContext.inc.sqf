@@ -23,7 +23,7 @@ private _hCamContext = createHashMap;
 _hCamContext set [QGVAR(fnc_getUnits), {private _all = allUnits + allDeadMen; _all arrayIntersect _all}];
 _hCamContext set [QGVAR(fnc_prepareUnit), {
     params ["_unit"];
-    private _hasCameraItem = [_unit, ["ItemcTabHCam"]] call FUNC(checkGear);
+    private _hasCameraItem = [_unit, [QITEM_HCAM]] call FUNC(checkGear);
     _unit setVariable [QGVAR(cameraItem), _hasCameraItem];
     private _hasCameraHelmet = _unit getVariable [QGVAR(cameraHelmet), false];
     // diag_log format ["%1 has item? [%2] has helmet? [%3]", _unit, _hasCameraItem, _hasCameraHelmet];

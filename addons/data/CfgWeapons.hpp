@@ -1,7 +1,7 @@
 class CfgWeapons {
     class CBA_MiscItem;
     class CBA_MiscItem_ItemInfo;
-    class ItemcTab: CBA_MiscItem {
+    class ITEM_TABLET: CBA_MiscItem {
         descriptionshort = "DK10 Rugged Tablet PC";
         descriptionuse = "<t color='#9cf953'>Use: </t>Show Commander's Tablet";
         displayname = "Rugged Tablet";
@@ -13,7 +13,7 @@ class CfgWeapons {
         };
         author = LEGACY_AUTHOR;
     };
-    class ItemAndroid: ItemcTab {
+    class ITEM_ANDROID: ItemcTab {
         descriptionshort = "GD300 Rugged Wearable Computer";
         descriptionuse = "<t color='#9cf953'>Use: </t>Show Android Based BFT";
         displayname = "GD300 Android";
@@ -25,7 +25,7 @@ class CfgWeapons {
         author = LEGACY_AUTHOR;
     };
 
-    class ItemMicroDAGR: ItemcTab {
+    class ITEM_MICRODAGR: ItemcTab {
         descriptionshort = "HNV-2930 Micro Defense Advanced GPS Receiver";
         descriptionuse = "<t color='#9cf953'>Use: </t>Show Android Based BFT";
         displayname = "MicroDAGR";
@@ -36,7 +36,7 @@ class CfgWeapons {
         };
         author = LEGACY_AUTHOR;
     };
-    class ItemcTabHCam: CBA_MiscItem {
+    class ITEM_HCAM: CBA_MiscItem {
         descriptionshort = "HD Helmet Mounted Camera";
         descriptionuse = "<t color='#9cf953'>Use: </t>Used to record and stream video";
         displayname = "Helmet Camera";

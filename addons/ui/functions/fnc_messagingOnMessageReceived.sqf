@@ -11,7 +11,7 @@ _msgRecipient setVariable [format [QGVARMAIN(messages_%1),_msgEncryptionKey],_ms
 if (_msgRecipient == Ctab_player && 
     _sender != Ctab_player && 
     {_playerEncryptionKey == _msgEncryptionKey} && 
-    {[Ctab_player,["ItemcTab","ItemAndroid"]] call EFUNC(core,checkGear)}) then {
+    {[Ctab_player,[QITEM_TABLET,QITEM_ANDROID]] call EFUNC(core,checkGear)}) then {
     playSound QGVARMAIN(phoneVibrate);
     if (!isNil QGVAR(ifOpen) && {[GVAR(ifOpen) select 1,QSETTING_MODE] call FUNC(getSettings) == QSETTING_MODE_MESSAGES}) then {
         [] call FUNC(messagingLoadGUI);

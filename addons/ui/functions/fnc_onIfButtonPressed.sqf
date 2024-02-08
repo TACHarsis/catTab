@@ -32,11 +32,11 @@ private _deviceTAD = [
     { [QGVARMAIN(TAD_dsp), QGVARMAIN(TAD_dlg)] select _this }
 ];
 private _deviceAndroid = [
-    { [_player, ["ItemAndroid"]] call EFUNC(core,checkGear) },
+    { [_player, [QITEM_ANDROID]] call EFUNC(core,checkGear) },
     { [QGVARMAIN(Android_dsp), QGVARMAIN(Android_dlg)] select _this }
 ];
 private _deviceMicroDAGR = [
-    {[_player, ["ItemMicroDAGR"]] call EFUNC(core,checkGear)},
+    {[_player, [QITEM_MICRODAGR]] call EFUNC(core,checkGear)},
     //CC: If we also have a tablet, the microDAGR gets to draw cooler shit
     { [QGVARMAIN(microDAGR_dsp), QGVARMAIN(microDAGR_dlg)] select _this }
 ];
@@ -45,7 +45,7 @@ private _deviceFBCB2 = [
     { QGVARMAIN(FBCB2_dlg) }
 ];
 private _deviceTablet = [
-    {[_player, ["ItemcTab"]] call EFUNC(core,checkGear)},
+    {[_player, [QITEM_TABLET]] call EFUNC(core,checkGear)},
     { QGVARMAIN(Tablet_dlg) }
 ];
 //CC: Main order: TAD dsp, Android dsp, DAGR dsp, FBCB2 Vehicle, Tablet

@@ -1,6 +1,3 @@
-#ifndef MICRODAGR_CONTROLS
-#define MICRODAGR_CONTROLS
-
 // Background definition
 #define MICRODAGR_BackgroundImage_px_W 2048 // width in pixels
 #define MICRODAGR_BackgroundImage_px_H 2048 // hight in pixels
@@ -296,5 +293,3 @@ class cTab_microDAGR_brightness: cTab_RscText_microDAGR {
     h = QUOTE(MICRODAGR_pixel2Screen_H(cTab_GUI_microDAGR_MAP_H));
     colorBackground[] = COLOR_TRANSPARENT;
 };
-
-#endif

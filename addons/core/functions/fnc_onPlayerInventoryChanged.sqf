@@ -31,9 +31,9 @@ private _itemsToCheck = (_newPlayerInventory select 17) + (_newPlayerInventory s
 
 // see if we still have the correct device on us
 private _playerLostDevice = 
-    (_displayName == QGVARMAIN(Tablet_dlg) && !("ItemcTab" in _itemsToCheck)) ||
-    (_displayName in [QGVARMAIN(Android_dlg),QGVARMAIN(Android_dsp)] && ("ItemAndroid" in _itemsToCheck)) ||
-    (_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)] && !("ItemMicroDAGR" in _itemsToCheck));
+    (_displayName == QGVARMAIN(Tablet_dlg) && !(QITEM_TABLET in _itemsToCheck)) ||
+    (_displayName in [QGVARMAIN(Android_dlg),QGVARMAIN(Android_dsp)] && (QITEM_ANDROID in _itemsToCheck)) ||
+    (_displayName in [QGVARMAIN(microDAGR_dsp),QGVARMAIN(microDAGR_dlg)] && !(QITEM_MICRODAGR in _itemsToCheck));
 
 if (_playerLostDevice) then {
     [

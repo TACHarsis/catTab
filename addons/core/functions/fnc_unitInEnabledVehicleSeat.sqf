@@ -16,7 +16,7 @@
      Returns:
         BOOLEAN - True if unit is in the front-section of a cTab enabled vehicle, false if not
      Example:
-        _playerHasCtabItem = [player,["ItemcTab","ItemAndroid","ItemMicroDAGR"]] call Ctab_ui_fnc_unitInEnabledVehicleSeat;
+        _playerHasCtabItem = [player,[QITEM_TABLET,QITEM_ANDROID,QITEM_MICRODAGR]] call Ctab_ui_fnc_unitInEnabledVehicleSeat;
 */
 
 params ["_unit", "_vehicle", "_type"];

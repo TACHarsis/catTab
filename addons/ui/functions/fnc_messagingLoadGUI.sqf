@@ -39,7 +39,7 @@ uiNamespace setVariable [QGVAR(msgPlayerList), _plrList];
 //TODO: messages are not compatible with the whole new setup yet?
 {
     //TODO: that "isPlayer" check, was that me or was the old code? Cause it makes no sense to check if we're *the* player, not *any* human player
-    if ((side _x in _validSides) /*&& {isPlayer _x}*/ && {[_x, ["ItemcTab", "ItemAndroid"]] call EFUNC(core,checkGear)}) then {
+    if ((side _x in _validSides) /*&& {isPlayer _x}*/ && {[_x, [QITEM_TABLET, QITEM_ANDROID]] call EFUNC(core,checkGear)}) then {
         private _index = _plrlistControl lbAdd format ["%1:%2 (%3)", groupId group _x, groupId _x, name _x];
         _plrlistControl lbSetData [_index,str _x];
     };

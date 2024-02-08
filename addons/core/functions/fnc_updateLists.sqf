@@ -30,7 +30,7 @@ GVARMAIN(BFTMembers) --- GROUP MEMBERS
 */
 private _bftMembers = (units Ctab_player) select {
     (_x != Ctab_player) &&
-    { [_x, ["ItemcTab", "ItemAndroid", "ItemMicroDAGR"]] call FUNC(checkGear) }
+    { [_x, [QITEM_TABLET, QITEM_ANDROID, QITEM_MICRODAGR]] call FUNC(checkGear) }
 };
 
 if !(GVARMAIN(BFTMembers) isEqualTo _bftMembers) then {
@@ -50,12 +50,12 @@ private _bftGroups = []; // other groups
         private _group = _x;
         if (_group != _playerGroup) then {
             _ctabLeader = objNull;
-            if ([leader _group,["ItemcTab", "ItemAndroid"]] call FUNC(checkGear)) then {
+            if ([leader _group,[QITEM_TABLET, QITEM_ANDROID]] call FUNC(checkGear)) then {
                 _ctabLeader = leader _group;
             } else {
                 {
                     private _unit = _x;
-                    if ([_unit,["ItemcTab", "ItemAndroid"]] call FUNC(checkGear)) then {
+                    if ([_unit,[QITEM_TABLET, QITEM_ANDROID]] call FUNC(checkGear)) then {
                         _ctabLeader = _unit;
                     };
                 } foreach units _group;

@@ -5,12 +5,12 @@ private _fnc_getDeviceActions = {
         [
             "",
             QGVARMAIN(Android_dlg),     QGVAR(deviceAndroid_dlg),   [LLSTRING(ACE_Open_Android_Dlg)],
-            "ItemAndroid"
+            QITEM_ANDROID
         ],
         [
             QGVAR(deviceAndroid_dlg),
             QGVARMAIN(Android_dsp),     QGVAR(deviceAndroid_dsp),   [LLSTRING(ACE_Open_Android_Dsp), LLSTRING(ACE_Close_Android_Dsp)],
-            "ItemAndroid"
+            QITEM_ANDROID
         ],
         [
             "",
@@ -20,17 +20,17 @@ private _fnc_getDeviceActions = {
         [
             "",
             QGVARMAIN(microDAGR_dlg),   QGVAR(deviceMicroDAGR_dlg), [LLSTRING(ACE_Open_MicroDAGR_Dlg)],
-            "ItemMicroDAGR"
+            QITEM_MICRODAGR
         ],
         [
             QGVAR(deviceMicroDAGR_dlg),
             QGVARMAIN(microDAGR_dsp),   QGVAR(deviceMicroDAGR_dsp), [LLSTRING(ACE_Open_MicroDAGR_Dsp), LLSTRING(ACE_Close_MicroDAGR_Dsp)],
-            "ItemMicroDAGR"
+            QITEM_MICRODAGR
         ],
         [
             "",
             QGVARMAIN(Tablet_dlg),     QGVAR(deviceTablet_dlg),    [LLSTRING(ACE_Open_Tablet_Dlg)],
-            "ItemcTab"
+            QITEM_TABLET
         ],
         [
             "",
@@ -40,7 +40,7 @@ private _fnc_getDeviceActions = {
         [
             QGVAR(deviceTAD_dlg),
             QGVARMAIN(TAD_dsp),        QGVAR(deviceTAD_dsp),       [LLSTRING(ACE_Open_TAD_Dsp), LLSTRING(ACE_Close_TAD_Dsp)],
-        "", _fnc_conditionTAD
+            "", _fnc_conditionTAD
         ]
     ] apply {
         _x params ["_parent", "_interfaceName", "_id", "_texts", "_item", ["_condition", {true}, [{}]]];
@@ -64,7 +64,7 @@ private _fnc_getDeviceActions = {
             {
                 params ["_target", "_player", "_params"];
                 _params params ["_ifaceName", "_item", "_condition", ""];
-                private _hasItem = (_item isEqualTO "") || { [player, [_item]] call EFUNC(core,checkGear) };
+                private _hasItem = (_item isEqualTO "") || {[player, [_item]] call EFUNC(core,checkGear)};
                 private _enabled = _hasItem && ([] call _condition);
                 _enabled
             },
@@ -85,7 +85,7 @@ private _cattabCategoryAction = [
         {
             params ["_target", "_player", "_params"];
             _params params ["_fnc_conditionFBCB2", "_fnc_conditionTAD"];
-            private _hasItem = [player, ["ItemAndroid", "ItemMicroDAGR", "ItemcTab"]] call EFUNC(core,checkGear);
+            private _hasItem = [player, [QITEM_ANDROID, QITEM_MICRODAGR, QITEM_TABLET]] call EFUNC(core,checkGear);
             private _enabled = _hasItem || { [] call _fnc_conditionFBCB2 } || { [] call _fnc_conditionTAD} ;
             _enabled
         },
