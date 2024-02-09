@@ -1,3 +1,9 @@
+
+Immediate bugs:
+* reopening tablet reopens collapsed video feeds
+* UAV names in fullscreen are cut off
+* Center map in UAV and HCAM mode does not center on selected feed
+
 Check:
 * selection/update loop is chaotic
 
