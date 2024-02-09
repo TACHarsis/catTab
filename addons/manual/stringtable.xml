@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project name="Ctab">
+    <Package name="Manual">
+        <!-- Category strings -->
+        <Key ID="STR_Ctab_Manual_General_Category_Mod">
+            <English>CatTab</English>
+        </Key>
+        <!-- Field Manual Entries -->
+        <Key ID="STR_Ctab_Manual_Hints_">
+            <English>CatTab</English>
+        </Key>
+
+        <!-- Example Category -->
+        <Key ID="STR_Ctab_Manual_Hints_Category_Examples">
+            <English>Examples</English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Examples_Tags_Title">
+            <English>Tags</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Examples_Tags_Short">
+            <English>All The Tags</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Examples_Tags_Description">
+            <English>
+Parameter Tags:%12
+%12
+%3 1%4: Small empty line:%1
+%3 2%4: %2 Bulletpoint%12
+%3 3 and 4%4: %3Highlight%4%12
+%3 5%4: &lt;t %5&gt;Warning color&lt;/t&gt;%12
+%3 6%4: &lt;t %6&gt;Blufor color&lt;/t&gt;%12
+%3 7%4: &lt;t %7&gt;Opfor color&lt;/t&gt;%12
+%3 8%4: &lt;t %8&gt;Independent Color:&lt;/t&gt;%12
+%3 9%4: &lt;t %9&gt;Civilian color&lt;/t&gt;%12
+%3 10%4: &lt;t %10&gt;Unknown color&lt;/t&gt;%12
+%3 11%4: %11Indent%12
+%3 12%4: %12Line break%12
+%3 13%4: %13%12
+%3 14%4: "%14"|"%16"%12
+%3 15%4: "%15"|"%17"%12</English>
+        </Key>
+
+        <!-- Changes Category -->
+        <Key ID="STR_Ctab_Manual_Hints_Category_Changes">
+            <English>Changes</English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Changes_ACE_Title">
+            <English>ACE Integration</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_ACE_Short">
+            <English>Ace's High</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_ACE_Description">
+        <!--%16 <ace interaction image-->
+            <English>
+If you are running CatTab with ACE, rejoice! For it is now ACE aware and integrated.%12
+%1
+%3Self-Interaction%4%12
+ACE Self-interaction now allows you to open any CatTab devices you have in your inventory. If you have duplicates you still only get one interaction item. If you are in a vehicle seat that has access to TAD or FBCB2, you will also get a self-interaction item for the respective device (might be changed to a normal interact later).%12
+%16%12
+%3Note:%4%1
+The basic interaction item, in this case %3MicroDAGR%4, will open the respective device as a %3Dialog%4, allowing you to interact with it.%12
+The child item %3Open/Close MicroDAGR OSD%4 will open (or close) the device as a passive OSD element.%12
+%1
+%3Pressing ace interaction keys while dialogs are opened will close them.%4%12
+%12
+%1
+%3Helmet Cam Vitals%4%12
+If you run the mod with ACE medical enabled, then the Helmet Cam video feed will show the units actual current heartrate and bloodpressure.%12
+Fancy, right?
+
+</English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Items_Title">
+            <English>Items</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Items_Short">
+            <English>Them Items</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Items_Description">
+            <!--%16 <android icon-->
+            <!--%17 <tablet icon-->
+            <!--%18 <hcam icon-->
+            <!--%19 <microdagr icon-->
+            <English>
+A few things changed about the related items.%12
+%12
+%18%3Helmet Cam:%4%12
+Helmet camera is a regular item instead of a mine detector.%12
+%17%3Tablet:%4%12
+Tablet mass has been significantly reduced (56 to 20) as to not take up a whole backpack anymore.
+            </English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Backgrounds_Title">
+            <English>Custom Backgrounds</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Backgrounds_Short">
+            <English>Wait what?</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Backgrounds_Description">
+            <!-- %16 <tablet settings (backgrounds)-->
+            <!-- %17 <android settings (backgrounds)-->
+            <!-- %18 <tablet background-->
+            <English>
+The background images of %3Android%4 and %3Tablet%4 can now be adjusted to your liking.%12
+%1
+Under the %3CatTab%4 Addon Settings you can find the background options for both the Android and Tablet:%12
+%1
+%16%11%17%12
+%1
+Change the %3Background Mode%4 between%1
+%2%3Preset%4 - Choose a preset from the preset dropdown.%12
+%2%3Color%4 - Set a background color from the color dialog.%12
+%2%3Custom%4 - Select a custom image (see notes below) by filename.%12
+%12
+%1
+%3Custom Background Notes:%4%12
+%18%12
+In the mod's directory, there is a folder called %3custom_background%4. This is where the mod will look for the filenames you put into the custom image text box.%12
+You can create subfolders, I guess.%12
+%3File format%4 for background images is either %3.paa%4 or %3.jpg%4. Aspect ratio is different based on file format. For %3.jpg%4 you can use the actual aspect ratio of the background, which by default has a resolution of %12
+%3 1341x993%4 for the %3Tablet%4 and%12
+%3 1068x622%4 for the %3Android%4 respectively. Actual resolution doesn't matter, but ratio does.%12
+For %3.paa%4 it's a bit more complicated, as that file format has to have its sides at base2. Since that would get squashed and distorted when being displayed at the tablet's aspect ratio, you should start out with an image at the correct ratio and then resize/distort it to fit a base2 format, so it shows correctly in the end.%12
+%12
+%3Note:%4 While you can add files to the folder while the game is running and they will be found correctly, you cannot change an image file during runtime, as the game will already have it cached.
+</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Layout_Title">
+            <English>UI Layouts</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Layout_Short">
+            <English>Editorial</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Layout_Description">
+            <!-- %16 <layout options (backgrounds)-->
+            <English>
+The %3OSD location%4 of OSD enabled devices %3Android%4, %3TAD%4 and %3MicroDAGR%4 have both their primary and secondary locations on screen able to be changed through the games %3Layout options%4 accessible from the pause menu under %3Options %15%15 Game%4.%12
+%16%12
+%1
+%3Note:%4 If the respective device is on screen during a change of layout location, you have to close and reopen the device in OSD mode for the changes to take effect. You do NOT have to restart the game.%12
+</English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Keybinds_Title">
+            <English>Keybinds</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Keybinds_Short">
+            <English>The keys that bind</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Keybinds_Description">
+            <English>
+Pretty straight forward, actually. There are customizable %3Keybinds%4 now!%12
+%1
+Besides the keybinds you already know (Toggling %3primary%4, %3secondary%4 and %3tertiary%4 devices, %3Zooming%4 and %3switching OSD locations%4),%12
+there are now also keybinds to %3Toggle each of the devices%4 in Dialog and OSD mode respectively.
+</English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Misc_Title">
+            <English>Miscellaneous</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Misc_Short">
+            <English>Things I couldn't bother to get screens for</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Changes_Misc_Description">
+            <English>
+Other changes:%12
+%2 %3Marker Menu:%4 - Now goes up to company level
+</English>
+        </Key>
+
+        <!-- Tablet Category -->
+        <Key ID="STR_Ctab_Manual_Hints_Category_Tablet">
+            <English>Tablet</English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_Changes_Title">
+            <English>What&apos;s new</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_Changes_Short">
+            <English>Pussycat?</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_Changes_Description">
+            <English>
+The %3Tablet%4 has seen the most comprehensive changes immediately visible to the end user. That's you.%12
+%1
+These changes include:%12
+%2 %3Less Clutter:%4 - Removed a bunch of interface elements that had no use.%1
+%2 %3More Buttons:%4 - More of the buttons on the device now do sth.%1
+%2 %3Video Feeds:%4 - Video feeds are no longer confined to tiny windows and actually have correct aspect ratios.%1
+%2 %3More Video Feeds:%4 - You can now have up to 6 video feeds running at the same time for each the UAV and Helmet Cam screen.%1
+%2 %3More Settings:%4 - You can set several options for those video feeds, including aspect ratio method, resolution and count.%1
+%2 %3Bigger Maps:%4 - The maps on the UAV and Helmet Cam screens are now fullscreen (to the tablet).%1
+%2 %3Select Video Sources:%4 - Video feed source can now be selected on the map itself, RTS-Style, including keyboard shortcuts.%1
+%2 %3Diegetic Fullscreen:%4 - Fullscreen video of feeds is now actually fullscreen on the tablet (and toggle via double click).%1
+%2 %3Vision Modes:%4 - You can change the respective cam's vision mode directly on the feed (via rightclick).%1
+%2 %3Collapsable Feeds:%4 - Since you can have up to %3 6%4 video feeds active at the same time, they are collapsible.%1
+%2 %3UAV Cam Lock Controls:%4 - Also in RTS-Style is the new handling of UAV Camera locks.%1
+%2 %3UAV Cam Vision Cone:%4 - Know what your UAVs are looking at and where they're locked to.%1
+%2 %3Helmet Cam Vitals:%4 - Helmet Cam view will now show the vitals of the respective unit. With ACE medical integration.%1
+</English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_Settings_Title">
+            <English>Settings</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_Settings_Short">
+            <English>The setter the better</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_Settings_Description">
+            <!-- %16 <tablet settings (feeds)-->
+            <!-- %17 <tablet settings (backgrounds)-->
+            <English>
+Besides the %3Custom Background%4 settings as explained in their own section above there are settings for the video feeds on the tablet:%12
+%19%12
+%1
+%2 %3Number of Video Feeds:%4 - Rather straight forward. Takes immediate effect and can slightly vary the size of the video feeds.%12
+%2 %3Resolution:%4 - Both in map view and fullscreen, set your desired resolution. On older machines or with a lot of simultaneous views, lower resolutions might help. Also affect by your PIP settings.%12
+%2 %3Aspect Ratio Mode:%4 - Both in map view and fullscreen, change whether you want the video scaled down to fit in your monitor's aspect ratio (it's an engine thing), or zoom and crop the video to make use of as much real estate as possible while sacrificing a bit of periphery vision.%12
+</English>
+        </Key>
+
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_VideoFeeds_View_Title">
+            <English>Video Feed Views</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_VideoFeeds_View_Short">
+            <English>See through a million eyes</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_VideoFeeds_View_Description">
+            <!--%16 <screen UAV-->
+            <!--%17 <screen HCAM-->
+            <!--%18 <Fulscreen HCAM-->
+            <English>
+%3UAV Feed View%4%12
+%1
+%16%17%12
+%12
+%1
+New elements:%12
+%2 %3Feed Selection:%4 - Dropdown to select available (though maybe offline or destroyed) video feeds of the respective category.
+%2 %3Feed:%4 - Video feed frame of selected video feed source. %3Double Click%4 to enter/exit fullscreen mode. %3Right click%4 to change vision mode. %3Left Click%4 to select assocated unit.
+%2 %3Handle:%4 - Use to collapse or restore video frames
+%2 %3View Cone:%4 - For UAVs you get a viewcone and focus icon (also a lock icon) to give you an idea of where they're looking at while you have them selected. Color will be dark green if view goes above the horizon, light green if it hits ground.
+%2 %3Focus:%4 - Point roughly in the center of the UAV camera's vision port. If beyond 2Km will not be accurate and turn dark green.
+%2 %3Select on Map:%4 - Use mouse to over over and select units with %3Left Click%4. A %3Left click%4 on empty space deselects unit. %3Double click%4 does not deselect unit, but opens marker and lock menu.
+%12
+%3Fullscreen%4%12
+%1
+%18%12
+%12
+%1
+New elements:%12
+%2 %3Feed Selection:%4 - Dropdown to select available (though maybe offline or destroyed) video feeds of the respective category. A change here will not change the associated unit for the feed you turned fullscreen!
+%3Double Click%4 into screen to leave fullscreen.%12
+%12
+%Feed Selection and Shortcuts%4:%12
+%1
+Aside from the familiar RTS selection method of pointing your mouse and using %3Left Click%4 on a unit to %3select%4 it, or on an empty space to %3deselect%4 it, there are keyboard shortcuts to un/assign and manipulate video feeds without using the mouse.%12
+%2 %3Assign to Feed:%4 - While having no unit selected and hovering the mouse over a selectable unit on the map, you can press %3CTRL+1-6%4 to select it and assign it to the respective Feed Slot, overwriting previous assignments. If you already have a unit selected it will be assigned to the Feed Slot instead, ignoring any unit you may be hovering over.
+%2 %3Unassign from Feed:%4 - While having no unit selected, pressing %3CTRL%4 and the respective Feed Slot number will unassign the respective slot. Hovered over units are ignored.
+%2 %Toggle Feed:%4 - Pressing %ALT+1-6%4 will collapse or restore the respective Feed Frame.
+%2 %3Select assigned Unit:%4 - Pressing %1-6%4 with no unit selected will select the unit assigned to the respective Feed Slot, if any. If you have a unit selected and press the number of the assigned slot, it will %3Toggle Follow Mode%4 for that unit. Can also be done via button on the frame of the tablet.
+
+</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_UAV_View_Title">
+            <English>UAV Cam Lock</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_UAV_View_Short">
+            <English>Basically an RTS now</English>
+        </Key>
+        <Key ID="STR_Ctab_Manual_Hints_Tablet_UAV_View_Description">
+            <!-- %16 <no lock-->
+            <!-- %17 <lock menu-->
+            <!-- %18 <lock over horizon-->
+            <!-- %19 <successful lock-->
+            <English>
+On the UAV screen you have the additional option of %3locking/unlocking%4 the UAVs' cameras.%12
+%3Select a UAV%4%12
+%16%12
+%1
+With the UAV selected, you can now see the UAV's view cone and focus icon. The focus icon will roughly point to the center of the UAVs view port. If the focus is not a point within 2km of the UAV, it will turn dark green to indicate that it is %3over-the-horizon%4.%12
+If the focus point hits ground or any other obstacle within 2km, it will turn light green and the focus point will be more or less accurate.%12
+%1
+%3Choose Lock Target%4%12
+%17%12
+%1
+With a UAV selected, double click on a spot on the map where you would like to %3lock%4 the UAVs camera to. The marker menu will open up and you will find the option of %3Lock UAV Cam%4 in there.%12
+Select it.%12
+%12
+%3Observe and Marvel%4%12
+%18%11%19%12
+%1
+A new marker will appear on the map where you set the lock to, with a line extending from the UAV towards it. This is the %3Lock Target%4 that the UAV will do its best to keep in focus.%12
+While the UAV is selected, the Lock Target and the line connecting it to the UAV will be red. For deselected UAVs the Lock Target and line will be white.%12
+%12
+To %3release%4 a Lock Target, hover over it with the mouse and press %3DEL%4.
+</English>
+        </Key>
+    </Package>
+</Project>

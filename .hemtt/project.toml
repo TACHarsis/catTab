@@ -13,6 +13,7 @@ include = [
     "custom_backgrounds/*.paa",
     "custom_backgrounds/*.jpg",
     "*.paa",
+    "addon/manual/images/*.jpg",
 ]
 
 exclude = [
