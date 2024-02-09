@@ -62,7 +62,7 @@
             <English>Custom Image</English>
         </Key>
         <Key ID="STR_Ctab_UI_Setting_Android_Desktop_Custom_Image_Hint">
-            <English>Set path and filename of custom image to use in custom mode</English>
+            <English>Set filename of custom image relative to custom_backgrounds folder</English>
         </Key>
         <!--                        Settings: Tablet-->
         <Key ID="STR_Ctab_UI_Setting_Tablet_Number_Feeds">

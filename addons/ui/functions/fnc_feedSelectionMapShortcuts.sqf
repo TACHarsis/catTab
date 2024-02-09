@@ -57,18 +57,18 @@ switch (true) do {
         if (!isNull _selectedSource) then { // we have sth selected already
             if (_selectedSource isNotEqualTo _assignedSource) then { // it's different from the source in the slot
                 //setting new selected source
-                ["CTRL+%1 pressed. Saving selected %2 to frame %3", keyName _dikCode, _selectedSource, _slotIdx] call FUNCMAIN(debugLog);
+                // ["CTRL+%1 pressed. Saving selected %2 to frame %3", keyName _dikCode, _selectedSource, _slotIdx] call FUNCMAIN(debugLog);
                 [_selectedSourceNetID] call _fnc_assignToFrameSlot;
             };
         } else { // we have nothing selected right now
             if !(isNull _closestSource) then { // there is a valid source nearby
                 //select and assign to slot
-                ["CTRL+%1 pressed. Saving nearby %2 to frame %3", keyName _dikCode, _closestSource, _slotIdx] call FUNCMAIN(debugLog);
+                // ["CTRL+%1 pressed. Saving nearby %2 to frame %3", keyName _dikCode, _closestSource, _slotIdx] call FUNCMAIN(debugLog);
                 [_closestFeedSourceNetID] call _fnc_select;
                 [_closestFeedSourceNetID] call _fnc_assignToFrameSlot;
             } else { // there no valid source nearby
                 // deselect current soure and unassign slot
-                ["CTRL+%1 pressed. Nothing selected nor nearby. Deselecting frame %2", keyName _dikCode, _slotIdx] call FUNCMAIN(debugLog);
+                // ["CTRL+%1 pressed. Nothing selected nor nearby. Deselecting frame %2", keyName _dikCode, _slotIdx] call FUNCMAIN(debugLog);
                 [] call _fnc_select;
                 [] call _fnc_assignToFrameSlot;
             };
@@ -85,14 +85,14 @@ switch (true) do {
         if !(isNull _assignedSource) then {
             if(_assignedSource isNotEqualTo _selectedSource) then { // we do not have it selected right now
                 //recall respective source
-                ["Pressed %1, selecting %2 from slot %3.", keyName _dikCode, _assignedSource, _slotIdx] call FUNCMAIN(debugLog);
+                // ["Pressed %1, selecting %2 from slot %3.", keyName _dikCode, _assignedSource, _slotIdx] call FUNCMAIN(debugLog);
                 [_assignedSourceNetID] call _fnc_select;
             } else { // we already have it selected, so toggle follow
                 [] call _fnc_toggleFollow;
             };
         } else {
             // deselect current source
-            ["Pressed %1, but there was no source assigned to slot %2.", keyName _dikCode, _slotIdx] call FUNCMAIN(debugLog);
+            // ["Pressed %1, but there was no source assigned to slot %2.", keyName _dikCode, _slotIdx] call FUNCMAIN(debugLog);
             [] call _fnc_select;
         };
     };

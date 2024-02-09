@@ -16,6 +16,18 @@
 // Returns:
 //  Returns the current keybind for the action [Array]
 
+// Additional DIK codes usable with addKeybind
+//      0xFA    :   Custom user action 1            0x104   :  Custom user action 11        0xF0    :   Left mouse button
+//      0xFB    :   Custom user action 2            0x105   :  Custom user action 12        0xF1    :   Right mouse button
+//      0xFC    :   Custom user action 3            0x106   :  Custom user action 13        0xF2    :   Middle mouse button
+//      0xFD    :   Custom user action 4            0x107   :  Custom user action 14        0xF3    :   Mouse #4
+//      0xFE    :   Custom user action 5            0x108   :  Custom user action 15        0xF4    :   Mouse #5
+//      0xFF    :   Custom user action 6            0x109   :  Custom user action 16        0xF5    :   Mouse #6
+//      0x100   :  Custom user action 7             0x10A   :  Custom user action 17        0xF6    :   Mouse #7
+//      0x101   :  Custom user action 8             0x10B   :  Custom user action 18        0xF7    :   Mouse #8
+//      0x102   :  Custom user action 9             0x10C   :  Custom user action 19        0xF8    :   Mouse wheel up
+//      0x103   :  Custom user action 10            0x10D   :  Custom user action 20        0xF9    :   Mouse wheel down
+
 #define KEYBIND_NULL [0, [false, false, false]]
 
 private _categoryMod = LLSTRING(General_Category_Mod);

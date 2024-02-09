@@ -449,7 +449,7 @@ if (isNil "_mode") then {
                             };
                         };
                     };
-                    // ---------- FULLSCREEN UAV GUNNER -----------
+                    // ---------- FULLSCREEN UAV -----------
                     case (QSETTING_MODE_CAM_UAV_FULL) : {
                         private _uavNetID = [_displayName, QSETTING_CAM_UAV_SELECTED] call FUNC(getSettings);
                         private _uav = _uavNetID call BIS_fnc_objectFromNetId;
@@ -457,9 +457,9 @@ if (isNil "_mode") then {
                             [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_UAV]]] call FUNC(setSettings);
                         };
 
-                        private _deleteEHID = _uav getVariable [QGVAR(fullscreenDeletedEHID), -1];
+                        private _deletedEHID = _uav getVariable [QGVAR(fullscreenDeletedEHID), -1];
                         if(_deletedEHID == -1) then {
-                            _deleteEHID = _uav addEventHandler ["Deleted", {
+                            _deletedEHID = _uav addEventHandler ["Deleted", {
                                 params ["_uav"];
                                 _uav removeEventHandler _thisEventHandler;
                                 _uav setVariable [QGVAR(fullscreenDeletedEHID), nil];
@@ -469,7 +469,7 @@ if (isNil "_mode") then {
                                     [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_UAV]]] call FUNC(setSettings);
                                 };
                             }];
-                            _uav setVariable [QGVAR(fullscreenDeletedEHID), _deleteEHID];
+                            _uav setVariable [QGVAR(fullscreenDeletedEHID), _deletedEHID];
                         };
 
                         [VIDEO_FEED_TYPE_UAV] call FUNC(deleteVideoSourceCam);
@@ -494,7 +494,7 @@ if (isNil "_mode") then {
                             QSETTING_CAM_UAV_FULL
                         ] spawn FUNC(createVideoSourceCam);
                     };
-                    // ---------- FULLSCREEN HCAM CAM -----------
+                    // ---------- FULLSCREEN HCAM -----------
                     case (QSETTING_MODE_CAM_HCAM_FULL) : {
                         private _unitNetID = [_displayName, QSETTING_CAM_HCAM_SELECTED] call FUNC(getSettings);
                         private _unit = _unitNetID call BIS_fnc_objectFromNetId;
@@ -502,9 +502,9 @@ if (isNil "_mode") then {
                             [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_HCAM]]] call FUNC(setSettings);
                         };
 
-                        private _deleteEHID = _unit getVariable [QGVAR(fullscreenDeletedEHID), -1];
+                        private _deletedEHID = _unit getVariable [QGVAR(fullscreenDeletedEHID), -1];
                         if(_deletedEHID == -1) then {
-                            _deleteEHID = _unit addEventHandler ["Deleted", {
+                            _deletedEHID = _unit addEventHandler ["Deleted", {
                                 params ["_unit"];
                                 _unit removeEventHandler _thisEventHandler;
                                 _unit setVariable [QGVAR(fullscreenDeletedEHID), nil];
@@ -514,7 +514,7 @@ if (isNil "_mode") then {
                                     [QGVARMAIN(Tablet_dlg), [[QSETTING_MODE, QSETTING_MODE_CAM_HCAM]]] call FUNC(setSettings);
                                 };
                             }];
-                            _unit setVariable [QGVAR(fullscreenDeletedEHID), _deleteEHID];
+                            _unit setVariable [QGVAR(fullscreenDeletedEHID), _deletedEHID];
                         };
 
                         [VIDEO_FEED_TYPE_UAV] call FUNC(deleteVideoSourceCam);
