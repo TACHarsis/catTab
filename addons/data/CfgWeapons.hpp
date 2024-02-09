@@ -13,7 +13,7 @@ class CfgWeapons {
         };
         author = LEGACY_AUTHOR;
     };
-    class ITEM_ANDROID: ItemcTab {
+    class ITEM_ANDROID: ITEM_TABLET {
         descriptionshort = "GD300 Rugged Wearable Computer";
         descriptionuse = "<t color='#9cf953'>Use: </t>Show Android Based BFT";
         displayname = "GD300 Android";
@@ -25,7 +25,7 @@ class CfgWeapons {
         author = LEGACY_AUTHOR;
     };
 
-    class ITEM_MICRODAGR: ItemcTab {
+    class ITEM_MICRODAGR: ITEM_TABLET {
         descriptionshort = "HNV-2930 Micro Defense Advanced GPS Receiver";
         descriptionuse = "<t color='#9cf953'>Use: </t>Show Android Based BFT";
         displayname = "MicroDAGR";
