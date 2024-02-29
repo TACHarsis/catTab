@@ -19,38 +19,63 @@
 */
 
 params ["_type", ["_unitNetID", "", [""]], ["_camID", "", [""]]];
-// diag_log format ["Creating cam for %1", _unit];
-if(_camID isEqualTo "") exitWith {false};
+// WARNING ["Creating cam for %1", _unit];
+if(_camID isEqualTo "") exitWith {
+    WARNING_2("[VideoSourceCamCreation] Could not create Video Source Cam: missing camera ID. Type: %1, UnitNetID: %2",_type,_unitNetID);
+    (false)
+};
+
+
 private _context = GVAR(videoSourcesContext) get _type;
 private _slotSettings = _context get QGVAR(slotSettings);
 private _frameGroupCtrls = [] call (_context get QGVAR(fnc_getVideoSlotUIs));
 private _videoSourcesHash = _context get QGVAR(sourcesHash);
-private _videoSourceData = _videoSourcesHash getOrDefault [_unitNetID , []];
+private _videoSourceData = _videoSourcesHash getOrDefault [_unitNetID, []];
 
 private _slotSetting = _slotSettings getOrDefault [_camID, []];
-if(_slotSetting isEqualTo []) exitWith {false};
-_slotSetting params ["_slotIdx", "_slotSettingsName", "_slotIDC"];
+if(_slotSetting isEqualTo []) exitWith {
+    WARNING_2("[VideoSourceCamCreation] Could not create Video Source Cam: unable to retrieve slot setting. Type: %1, camera ID %2",_type,_camID);
+    (false)
+};
 
-if(count _frameGroupCtrls <= _slotIdx) exitWith {false};
+
+_slotSetting params ["_slotIdx", "_slotSettingsName", "_slotIDC"];
+if(count _frameGroupCtrls <= _slotIdx) exitWith {
+    WARNING_3("[VideoSourceCamCreation] Could not create Video Source Cam: slot index out of bounds. Type: %1, camera ID %2, slotIdx: %2",_type,_camID,_slotIdx);
+    (false)
+};
+
 
 // exit if requested data could not be found
-if(_videoSourceData isEqualTo []) exitWith {false};
+if(_videoSourceData isEqualTo []) exitWith {
+    WARNING_3("[VideoSourceCamCreation] Could not create Video Source Cam: video source data empty. Type: %1, camera ID %2, slotIdx: %2",_type,_camID,_slotIdx);
+    (false)
+};
+
 
 private _frameGroupCtrls = _frameGroupCtrls # _slotIdx;
-// diag_log format ["CreateVideo Source _frameGroupCtrls: %1", _frameGroupCtrls];
+// WARNING ["CreateVideo Source _frameGroupCtrls: %1", _frameGroupCtrls];
 
 _frameGroupCtrls params ["_frameGrpCtrl"];
-// diag_log format ["CreateVideo Source allVariables _frameGrpCtrl: %1", allVariables _frameGrpCtrl];
+// WARNING ["CreateVideo Source allVariables _frameGrpCtrl: %1", allVariables _frameGrpCtrl];
 private _contentGrpCtrl = _frameGrpCtrl getVariable QGVAR(contentGrpCtrl);
-// diag_log format ["CreateVideo Source _contentGrpCtrl: %1", _contentGrpCtrl];
+// WARNING ["CreateVideo Source _contentGrpCtrl: %1", _contentGrpCtrl];
 private _videoControllerCtrl = _contentGrpCtrl getVariable [QGVAR(feed_controllerCtrl), controlNull];
 private _videoCtrl = _contentGrpCtrl getVariable QGVAR(videoCtrl);
-// diag_log format ["CreateVideo Source _videoControllerCtrl: %1", _videoControllerCtrl];
+// WARNING ["CreateVideo Source _videoControllerCtrl: %1", _videoControllerCtrl];
 
-if(_videoControllerCtrl isEqualTo controlNull) exitWith {false};
-// diag_log format ["CreateVideo Source 6"];
-if(_videoCtrl isEqualTo controlNull) exitWith {false};
-// diag_log format ["CreateVideo Source 7"];
+if(_videoControllerCtrl isEqualTo controlNull) exitWith {
+    WARNING_3("[VideoSourceCamCreation] Could not create Video Source Cam: could not find video controller control. Type: %1, camera ID %2, slotIdx: %2",_type,_camID,_slotIdx);
+    (false)
+};
+
+
+if(_videoCtrl isEqualTo controlNull) exitWith {
+    WARNING_3("[VideoSourceCamCreation] Could not create Video Source Cam: could not find video control. Type: %1, camera ID %2, slotIdx: %2",_type,_camID,_slotIdx);
+    (false)
+};
+
+
 private _renderTargetName = _videoCtrl getVariable [QGVAR(renderTargetName), ""];
 // now that all checks have passed, remove existing video source camera
 [_type, _camID] call FUNC(deleteVideoSourceCam);
@@ -90,7 +115,6 @@ if(_unitExists) then {
         };
     };
 };
-// _videoCtrl ctrlShow _unitExists;
 
 //TAG: cam data
 private _newCamData = [_type, _unitNetID, _videoSourceData, _camID, _cam, _renderTargetName, _contentGrpCtrl];

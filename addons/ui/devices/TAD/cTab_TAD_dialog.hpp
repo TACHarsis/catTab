@@ -139,7 +139,7 @@ class GVARMAIN(TAD_dlg) {
         };
         class btnF7: cTab_RscButton_TAD_OSB19 {
             idc = 22;
-            action = QUOTE([QQGVARMAIN(TAD_dlg)] call FUNC(caseButtonsCenterMapOnPlayerPosition));
+            action = QUOTE([QQGVARMAIN(TAD_dlg)] call FUNC(caseButtonsCenterMap));
             tooltip = "Center Map On Current Position (F7)";
         };
     };

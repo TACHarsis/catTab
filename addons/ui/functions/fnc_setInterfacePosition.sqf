@@ -42,8 +42,8 @@ private _displayConfigContainers = if (_isDialog) then {
                         _newPosition = [_newPosition # 0, _newPosition # 1];
                         _ctrl ctrlSetPosition _newPosition;
                         _ctrl ctrlCommit 0;
-                    } else {diag_log str ["invalid IDC",_x]};
-                } else {diag_log str ["missing IDC",_x]};
+                    } else { WARNING_1("invalid IDC: %1",_x); };
+                } else { WARNING_1("missing IDC; %1",_x);};
             };
         } forEach _displayConfigClasses;
     };

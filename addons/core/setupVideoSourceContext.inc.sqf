@@ -26,8 +26,8 @@ _hCamContext set [QGVAR(fnc_prepareUnit), {
     private _hasCameraItem = [_unit, [QITEM_HCAM]] call FUNC(checkGear);
     _unit setVariable [QGVAR(cameraItem), _hasCameraItem];
     private _hasCameraHelmet = _unit getVariable [QGVAR(cameraHelmet), false];
-    // diag_log format ["%1 has item? [%2] has helmet? [%3]", _unit, _hasCameraItem, _hasCameraHelmet];
-    // diag_log format ["(_hasCameraHelmet %1 || _hasCameraItem %2)", _hasCameraHelmet, _hasCameraItem];
+    LOG_3("%1 has item? [%2] has helmet? [%3]",_unit,_hasCameraItem,_hasCameraHelmet);
+    LOG_2("(_hasCameraHelmet %1 || _hasCameraItem %2)",_hasCameraHelmet,_hasCameraItem);
     (_hasCameraHelmet || _hasCameraItem)
 }];
 // _hCamContext set [QGVAR(fnc_updateEntry), {

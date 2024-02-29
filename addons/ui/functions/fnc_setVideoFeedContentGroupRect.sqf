@@ -16,5 +16,3 @@ private _videoCtrl = _contentGrpCtrl getVariable QGVAR(videoCtrl);
 private _ratioFixedTextureRect = [_contentRect, _aspectRatioMethod, ALIGN_CENTER] call FUNC(positionTextureR2T);
 _videoCtrl ctrlSetPosition _ratioFixedTextureRect;
 _videoCtrl ctrlCommit _commitTime;
-
-// diag_log format ["[VIDEOFEEDSIZING]: _ctrlsGrpCtrlRect: %1, _contentRect: %2, _ratioFixedTextureRect: %3", _ctrlsGrpCtrlRect, _contentRect, _ratioFixedTextureRect];

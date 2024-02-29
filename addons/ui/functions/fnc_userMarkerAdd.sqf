@@ -19,7 +19,7 @@ if!(hasInterface) exitWith {};
 
 params ["_encryptionKey","_markerData","_transactionId"];
 
-if (isNil "_transactionId") exitWith { diag_log "userMarkerAdd: SENT IN ERROR; NO TRANSACTION ID";};
+if (isNil "_transactionId") exitWith { LOG("userMarkerAdd: SENT IN ERROR; NO TRANSACTION ID");};
 
 if (GVAR(userMarkerTransactionId) == _transactionId) exitWith {};
 if (GVAR(userMarkerTransactionId) != (_transactionId -1)) exitWith {

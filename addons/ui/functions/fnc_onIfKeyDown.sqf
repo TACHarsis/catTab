@@ -81,7 +81,7 @@ private _return = switch (_dikCode) do {
     };
     case(DIK_F7): {
         if (_displayName in [QGVARMAIN(Tablet_dlg), QGVARMAIN(Android_dlg), QGVARMAIN(TAD_dlg), QGVARMAIN(microDAGR_dlg), QGVARMAIN(FBCB2_dlg)]) exitWith {
-            [_displayName] call FUNC(caseButtonsCenterMapOnPlayerPosition)
+            [_displayName] call FUNC(caseButtonsCenterMap)
         };
         false
     };

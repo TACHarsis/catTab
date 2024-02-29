@@ -208,7 +208,7 @@ class GVARMAIN(FBCB2_dlg){
         };
         class btnF7: cTab_FBCB2_btnF7 {
             idc = IDC_CTAB_BTNF7;
-            action = QUOTE([QQGVARMAIN(FBCB2_dlg)] call FUNC(caseButtonsCenterMapOnPlayerPosition));
+            action = QUOTE([QQGVARMAIN(FBCB2_dlg)] call FUNC(caseButtonsCenterMap));
             tooltip = "Center Map On Current Position (F7)";
         };
 

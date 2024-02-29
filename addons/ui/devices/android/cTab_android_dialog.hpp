@@ -122,7 +122,7 @@ class GVARMAIN(Android_dlg) {
                     idc = 15;
                     y = QUOTE(ANDROID_pixel2Menu_Y(OSD_menuElement_px_Y(6)));
                     text = "Center Map";
-                    action = QUOTE([QQGVARMAIN(Android_dlg)] call FUNC(caseButtonsCenterMapOnPlayerPosition));
+                    action = QUOTE([QQGVARMAIN(Android_dlg)] call FUNC(caseButtonsCenterMap));
                     tooltip = "Center Map On Current Position (F7)";
                 };
             };

@@ -25,8 +25,8 @@ private _fnc_slotItemChanged = {
     if(_slot isEqualTo HEADGEAR) then {
         private _camera = getNumber (configfile >> "CfgWeapons" >> _item >> "CTAB_Camera");
         _isEnabled = (_camera isNotEqualTo 0) || {_item in GVARMAIN(helmetClasses)};
-        // diag_log format ["SLOTITEM CHANGED on %1: %2 > %3 [%4]", _unit, _slot, _item, _assigned];
-        // diag_log format ["Set to enabled: %1", _isEnabled];
+        LOG_4("SLOTITEM CHANGED on %1: %2 > %3 [%4]",_unit,_slot,_item,_assigned);
+        LOG_1("Set to enabled: %1",_isEnabled);
         _unit setVariable [QGVAR(cameraHelmet), _isEnabled, true];
         if(hasInterface) then {
             private _unitNetID = _unit call BIS_fnc_netId;

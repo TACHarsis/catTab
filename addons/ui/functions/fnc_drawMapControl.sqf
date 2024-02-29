@@ -14,7 +14,7 @@ private _playerPos = getPosASL _playerVehicle;
 private _playerHeading = direction _playerVehicle;
 private _drawOptions = GVAR(displayDrawOptions) getOrDefault [_displayName, nil];
 
-if(isNil "_drawOptions") exitWith { diag_log format["[Ctab] draMapControl(): ""%1"" has no draw options", _displayName]; };
+if(isNil "_drawOptions") exitWith { WARNING_1("[Ctab] draMapControl(): ""%1"" has no draw options",_displayName); };
 
 private _condition = _drawOptions getOrDefault [DMC_CONDITION, {true}];
 if(!([_displayName,_displaySettings] call _condition)) exitWith {};

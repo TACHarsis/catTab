@@ -82,7 +82,7 @@ class GVARMAIN(microDAGR_dlg) {
             action = QUOTE([QQGVARMAIN(microDAGR_dlg)] call FUNC(toggleMapTools));
         };
         class btnF7: cTab_microDAGR_btnF7 {
-            action = QUOTE([QQGVARMAIN(microDAGR_dlg)] call FUNC(caseButtonsCenterMapOnPlayerPosition));
+            action = QUOTE([QQGVARMAIN(microDAGR_dlg)] call FUNC(caseButtonsCenterMap));
         };
         class btnfunction: cTab_microDAGR_btnfunction {
             action = QUOTE([QQGVARMAIN(microDAGR_dlg)]  call FUNC(caseButtonsIconTextToggle););

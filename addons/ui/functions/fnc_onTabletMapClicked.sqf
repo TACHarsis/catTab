@@ -29,7 +29,6 @@ private _ctrlScreen = _display displayCtrl ([
 private _context = GVAR(videoSourcesContext) get _videoSourceType;
 private _selectSetting = _context get QGVAR(selectedSettingName);
 private _followSetting = _context get QGVAR(followSettingName);
-// diag_log format ["onTabletClick: %1", [_videoSourceType, _ctrlScreen, GVAR(mapCursorPos), [] call EFUNC(core,getPlayerSides)]];
 private _closestVideoSourceData = [_videoSourceType, _ctrlScreen, GVAR(mapCursorPos), [] call EFUNC(core,getPlayerSides)] call FUNC(videoSourceNearLocation);
 if (_closestVideoSourceData isNotEqualTo []) then {
     //TAG: video source data

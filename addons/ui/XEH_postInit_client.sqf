@@ -44,7 +44,6 @@ if (isNil QGVAR(videoFeedsPFHID)) then {
                         private _statusText = (GVAR(statusStrings) # _status);
                         private _fontSize = 0.3;
                         #define TW_LIMIT 0.6
-                        // diag_log format ["TextWidth of ""%1"": %2", _statusText, _statusText getTextWidth ["EtelkaMonospaceProBold", _fontSize] ];
                         private _textWidth = _statusText getTextWidth ["EtelkaMonospaceProBold", _fontSize];
                         if(_textWidth > TW_LIMIT) then {
                             _fontSize = (TW_LIMIT / _textWidth) * _fontSize;
@@ -53,17 +52,10 @@ if (isNil QGVAR(videoFeedsPFHID)) then {
                         _statusBigCtrl ctrlSetText _newStatusString;
                         //_statusBigCtrl ctrlSetText "#(rgb,512,512,3)text(0,0,""Caveat"",0.3,""#0000ff7f"",""#ff0000"",""Hallo\nWelt"")";
                         private _ctrlWasShown = ctrlshown _statusBigCtrl;
-                        // if(!_ctrlWasShown && _camOffline) then {
-                        //     diag_log format ["[VideoFeedPFH]: turning cam offline, using status %1", (GVAR(statusStrings) # _status)];
-                        //     diag_log format ["[VideoFeedPFH]: all status string: %1", GVAR(statusStrings)];
-                        //     diag_log format ["[VideoFeedPFH]: text on control should be: %1", _newStatusString];
-                        //     diag_log format ["[VideoFeedPFH]: text on control is : %1", ctrlText _statusBigCtrl];
-                        // };
                         _statusBigCtrl ctrlshow _camOffline;
 
                         private _videoCtrl = _contentGrpCtrl getVariable QGVAR(videoCtrl);
                         private _renderTextureEnabled = !isNull _cam && !isNull _unit;
-                        // diag_log format ["FrameGrpUpdate: Status of %1 [%2]: Damaged? %3 Offline? %4 TexEnabled? %5", _name, _status, _camDamaged, _camOffline, _renderTextureEnabled];
                         if(_renderTextureEnabled) then {
                             private _fov = _unit getVariable [QGVAR(targetFovHash), 0.75];
                             _cam camSetFov _fov;
@@ -78,7 +70,6 @@ if (isNil QGVAR(videoFeedsPFHID)) then {
                             private _isSelected = _unit call _fnc_isSelected;
 
                             _videoCtrl ctrlSetTextColor ([[1, 1, 1, 1], [1, 0.95, 0.95, 1]] select _isSelected);
-                            // diag_log format ["Updating frame?"];
                         };
                         _videoCtrl ctrlShow _renderTextureEnabled;
 
@@ -102,10 +93,9 @@ if (isNil QGVAR(animatedControlsPFHID)) then {
                     continue;
                 };
                 private _animationParams = _ctrl getVariable [QGVAR(animationParams), []];
-                // diag_log format ["Testing %1 for animation", _ctrl];
                 if(_animationParams isEqualTo []) then {
                     _toRemove pushBack _ctrl;
-                    diag_log format ["Control [%1] is not set up to be animated. Removing from queue.", _ctrl];
+                    WARNING_1("Control [%1] is not set up to be animated. Removing from queue.",_ctrl);
                     continue;
                 };
                 // heartbeat delta time is the time spent in the curren animation (so 0..runtime)
@@ -121,7 +111,7 @@ if (isNil QGVAR(animatedControlsPFHID)) then {
                 private _timePerImage = _runtime / (count _frameArray);
                 private _imageIdx = floor (_deltaTime / _timePerImage);
                 _ctrl ctrlSetText (_frameArray # _imageIdx);
-                // diag_log format ["Debug Animation: [%1] %2 @ %3 >> %4", _ctrl, _deltaTime, _runtime, _imageIdx];
+                // INFO_1("Debug Animation: [%1] %2 @ %3 >> %4",_ctrl,_deltaTime,_runtime,_imageIdx);
             } foreach GVAR(animatedCtrls);
 
             GVAR(animatedCtrls) = GVAR(animatedCtrls) - _toRemove;

@@ -3,8 +3,6 @@
 
 disableSerialization;
 
-// ["Number of screens: %1", GVAR(numTabletFeeds)] call FUNCMAIN(debugLog);
-
 params ["_display", ["_config", configNull]];
 
 private _fnc_createListCtrl = {
@@ -27,7 +25,7 @@ private _fnc_createListCtrl = {
 
     _listCtrl setVariable [QGVAR(camIdx), _i];
 
-    _listCtrl
+    (_listCtrl)
 };
 
 private _fnc_createVideoSourceLists = {
@@ -50,7 +48,7 @@ private _fnc_createVideoSourceLists = {
         _listCtrlsList pushBack _listCtrl;
     };
 
-    _listCtrlsList
+    (_listCtrlsList)
 };
 
 private _fnc_uavListSelChangedCallback = {
@@ -67,7 +65,6 @@ private _fnc_uavListSelChangedCallback = {
                 ]
             ]
         ] call FUNC(setSettings);
-        // diag_log format ["selChanged (uav): %1 # %2", _control lbData _lbCurSel, _frameIdx];
     };
 };
 
@@ -80,7 +77,6 @@ private _fnc_hCamListSelChangedCallback = {
 
     if (!GVAR(openStart) && (_lbCurSel != -1)) then {
         private _frameIdx = _ctrl getVariable [QGVAR(frameIdx), -1];
-        // diag_log format ["Setting Settings: %1, %2", GVAR(hCamSettingsNames) # _frameIdx, _lbCurSel];
         [
             QGVARMAIN(Tablet_dlg),
             [
@@ -90,7 +86,6 @@ private _fnc_hCamListSelChangedCallback = {
                 ]
             ]
         ] call FUNC(setSettings);
-        // diag_log format ["selChanged (hcam): %1 # %2", GVAR(hCamSettingsNames), _frameIdx];
     };
 };
 
@@ -99,7 +94,7 @@ private _hCamListCtrls = [_display, _hcamListCtrlGrp, _fnc_hCamListSelChangedCal
 uiNamespace setVariable [QGVAR(HCAMListCtrls), _hCamListCtrls];
 
 private _fnc_createVideoFeedGroupCtrl = {
-    params ["_display", "_feedType", "_renderTargetID", "_fnc_controlsCreationFunction", "_frameGrpCtrl", "_aspectRatioMethod"];
+    params ["_display", "_feedType", "_renderTargetID", "_fnc_controlsCreationFunction", "_frameGrpCtrl", ["_isFullscreen", false, [true]]];
 
     private _contentGrpCtrl = _display ctrlCreate ["cTab_Tablet_FrameBox", -1, _frameGrpCtrl];
     private _contentCtrlsHash = createHashmap;
@@ -125,9 +120,10 @@ private _fnc_createVideoFeedGroupCtrl = {
     _statusBigCtrl ctrlSetText format [_textPattern, _statusTextFontSize, "UNINITIALIZED"];
     _statusBigCtrl ctrlShow false;
 
-    private _controllerCtrl = [_display, _contentGrpCtrl, _contentCtrlsHash] call _fnc_controlsCreationFunction;
+    private _controllerCtrl = [_display, _contentGrpCtrl, _contentCtrlsHash, _isFullscreen] call _fnc_controlsCreationFunction;
 
     [_controllerCtrl, _feedType] call FUNC(onLoadVideoDisplayController);
+
     _contentGrpCtrl setVariable [QGVAR(feed_controllerCtrl), _controllerCtrl];
 
     (_contentGrpCtrl)
@@ -164,7 +160,6 @@ private _fnc_createFramedVideoSlotUIs = {
 
         private _contentGrpCtrl = [_display, _feedType, _i, _fnc_controlsCreationFunction, _frameGrpCtrl] call _fnc_createVideoFeedGroupCtrl;
         _frameGrpCtrl setVariable [QGVAR(contentGrpCtrl), _contentGrpCtrl];
-        // diag_log format ["[CREATEVIDEOFRAME] _contentGrpCtrl: %1", _contentGrpCtrl];
 
         //TODO: Implement proper display of currently selected feed
         // private _selectedIconCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _frameGrpCtrl];
@@ -177,24 +172,101 @@ private _fnc_createFramedVideoSlotUIs = {
         _frameGrpCtrl setVariable [QGVAR(toggleButtonCtrl), _toggleButtonCtrl];
 
         [_frameGrpCtrl, _foldingDirection] call FUNC(onLoadVideoDisplayFrame);
+
+        _frameGrpCtrl setVariable [QGVAR(feedType), _feedType];
+        _frameGrpCtrl setVariable [QGVAR(frameIdx), _i];
+        _frameGrpCtrl setVariable [QGVAR(uiVarName), format [QGVAR(%1_%2), _feedType, _i]];
+
+
         private _videoSlotUIData = [_frameGrpCtrl];
         _videoSlotUIDataList pushBack _videoSlotUIData;
     };
 
-    _videoSlotUIDataList
+    (_videoSlotUIDataList)
+};
+private _fnc_createOSDHints = {
+    params ["_contentGrpCtrl", "_hintFontHeight", "_contentHash", "_isFullscreen"];
+
+    private _visionHintCtrl = _display ctrlCreate ["cTab_RscText_VideoFeed", -1, _contentGrpCtrl];
+    _visionHintCtrl ctrlSetText LLSTRING(Video_Feed_Hint_Vision);
+    _visionHintCtrl ctrlSetFontHeight _hintFontHeight;
+    private _hintTextHeight = (ctrlTextHeight _visionHintCtrl) * 1.75;
+    private _visionHintCtrlRelPos = [
+        [0.55, (0.98 - 4 * _hintTextHeight), 0.5, 0.05],
+        [0.60, (0.98 - 2 * _hintTextHeight), 0.5, 0.05]
+    ];
+    _contentHash set [FEED_HINT_VISION, [_visionhintCtrl,   _visionHintCtrlRelPos select _isFullscreen]];
+
+    private _zoomhintCtrl = _display ctrlCreate ["cTab_RscText_VideoFeed", -1, _contentGrpCtrl];
+    _zoomhintCtrl ctrlSetText LLSTRING(Video_Feed_Hint_Zoom);
+    _zoomhintCtrl ctrlSetFontHeight _hintFontHeight;
+    private _zoomhintCtrlRelPos = [
+        [0.55, (0.98 - 3 * _hintTextHeight), 0.5, 0.05],
+        [0.60, (0.98 - 1.5 * _hintTextHeight), 0.5, 0.05]
+    ];
+    _contentHash set [FEED_HINT_ZOOM,   [_zoomhintCtrl,     _zoomhintCtrlRelPos select _isFullscreen]];
+
+    private _togglehintCtrl = _display ctrlCreate ["cTab_RscText_VideoFeed", -1, _contentGrpCtrl];
+    _togglehintCtrl ctrlSetText LLSTRING(Video_Feed_Hint_Toggle);
+    _togglehintCtrl ctrlSetFontHeight _hintFontHeight;
+    private _togglehintCtrlRelPos = [
+        [0.55, (0.98 - 2 * _hintTextHeight), 0.5, 0.05],
+        [0.60, (0.98 - 1 * _hintTextHeight), 0.5, 0.05]
+    ];
+    _contentHash set [FEED_HINT_TOGGLE, [_togglehintCtrl,   _togglehintCtrlRelPos select _isFullscreen]];
 };
 
 private _fnc_createUAVControls = { //TODO: This has to be kept in sync with the fullscren variant below, but there is duplicate code and I hate it
-    params ["_display", "_contentGrpCtrl", "_contentHash"];
+    params ["_display", "_contentGrpCtrl", "_contentHash", "_isFullscreen"];
 
-    private _nameCtrl = _display ctrlCreate ["cTab_RscText", -1, _contentGrpCtrl];
+    private _fnc_setTextFactor = {
+        if(!_isFullscreen) exitWith {};
+        params ["_ctrl"];
+        _ctrl ctrlSetFontHeight (ctrlFontHeight _ctrl) * 2;
+    };
+
+    private _nameCtrl = _display ctrlCreate ["cTab_RscText_VideoFeed", -1, _contentGrpCtrl];
     _nameCtrl ctrlSetText "Drone Dronedottir";
-    _contentHash set [FEED_NAME,        [_nameCtrl,             [0, 0, 1, 0.1]]];
+    _nameCtrl ctrlSetBackgroundColor [0, 0, 0, 0.2];
+    private _nameCtrlRelPos = [
+        [0, 0, 1, 0.1],
+        [0, 0, 1, 0.05]
+    ];
+    _contentHash set [FEED_NAME,        [_nameCtrl,         _nameCtrlRelPos select _isFullscreen]];
+    [_nameCtrl] call _fnc_setTextFactor;
+
+    #define FUEL_SIZE_FACTOR 0.7
+    private _fuelFontHeight = (ctrlFontHeight _nameCtrl) * FUEL_SIZE_FACTOR;
+    private _fuelCtrl = _display ctrlCreate ["cTab_RscText_VideoFeed", -1, _contentGrpCtrl];
+    _fuelCtrl ctrlSetText "-10=%";
+    _fuelCtrl ctrlSetFontHeight _fuelFontHeight;
+    private _fuelCtrlRelPos = [
+        [0.88 - TEXT_MARGIN, 0, 0.1, 0.075],
+        [0.88 - TEXT_MARGIN, 0, 0.1, 0.0375]
+    ];
+    _contentHash set [FEED_FUEL,        [_fuelCtrl,         _fuelCtrlRelPos select _isFullscreen]];
+    // we derive our font height from the name ctrl after it has been adjusted, so we're fine
+
+    private _fuelIconCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _contentGrpCtrl];
+    _fuelIconCtrl ctrlSetTextColor [0, 1, 0, 1];
+    _fuelIconCtrl ctrlSetText "\a3\ui_f\data\IGUI\RscIngameUI\RscUnitInfo\fuelwarning_ca.paa";
+    private _fuelIconCtrlRelPos = [
+        [0.88 - ARMA_UI_RATIO_W(0.075), TEXT_MARGIN, ARMA_UI_RATIO_W(0.075), 0.075 - TEXT_MARGIN],
+        [0.88 - ARMA_UI_RATIO_W(0.075 * FUEL_SIZE_FACTOR - TEXT_MARGIN), 0, ARMA_UI_RATIO_W(0.075 * FUEL_SIZE_FACTOR - TEXT_MARGIN), 0.075 * FUEL_SIZE_FACTOR - TEXT_MARGIN]
+    ];
+    _contentHash set [FEED_FUEL_ICON,   [_fuelIconCtrl,     _fuelIconCtrlRelPos select _isFullscreen]];
+
+    private _hintFontHeight = (ctrlFontHeight _nameCtrl) * 0.7;
+    [_contentGrpCtrl, _hintFontHeight, _contentHash, _isFullscreen] call _fnc_createOSDHints;
 
     private _controllerCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _contentGrpCtrl];
     _controllerCtrl setVariable [QGVAR(canDisable), true];
     _controllerCtrl ctrlSetActiveColor [1, 0, 0, 1];
-    _contentHash set [FEED_CONTROLLER, [_controllerCtrl,        [0, 0, 1, 1]]];
+    private _controllerCtrlRelPos = [
+        [0, 0, 1, 1],
+        [0, 0, 1, 1]
+    ];
+    _contentHash set [FEED_CONTROLLER, [_controllerCtrl,    _controllerCtrlRelPos select _isFullscreen]];
 
     (_controllerCtrl)
 };
@@ -203,25 +275,53 @@ private _uavVideoSlotUIs = [_display, VIDEO_FEED_TYPE_UAV, _fnc_createVideoFeedG
 uiNamespace setVariable [QGVAR(UAVVideoSlotUIs), _uavVideoSlotUIs];
 
 private _fnc_createHCamControls = { //TODO: This has to be kept in sync with the fullscren variant below, but there is duplicate code and I hate it
-    params ["_display", "_contentGrpCtrl", "_contentHash"];
+    params ["_display", "_contentGrpCtrl", "_contentHash", "_isFullscreen"];
+
+    private _fnc_setTextFactor = {
+        if(!_isFullscreen) exitWith {};
+        params ["_ctrl"];
+        _ctrl ctrlSetFontHeight (ctrlFontHeight _ctrl) * 2;
+    };
+    private _nameCtrl = _display ctrlCreate ["cTab_RscText_VideoFeed", -1, _contentGrpCtrl];
+    _nameCtrl ctrlSetText "Name Nameson";
+    private _nameCtrlRelPos = [
+        [0, 0.1, 1, 0.1],
+        [0, 0.05, 1, 0.05]
+    ];
+    _contentHash set [FEED_NAME,            [_nameCtrl,             _nameCtrlRelPos select _isFullscreen]];
+    [_nameCtrl] call _fnc_setTextFactor;
 
     private _heartBeatIconCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _contentGrpCtrl];
     _heartBeatIconCtrl ctrlSetText "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa";
-    _contentHash set [HEARTBEAT_ICON,   [_heartBeatIconCtrl,    [0, 0, ARMA_UI_RATIO_W(0.1), 0.1]]];
 
-    private _heartBeatTextCtrl = _display ctrlCreate ["cTab_RscText", -1, _contentGrpCtrl];
+    private _heartBeatIconCtrlRelPos = [
+        [0, 0, ARMA_UI_RATIO_W(0.1), 0.1],
+        [0, 0, ARMA_UI_RATIO_W(0.05), 0.05]
+    ];
+    _contentHash set [FEED_HEARTBEAT_ICON,  [_heartBeatIconCtrl,    _heartBeatIconCtrlRelPos select _isFullscreen]];
+    [_heartBeatIconCtrl] call _fnc_setTextFactor;
+
+    private _heartBeatTextCtrl = _display ctrlCreate ["cTab_RscText_VideoFeed", -1, _contentGrpCtrl];
     _heartBeatTextCtrl ctrlSetText "132456789";
-    _contentHash set [HEARTBEAT_TEXT,   [_heartBeatTextCtrl,    [ARMA_UI_RATIO_W(0.1), 0, ARMA_UI_RATIO_W(0.9), 0.1]]];
+    private _heartBeatTextCtrlRelPos = [
+        [ARMA_UI_RATIO_W(0.1), 0, ARMA_UI_RATIO_W(0.9), 0.1],
+        [ARMA_UI_RATIO_W(0.05), 0, ARMA_UI_RATIO_W(0.9), 0.05]
+    ];
+    _contentHash set [FEED_HEARTBEAT_TEXT,  [_heartBeatTextCtrl,    _heartBeatTextCtrlRelPos select _isFullscreen]];
+    [_heartBeatTextCtrl] call _fnc_setTextFactor;
 
-    private _nameCtrl = _display ctrlCreate ["cTab_RscText", -1, _contentGrpCtrl];
-    _nameCtrl ctrlSetText "Name Nameson";
-    _contentHash set [FEED_NAME,        [_nameCtrl,             [0, 0.1, 1, 0.1]]];
+    private _hintFontHeight = (ctrlFontHeight _nameCtrl) * 0.7;
+    [_contentGrpCtrl, _hintFontHeight, _contentHash, _isFullscreen] call _fnc_createOSDHints;
 
     // needs to be created last so it overlays all others
     private _controllerCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _contentGrpCtrl];
     _controllerCtrl setVariable [QGVAR(canDisable), true];
     _controllerCtrl ctrlSetActiveColor [1, 0, 0, 1];
-    _contentHash set [FEED_CONTROLLER, [_controllerCtrl,        [0, 0, 1, 1]]];
+    private _controllerCtrlRelPos = [
+        [0, 0, 1, 1],
+        [0, 0, 1, 1]
+    ];
+    _contentHash set [FEED_CONTROLLER, [_controllerCtrl,            _controllerCtrlRelPos select _isFullscreen]];
 
     (_controllerCtrl)
 };
@@ -249,8 +349,7 @@ private _fnc_createFullscreenVideoSlotUI = {
     _backgroundCtrl ctrlSetPosition _backgroundRect;
     _backgroundCtrl ctrlCommit 0;
 
-    // diag_log format ["[CREATEFULLSCREEN]: _fullscreenGrpRect: %1, _maxContentRect: %2, _ratioFixedContentRect: %3", _fullscreenGrpRect, _maxContentRect, _ratioFixedContentRect];
-    private _contentGrpCtrl = [_display, _feedType, "Full", _fnc_controlsCreationFunction, _fullscreenGrpCtrl] call _fnc_createVideoFeedGroupCtrl;
+    private _contentGrpCtrl = [_display, _feedType, "Full", _fnc_controlsCreationFunction, _fullscreenGrpCtrl, true] call _fnc_createVideoFeedGroupCtrl;
     private _contentCtrlsHash = _contentGrpCtrl getVariable QGVAR(feed_contentCtrlsHash);
     [_contentGrpCtrl, _maxContentRect, GVAR(tabletFeedDealWithAspectRatioFullscreen), _committTime] call FUNC(setVideoFeedContentGroupRect);
     _fullscreenGrpCtrl setVariable [QGVAR(contentGrpCtrl), _contentGrpCtrl];
@@ -258,52 +357,12 @@ private _fnc_createFullscreenVideoSlotUI = {
     private _videoSlotUIData = [_fullscreenGrpCtrl];
     _fullscreenGrpCtrl ctrlShow false;
 
-    _videoSlotUIData
+    (_videoSlotUIData)
 };
-
-private _fnc_createUAVControlsFullscreen = { //TODO: This has to be kept in sync with the frame variant above, but there is duplicate code and I hate it
-    params ["_display", "_contentGrpCtrl", "_contentHash"];
-
-    private _nameCtrl = _display ctrlCreate ["cTab_RscText", -1, _contentGrpCtrl];
-    _nameCtrl ctrlSetText "Drone Dronedottir";
-    _contentHash set [FEED_NAME,        [_nameCtrl,             [0, 0, 0.05, 0.05]]];
-
-    private _controllerCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _contentGrpCtrl];
-    _controllerCtrl setVariable [QGVAR(canDisable), false];
-    _controllerCtrl ctrlSetActiveColor [1, 0, 0, 1];
-    _contentHash set [FEED_CONTROLLER, [_controllerCtrl,        [0, 0, 1, 1]]];
-
-    (_controllerCtrl)
-};
-
 private _fullscreenUAVListGrp = _display displayCtrl IDC_CTAB_UAV_FULLSCREEN_LIST;
 _uavListCtrls pushBack ([_display, ctrlPosition _fullscreenUAVListGrp, _fullscreenUAVListGrp, _fnc_uavListSelChangedCallback] call _fnc_createListCtrl);
-_uavVideoSlotUIs pushBack ([_display, VIDEO_FEED_TYPE_UAV, _fnc_createUAVControlsFullscreen, _display displayCtrl IDC_CTAB_UAV_FULLSCREEN_CNTNT] call _fnc_createFullscreenVideoSlotUI);
-
-private _fnc_createHCamControlsFullscreen = { //TODO: This has to be kept in sync with the frame variant above, but there is duplicate code and I hate it
-    params ["_display", "_contentGrpCtrl", "_contentHash"];
-
-    private _heartBeatIconCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _contentGrpCtrl];
-    _heartBeatIconCtrl ctrlSetText "\a3\ui_f\data\IGUI\Cfg\Revive\overlayIcons\u50_ca.paa";
-    _contentHash set [HEARTBEAT_ICON,   [_heartBeatIconCtrl,    [0, 0, ARMA_UI_RATIO_W(0.05), 0.05]]];
-
-    private _heartBeatTextCtrl = _display ctrlCreate ["cTab_RscText", -1, _contentGrpCtrl];
-    _heartBeatTextCtrl ctrlSetText "132456789";
-    _contentHash set [HEARTBEAT_TEXT,   [_heartBeatTextCtrl,    [ARMA_UI_RATIO_W(0.05), 0, ARMA_UI_RATIO_W(0.9), 0.05]]];
-
-    private _nameCtrl = _display ctrlCreate ["cTab_RscText", -1, _contentGrpCtrl];
-    _nameCtrl ctrlSetText "Name Nameson";
-    _contentHash set [FEED_NAME,        [_nameCtrl,             [0, 0.05, 1, 0.05]]];
-
-    // needs to be created last so it overlays all others
-    private _controllerCtrl = _display ctrlCreate ["cTab_RscPicture", -1, _contentGrpCtrl];
-    _controllerCtrl setVariable [QGVAR(canDisable), false];
-    _controllerCtrl ctrlSetActiveColor [1, 0, 0, 1];
-    _contentHash set [FEED_CONTROLLER, [_controllerCtrl,        [0, 0, 1, 1]]];
-
-    (_controllerCtrl)
-};
+_uavVideoSlotUIs pushBack ([_display, VIDEO_FEED_TYPE_UAV, _fnc_createUAVControls, _display displayCtrl IDC_CTAB_UAV_FULLSCREEN_CNTNT] call _fnc_createFullscreenVideoSlotUI);
 
 private _fullscreenHCamListGrp = _display displayCtrl IDC_CTAB_HCAM_FULLSCREEN_LIST;
 _hCamListCtrls pushBack ([_display, ctrlPosition _fullscreenHCamListGrp, _fullscreenHCamListGrp, _fnc_hCamListSelChangedCallback] call _fnc_createListCtrl);
-_hCamVideoSlotUIs pushBack ([_display, VIDEO_FEED_TYPE_HCAM, _fnc_createHCamControlsFullscreen, _display displayCtrl IDC_CTAB_HCAM_FULLSCREEN_CNTNT] call _fnc_createFullscreenVideoSlotUI);
+_hCamVideoSlotUIs pushBack ([_display, VIDEO_FEED_TYPE_HCAM, _fnc_createHCamControls, _display displayCtrl IDC_CTAB_HCAM_FULLSCREEN_CNTNT] call _fnc_createFullscreenVideoSlotUI);

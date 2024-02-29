@@ -18,13 +18,19 @@ if(_requiredSeatEnabled isNotEqualTo "" && {!([Ctab_player, vehicle Ctab_player,
 
 if (_interfaceName != "" && _interfaceName != _previousInterface) exitWith {
     // queue the start up of the interface as we might still have one closing down
-    [{
-        params ["_mode", "_pfhID"];
-        if (isNil QGVAR(ifOpen)) then {
-            [_pfhID] call CBA_fnc_removePerFrameHandler;
-            (_mode) call FUNC(open);
-        };
-    }, 0, [DEVICE_KEY_ORDER_ACE, _interfaceName, player, _vehicle]] call CBA_fnc_addPerFrameHandler;
-    true
+    [
+        {
+            params ["_mode", "_pfhID"];
+            if (isNil QGVAR(ifOpen)) then {
+                [_pfhID] call CBA_fnc_removePerFrameHandler;
+                (_mode) call FUNC(open);
+            };
+        },
+        0,
+        [DEVICE_KEY_ORDER_ACE, _interfaceName, player, _vehicle]
+    ] call CBA_fnc_addPerFrameHandler;
+
+    (true)
 };
-false
+
+(false)

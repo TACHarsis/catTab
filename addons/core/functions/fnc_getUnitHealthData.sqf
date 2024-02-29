@@ -87,9 +87,7 @@ private _fnc_getHealthDataACE = {
                 private _diffBoundaries = ((_upperBloodVolumeBoundary # 0) - (_lowerBloodVolumeBoundary # 0));
                 private _diffLowerToCurrent = _bloodVolume - (_lowerBloodVolumeBoundary # 0);
                 private _bloodVolumeDelta = if(_diffLowerToCurrent != 0) then { _diffBoundaries / _diffLowerToCurrent };
-                //diag_log format ["Lower: %1 vs Upper: %2 for %3", _lowerBloodVolumeBoundary, _upperBloodVolumeBoundary, _bloodVolume];
                 _colorHint = [_lowerBloodVolumeBoundary # 1, _upperBloodVolumeBoundary # 1, _bloodVolumeDelta, 1] call BIS_fnc_interpolateVectorConstant;
-                //diag_log format ["Interpolated colorHint: %1", _colorHint];
             };
         };
         _colorHint pushBack 1; // add alpha value

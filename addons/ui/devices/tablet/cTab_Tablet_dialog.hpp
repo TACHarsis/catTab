@@ -26,7 +26,7 @@
 class GVARMAIN(Tablet_dlg){
     idd = IDD_CTAB_TABLET_DLG;
     movingEnable = "true";
-    onLoad = QUOTE(_this call FUNC(onTabletOpen); _this call FUNC(onIfOpen););
+    onLoad = QUOTE(_this call FUNC(tabletCreateVideoFrames); _this call FUNC(onIfOpen););
     onUnload = QUOTE(_this call FUNC(onTabletClose); [] call FUNC(onIfClose););
     onKeyDown = QUOTE(_this call FUNC(onIfKeyDown));
     objects[] = {};
@@ -372,7 +372,7 @@ class GVARMAIN(Tablet_dlg){
         };
         class btnF7: cTab_Tablet_btnTrackpad {
             idc = 17;
-            action = QUOTE([QQGVARMAIN(Tablet_dlg)] call FUNC(caseButtonsCenterMapOnPlayerPosition));
+            action = QUOTE([QQGVARMAIN(Tablet_dlg)] call FUNC(caseButtonsCenterMap));
             tooltip = "Center Map On Current Position (F7)";
         };
         class btnF8: cTab_Tablet_btnTiny {

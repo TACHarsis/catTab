@@ -152,13 +152,11 @@ private _fnc_onSourceInit = {
 private _fnc_onSourceDeleted = {
     params ["_unit"];
 
-    // diag_log format ["[DELETED] Unit deleted: %1", _unit];
     private _unitNetID = _unit call BIS_fnc_netId;
     {
         private _type = _x;
         private _context = _y;
         private _sourcesHash = _context get QGVAR(sourcesHash);
-        // diag_log format ["[DELETED] Unit was video source? %1", _unitNetID in _sourcesHash];
         if(_unitNetID in _sourcesHash) then {
             // wait till next frame so the unit can go null
             [
@@ -168,7 +166,6 @@ private _fnc_onSourceDeleted = {
                     isNull _unit
                 },
                 {
-                    // diag_log format ["[DELETED] Unit is now null: %1. Updating source.", _unit];
                     params ["_type", "_unitNetID", "_unit"];
                     [_type, _unitNetID] call FUNC(updateVideoSource);
                 },
@@ -203,7 +200,6 @@ GVAR(videoSourceUpdatePFHID) = [
                 if(_known) then {
                     //TAG: video source data
                     _sourceData params ["_unitNetID", "_unit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
-                    // diag_log format ["waaa %1 %2", _sourceData, _isEnabled];
                     if(_enabled isNotEqualTo _isEnabled) then {
                         [_type, _unitNetID] call FUNC(updateVideoSource);
                     };

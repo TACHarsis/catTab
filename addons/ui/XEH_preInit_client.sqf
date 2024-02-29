@@ -218,7 +218,6 @@ GVAR(sourceRemovedSlotBuffer) = [];
             private _data = [_displayName, _settingName] call FUNC(getSettings);
             if(_data isEqualTo _newUnitNetID || {_data isNotEqualTo ""}) then {continue}; // don't replace a new selection and don't bother if we're already set
             [_displayName, [[_settingName, _newUnitNetID]]] call FUNC(setSettings);
-            // diag_log format ["Replacing %1 with %2 in slot %3", _corpseNetID, _unitNetID, _settingName];
         } foreach _selectedSettingsNames;
     }
 ] call CBA_fnc_addEventHandler;

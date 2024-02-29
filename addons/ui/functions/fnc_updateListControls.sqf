@@ -4,12 +4,8 @@
 if (isNil QGVAR(ifOpen)) exitWith {};
 params ["_type", ["_rebuild", false, [true]]];
 
-// diag_log format ["UpdateListCtrls: Called %1", _type];
-
 private _context = GVAR(videoSourcesContext) get _type;
-//diag_log format ["UpdateListCtrls: _context %1", _context];
 private _sources = _context get QGVAR(sourcesHash);
-// diag_log format ["UpdateListCtrls: _sources %1", _sources];
 private _listCtrls = [] call (_context get QGVAR(fnc_getListCtrlsData));
 private _settingsNames = _context get QGVAR(slotSettingsNames);
 private _modes = _context get QGVAR(modes);
@@ -20,10 +16,7 @@ private _displaySettings = [_displayName] call FUNC(getSettings);
 private _mode = _displaySettings get QSETTING_MODE;
 if (isNil "_mode") exitWith {};
 
-// diag_log format ["UpdateListCtrls: Mode %1 vs %2", _mode, _modes];
 if (_mode in _modes) then {
-    // diag_log format ["UpdateListCtrls: Updating %1", _listCtrls];
-    // diag_log format ["UpdateListCtrls: _sources %1", _sources];
     {
         private _listCtrl = _x;
         private _isBusy = _listCtrl getVariable [QGVAR(busy), false];
@@ -44,7 +37,6 @@ if (_mode in _modes) then {
             {
                 //TAG: video source data
                 _y params ["_unitNetID", "_unit", "_name", "_alive", "_enabled", "_group", "_side", "_status"];
-                // diag_log format ["UpdateListCtrls: Checking %1: (%2) vs (%3)", _unit, _side, playerSide];
                 if!(_side in _filterSides) then {continue};
 
                 //TODO: get canonical side from here and only add entry if it matches playerSide (or you're logged admin or sth)
@@ -72,7 +64,6 @@ if (_mode in _modes) then {
                 if (_data isEqualTo (_listCtrl lbData _i)) exitWith {
                     if ((lbCurSel _listCtrl) != _i) then {
                         _listCtrl lbSetCurSel _i;
-                        // diag_log format ["UpdateListCtrl setting cursel: %1 @ %2", _i, _settingName];
                     };
                 };
             };
@@ -80,7 +71,6 @@ if (_mode in _modes) then {
             if ((lbCurSel _listCtrl) isEqualTo -1) then {
                 [_displayName, [[_settingName, ""]]] call FUNC(setSettings);
                 _listCtrl lbSetCurSel _deselectIndex;
-                // diag_log format ["UpdateListCtrl setting cursel: DESELECT @ %2", _i, _settingName];
             };
         };
         _listCtrl setVariable [QGVAR(busy), false];

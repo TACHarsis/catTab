@@ -1,10 +1,13 @@
 #include "script_component.hpp"
+
 params ["_rect", ["_method", R2T_METHOD_SHRINK, [-1]], ["_alignment", DO_NOT_ALIGN, [1]]];
+
 private _rectCnt = count _rect;
 if(_rectCnt != 2 && _rectCnt != 4) exitWith { throw format ["[ShrinkToFit] Wrong number of arguments: %1, expected 2 or 4", _rectCnt] };
 if(_rectCnt == 2) then {
     _rect = [0, 0, _rect # 0, _rect # 1];
 };
+
 _rect params ["_rectX", "_rectY", "_rectW", "_rectH"];
 if(_method >= NUM_R2T_METHODS || _method < 0) then {
     _method = R2T_METHOD_SHRINK;
